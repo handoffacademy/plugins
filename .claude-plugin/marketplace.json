@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
+  "name": "moai-plugins",
+  "version": "1.0.0",
+  "description": "Mother of AI plugins for practical business workflows in Claude.",
+  "owner": {
+    "name": "Mother of AI",
+    "url": "https://themotherofai.com"
+  },
+  "plugins": [
+    {
+      "name": "inbox-assistant",
+      "displayName": "Inbox Assistant",
+      "source": "./plugins/inbox-assistant",
+      "description": "Reads your email, prepares a morning brief, finds stalled follow-ups, and writes replies as drafts with every action off until you enable it.",
+      "category": "productivity",
+      "tags": ["email", "inbox", "follow-up", "small-business"]
+    }
+  ]
+}

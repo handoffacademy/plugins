@@ -1,0 +1,44 @@
+name: Marketplace validation
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - preview
+  schedule:
+    - cron: '17 10 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-marketplace:
+    name: Validate marketplace
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install Claude Code validator
+        run: npm install --global @anthropic-ai/claude-code@2.1.216
+
+      - name: Validate release policy
+        shell: bash
+        run: |
+          if git show-ref --verify --quiet refs/remotes/origin/main && [ "$GITHUB_REF_NAME" != "main" ]; then
+            node scripts/validate-marketplace.mjs --base origin/main
+          else
+            node scripts/validate-marketplace.mjs
+          fi
+
+      - name: Validate Anthropic plugin schemas
+        run: claude plugin validate . --strict
