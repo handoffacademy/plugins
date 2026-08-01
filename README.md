@@ -63,22 +63,6 @@ codex plugin add inbox-assistant@plugins
 
 Claude's Auto-update setting does not update Codex installations.
 
-## Moving from the former MOAI marketplace
-
-Handoff Academy replaced the MOAI Plugins name. GitHub redirects the former repository URL, but the marketplace slug changed from `moai-plugins` to `plugins`.
-
-For Claude, add `https://github.com/handoffacademy/plugins`, install the plugin from **Handoff Academy Plugins**, and remove the old marketplace entry after confirming the new installation works.
-
-For Codex:
-
-```bash
-codex plugin marketplace add handoffacademy/plugins
-codex plugin add inbox-assistant@plugins
-codex plugin marketplace remove moai-plugins
-```
-
-Remove the old source only after the plugin appears under the new marketplace.
-
 ## Available plugins
 
 | Plugin | Purpose |
