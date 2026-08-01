@@ -70,7 +70,8 @@ jobs:
         shell: bash
         run: |
           codex plugin marketplace add "$GITHUB_WORKSPACE" --json
+          marketplace_name="$(node -p 'require("./.agents/plugins/marketplace.json").name')"
           while IFS= read -r plugin; do
-            codex plugin add "$plugin@moai-plugins"
+            codex plugin add "$plugin@$marketplace_name"
           done < <(node -e 'for (const plugin of require("./.agents/plugins/marketplace.json").plugins) console.log(plugin.name)')
           codex plugin list
