@@ -1,6 +1,6 @@
-# Creating and releasing MOAI plugins
+# Creating and releasing plugins
 
-This is the required workflow for every plugin in the MOAI Git marketplace. It
+This is the required workflow for every plugin in the Handoff Academy Git marketplace. It
 keeps releases discoverable and updateable in Claude Cowork, Claude Code, and
 ChatGPT/Codex without putting a self-updater inside the plugin.
 
@@ -9,7 +9,7 @@ ChatGPT/Codex without putting a self-updater inside the plugin.
 1. The Git marketplace is the only supported Claude distribution path. Do not
    create a ZIP release or duplicate the canonical plugin source in another app.
 2. Claude's native marketplace updater owns Claude updates. Members enable
-   **Auto-update** for MOAI Plugins once; third-party marketplaces default to off.
+   **Auto-update** for Handoff Academy Plugins once; third-party marketplaces default to off.
 3. A plugin never checks the network for its own version, edits its installed
    files, blocks a workflow because it is stale, or adds a SessionStart update
    hook. The marketplace can publish updates, but it cannot override an
@@ -119,7 +119,7 @@ Then install the marketplace and the changed plugin through Codex:
 
 ```bash
 codex plugin marketplace add "$PWD"
-codex plugin add <plugin-id>@moai-plugins
+codex plugin add <plugin-id>@plugins
 codex plugin list
 ```
 
@@ -150,7 +150,7 @@ Before merge, verify:
 ## Managed Claude Code organizations
 
 An administrator who controls members' Claude Code managed settings may set
-`autoUpdate: true` for the MOAI marketplace in `extraKnownMarketplaces`. That is
+`autoUpdate: true` for the Handoff Academy marketplace in `extraKnownMarketplaces`. That is
 an organization deployment option, not a publisher capability and not a promise
 we make to individual Cowork members. Individual members still follow the
 one-time Auto-update step in the plugin README.

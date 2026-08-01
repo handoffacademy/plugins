@@ -1,13 +1,13 @@
 {
   "name": "inbox-assistant",
-  "version": "3.5.3",
+  "version": "3.5.4",
   "description": "An Inbox Assistant for your business that reads email, prepares briefs, finds stalled follow-ups, and drafts replies with every action off until you enable it.",
   "author": {
     "name": "Mother of AI",
     "url": "https://themotherofai.com"
   },
   "homepage": "https://themotherofai.com",
-  "repository": "https://github.com/thomas-echezabal/moai-plugins",
+  "repository": "https://github.com/handoffacademy/plugins",
   "keywords": ["email", "inbox", "follow-up", "small-business", "productivity"],
   "skills": "./skills/",
   "interface": {

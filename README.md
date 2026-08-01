@@ -1,86 +1,104 @@
-# MOAI Plugins
+# Handoff Academy Plugins
 
-The official Mother of AI plugin marketplace for Claude Cowork and ChatGPT/Codex. Every release carries both platform manifests, shares one plugin source, and is install-tested through both CLIs.
+A plugin marketplace for Claude, Codex, ChatGPT, and compatible agent platforms. Each plugin keeps one canonical workflow and adds the manifests or adapters each platform needs.
 
-## Add the marketplace in Cowork
+## Platform support
 
-1. Open **Cowork**, then open **Customize** → **Plugins**.
-2. In **Personal plugins**, select **+** → **Add marketplace**.
-3. Choose **Add from a repository** and enter:
+| Platform | Marketplace catalog | Plugin contract |
+|---|---|---|
+| Claude Cowork and Claude Code | `.claude-plugin/marketplace.json` | `.claude-plugin/plugin.json`, commands, agents, hooks, and shared skills |
+| Codex and ChatGPT | `.agents/plugins/marketplace.json` | `.codex-plugin/plugin.json` and shared Agent Skills |
+| Other compatible agents | Shared `skills/` directories | Portable `SKILL.md` workflows, with a platform adapter when required |
 
-   `https://github.com/thomas-echezabal/moai-plugins`
+Platform-specific files should delegate to the shared workflow instead of copying it. If a platform lacks a connector, scheduler, hook, or file API, the plugin must document a safe fallback and fail closed when the missing capability affects safety.
 
-4. Open **MOAI Plugins** and turn on its **Auto-update** toggle. Claude leaves
-   automatic updates off by default for third-party marketplaces, so this is a
-   one-time setup step.
-5. Install the plugin you want, then start a new Cowork session so it loads.
+## Repository layout
 
-## Add the marketplace in ChatGPT/Codex
-
-From Codex CLI, add the Git marketplace and install Inbox Assistant:
-
-```bash
-codex plugin marketplace add thomas-echezabal/moai-plugins
-codex plugin add inbox-assistant@moai-plugins
+```text
+plugins/
+├── .claude-plugin/marketplace.json
+├── .agents/plugins/marketplace.json
+├── plugins/
+│   └── <plugin-id>/
+│       ├── .claude-plugin/plugin.json
+│       ├── .codex-plugin/plugin.json
+│       ├── skills/
+│       ├── commands/        # when Claude commands are needed
+│       ├── agents/          # when Claude subagents are needed
+│       ├── hooks/           # when Claude hooks are needed
+│       ├── README.md
+│       └── CHANGELOG.md
+├── scripts/
+└── docs/creating-and-releasing-plugins.md
 ```
 
-Then start a new Codex task so its skills load. In the Codex app, the same marketplace entry appears as **MOAI Plugins**. ChatGPT/Codex users can invoke the six workflows by intent or select the corresponding `$inbox-assistant-*` skill; typing the familiar `/inbox-assistant:setup` text also routes to the setup skill.
+## Install in Claude Cowork
 
-Before this release reaches `main`, administrators can test the staged build with `codex plugin marketplace add thomas-echezabal/moai-plugins --ref preview`.
+1. Open **Cowork** → **Customize** → **Plugins**.
+2. Under **Personal plugins**, select **+** → **Add marketplace**.
+3. Choose **Add from a repository** and enter:
 
-## Inbox Assistant
+   `https://github.com/handoffacademy/plugins`
 
-Inbox Assistant reads your email, prepares a morning brief, finds stalled follow-ups, and writes replies as drafts. Every mailbox action starts switched off and must be enabled and tested individually.
+4. Open **Handoff Academy Plugins** and turn on **Auto-update**. Claude leaves automatic updates off for third-party marketplaces.
+5. Install the plugin, then start a new Cowork session.
 
-After installation, run `/inbox-assistant:setup` in a Cowork session to set it up, or `/inbox-assistant:status` if you are moving an existing installation.
+Claude Code users can add the same Git marketplace through the plugin interface.
 
-### Moving from the downloaded plugin
+## Install in Codex
 
-If you previously installed Inbox Assistant by uploading a file:
+```bash
+codex plugin marketplace add handoffacademy/plugins
+codex plugin add inbox-assistant@plugins
+```
 
-1. Open **Customize** → **Plugins** and uninstall the uploaded Inbox Assistant.
-2. Add this marketplace using the steps above.
-3. Install **Inbox Assistant** from MOAI Plugins.
-4. Start a new Cowork session and run `/inbox-assistant:status`.
+Start a new Codex task after installation so its skills load.
 
-The marketplace version uses the same plugin name, command namespace, and workspace files. Do not leave both copies installed.
+To refresh the marketplace and reinstall a plugin:
+
+```bash
+codex plugin marketplace upgrade plugins
+codex plugin add inbox-assistant@plugins
+```
+
+Claude's Auto-update setting does not update Codex installations.
+
+## Moving from MOAI Plugins
+
+GitHub redirects the former repository URL, but the marketplace name changed from `moai-plugins` to `plugins`.
+
+For Claude, add `https://github.com/handoffacademy/plugins`, install the plugin from **Handoff Academy Plugins**, and remove the old marketplace entry after confirming the new installation works.
+
+For Codex:
+
+```bash
+codex plugin marketplace add handoffacademy/plugins
+codex plugin add inbox-assistant@plugins
+codex plugin marketplace remove moai-plugins
+```
+
+Remove the old source only after the plugin appears under the new marketplace.
+
+## Available plugins
+
+| Plugin | Purpose |
+|---|---|
+| [Inbox Assistant](plugins/inbox-assistant) | Email briefs, stalled follow-ups, safe draft replies, and recurring inbox reviews with mailbox actions disabled until you enable and test them |
+
+## Create or release a plugin
+
+Read [Creating and releasing plugins](docs/creating-and-releasing-plugins.md). The repository includes a scaffold command and validation for synchronized Claude and Codex manifests, semantic versions, changelogs, installation docs, and cross-platform fallbacks.
 
 ## Updates
 
-Claude's native marketplace updater is the supported update path. Do not install a
-separate updater or a SessionStart version-check hook. Once **Auto-update** is on
-for MOAI Plugins, Claude checks the marketplace after startup and downloads newer
-plugin versions in the background. Third-party marketplace auto-update is off by
-default, so adding the marketplace alone is not enough.
+Claude uses its native marketplace updater. Turn on **Auto-update** for Handoff Academy Plugins, then start a new session after an update. Claude Code can use `/reload-plugins` for most plugin changes.
 
-The check can take several minutes, and a session keeps the plugin version it
-loaded at launch. Start a new session after an update; in Claude Code you can use
-`/reload-plugins` to load most plugin changes without restarting. If you customized
-a plugin locally, Claude warns you before replacing those edits.
+Codex maintains a separate marketplace cache. Run the upgrade and reinstall commands above, then start a new task.
 
-If an update does not appear, confirm **Auto-update** is enabled, open
-**Customize** → **Plugins**, open MOAI Plugins, and select **Update**. Then start a
-new session.
+## Support
 
-For ChatGPT/Codex, refresh the Git marketplace, reinstall the plugin, and start a new task:
-
-```bash
-codex plugin marketplace upgrade moai-plugins
-codex plugin add inbox-assistant@moai-plugins
-```
-
-Claude's Auto-update toggle does not update Codex installations.
-
-## Troubleshooting
-
-- **Marketplace does not appear:** confirm the repository URL is exactly `https://github.com/thomas-echezabal/moai-plugins`, then try adding it again.
-- **Two Inbox Assistant entries appear:** uninstall the uploaded copy and keep the marketplace copy.
-- **Commands are missing after an update:** start a new Cowork session so the updated plugin is loaded.
-- **A slash command does not appear in Codex:** select the matching `$inbox-assistant-*` skill or ask for the workflow in plain language; the Claude slash command and Codex skill use the same source workflow.
-- **Inbox Assistant cannot read mail:** reconnect Gmail or Microsoft 365 under Claude **Settings** → **Connectors**, then run `/inbox-assistant:setup` again.
-
-For Academy support, use the Help Center or weekly office hours in the Mother of AI portal.
+Use the Help Center or weekly office hours in the Mother of AI portal.
 
 ## Copyright
 
-Source available. All rights reserved. No permission is granted to copy, modify, redistribute, or sublicense this repository or its plugins without written authorization from Mother of AI.
+Source available. All rights reserved. Mother of AI grants no permission to copy, modify, redistribute, or sublicense this repository or its plugins without written authorization.

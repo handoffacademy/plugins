@@ -1,4 +1,4 @@
-# Releasing MOAI plugins
+# Releasing plugins
 
 Every plugin release goes through a pull request. Direct releases from a working tree are not supported.
 
@@ -8,12 +8,12 @@ Read it before creating or releasing a plugin.
 
 ## Update policy
 
-MOAI plugins use the host's native marketplace updater. Never add a network
+Handoff Academy plugins use the host's native marketplace updater. Never add a network
 version check, self-update script, stale-version blocker, or SessionStart update
 hook to a plugin.
 
 Claude leaves automatic updates off by default for third-party marketplaces.
-Every plugin README must tell members to enable **Auto-update** for MOAI Plugins
+Every plugin README must tell members to enable **Auto-update** for Handoff Academy Plugins
 once, explain that a running session keeps the version it loaded, and name the
 manual recovery path. Publishers cannot override an individual member's toggle.
 

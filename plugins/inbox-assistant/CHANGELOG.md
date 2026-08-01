@@ -1,5 +1,15 @@
 # Changelog
 
+## 3.5.4
+
+Inbox Assistant now ships from the renamed Handoff Academy plugin marketplace.
+
+- The canonical repository is `handoffacademy/plugins`.
+- Claude installation uses the Handoff Academy Plugins marketplace.
+- Codex installs `inbox-assistant@plugins`; users of the former
+  `moai-plugins` marketplace can remove that source after adding the renamed one.
+- The plugin workflow and safety policy are unchanged.
+
 ## 3.5.3
 
 The write-policy guard no longer mistakes an unfamiliar but clearly unrelated
