@@ -1,6 +1,6 @@
 # Handoff Academy Plugins
 
-A plugin marketplace for Claude, Codex, ChatGPT, and compatible agent platforms. Each plugin keeps one canonical workflow and adds the manifests or adapters each platform needs.
+Handoff Academy publishes practical plugins for Claude, Codex, ChatGPT, and compatible agent platforms. Each plugin keeps one canonical workflow and adds the manifests or adapters each platform needs.
 
 ## Platform support
 
@@ -63,9 +63,9 @@ codex plugin add inbox-assistant@plugins
 
 Claude's Auto-update setting does not update Codex installations.
 
-## Moving from MOAI Plugins
+## Moving from the former MOAI marketplace
 
-GitHub redirects the former repository URL, but the marketplace name changed from `moai-plugins` to `plugins`.
+Handoff Academy replaced the MOAI Plugins name. GitHub redirects the former repository URL, but the marketplace slug changed from `moai-plugins` to `plugins`.
 
 For Claude, add `https://github.com/handoffacademy/plugins`, install the plugin from **Handoff Academy Plugins**, and remove the old marketplace entry after confirming the new installation works.
 
@@ -97,8 +97,8 @@ Codex maintains a separate marketplace cache. Run the upgrade and reinstall comm
 
 ## Support
 
-Use the Help Center or weekly office hours in the Mother of AI portal.
+Use the Handoff Academy Help Center or bring your question to weekly office hours.
 
-## Copyright
+## License
 
-Source available. All rights reserved. Mother of AI grants no permission to copy, modify, redistribute, or sublicense this repository or its plugins without written authorization.
+Source available. All rights reserved. Written permission is required to copy, modify, redistribute, or sublicense this repository or its plugins.
