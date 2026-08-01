@@ -1,7 +1,7 @@
 {
-  "name": "moai-plugins",
+  "name": "plugins",
   "interface": {
-    "displayName": "MOAI Plugins"
+    "displayName": "Handoff Academy Plugins"
   },
   "plugins": [
     {

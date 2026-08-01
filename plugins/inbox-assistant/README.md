@@ -8,10 +8,14 @@ It runs on Claude's servers on a schedule, so your laptop can be closed.
 
 1. In Cowork, open **Customize** → **Plugins**.
 2. Under **Personal plugins**, select **+** → **Add marketplace**.
-3. Add `https://github.com/thomas-echezabal/moai-plugins` from a repository.
-4. Open **MOAI Plugins** and turn on its **Auto-update** toggle. Claude leaves
+3. Add `https://github.com/handoffacademy/plugins` from a repository.
+4. Open **Handoff Academy Plugins** and turn on its **Auto-update** toggle. Claude leaves
    this off by default for third-party marketplaces.
 5. Install **Inbox Assistant**, then start a new Cowork session so it loads.
+
+If Claude still shows the former **MOAI Plugins** marketplace, add the Handoff
+Academy repository above, install Inbox Assistant from the new marketplace, and
+remove the old marketplace only after the new installation works.
 
 If you previously uploaded Inbox Assistant as a file, uninstall that copy before installing this one. Your Inbox Assistant project files stay in place. Run `/inbox-assistant:status` in a new Cowork session to verify the move, and do not leave both copies installed.
 
@@ -23,14 +27,20 @@ The check can take several minutes, and the current session keeps the version it
 loaded. Start a new session after an update; in Claude Code, `/reload-plugins` can
 load most changes immediately.
 
-If an update does not appear, confirm **Auto-update** is enabled, open MOAI
+If an update does not appear, confirm **Auto-update** is enabled, open Handoff Academy
 Plugins, select **Update**, and start a new session.
 
 ## Install in ChatGPT/Codex
 
 ```bash
-codex plugin marketplace add thomas-echezabal/moai-plugins
-codex plugin add inbox-assistant@moai-plugins
+codex plugin marketplace add handoffacademy/plugins
+codex plugin add inbox-assistant@plugins
+```
+
+After confirming the new installation, remove the former marketplace source:
+
+```bash
+codex plugin marketplace remove moai-plugins
 ```
 
 Start a new Codex task after installation. Ask for setup, testing, scheduling, status, tuning, or pausing in plain language, type the familiar namespaced command, or select the matching `$inbox-assistant-*` skill. The Codex skills delegate to the same command workflows used by Claude.
@@ -39,8 +49,8 @@ To update the Codex installation, refresh the marketplace, reinstall the plugin,
 and start a new task. Claude's Auto-update toggle does not update Codex:
 
 ```bash
-codex plugin marketplace upgrade moai-plugins
-codex plugin add inbox-assistant@moai-plugins
+codex plugin marketplace upgrade plugins
+codex plugin add inbox-assistant@plugins
 ```
 
 Connector names and recurring-task controls differ by product. Inbox Assistant uses only capabilities visible in the current conversation, preserves the same project files, and fails closed before writes when a required connector, action control, safety state, or platform capability is missing.

@@ -1,8 +1,8 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
-  "name": "moai-plugins",
+  "name": "plugins",
   "version": "1.0.0",
-  "description": "Mother of AI plugins for practical business workflows in Claude.",
+  "description": "Handoff Academy plugins for practical workflows across Claude and compatible agent platforms.",
   "owner": {
     "name": "Mother of AI",
     "url": "https://themotherofai.com"

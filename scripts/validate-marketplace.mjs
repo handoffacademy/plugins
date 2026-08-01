@@ -67,6 +67,15 @@ if (!existsSync(pluginsRoot)) fail("plugins/ is missing.");
 
 const marketplace = readJSON(marketplacePath);
 const codexMarketplace = readJSON(codexMarketplacePath);
+const expectedMarketplaceName = "plugins";
+const expectedRepository = "https://github.com/handoffacademy/plugins";
+const expectedRepositorySlug = "handoffacademy/plugins";
+if (marketplace.name !== expectedMarketplaceName) {
+  fail(`Marketplace name must be "${expectedMarketplaceName}".`);
+}
+if (codexMarketplace.interface?.displayName !== "Handoff Academy Plugins") {
+  fail('Codex marketplace displayName must be "Handoff Academy Plugins".');
+}
 if (!kebabCase.test(marketplace.name ?? ""))
   fail("Marketplace name must be kebab-case.");
 if (!marketplace.owner?.name) fail("Marketplace owner.name is required.");
@@ -146,6 +155,11 @@ for (const entry of entries) {
       `Plugin "${entry.name}" Codex manifest needs description and author.name.`,
     );
   }
+  if (codexManifest.repository !== expectedRepository) {
+    fail(
+      `Plugin "${entry.name}" Codex manifest repository must be "${expectedRepository}".`,
+    );
+  }
   if (codexManifest.skills !== "./skills/") {
     fail(`Plugin "${entry.name}" Codex manifest must discover ./skills/.`);
   }
@@ -198,12 +212,17 @@ for (const entry of entries) {
       `Plugin "${entry.name}" README must explain that a running Claude session keeps its loaded plugin version.`,
     );
   }
-  if (!readme.includes("codex plugin marketplace upgrade moai-plugins")) {
+  if (!readme.includes(`codex plugin marketplace add ${expectedRepositorySlug}`)) {
+    fail(
+      `Plugin "${entry.name}" README must include the canonical Codex marketplace add command.`,
+    );
+  }
+  if (!readme.includes(`codex plugin marketplace upgrade ${expectedMarketplaceName}`)) {
     fail(
       `Plugin "${entry.name}" README must include the Codex marketplace upgrade command.`,
     );
   }
-  if (!readme.includes(`codex plugin add ${entry.name}@moai-plugins`)) {
+  if (!readme.includes(`codex plugin add ${entry.name}@${expectedMarketplaceName}`)) {
     fail(
       `Plugin "${entry.name}" README must include its Codex install/reinstall command.`,
     );
