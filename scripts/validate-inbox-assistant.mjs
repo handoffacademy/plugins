@@ -129,6 +129,24 @@ if (JSON.stringify(commandFiles) !== JSON.stringify(commandNames)) {
   );
 }
 
+const scheduleSource = readFileSync(
+  join(pluginRoot, "commands", "schedule.md"),
+  "utf8",
+);
+for (const phrase of [
+  "Automatically approve (Auto)",
+  "Do not choose Skip all approvals",
+  "one final confirmation",
+  "Pro and Max",
+  "Team and Enterprise",
+]) {
+  if (!scheduleSource.includes(phrase)) {
+    failures.push(
+      `commands/schedule.md: missing streamlined approval guidance: ${phrase}`,
+    );
+  }
+}
+
 if (failures.length > 0) {
   throw new Error(
     `Inbox Assistant content validation failed:\n${failures.join("\n")}`,

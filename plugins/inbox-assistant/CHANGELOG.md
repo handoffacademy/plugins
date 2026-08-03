@@ -1,5 +1,15 @@
 # Changelog
 
+## 3.6.0
+
+Scheduling a read-only Inbox Assistant task no longer requires turning on mailbox actions first.
+
+- Read-only Daily Briefs can be tested and scheduled while all seven mailbox actions remain off.
+- Claude Cowork uses Automatically approve (Auto) on Pro and Max so safety-reviewed connector reads do not stop for approval on every run.
+- Team and Enterprise users get an explicit administrator-policy check instead of a task that silently pauses each time it runs.
+- The Schedule button is the one final creation confirmation. Skip all approvals is never the default.
+- Write-action controls, live tests, the per-write auditor, receipts, kill switch, and escalation boundaries are unchanged.
+
 ## 3.5.4
 
 Inbox Assistant now ships from the renamed Handoff Academy plugin marketplace.
