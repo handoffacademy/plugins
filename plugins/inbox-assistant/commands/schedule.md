@@ -27,12 +27,12 @@ The argument names exactly one skill: `daily-inbox`, `follow-through`, or `owner
 
 **The skill has been tested.** Read the `Last tested` table in `Task Settings`. Do not ask the owner whether they tested it. It may have been tested six weeks ago in a session neither of you can see, and "I think so" is not something to schedule on.
 
-| Row says | Do |
-|---|---|
-| A date, result "output approved" or "tuned then approved" | Offer to schedule it |
-| "not yet tested" | Say so and recommend `/inbox-assistant:test <skill>` first |
-| Result "needs work" | Say what the row records as unresolved, and recommend testing again before scheduling |
-| Coverage names a mailbox that is no longer connected | Say the test does not cover the current setup and recommend a fresh test |
+| Row says                                                  | Do                                                                                    |
+| --------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| A date, result "output approved" or "tuned then approved" | Offer to schedule it                                                                  |
+| "not yet tested"                                          | Say so and recommend `/inbox-assistant:test <skill>` first                            |
+| Result "needs work"                                       | Say what the row records as unresolved, and recommend testing again before scheduling |
+| Coverage names a mailbox that is no longer connected      | Say the test does not cover the current setup and recommend a fresh test              |
 
 The owner can override any of these and schedule anyway. Say plainly what that choice is: an untested skill means finding out it is wrong on a Monday morning instead of now. Then do it if they still want it.
 
@@ -41,6 +41,20 @@ The owner can override any of these and schedule anyway. Say plainly what that c
 **Read-only cadences need nothing else.** A daily brief with no action turned on still lands every morning with its drafts as text to copy, and a follow-through queue whose tidy-ups are all proposals is still the whole queue. Schedule those, and say in one line what the scheduled run will and will not do, so the first Monday is not a surprise.
 
 **A cadence that exercises a write needs `Setup stage: stage-2-complete`.** Read it from `Inbox Assistant State`. If the stage is not there, the task can still be created as a read-only cadence today, and `/inbox-assistant:setup stage-2` is what turns actions on later. Say which of the two the owner is getting.
+
+### Choose an approval mode that can finish unattended
+
+For a read-only scheduled task in Claude Cowork, use the least disruptive mode that keeps Claude's safety review in the loop:
+
+- **Pro and Max:** choose **Automatically approve (Auto)**. Auto safety-checks connector calls without pausing at every read. It can still block an unsafe call, and it never approves creation of the scheduled task itself.
+- **Team and Enterprise:** Auto may be unavailable, and organization policy may block persistent connector approval. Use the organization's allowed persistent connector setting when it exists. If it does not, say exactly that an administrator must enable **Allow "Always allow" for connector tools** before this can be honestly presented as an unattended connector task. Do not create a task that will pause every run and call it automated.
+- **Do not choose Skip all approvals** as the default. Skip removes Claude's automatic safety review. The plugin's own rules remain, but they are not a reason to throw away the platform's protection.
+
+A write-enabled task may still trigger a platform approval or safety block even when its plugin action control passes. Say that before creating it. Never promise zero prompts for sending, deleting, or any other mailbox write.
+
+Approval mode is part of the proposal. State it beside the task name, schedule, read source, and allowed actions. Then ask for **one final confirmation** with the Schedule button. Do not ask the owner to approve each read-only connector call during setup.
+
+For a non-Claude host, use that platform's closest safety-reviewed unattended mode. If no such mode exists, disclose the limitation rather than substituting an unrestricted mode.
 
 ### Non-overlapping cadences are enforced, not suggested
 
@@ -72,11 +86,11 @@ Scheduled tasks are the only record of when each skill runs. Nothing in the save
 
 Use the preferred brief time and time zone from `Business Profile`. Say why, and let the owner change it.
 
-| Skill | Suggested cadence | Why |
-|---|---|---|
-| daily-inbox | Weekday mornings, at the owner's preferred time, typically 7:00 or 8:00am | Ready before the day starts, five days a week. Weekends off unless the owner asks. |
-| follow-through | Twice weekly, Monday and Thursday mornings | Monday catches what went quiet over the weekend, Thursday catches it before the week closes. Daily is too often and turns into noise. |
-| owner-brief | Friday afternoon, around 3:00pm | The week is done enough to synthesize and there is still time to act on a decision. |
+| Skill          | Suggested cadence                                                         | Why                                                                                                                                   |
+| -------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| daily-inbox    | Weekday mornings, at the owner's preferred time, typically 7:00 or 8:00am | Ready before the day starts, five days a week. Weekends off unless the owner asks.                                                    |
+| follow-through | Twice weekly, Monday and Thursday mornings                                | Monday catches what went quiet over the weekend, Thursday catches it before the week closes. Daily is too often and turns into noise. |
+| owner-brief    | Friday afternoon, around 3:00pm                                           | The week is done enough to synthesize and there is still time to act on a decision.                                                   |
 
 ### If the owner asks what a cadence costs
 
@@ -86,14 +100,15 @@ Use the **zapier-limits-and-cost** skill for the actual arithmetic. It counts on
 
 ## 4. Confirm it, then create it
 
-State the exact name, the exact schedule, what it will do, and which actions it may take. Wait for a clear yes. Then create it using the matching task prompt from section 5, and confirm it exists.
+State the exact name, schedule, read source, approval mode, what it will do, and which actions it may take. Wait for a clear yes. In Claude Cowork, that yes is the Schedule button: do not add a second consent ritual before or after it. Then create the task and confirm it exists.
 
 > **Inbox Assistant: Daily Brief**
 > Weekdays at 7:30am, America/New_York.
-> Reads new mail since the last run, writes drafts for the straightforward replies, and leaves the brief waiting for you.
-> May save drafts into your Gmail. Takes no other action: nothing sent, nothing archived, nothing moved.
+> Reads new mail through the native Gmail connector, writes reply drafts as text in the brief, and leaves the brief waiting for you.
+> Approval mode: Automatically approve (Auto).
+> Read-only: nothing sent, saved into Gmail, archived, deleted, moved, labeled, or marked read.
 >
-> Create it?
+> Schedule it?
 
 Naming convention, so `/inbox-assistant:pause` and `/inbox-assistant:status` can find them later:
 
