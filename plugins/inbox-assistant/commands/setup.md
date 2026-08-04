@@ -1,5 +1,5 @@
 ---
-description: Hire a read-only Inbox Assistant and receive your first Daily Brief.
+description: Hire and configure a read-only Inbox Assistant.
 ---
 
 # /setup
@@ -39,7 +39,7 @@ Do not announce the classification or the checks behind it. Start the work silen
 
 ## First-run setup
 
-Six steps, in this order, after the old-file rename in step 0 above. The detail is in setup-concierge.
+Five steps, in this order, after the old-file rename in step 0 above. The detail is in setup-concierge.
 
 1. **Provider and routes.** Establish gmail, outlook-m365, outlook-personal, or both. Take inventory of the three routes, then verify each claimed route with one live read that changes nothing. A tool in the list is not proof the route works.
 2. **The stop rule.** No mail read route on either layer is the only full stop in stage 1. Everything else keeps going and gets recorded. A personal Microsoft account is the one that needs a truthful answer rather than an encouraging one: the native Outlook connector is built for work and school Microsoft accounts and does not reach outlook.com or hotmail.com, so that route requires a later, outcome-specific Zapier capability flow.
@@ -52,9 +52,7 @@ Six steps, in this order, after the old-file rename in step 0 above. The detail 
    Four bounds on that read, and setup-concierge has the detail. **Native route only**, because 30 full-body reads through Zapier spend the owner's tasks in a stage that is meant to cost nothing. **The scan stops at 30 qualifying samples, 12 months, or 200 candidate messages, whichever comes first.** **Fewer than 30** means build from what qualified and say the count; **under about five, or sent mail unreachable on the native route,** means write no guide at all, fall back to the sample email and the `Draft voice` defaults, and say which it was with the fix attached, because three emails is not a pattern. It asks nothing, so the two-question budget is untouched. A voice sample is never a setting: this read writes the voice guide and nothing else, and it never adds a VIP, a scope, or a line in `Boundaries`.
 4. **At most two questions, and only the ones the context did not already answer.** Q1 is when the Daily Brief should arrive, proposed as a weekday morning default. Q2 is anyone the owner wants treated as a VIP that the mail did not reveal. If the supplied context answers one, skip it. Never ask a third, and never ask the owner to restate something already given to you. A question about drafted content carries that content: before Q2 is asked, the drafted names are printed in the message body with a word on why each is there — answer options like "drop the personal ones" must never reference a list nobody has been shown.
 5. **One short review, then save in one pass.** Show at most three owner-facing bullets: the brief time, the people treated as important, and any inferred boundary or scope choice that could surprise the owner. Ask "Anything to adjust?" once, apply whatever the owner changes, then save `Business Profile`, `Approved Sources`, `Boundaries`, `Task Settings`, and `Inbox Assistant State` together. Never name those files in the owner-facing review. No file is read back on its own and no file gets its own approval. Always write the escalation topics into `Boundaries` whether or not the owner named them.
-6. **A real brief before the owner leaves.** Load safety-escalation and business-context by name, run daily-inbox read-only on their actual mail, print every draft in the output, save nothing. This is the step that turns a file-creation exercise into a hire. **Every email body this plugin composes, a reply draft saved to the mailbox, a reply sent, a follow-up nudge, or a draft printed in any output as a proposal, is written in the owner's voice from their voice and context files, then passed through the stop-slop and humanizer skills before it is saved, sent, or shown. The owner's own voice wins any conflict with a style rule.** See `references/email-voice.md`. Printing these rather than saving them changes nothing about that: the owner copies them straight out of the brief.
-
-Before the brief, say only: "Your Inbox Assistant is ready and remains read-only. Your first Daily Brief is below." Do not recite the internal defaults, action list, route details, file list, or next-command menu unless the owner asks.
+After the save, say only: "Your Inbox Assistant is ready and remains read-only." Do not run `daily-inbox`, recite the internal defaults, list the actions, explain route details, name the files, or show a next-command menu unless the owner asks.
 
 ## Internal capability enablement
 
