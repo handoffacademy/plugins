@@ -1,6 +1,6 @@
 # Inbox Assistant
 
-An Inbox Assistant for your business. It reads your email, brings you a morning brief, chases what has gone quiet, gives you one page every Friday on the week you actually had, and writes every reply as a draft with your name on it.
+An Inbox Assistant for your business. It reviews your real inbox, proposes three ways to organize it, applies only the Zapier actions you explicitly enable and test, brings you a morning brief, and chases what has gone quiet.
 
 It runs on Claude's servers on a schedule, so your laptop can be closed.
 
@@ -67,7 +67,7 @@ Leaving both plugins installed is the one thing worth avoiding. Two plugins mean
 
 **Stage 1 is reading.** Under ten minutes, once. It checks what is connected, verifies it can really read your mail, drafts your five files from what you have already told the academy and a quick look at your own mail, asks you at most two questions, shows you one summary to adjust, and then runs a real brief on your real inbox before you leave. At the end of stage 1 you have a working Inbox Assistant that changes nothing in your mailbox.
 
-**Stage 2 is writing.** Optional, later, and one action at a time. This is where you let it save a draft into your mailbox, or clear the noise out of it, by itself. Turning on one action takes a few minutes: you see the exact tool it will use, you see the change on your own data before it happens, you type a confirmation phrase, and then it runs one real test that you approve. Nothing is on until that test passes.
+**Stage 2 is acting.** Optional, later, and one action at a time. Audit and preview the inbox first, then choose whether to save drafts, organize and archive, clean up selected clutter, or automate narrow follow-up nudges. You see the exact Zapier tool, scope, and change on your own data before it happens, type the action confirmation phrase, and run one real test. Nothing is on until that test passes.
 
 Plenty of people stay on stage 1 forever. That is a real way to use this, not a half-finished setup.
 
@@ -86,6 +86,7 @@ What it will never do, whatever you turn on: buy, pay, refund, subscribe, sign, 
 | Command                     | What it does                                                                                                   |
 | --------------------------- | -------------------------------------------------------------------------------------------------------------- |
 | `/inbox-assistant:setup`    | Stage 1, stage 2, upgrades, and repairs. Start here.                                                           |
+| `/inbox-assistant:organize` | Audit the real inbox, preview three systems, or apply a chosen system through enabled Zapier actions.          |
 | `/inbox-assistant:test`     | Run one skill on your real data, or test an action you turned on.                                              |
 | `/inbox-assistant:schedule` | Put one skill on a cadence as a cloud scheduled task.                                                          |
 | `/inbox-assistant:status`   | What is connected, what is on, what is scheduled, what did not finish. Reads only.                             |
@@ -94,7 +95,7 @@ What it will never do, whatever you turn on: buy, pay, refund, subscribe, sign, 
 
 ## What it connects to
 
-Reads come from the Gmail and Outlook connectors inside claude.ai, turned on in Settings, then Connectors. Writes go through your own Zapier server and nowhere else. This plugin ships no connector configuration of any kind, including no `.mcp.json`, and it never asks you for a Zapier URL, an API key, or a password. See CONNECTORS.md.
+Reads go through the connected Gmail or Microsoft 365 route recorded in Approved Sources, native first when available. Current native connectors may expose some write tools, but Inbox Assistant deliberately sends every plugin write through the exact Zapier tool recorded in its action control so Claude and Codex share one policy. The plugin ships no connector configuration, including no `.mcp.json`, and never asks for a Zapier URL, API key, or password. See CONNECTORS.md.
 
 ## A note on the hook
 
@@ -102,4 +103,4 @@ This plugin ships a PreToolUse hook that independently blocks a native-connector
 
 ## Questions
 
-The Turn On Automation lesson at portal.themotherofai.com covers connecting Zapier, and the Help Center there is the place to ask anything this file does not answer.
+The Setting up Zapier MCP lesson at portal.themotherofai.com covers connecting Zapier, and the Help Center there is the place to ask anything this file does not answer.

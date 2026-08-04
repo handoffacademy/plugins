@@ -119,6 +119,54 @@ The owner brief takes no action, ever, so its actions line is always exactly tha
 
 Exactly three decisions. If there are fewer real ones, say so rather than padding. If there are more, pick the three with the shortest fuse and note how many were left out.
 
+## 4. Inbox organization review (inbox-organization)
+
+The audit is read-only. Exactly three plans appear in this order.
+
+```
+# Inbox organization review, [date]
+
+## What is in the way
+- Coverage: [mailboxes, dates, message count, and any provider limit]
+- Inbox shape: [volume, age, and concentration]
+- Recurring senders: [count and useful categories]
+- Open loops: [awaiting the owner / awaiting someone else]
+- Existing structure: [Gmail labels or Outlook categories and folders]
+
+## Minimal inbox
+Best when: [one line]
+Would change: [provider-aware description]
+Approximate items: [count]
+Required actions: [action IDs or none]
+Reversibility: [one line]
+Estimated Zapier use: [successful calls] calls, [tasks] tasks at the current documented rate
+
+## Client operations
+Best when: [one line]
+Would change: [provider-aware description]
+Approximate items: [count]
+Required actions: [action IDs]
+Reversibility: [one line]
+Estimated Zapier use: [successful calls] calls, [tasks] tasks at the current documented rate
+
+## Aggressive cleanup
+Best when: [one line]
+Would change: [provider-aware description]
+Approximate items: [count]
+Required actions: [action IDs]
+Reversibility: [one line]
+Estimated Zapier use: [successful calls] calls, [tasks] tasks at the current documented rate
+
+## Delete candidates, separate review
+[Count and categories only during audit. No targets are deleted or mixed into archive.]
+
+---
+Covered [window]. Nothing changed in the mailbox.
+Actions taken: none, all proposals.
+```
+
+Plans recommend operations. They do not authorize them. Gmail output says labels and archive. Outlook output says categories and folders. A plan that needs no visible provider capability says so rather than promising it.
+
 ## Corrections capture
 
 When the owner corrects an output during a test or a live run, capture it in this shape before doing anything else with it, then hand it to the task-tuner skill.

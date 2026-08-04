@@ -1,5 +1,18 @@
 # Changelog
 
+## 3.7.0
+
+Inbox Assistant can now diagnose and organize a real inbox instead of stopping at read-only briefs.
+
+- Added `/inbox-assistant:organize audit | preview | apply` with three provider-aware systems: Minimal inbox, Client operations, and Aggressive cleanup.
+- Audit and preview are read-only. Selecting a plan never authorizes a mailbox action.
+- Stage 2 can follow saved-draft, organization, follow-up, or specific-action paths while preserving the exact-tool ritual, live test, auditor, receipts, and kill switch.
+- Organization applies labels, archive, read state, moves, and optional deletion in safest-first order. Delete candidates stay separate, deletion is last, and the course does not recommend scheduled deletion.
+- Follow-through now supports a review queue, saved mailbox drafts, or narrowly scoped automatic nudges for existing "They owe you" threads. Substantive replies remain drafts.
+- Scheduling now offers an explicit read-only or action-enabled mode and makes clear that existing read-only tasks never inherit later permissions.
+- Connector guidance now describes Zapier as the portable action layer rather than falsely claiming native connectors have no write tools.
+- Zapier cost guidance now uses the current rule of two tasks per successful MCP tool call and looks allowances and prices up live.
+
 ## 3.6.0
 
 Scheduling a read-only Inbox Assistant task no longer requires turning on mailbox actions first.

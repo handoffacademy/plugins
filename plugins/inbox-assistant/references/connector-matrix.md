@@ -1,86 +1,102 @@
 # Connector Matrix
 
-What each Inbox Assistant capability needs in order to work, which route it takes, and what happens when the route is missing.
+What each Inbox Assistant capability needs, which route it takes, and what happens when that route is missing.
 
-Two connector layers are in play and they do different jobs.
+## Product doctrine
 
-- **Native connectors.** The Gmail and Outlook (Microsoft 365) connectors Anthropic ships inside claude.ai, turned on by the member in Settings, Connectors, or through Cowork's connect-tools flow. They read: mail search, thread bodies. They are the primary read route for every skill in this plugin.
-- **Zapier MCP.** The member's own Zapier server, added as a connector. It is the only write route here: saving a draft, archiving a thread, applying a label. It is also the read fallback whenever a native connector is not on.
+Two connector layers are available. Native write tools exist, and their capabilities vary by provider, plan, administrator policy, and host product. Gmail can create drafts and manage labels. Microsoft 365 can expose broader write tools when an administrator enables them. The plugin does not pretend otherwise.
 
-The split, in one line: **reads go native first, writes go through Zapier only.**
+The Inbox Assistant makes a deliberate portability choice:
 
-This plugin ships no connector configuration of any kind, **including no `.mcp.json`**. No MCP block, no native connector list, no server entry. A Zapier MCP URL carries access to the member's accounts, so it is never written into a plugin file, never pasted into a chat, and never requested by any command here. Every run checks at runtime which tools are actually connected and adapts.
+- **Native connectors are the primary read route.** They are efficient for mailbox search and thread bodies and do not consume Zapier tasks.
+- **Zapier MCP is the portable action layer.** It gives Claude and Codex one consistent route for controlled mailbox actions, exact tool exposure, and Zapier action history across providers.
+- **Zapier remains this plugin's only write route.** A native write capability being visible does not authorize this plugin to use it.
 
-This file routes reads. It does not govern writes: which write may happen and through which exact tool both live in `references/action-controls.md`, and a route being available never implies an action is permitted.
+The split, in one line: **reads go native first; plugin writes go through Zapier only.** This is an Inbox Assistant policy, not a claim that native products have no write tools.
 
-Tool names differ between Zapier accounts and between connector versions. Match on capability, not on an exact string.
+This plugin ships no connector configuration, including no `.mcp.json`. A Zapier MCP URL carries account access, so it is never written into a plugin file, pasted into chat, or requested by a command. Every run inventories the tools actually visible in that session.
+
+Tool names differ between Zapier accounts and connector versions. Read routing may match by capability. A write never does: it uses only the exact tool recorded in the action control.
 
 ## Capability to route
 
-| Capability | Primary route | Fallback route | Used by |
+| Capability | Primary route | Fallback or degradation | Used by |
 |---|---|---|---|
-| Read new mail | Native Gmail or native Outlook connector | Zapier mail find action. Gmail: Find Email. Microsoft Outlook: Find Email | daily-inbox, follow-through, owner-brief |
-| Read sent mail | The same native connector, scoped to sent | Zapier. Gmail: Find Email with label SENT. Microsoft Outlook: Find Email in Sent Items | follow-through, owner-brief |
-| Read a full thread | Native connector, message body and not only headers | Zapier find action that returns a body | all mail skills |
-| Save a reply draft | Zapier only. Gmail: Create Draft, Create Draft Reply. Microsoft Outlook: Create Draft Email | None. Without it the draft goes into the output as text to copy | daily-inbox, follow-through |
-| Tidy a thread: archive, move, label, mark read | Zapier only. Gmail: Archive Email, Add Label. Microsoft Outlook: Move Email | None. Without it the tidy-up is a proposal the owner applies | daily-inbox, follow-through |
-| Save the four context files and the state ledger | Files in the member's Claude account | None | setup-concierge, task-tuner, every run |
-| Run on a schedule | Claude scheduled tasks, cloud side | None | all three skills |
+| Read new mail | Native Gmail or native Microsoft 365 | Zapier mail find action | daily-inbox, follow-through, owner-brief, inbox-organization |
+| Read sent mail | Native connector scoped to sent | Zapier mail find action scoped to sent | follow-through, owner-brief, setup voice read when native sent access exists |
+| Read a full thread | Native connector returning message bodies | Zapier find action returning bodies | all mail skills |
+| Save or update a reply draft | Exact Zapier tool in `save-draft` control | Draft text appears in the output | daily-inbox, follow-through |
+| Send or reply | Exact Zapier tool in `send-reply` control | Draft or nudge remains a proposal | follow-through |
+| Archive | Exact Zapier tool in `archive` control | Archive list remains a proposal | daily-inbox, inbox-organization |
+| Delete or move to trash | Exact Zapier tool in `delete` control | Delete candidates remain a separate proposal | inbox-organization |
+| Move between folders | Exact Zapier tool in `move` control | Move list remains a proposal | inbox-organization |
+| Apply labels, tags, categories, flags, or stars | Exact Zapier tool in `label` control | Organization labels remain a proposal | daily-inbox, inbox-organization |
+| Mark read or unread | Exact Zapier tool in `mark-read` control | Read-state changes remain proposals | daily-inbox, inbox-organization |
+| Save the four context files and state ledger | Files in the member's project or workspace | Return proposed contents and name the persistence gap | setup, tune, every run |
+| Run on a schedule | Host product recurring task retaining the full safety preamble | Prepare the exact proposal without claiming it was scheduled | daily-inbox, follow-through, owner-brief |
 
-The two write rows have no fallback on purpose. The native connectors read. They do not save drafts and they do not archive, move, or label, so a member with native connectors and no Zapier gets the whole reading half of every skill and nothing that changes a mailbox. That is a real tier of the product, not a broken setup.
+Write rows have no fallback write route. A missing Zapier tool degrades to a proposal, never to a native write or another Zapier action.
 
-**A missing write route degrades to text in the output. It never degrades to a different write.** Never use a send action in place of a missing draft action, and never use a delete action in place of a missing archive action.
+## Read routes must not change state
 
-**A route counts as a read route only if it changes no state.** A "read" that marks mail as read, moves a message, applies a label, or logs a side effect anywhere is a write in disguise, so it is never invoked, not even with the owner's approval, and not on either layer. When the only read action available for a mailbox carries a side effect, that source is uncovered for the run: leave it alone, produce the output from the sources you could read cleanly, and name the uncovered one in the footer. This rule is global to the plugin, so every skill, command, and scheduled task follows it without restating it.
+A route counts as a read route only when it changes no mailbox state. A read that marks a message read, moves it, labels it, archives it, or logs another mailbox side effect is a write in disguise. Do not invoke it as part of reading, even when the corresponding action is enabled. Treat that source as uncovered for the read and name the gap.
 
-## The mail asymmetry, in both layers
+## The mail asymmetry
 
-**A read route and a write route are two separate connections, even for the same mailbox.** The native Gmail or Outlook connector reads that mailbox and cannot write to it. Gmail or Microsoft Outlook in the owner's Zapier server writes to it, and only for the exact actions they added there.
+A read route and a write route are separate connections even when they reach the same mailbox.
 
-Native-first reads moved this trap rather than removing it, so check both halves:
+- The native Gmail or Microsoft 365 connector normally reads the mailbox.
+- The exact Zapier tool recorded in an action control performs an approved write.
+- Approved Sources records the read route. Task Settings records write controls.
+- A connected route never implies an enabled action.
 
-- **Mail reads** come from the native connector, with Zapier mail find actions as the fallback. A member with the native Gmail connector on has reads covered and nothing else.
-- **Mail writes** come from the exact Zapier tool named in the action's control block and from nowhere else. A native connector never covers this half.
+Both layers being connected is the intended course setup. Read one mailbox through one route per run. Do not read through native and Zapier simultaneously or the same message can appear twice.
 
-That produces a combination worth naming, because it looks like a bug and is not one: native mail read on, no Zapier mail app. Every brief and every queue runs in full and sees everything. Nothing saves into the mailbox, because there is no route to save it, so every draft prints as text and every tidy-up is a proposal. Say that inside the output rather than letting the owner expect a draft that cannot land.
+## Current native capabilities
 
-## What to say when something is missing
+Course and plugin copy must remain honest about current product behavior.
 
-Name the capability, name the effect, name the fix, and point at the right place for that fix. Native connectors are turned on inside claude.ai. Zapier tools are connected through the portal lesson. Never attempt to connect either one on the owner's behalf, and never ask for a credential.
+- Claude's native Gmail connector can search and read email, create drafts, and manage labels and threads. It cannot send email at the time of this release.
+- Claude's native Microsoft 365 connector can expose drafting, sending, organization, categories, inbox rules, and other write tools when the organization's administrator enables them.
+- Those capabilities are not guaranteed in ChatGPT, Codex, every Claude plan, every organization, or every future connector version.
 
-Three failure categories, because the fix is in a different place each time.
+The Inbox Assistant therefore uses native connectors for cost-efficient reads and Zapier for consistent cross-platform writes. Do not say native connectors are universally read-only. Do not use a native write tool as a shortcut around the action controls.
 
-**No mail read route at all.** Nothing runs. Offer the one-click route first.
+## Zapier task use
 
-> I cannot read any mail yet, so your Inbox Assistant has nothing to work from. The fastest fix is inside Claude: open Settings, then Connectors, and turn on Gmail or Outlook. It is a one-click sign-in and you are done. If your mail lives somewhere those do not reach, the Turn On Automation lesson at portal.themotherofai.com covers the other route.
+Zapier's current documentation charges two tasks per successful Zapier MCP tool call. Failed calls do not consume tasks. Use `skills/zapier-limits-and-cost/SKILL.md` to retrieve current allowances, prices, or a changed task rate. Never quote plan allowances from memory.
 
-**Mail reads work, no Zapier write tools.** Everything reads, nothing saves.
+A native read normally costs zero Zapier tasks. A Zapier fallback read and every Zapier write consume tasks according to the current documented rate.
 
-> I can read your mail through your Gmail connector, so your briefs and your follow-through queue both work. What I cannot do yet is save a draft into your mailbox, because saving drafts goes through Zapier and I do not see it connected. Your drafts will come to you as text in the brief, ready to copy. The Turn On Automation lesson at portal.themotherofai.com is what turns that into a saved draft.
+## Missing-route language
 
-**Mail reads work, the named write tool is missing.** The output is whole, the write half is not.
+Name the capability, effect, route, and fix.
 
-> I can read your mail, so your brief is complete. What I cannot do is archive the pile at the bottom, because the archive tool named in your settings is not visible this run. That list is yours to clear until it is back, and the Turn On Automation lesson at portal.themotherofai.com walks through adding it.
+**No mail read route:**
+
+> I cannot read this mailbox yet, so I left it alone. Connect Gmail or Microsoft 365 in the current product, or add the needed Zapier find tool through the Setting up Zapier MCP lesson.
+
+**Mail reads work, no Zapier write tools:**
+
+> I can review your inbox. I cannot change it through the Inbox Assistant because no Zapier write tool is available. Every proposed label, archive, move, draft, or deletion stays in the report.
+
+**The recorded write tool is missing:**
+
+> I completed the review. I did not apply the archive changes because the exact Zapier tool recorded in your archive control is not visible in this session. I did not substitute another tool.
 
 ## Degradation table
 
 | Missing | Still works | Does not work |
 |---|---|---|
-| Native mail connector, Zapier mail read present | Every mail skill, reading through Zapier instead | Nothing. Zapier reads spend Zapier tasks, which native reads do not |
-| Zapier entirely, native mail read present | Every skill, read-only. Drafts printed in the output to copy, every tidy-up a proposal | Drafts saved into the mailbox. Any write at all |
-| Zapier draft action, mail reads work | Every skill, with drafts printed in the output to copy | Drafts saved into the mailbox |
-| Zapier archive, move, or label action | Every skill in full, with the tidy-up listed as a proposal | Anything leaving the inbox on its own |
-| Sent mail access, both routes | daily-inbox, owner-brief | The "they owe you" half of follow-through |
-| Every mail read route | Nothing. Setup does not complete without a mail read route, so nothing runs | Every skill |
-| Everything | Nothing | Setup stops and points at both fixes: native connectors in Claude's settings, Zapier through the lesson |
+| Native mail connector, Zapier read present | Mail skills through the Zapier fallback | Free native reads; fallback reads consume Zapier tasks |
+| Zapier entirely, native mail read present | Full audit, briefs, queues, drafts as text, all changes as proposals | Any Inbox Assistant mailbox write |
+| Zapier draft tool | Draft text in outputs | Drafts saved into the mailbox |
+| Zapier organization tools | Audit and preview in full | Applying the missing organization actions |
+| Sent-mail access on both routes | Daily inbox and partial owner brief | The "They owe you" half of follow-through |
+| Every mail read route | Nothing | Every mail skill |
 
-A run that cannot cover everything says what it covered and what it did not. It never returns a partial result shaped like a complete one.
+A partial run says what it covered and what it did not. It never presents limited coverage as complete.
 
-## Running both routes at once
+## Security boundary
 
-Both layers on is the intended end state: native connectors reading, Zapier writing. Two things to keep straight when that is the setup.
-
-- **One read route per mailbox, per run.** Do not read the same mailbox through the native connector and through Zapier in the same run. Pick the primary, use it, and say which one you used in the footer. Reading both puts the same message in the brief twice.
-- **The safety rules do not change with the route.** A native send action, if one ever appears, is off limits: native connectors read, and every write goes through the exact Zapier tool named in its control block. The route decides how something happens. Whether it is allowed at all is decided in `references/action-controls.md` and nowhere else.
-
-Record in `Approved Sources` which route covers which mailbox, and which route saves drafts. That keeps the choice stable between runs instead of being re-decided every morning, and it is what tells a scheduled run six weeks from now that a gap is known rather than new.
+The route decides how a permitted action happens. `references/action-controls.md` decides whether it is permitted. Before every write, the exact tool, action class, scope, restrictions, test date, kill switch, receipts, and auditor verdict must all pass again.

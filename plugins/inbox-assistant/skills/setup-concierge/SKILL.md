@@ -112,13 +112,13 @@ Report the result in plain language, one line per route, naming the route rather
 Two different places, and mixing them up sends the owner to the wrong screen.
 
 - **Native connectors are turned on inside claude.ai.** Settings, then Connectors, then Gmail or Outlook. It is a one-click sign-in and the owner does it right there while you wait. **This is not the portal lesson.** Do not point them at a lesson for a native connector.
-- **Zapier tools are connected through the portal.** The Turn On Automation lesson, at portal.themotherofai.com. That lesson is the only thing you point at for a Zapier gap.
+- **Zapier tools are connected through the portal.** The Setting up Zapier MCP lesson, at portal.themotherofai.com. That lesson is the only thing you point at for a Zapier gap.
 
 ### The stop rule
 
 **No mail read route on either layer is the sole full stop in stage 1.** One case, not two. Every other gap keeps the setup running and gets recorded in `Task Settings`.
 
-> I cannot read any mail yet, so your Inbox Assistant has nothing to work from. The fastest fix is right here in Claude: open Settings, then Connectors, and turn on Gmail or Outlook. One sign-in and it is done. If your mail lives somewhere those do not reach, the Turn On Automation lesson covers the other route, at portal.themotherofai.com. Come back and run setup again and I will pick up right here.
+> I cannot read any mail yet, so your Inbox Assistant has nothing to work from. The fastest fix is right here in Claude: open Settings, then Connectors, and turn on Gmail or Outlook. One sign-in and it is done. If your mail lives somewhere those do not reach, the Setting up Zapier MCP lesson covers the other route, at portal.themotherofai.com. Come back and run setup again and I will pick up right here.
 
 Four failure categories, because each one resolves differently. Only the first one stops:
 
@@ -448,7 +448,7 @@ Requires `Setup stage: stage-1-complete`. If it is not there, say so and run sta
 
 ### Phase 1: Zapier, and only the tools the owner means to use
 
-Zapier is the only write route. Point the owner at the Turn On Automation lesson at portal.themotherofai.com, and never recite the setup steps from memory: they change.
+Zapier is the only write route. Point the owner at the Setting up Zapier MCP lesson at portal.themotherofai.com, and never recite the setup steps from memory: they change.
 
 One instruction matters more than the rest, so give it before they start, not after.
 
@@ -563,10 +563,10 @@ Read-only is a tier, not a failure. A member with a native mail connector and no
 > **Done:** business profile, approved sources, boundaries, task settings, and your state ledger. Reading your Gmail through your Claude connector, verified just now.
 > **Working today:** daily brief, follow-through, weekly reset. Drafts come to you as text in the brief.
 > **Not yet:** anything I do myself. Every action is off, which is the default.
-> **Turns it on:** the Turn On Automation lesson at portal.themotherofai.com, then `/inbox-assistant:setup stage-2` for one action at a time.
+> **Turns it on:** the Setting up Zapier MCP lesson at portal.themotherofai.com, then `/inbox-assistant:setup stage-2` for one action at a time.
 
 When the gap is one named write tool instead, the block names that tool rather than Zapier as a whole:
 
 > **Done:** business profile, approved sources, boundaries, task settings, state ledger.
 > **Blocked:** saving drafts into your mailbox. Zapier is connected, and the draft tool your settings name is not visible this run.
-> **Unblocks it:** adding that one action back on your Zapier server. The Turn On Automation lesson covers it, at portal.themotherofai.com. Everything else keeps working, and your drafts come to you as text until then.
+> **Unblocks it:** adding that one action back on your Zapier server. The Setting up Zapier MCP lesson covers it, at portal.themotherofai.com. Everything else keeps working, and your drafts come to you as text until then.

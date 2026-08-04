@@ -141,7 +141,7 @@ Before creating the scheduled task, attach the connectors Claude needs. That cou
 
 Then ask what apps the user expects to use.
 
-Name where each fix lives, because they are two different screens. Native connectors are turned on inside claude.ai, in Settings, then Connectors, as a one-click sign-in. Zapier is connected separately, and inside the Inbox Assistant plugin that step is the Turn On Automation lesson at portal.themotherofai.com. Do not send someone to a lesson to fix a native connector, and do not walk someone through Claude's settings to fix a missing Zapier write.
+Name where each fix lives, because they are two different screens. Native connectors are turned on inside claude.ai, in Settings, then Connectors, as a one-click sign-in. Zapier is connected separately, and inside the Inbox Assistant plugin that step is the Setting up Zapier MCP lesson at portal.themotherofai.com. Do not send someone to a lesson to fix a native connector, and do not walk someone through Claude's settings to fix a missing Zapier write.
 
 If they want Zapier setup help, do not recite setup steps from memory. The setup flow changes. Check Zapier's current MCP/setup docs first (start at `https://docs.zapier.com/llms.txt`), then walk them through the current steps in plain language.
 

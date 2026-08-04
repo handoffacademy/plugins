@@ -7,7 +7,15 @@ import { fileURLToPath } from "node:url";
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const pluginRoot = join(repoRoot, "plugins", "inbox-assistant");
 const allowTag = "terminology-allow";
-const commandNames = ["pause", "schedule", "setup", "status", "test", "tune"];
+const commandNames = [
+  "organize",
+  "pause",
+  "schedule",
+  "setup",
+  "status",
+  "test",
+  "tune",
+];
 const checks = [
   { label: "retired “routine” wording", pattern: /\broutines?\b/i },
   {
@@ -144,6 +152,36 @@ for (const phrase of [
     failures.push(
       `commands/schedule.md: missing streamlined approval guidance: ${phrase}`,
     );
+  }
+}
+
+const organizeSource = readFileSync(
+  join(pluginRoot, "commands", "organize.md"),
+  "utf8",
+);
+for (const phrase of [
+  "audit | preview | apply",
+  "Nothing changes during audit or preview",
+  "Selecting a plan is not authorization",
+  "Delete candidates stay separate",
+  "two tasks per successful Zapier MCP tool call",
+]) {
+  if (!organizeSource.includes(phrase)) {
+    failures.push(`commands/organize.md: missing organization policy: ${phrase}`);
+  }
+}
+
+const connectorSource = readFileSync(
+  join(pluginRoot, "references", "connector-matrix.md"),
+  "utf8",
+);
+for (const phrase of [
+  "portable action layer",
+  "Native write tools exist",
+  "Zapier remains this plugin's only write route",
+]) {
+  if (!connectorSource.includes(phrase)) {
+    failures.push(`references/connector-matrix.md: missing current connector doctrine: ${phrase}`);
   }
 }
 

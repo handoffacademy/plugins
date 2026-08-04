@@ -4,7 +4,7 @@ Apply these rules whenever Inbox Assistant runs in ChatGPT or Codex. The workflo
 
 ## Commands
 
-Treat `/inbox-assistant:setup`, `test`, `schedule`, `status`, `tune`, and `pause` as durable workflow names. Claude exposes them as plugin slash commands. ChatGPT and Codex may invoke the matching `inbox-assistant-*` skill by intent or explicit skill selection instead. Never claim a slash-command UI is registered when the current product does not show one.
+Treat `/inbox-assistant:setup`, `organize`, `test`, `schedule`, `status`, `tune`, and `pause` as durable workflow names. Claude exposes them as plugin slash commands. ChatGPT and Codex may invoke the matching `inbox-assistant-*` skill by intent or explicit skill selection instead. Never claim a slash-command UI is registered when the current product does not show one.
 
 In shared workflow prose, a generic reference to Claude as the acting assistant means the assistant running the current session. A reference to a named Claude or Cowork menu, connector, Project, or Scheduled Task is product-specific and must use the platform mapping below rather than being repeated as if that UI exists in ChatGPT or Codex.
 

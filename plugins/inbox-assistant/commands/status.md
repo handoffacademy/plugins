@@ -107,7 +107,7 @@ If there are none: "Nothing outstanding."
 Only when something above is actually broken, and name the right screen for the right thing. These are two different places and sending the owner to the wrong one wastes an afternoon.
 
 - **A native connector.** Inside claude.ai: Settings, then Connectors, then Gmail or Outlook. One sign-in. Walk the owner through it here if they want.
-- **Zapier.** The Turn On Automation lesson at portal.themotherofai.com. Never recite the steps from memory, and never ask for a server URL.
+- **Zapier.** The Setting up Zapier MCP lesson at portal.themotherofai.com. Never recite the steps from memory, and never ask for a server URL.
 - **A missing or damaged state file.** `/inbox-assistant:setup`, which repairs it with the owner confirming each value.
 - **An action that is not running.** `/inbox-assistant:test controls` if it is waiting on a test, `/inbox-assistant:setup stage-2` if it was never turned on.
 
