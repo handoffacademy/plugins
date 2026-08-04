@@ -180,7 +180,6 @@ const setupSource = readFileSync(
 for (const phrase of [
   "The owner sees one setup product: a read-only Inbox Assistant",
   "Do not present Stage 2, action IDs, organization plans, or operating modes during first-run setup",
-  "first Daily Brief",
 ]) {
   if (!setupSource.includes(phrase)) {
     failures.push(`commands/setup.md: missing simplified setup policy: ${phrase}`);
@@ -217,6 +216,23 @@ const ownerCommunicationSource = (() => {
     return "";
   }
 })();
+const readmeSource = readFileSync(join(pluginRoot, "README.md"), "utf8");
+for (const [sourceName, source] of [
+  ["README.md", readmeSource],
+  ["commands/setup.md", setupSource],
+  ["references/owner-communication.md", ownerCommunicationSource],
+  ["skills/setup-concierge/SKILL.md", setupConciergeSource],
+]) {
+  for (const phrase of [
+    "first Daily Brief",
+    "finish stage 1 with a real brief",
+    "runs a real brief on your real inbox before you leave",
+  ]) {
+    if (source.includes(phrase)) {
+      failures.push(`${sourceName}: setup must leave the first Daily Brief to the next lesson: ${phrase}`);
+    }
+  }
+}
 for (const phrase of [
   "Do the work silently",
   "Share only what the owner needs to do next",

@@ -73,7 +73,7 @@ Setup needs a connector:
 
 Setup finished:
 
-> Your Inbox Assistant is ready and remains read-only. Your first Daily Brief is below.
+> Your Inbox Assistant is ready and remains read-only.
 
 A capability is unavailable:
 

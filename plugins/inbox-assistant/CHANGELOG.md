@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.7.5
+
+Setup now stops after the owner reviews and saves the five setup files.
+
+- The first real Daily Brief is left to the Academy lesson that teaches and tests it.
+- Setup no longer runs `daily-inbox` or prints a brief after saving the setup files.
+
 ## 3.7.4
 
 Inbox Assistant no longer registers a Claude Code runtime hook.

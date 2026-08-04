@@ -65,7 +65,7 @@ Leaving both plugins installed is the one thing worth avoiding. Two plugins mean
 
 ## One setup product
 
-**Setup is read-only.** Under ten minutes, once. It checks what is connected, verifies it can really read your mail, drafts your five files from what you have already told the academy and a quick look at your own mail, asks you at most two questions, shows you one summary to adjust, and then runs a real brief on your real inbox before you leave. You now have a working Inbox Assistant that changes nothing in your mailbox.
+**Setup is read-only.** Under ten minutes, once. It checks what is connected, verifies it can really read your mail, drafts your five files from what you have already told the academy and a quick look at your own mail, asks you at most two questions, and shows you one summary to adjust before saving. You now have a working Inbox Assistant that changes nothing in your mailbox. The next Academy lesson runs the first real brief.
 
 **Actions appear only when you ask for an outcome that needs one.** If you later ask Inbox Assistant to save a draft or clean up the inbox, it requests only that capability. You see the exact Zapier tool, scope, and change on your own data before it happens, type the action confirmation phrase, and run one real test. Nothing is on until that test passes.
 
