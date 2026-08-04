@@ -171,6 +171,19 @@ for (const phrase of [
 if (/^argument-hint:.*stage-1.*stage-2/m.test(setupSource)) {
   failures.push("commands/setup.md: stage arguments must not be advertised during first-run setup");
 }
+for (const phrase of ["offers stage 2", "that is stage 2"]) {
+  if (setupSource.toLowerCase().includes(phrase)) {
+    failures.push(`commands/setup.md: owner-facing setup still exposes internal stage terminology: ${phrase}`);
+  }
+}
+
+const setupConciergeSource = readFileSync(
+  join(pluginRoot, "skills", "setup-concierge", "SKILL.md"),
+  "utf8",
+);
+if (setupConciergeSource.toLowerCase().includes("that is stage 2")) {
+  failures.push("skills/setup-concierge/SKILL.md: owner-facing setup still exposes internal stage terminology");
+}
 
 const organizeSource = readFileSync(
   join(pluginRoot, "commands", "organize.md"),
@@ -187,6 +200,18 @@ for (const phrase of [
 ]) {
   if (!organizeSource.includes(phrase)) {
     failures.push(`commands/organize.md: missing organization policy: ${phrase}`);
+  }
+}
+const organizationSkillSource = readFileSync(
+  join(pluginRoot, "skills", "inbox-organization", "SKILL.md"),
+  "utf8",
+);
+for (const [sourceName, source] of [
+  ["commands/organize.md", organizeSource],
+  ["skills/inbox-organization/SKILL.md", organizationSkillSource],
+]) {
+  if (source.toLowerCase().includes("permission bundle")) {
+    failures.push(`${sourceName}: permissions must be requested and tested one action at a time, never as a bundle`);
   }
 }
 

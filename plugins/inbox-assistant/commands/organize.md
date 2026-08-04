@@ -44,7 +44,7 @@ Preview the recommended plan from the current audit. If no audit is visible in t
 4. Name the exact Zapier tool currently visible for each required action. If it is missing, say so. Never guess a tool name.
 5. Keep archive and delete separate. Delete candidates stay separate even when the owner picked Aggressive cleanup.
 6. Show the estimated successful tool calls and multiply by two tasks per successful call.
-7. Ask for the one contextual permission bundle the plan needs in plain language. Keep action IDs and setup-stage language internal unless the owner asks for technical detail.
+7. Start the required capability sequence in plain language. Request, authorize, and test each required action separately, one at a time. Never bundle permissions. Keep action IDs and setup-stage language internal unless the owner asks for technical detail.
 
 No mailbox action runs in preview. Do not write a control block, do not update a setting, and do not interpret plan selection as authorization. Selecting a plan is not authorization.
 
@@ -74,4 +74,4 @@ Deletion is optional and comes last. The first deletion application is interacti
 
 ## Follow-up automation boundary
 
-Inbox organization does not authorize follow-up automation. Saved drafts require `save-draft`. Automatic nudges require `send-reply`. Those actions go through their own Stage 2 rituals and scopes. A read-only Daily Brief or organization audit never passes permission to a follow-through task.
+Inbox organization does not authorize follow-up automation. Saved drafts require `save-draft`. Automatic nudges require `send-reply`. Those actions go through their own independent capability rituals and scopes. A read-only Daily Brief or organization audit never passes permission to a follow-through task.

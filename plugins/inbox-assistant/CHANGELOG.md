@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.7.2
+
+Safety and onboarding-language corrections for the simplified setup.
+
+- Removed remaining owner-facing Stage 2 terminology from first-run setup and completion copy.
+- Replaced organization permission bundles with a sequential, one-action-at-a-time authorization and test flow.
+- Added release validation that rejects those two regressions.
+
 ## 3.7.1
 
 Inbox Assistant now feels like a product instead of a configuration console.

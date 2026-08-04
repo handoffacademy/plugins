@@ -425,7 +425,7 @@ Say these once, after the save. It is a statement of how the thing works, not a 
 >
 > Your scheduled tasks run on Claude's servers. Your computer can be asleep. The judgment stays yours.
 >
-> If you later want me to save a draft into your mailbox or clear the noise out of it myself, that is stage 2, and it goes one action at a time with you approving each one.
+> If you later want me to save a draft into your mailbox or clear the noise out of it myself, I will ask for only that capability. Each action is approved and tested separately.
 
 Then finish stage 1 with a real brief, in this session, before the owner leaves.
 
