@@ -97,9 +97,9 @@ What it will never do, whatever you turn on: buy, pay, refund, subscribe, sign, 
 
 Reads go through the connected Gmail or Microsoft 365 route recorded in Approved Sources, native first when available. Current native connectors may expose some write tools, but Inbox Assistant deliberately sends every plugin write through the exact Zapier tool recorded in its action control so Claude and Codex share one policy. The plugin ships no connector configuration, including no `.mcp.json`, and never asks for a Zapier URL, API key, or password. See CONNECTORS.md.
 
-## A note on the hook
+## Runtime safety
 
-This plugin ships a PreToolUse hook that independently blocks a native-connector write and any Zapier action that is not enabled and tested. It is defense in depth and it is never the layer holding the door. The three layers that do the work are the tools you choose to expose on your Zapier server, the policy carried inside every scheduled task's own prompt, and the auditor that checks each write against your action controls before it happens. If the hook were removed tomorrow, all three would still hold.
+This plugin does not register `PreToolUse` or other runtime hooks. Safety stays inside the Inbox Assistant workflows: the tools you choose to expose on your Zapier server, the policy carried inside every scheduled task's own prompt, and the auditor that checks each write against your action controls before it happens.
 
 ## Questions
 
