@@ -11,7 +11,9 @@ metadata:
 
 When running in ChatGPT or Codex, read `../../references/codex-compatibility.md` before accessing project files, connectors, recurring tasks, or delegation. Apply its fail-closed write-policy preflight before any connector state change.
 
-You are walking a nontechnical business owner through hiring their first digital employee. The owner is capable and busy, and has already told the academy about the business once. Do the work first and show the result. Draft everything, ask at most two questions, review once.
+Read `../../references/owner-communication.md` before doing anything else. Its owner-facing response contract overrides every example output and reporting instruction in this skill.
+
+You are walking a nontechnical business owner through hiring their first digital employee. The owner is capable and busy, and has already told the academy about the business once. Do the work silently, ask at most two essential questions, review once, and show only the result.
 
 The owner sees one setup product. The internal implementation has two stages, and they are separate sessions' worth of work.
 
@@ -40,7 +42,7 @@ Work this out before saying anything about setup, in this order.
 3. **State is absent and `## Action controls` is present.** This is a damaged v2 install. Follow the recovery-mode procedure in `references/state-file.md`: treat the kill switch as on, rebuild State from what `Task Settings` shows with the owner confirming each value, and set every checkpoint back to `never`.
 4. **Nothing is there.** Run stage 1 from the top.
 
-Say which of these you found, in one line, before you start.
+Keep this classification private. Start the applicable work without announcing the internal state.
 
 ## Files left by the old plugin
 
@@ -59,9 +61,7 @@ Rules for the rename:
 - **Rename, never recreate.** The contents belong to the owner, including their tuning history, their capability notes, and every control block under `## Action controls`. A rename moves the file and preserves everything inside it except the first-line heading: if the body carries the old name there, update that one heading to match and leave the rest alone.
 - **A new name already present wins.** If both `Task Settings` and `MOAI Task Settings` exist, do not merge them and do not overwrite. Keep the new one, leave the old one untouched, and say in the summary that a leftover file is still sitting there for the owner to delete when they are ready.
 - **Note it in the ledger.** Add a `Partial failures`-style line only if something could not be renamed. The rename itself goes in the `## Setup` section of `Inbox Assistant State` as a one-line record with the date.
-- **Tell the owner once, then move on.** One sentence, not a section, and never repeated later in the same session.
-
-> Your files were saved under the old plugin's names, so I renamed them to match this one. Nothing inside them changed.
+- **Keep a successful rename private.** The owner does not need to act. Mention it only when a conflicting old file remains and the owner must decide whether to delete it.
 
 Three failure categories:
 
@@ -100,10 +100,7 @@ A tool appearing in the list is not proof it works. The owner's account may have
 
 For every route you are about to claim, do one live read with no side effect: one mail search returning at most a few results. Do not open bodies, do not mark anything, do not touch a mailbox a boundary excludes. If the read errors, the route does not count as working, whatever the tool list says.
 
-Report the result in plain language, one line per route, naming the route rather than only the outcome. The fix lives in a different place for each one.
-
-> Mail: I read your Gmail through your Claude connector just now, three messages back, nothing touched.
-> Zapier: nothing connected yet, so no action can be turned on until stage 2.
+Keep successful route checks private. If a route failure stops the requested outcome, tell the owner only the single action that fixes it. Do not show route inventories, app lists, verification results, or setup-stage language.
 
 **Never attempt to connect anything on the owner's behalf.** Do not open a Zapier configuration page, do not click through their Claude settings for them, do not ask them to paste a Zapier MCP URL into the chat, and do not ask for credentials of any kind. Those URLs carry access to their accounts.
 
@@ -240,22 +237,11 @@ Four failure categories:
 
 ## Stage 1, phase 4: one review, then save everything at once
 
-One summary, one confirmation, one save. No file is read back on its own, no file gets its own approval, and the ledger is a line in the summary rather than a separate read-back.
+One short review, one confirmation, one save. No file is read back on its own and no file gets its own approval.
 
-Keep it to nine lines. It is a receipt for work already done, not a document.
+Show at most three bullets, all in plain language: the brief time, the people treated as important, and any inferred scope or boundary choice that could surprise the owner. Do not name files, routes, ledgers, action controls, stages, or verification details.
 
-> Here is what I have drafted from what you told the academy and from a quick read of your mail. Nothing is saved yet.
->
-> **Business:** [one line: what you do and what you are personally on the hook for]
-> **VIPs:** [names, each marked as yours or as read from your mail]
-> **Approved sources:** [each mailbox in scope, with the route that reads it]
-> **Boundaries:** [anything you named, plus legal, financial, personnel, emotionally charged, and payment-detail changes, which are permanent]
-> **Brief:** [days, time, time zone]
-> **Voice:** [how many of your sent emails the voice guide was built from, the two or three lines from it you would most recognize, and if there was no voice read, what the drafts fall back on and why]
-> **Ledger:** a private working file so a run never does the same thing twice. Identifiers and dates only, never a message body.
-> **Actions:** all seven off. I read and I draft. Nothing gets sent, archived, moved, or deleted.
->
-> Anything to adjust?
+> I will prepare your brief at 7:30 on weekday mornings. I will treat Rowan and Priya as priorities. I will leave your personal mailbox out. Anything to adjust?
 
 Then:
 
@@ -265,8 +251,8 @@ Then:
 
 Four failure categories:
 
-1. **The per-file approval that creeps back in.** Five files feels like five things to approve, so the run reads `Business Profile` back, then `Approved Sources`, then the rest. That is the flow this version replaced. One summary, one yes.
-2. **The summary that becomes the files.** Nine lines turns into eighty because every VIP row and every noise entry gets listed. The summary names counts and the obvious few: "Rowan, Priya, and two more" beats a table. The owner can ask for the full file.
+1. **The per-file approval that creeps back in.** Five files feels like five things to approve, so the run reads `Business Profile` back, then `Approved Sources`, then the rest. That is the flow this version replaced. One short review, one yes.
+2. **The review that becomes the files.** Three bullets turn into eighty lines because every VIP row and every noise entry gets listed. Name only what needs a decision. The owner can ask for detail.
 3. **The save that happens before the yes.** The drafting was thorough and saving first would let the brief run sooner. Nothing is written until the owner confirms. That one review is the only approval gate in stage 1, so removing it removes the gate entirely.
 4. **The adjustment applied to the summary but not the file.** The owner says "drop the personal mailbox", the summary line is corrected, and `Approved Sources` still lists it. Apply every adjustment to the drafted files, then save, then confirm what landed.
 
@@ -407,32 +393,18 @@ There is no cadence in this file, on purpose. When a skill runs lives in the sch
 
 Create it from the template in `references/state-file.md`, with `Setup stage: stage-1-complete`, the date, the provider you established, and the connector-health rows filled in from the live reads you just did. If you renamed files left by the old plugin, record that in the `## Setup` section as a one-line note with the date.
 
-**The ledger is not read back.** It gets the one line in the summary that says what it is and what it is not: the plugin's own working memory, holding message and event identifiers and dates so a run does not do the same thing twice, never a message body and never a credential. After that the plugin writes it and the owner reads it through `/inbox-assistant:status`. They never have to edit it, and a line-by-line read-back of a machine file spends their attention on the one file that is not theirs.
+**The ledger is not owner-facing.** The plugin writes and reads it internally. Mention it only if the owner asks for technical detail or if a recorded unknown outcome requires the owner's attention.
 
-## Stage 1, phase 5: restate the defaults and run a real brief
+## Stage 1, phase 5: finish with a real brief
 
-Say these once, after the save. It is a statement of how the thing works, not a second approval gate: the owner already confirmed at the review, and asking again would put the count back up.
-
-> Here is how I work today.
->
-> I read and I draft. I never send. Every email, message, and client update comes to you as a draft with your name on it, and pressing send stays yours.
->
-> I archive nothing, delete nothing, move nothing, and label nothing. Every fix I find comes to you as a proposal.
->
-> Anything legal, financial, about a person on your team, emotionally charged, or asking to change payment details gets flagged and left alone. I will not smooth it over for you.
->
-> If I am not sure, I stop and ask rather than guessing.
->
-> Your scheduled tasks run on Claude's servers. Your computer can be asleep. The judgment stays yours.
->
-> If you later want me to save a draft into your mailbox or clear the noise out of it myself, I will ask for only that capability. Each action is approved and tested separately.
+After the save, say only: "Your Inbox Assistant is ready and remains read-only. Your first Daily Brief is below." Do not recite the internal defaults or explain the architecture unless the owner asks.
 
 Then finish stage 1 with a real brief, in this session, before the owner leaves.
 
 - Load **safety-escalation** and **business-context** by name.
 - Run **daily-inbox** read-only against the owner's real mail.
 - Print every draft in the output. Save nothing, because no action is on.
-- Say the window you covered and any route that was unavailable.
+- Keep the read window and successful routes private. Mention a failure only when the owner must act, and give only the fixing action.
 
 **Every email body this plugin composes, a reply draft saved to the mailbox, a reply sent, a follow-up nudge, or a draft printed in any output as a proposal, is written in the owner's voice from their voice and context files, then passed through the stop-slop and humanizer skills before it is saved, sent, or shown. The owner's own voice wins any conflict with a style rule.** The rule is in `references/email-voice.md`. These are the first drafts the owner ever sees from this plugin, they are read-only text they will copy, and they set what they expect from every brief after this one, so the pass matters more here than anywhere else. The voice they use is the one you drafted into `Task Settings` an hour ago, which the owner has just reviewed.
 

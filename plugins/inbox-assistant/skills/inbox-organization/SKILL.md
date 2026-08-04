@@ -11,6 +11,8 @@ metadata:
 
 When running in ChatGPT or Codex, read `../../references/codex-compatibility.md` before accessing project files or connectors. Apply its fail-closed write-policy preflight before any state change.
 
+Read `../../references/owner-communication.md` before producing any owner-facing response. Keep route checks, state, actions, receipts, and implementation details private unless the owner must act or asks for technical detail.
+
 The value is not a generic clean-inbox lecture or a menu. It is a diagnosis of the owner's real mailbox, one evidence-based recommendation, and a controlled path from proposal to verified change. Evaluate alternatives internally and show them only when the owner asks.
 
 ## Contract
@@ -39,7 +41,7 @@ Recommend exactly one. Show the owner only that plan, the evidence behind it, ap
 
 ## Preview rules
 
-Use real representative items. Show current state, proposed state, action ID, exact visible Zapier tool, account route, reversibility, and whether the item hits a boundary. Missing tools remain missing. Never invent a mapping.
+Use real representative items. Show the owner the current state, proposed state, reversibility, and any boundary that blocks the change. Resolve action IDs, exact tools, and account routes internally. If something is unavailable, give only the action the owner can take to fix it. Never invent a mapping.
 
 A preview does not update Task Settings or Inbox Assistant State. It starts the accepted plan's required capability sequence in plain language. Request, authorize, and test each required action separately, one at a time. Never bundle permissions. Keep the safest-first action list internal unless the owner asks for technical detail.
 
