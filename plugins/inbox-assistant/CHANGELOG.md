@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.7.4
+
+Inbox Assistant no longer registers a Claude Code runtime hook.
+
+- Removed the broad `PreToolUse` prompt hook that intercepted every MCP call and could fail on unrelated Claude Code tools such as session task spawning.
+- Kept the load-bearing safety model in the plugin workflows: exact Zapier action controls, the per-write auditor, scheduled-task preambles, receipts, and the kill switch.
+- Kept the manual fail-closed connector preflight for ChatGPT and Codex without installing a runtime hook.
+
 ## 3.7.3
 
 Inbox Assistant now keeps implementation details out of owner-facing responses.
