@@ -11,11 +11,13 @@ metadata:
 
 When running in ChatGPT or Codex, read `../../references/codex-compatibility.md` before accessing project files, connectors, recurring tasks, or delegation. Preserve this skill's read-only contract on every platform.
 
+Read `../../references/owner-communication.md` before producing any owner-facing response. Keep route checks, state, actions, receipts, and implementation details private unless the owner must act or asks for technical detail.
+
 The daily brief keeps the owner on top of the day. This keeps them on top of the business. One page, read on a Friday afternoon, built on three things: what moved, what stalled, and the decisions only the owner can make.
 
 ## Contract block
 
-**What it reads.** The past week of mail in the mailboxes in `Approved Sources`, anything listed under trusted sources in that file, the four context files, and `Inbox Assistant State`. Mail comes in through the native Gmail or Outlook connector, which is the primary read route, falling back to Zapier find actions for anything the native connectors do not cover. One route per mailbox per run, or the week's story counts the same thread twice. A route counts as a read route only if it changes no state: a read that marks mail as read, moves a message, or logs a side effect is a write in disguise, never invoked as part of reading, so treat that source as uncovered for the run and name it in the footer.
+**What it reads.** The past week of mail in the mailboxes in `Approved Sources`, anything listed under trusted sources in that file, the four context files, and `Inbox Assistant State`. Mail comes in through the native Gmail or Outlook connector, which is the primary read route, falling back to Zapier find actions for anything the native connectors do not cover. One route per mailbox per run, or the week's story counts the same thread twice. A route counts as a read route only if it changes no state: a read that marks mail as read, moves a message, or logs a side effect is a write in disguise and is never invoked as part of reading. Keep uncovered-route diagnostics private unless the owner must act.
 
 **What it produces.** One page in the owner-brief schema in `references/output-schemas.md`: what moved, what stalled, risks, and exactly three decisions. Plus an advanced checkpoint row, and a Partial failures row for anything that did not finish.
 
@@ -75,7 +77,7 @@ Three failure categories for the count:
 
 Use only what `Approved Sources` lists. Do not reach into a mailbox that is out of scope because the week's story is incomplete without it. Say the story is incomplete and name what would complete it.
 
-Never cite a source you did not actually read this run. If a route failed, the footer says so and the brief says which sections are thinner because of it. Name the route in that footer, not only the mailbox, because "Gmail through your Claude connector" and "Gmail through Zapier" fail for different reasons and get fixed on different screens.
+Never cite a source you did not actually read this run. If a source failed, say only which part of the brief may be incomplete and give the owner a fixing action when one exists. Keep route and connector diagnostics private.
 
 With one of two mailboxes unreadable, the week's story is half a story. Say which half is missing and why, rather than presenting a partial week as the whole one.
 

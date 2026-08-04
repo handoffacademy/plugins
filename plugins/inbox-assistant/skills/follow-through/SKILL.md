@@ -11,11 +11,13 @@ metadata:
 
 When running in ChatGPT or Codex, read `../../references/codex-compatibility.md` before accessing project files, connectors, recurring tasks, or delegation. Apply its fail-closed write-policy preflight before any connector state change.
 
+Read `../../references/owner-communication.md` before producing any owner-facing response. Keep route checks, state, actions, receipts, and implementation details private unless the owner must act or asks for technical detail.
+
 The work that costs the most is the work nobody is chasing. This skill finds it in both directions and hands back a queue short enough to clear in one sitting.
 
 ## Contract block
 
-**What it reads.** Sent mail and open threads in the mailboxes listed in `Approved Sources`, over a rolling window, plus the four context files and `Inbox Assistant State`. Mail comes in through the native Gmail or Outlook connector, which is the primary read route, falling back to Zapier mail find actions for any mailbox the native connector does not cover. `Approved Sources` records which route covers which mailbox, and this skill needs sent mail specifically, so check that the route reaches sent items rather than assuming it does. A route counts as a read route only if it changes no state: a read that marks mail as read, moves a message, or logs a side effect is a write in disguise, never invoked as part of reading, so treat that mailbox as uncovered for the run and name it in the footer.
+**What it reads.** Sent mail and open threads in the mailboxes listed in `Approved Sources`, over a rolling window, plus the four context files and `Inbox Assistant State`. Mail comes in through the native Gmail or Microsoft 365 connector, which is the primary read route, falling back to Zapier mail find actions for any mailbox the native connector does not cover. `Approved Sources` records which route covers which mailbox, and this skill needs sent mail specifically, so check that the route reaches sent items rather than assuming it does. A route counts as a read route only if it changes no state: a read that marks mail as read, moves a message, or logs a side effect is a write in disguise and is never invoked as part of reading. Keep uncovered-route diagnostics private unless the owner must act.
 
 **What it produces.** A ranked queue of at most 10 items in the follow-through schema in `references/output-schemas.md`, split into "You owe them" and "They owe you", each item carrying one recommendation and one ready draft, plus receipts in `Inbox Assistant State` for anything it did.
 
@@ -35,7 +37,7 @@ Read the `## Action controls` section in full before the first write, and hold i
 
 ## The window and the ledger
 
-Take the window start from the `follow-through` row in the Checkpoints table. On a first run with no checkpoint, use the last 30 days. State the window in the footer.
+Take the window start from the `follow-through` row in the Checkpoints table. On a first run with no checkpoint, use the last 30 days. Keep that implementation detail private unless the owner asks.
 
 Read Processed sources before ranking. A thread already handled in a previous run is not new, but it may still be stale, so it stays eligible for the queue. The processed list prevents a duplicate action, never a duplicate mention.
 
@@ -101,6 +103,26 @@ For "you owe them" drafts, answer the actual question in the thread. A draft tha
 
 For "they owe you" drafts, keep the nudge short and specific. A "let it go" item carries no draft, just the reason.
 
+## Three operating modes
+
+The owner chooses a mode when scheduling. The saved task prompt fixes that mode. Later action enablement never changes an existing task.
+
+1. **Review queue.** Read, rank, and print every draft as text. Take no mailbox action even if a control is enabled later.
+2. **Save drafts.** Use `save-draft` only when its complete action control passes. Drafts for both directions may be saved. Nothing sends.
+3. **Automatic nudges.** Save "You owe them" replies as drafts. Send only a "They owe you" item whose recommendation is exactly Nudge, and only when `send-reply` is enabled, tested, unattended, in scope, outside restrictions, bound to the exact visible Zapier tool, and the kill switch is off.
+
+Automatic nudges have additional hard limits:
+
+- Existing thread only. Never start a new conversation.
+- No new recipients, CC, or BCC.
+- No attachments.
+- No draft with a marked gap or missing fact.
+- No legal, financial, personnel, emotionally charged, payment-change, refund, contract, or complaint thread.
+- One automatic nudge per thread until the owner reviews it. A receipt showing a prior nudge blocks another send.
+- Never send a substantive answer in the "You owe them" direction. Those remain drafts because they can contain decisions only the owner can make.
+
+A generic `send-reply` control is not enough. Its Scope and Restrictions must name the "They owe you, recommendation Nudge, existing thread only" pattern. If that narrow scope is absent, automatic nudges degrade to saved drafts or proposal text.
+
 ## A recommendation is not an action, three failure categories
 
 1. **The direct instruction for something not turned on.** The owner says "close the first four, they are dead", and `archive` reads `disabled`. The close drafts are ready and the owner can archive the threads themselves in one pass. Say what turning `archive` on would take, and change nothing today.
@@ -121,6 +143,6 @@ If a stale thread is legal, financial, personnel, or emotionally charged, it app
 - **No sent-mail access on either route.** Say so plainly. Without sent mail the "they owe you" side is guesswork, so produce only "you owe them" and label the gap. Check both layers before saying it, since a native connector and a Zapier find action can differ on whether they reach sent items.
 - **The exact draft tool named in the block is not visible.** Produce the whole queue with every draft as text in it, and say the named tool is not visible this run. Never substitute a near match.
 - **Only a limited number of messages can be read per run.** State the actual window covered in the footer, note that older stale items may not have surfaced, and advance the checkpoint only to the point actually covered.
-- **No mail read route at all.** Do not produce a queue. Give the one-click route first, which is turning on Gmail or Outlook in Claude's Settings, Connectors, and name the Turn On Automation lesson at portal.themotherofai.com as the other route.
+- **No mail read route at all.** Do not produce a queue. Give the one-click route first, which is turning on Gmail or Outlook in Claude's Settings, Connectors, and name the Setting up Zapier MCP lesson at portal.themotherofai.com as the other route.
 
 Every queue ends with the footer from `references/output-schemas.md`, including the actions line: what was taken, with its count, or "none, all proposals" when nothing was.

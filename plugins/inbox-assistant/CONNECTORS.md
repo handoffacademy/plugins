@@ -2,8 +2,10 @@
 
 Two connections, two different screens, two different jobs.
 
-- **Reading your mail** happens through the connector inside claude.ai. One sign-in.
-- **Making changes** happens through your own Zapier server, and only for the specific actions you turn on.
+- **Reading your mail** normally happens through the connector inside the host product. One sign-in.
+- **Inbox Assistant changes** happen through your own Zapier server, and only for the specific actions you turn on.
+
+Current Gmail and Microsoft 365 connectors may expose native write tools. Inbox Assistant does not use those writes. It uses Zapier as its portable action layer so Claude and Codex share the same exact-tool controls and receipts.
 
 You need the first one. The second one is optional and can wait as long as you like.
 
@@ -24,7 +26,7 @@ Your route is Zapier, below. Until that is connected, your Inbox Assistant has n
 
 ## Making changes: your Zapier server
 
-Covered by the Turn On Automation lesson at portal.themotherofai.com. Follow the lesson rather than any steps written down here, because Zapier's setup changes and the lesson is kept current.
+Covered by the Setting up Zapier MCP lesson at portal.themotherofai.com. Follow the lesson rather than any steps written down here, because Zapier's setup changes and the lesson is kept current.
 
 One thing to get right while you are in there:
 
@@ -34,7 +36,7 @@ Nobody will ever ask you to paste your Zapier server URL into a chat. That URL c
 
 ## Turning on an action
 
-Being connected is not the same as being turned on. All seven actions start off, and each one goes through the same short ritual in `/inbox-assistant:setup stage-2`:
+Being connected is not the same as being turned on. All seven actions start off. When you ask for an outcome that needs one, Inbox Assistant requests that capability through the same short ritual:
 
 1. You see the exact Zapier tool and which mailbox it reaches.
 2. You see what the change would look like on one real item of yours, before anything happens.

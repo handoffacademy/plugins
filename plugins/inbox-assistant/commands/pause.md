@@ -5,6 +5,8 @@ argument-hint: "all | <task name>"
 
 # /pause
 
+Read `references/owner-communication.md` before any other plugin instruction. Its owner-facing response contract overrides every example output and reporting instruction below.
+
 Show exactly what is scheduled, then change only what the owner names. Going quiet for a week should take one sentence and should never cost a scheduled task the owner wanted to keep.
 
 Usage:

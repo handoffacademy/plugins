@@ -7,7 +7,15 @@ import { fileURLToPath } from "node:url";
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const pluginRoot = join(repoRoot, "plugins", "inbox-assistant");
 const allowTag = "terminology-allow";
-const commandNames = ["pause", "schedule", "setup", "status", "test", "tune"];
+const commandNames = [
+  "organize",
+  "pause",
+  "schedule",
+  "setup",
+  "status",
+  "test",
+  "tune",
+];
 const checks = [
   { label: "retired “routine” wording", pattern: /\broutines?\b/i },
   {
@@ -89,6 +97,14 @@ for (const path of files(pluginRoot)) {
 }
 
 for (const command of commandNames) {
+  const commandPath = join(pluginRoot, "commands", `${command}.md`);
+  const commandSource = readFileSync(commandPath, "utf8");
+  if (!commandSource.includes("references/owner-communication.md")) {
+    failures.push(
+      `commands/${command}.md: must load the owner-facing communication contract.`,
+    );
+  }
+
   const adapter = join(
     pluginRoot,
     "skills",
@@ -129,6 +145,16 @@ if (JSON.stringify(commandFiles) !== JSON.stringify(commandNames)) {
   );
 }
 
+for (const skill of ["daily-inbox", "follow-through", "inbox-organization", "owner-brief"]) {
+  const source = readFileSync(
+    join(pluginRoot, "skills", skill, "SKILL.md"),
+    "utf8",
+  );
+  if (!source.includes("../../references/owner-communication.md")) {
+    failures.push(`skills/${skill}/SKILL.md: must load the owner-facing communication contract`);
+  }
+}
+
 const scheduleSource = readFileSync(
   join(pluginRoot, "commands", "schedule.md"),
   "utf8",
@@ -144,6 +170,113 @@ for (const phrase of [
     failures.push(
       `commands/schedule.md: missing streamlined approval guidance: ${phrase}`,
     );
+  }
+}
+
+const setupSource = readFileSync(
+  join(pluginRoot, "commands", "setup.md"),
+  "utf8",
+);
+for (const phrase of [
+  "The owner sees one setup product: a read-only Inbox Assistant",
+  "Do not present Stage 2, action IDs, organization plans, or operating modes during first-run setup",
+  "first Daily Brief",
+]) {
+  if (!setupSource.includes(phrase)) {
+    failures.push(`commands/setup.md: missing simplified setup policy: ${phrase}`);
+  }
+}
+if (/^argument-hint:.*stage-1.*stage-2/m.test(setupSource)) {
+  failures.push("commands/setup.md: stage arguments must not be advertised during first-run setup");
+}
+for (const phrase of ["offers stage 2", "that is stage 2"]) {
+  if (setupSource.toLowerCase().includes(phrase)) {
+    failures.push(`commands/setup.md: owner-facing setup still exposes internal stage terminology: ${phrase}`);
+  }
+}
+
+const setupConciergeSource = readFileSync(
+  join(pluginRoot, "skills", "setup-concierge", "SKILL.md"),
+  "utf8",
+);
+if (!setupConciergeSource.includes("../../references/owner-communication.md")) {
+  failures.push("skills/setup-concierge/SKILL.md: must load the owner-facing communication contract");
+}
+if (setupConciergeSource.toLowerCase().includes("that is stage 2")) {
+  failures.push("skills/setup-concierge/SKILL.md: owner-facing setup still exposes internal stage terminology");
+}
+
+const ownerCommunicationSource = (() => {
+  try {
+    return readFileSync(
+      join(pluginRoot, "references", "owner-communication.md"),
+      "utf8",
+    );
+  } catch {
+    failures.push("Missing references/owner-communication.md.");
+    return "";
+  }
+})();
+for (const phrase of [
+  "Do the work silently",
+  "Share only what the owner needs to do next",
+  "Never show internal execution details",
+  "Required safety approvals are the exception",
+]) {
+  if (!ownerCommunicationSource.includes(phrase)) {
+    failures.push(`references/owner-communication.md: missing response contract: ${phrase}`);
+  }
+}
+for (const phrase of [
+  "Say the user-facing status in one line",
+  "Report the result in plain language, one line per route",
+]) {
+  if (setupSource.includes(phrase) || setupConciergeSource.includes(phrase)) {
+    failures.push(`Setup must not expose internal diagnostics: ${phrase}`);
+  }
+}
+
+const organizeSource = readFileSync(
+  join(pluginRoot, "commands", "organize.md"),
+  "utf8",
+);
+for (const phrase of [
+  "audit | preview | apply",
+  "Nothing changes during audit or preview",
+  "Selecting a plan is not authorization",
+  "recommend exactly one plan",
+  "Show alternatives only if the owner asks",
+  "Delete candidates stay separate",
+  "two tasks per successful Zapier MCP tool call",
+]) {
+  if (!organizeSource.includes(phrase)) {
+    failures.push(`commands/organize.md: missing organization policy: ${phrase}`);
+  }
+}
+const organizationSkillSource = readFileSync(
+  join(pluginRoot, "skills", "inbox-organization", "SKILL.md"),
+  "utf8",
+);
+for (const [sourceName, source] of [
+  ["commands/organize.md", organizeSource],
+  ["skills/inbox-organization/SKILL.md", organizationSkillSource],
+]) {
+  if (source.toLowerCase().includes("permission bundle")) {
+    failures.push(`${sourceName}: permissions must be requested and tested one action at a time, never as a bundle`);
+  }
+}
+
+const connectorSource = readFileSync(
+  join(pluginRoot, "references", "connector-matrix.md"),
+  "utf8",
+);
+for (const phrase of [
+  "portable action layer",
+  "Native write tools exist",
+  "Zapier remains this plugin's only write route",
+]) {
+  if (!connectorSource.includes(phrase)) {
+    failures.push(`references/connector-matrix.md: missing current connector doctrine: ${phrase}`);
   }
 }
 

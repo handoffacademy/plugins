@@ -1,0 +1,63 @@
+---
+name: inbox-organization
+description: Audits a real inbox, recommends one provider-aware organization plan, previews exact changes, and applies it only through enabled and tested Zapier actions. Use when the owner asks to clean up, organize, label, archive, move, mark read, or delete inbox mail.
+metadata:
+  version: 1.1.0
+---
+
+# Inbox Organization
+
+## Platform compatibility
+
+When running in ChatGPT or Codex, read `../../references/codex-compatibility.md` before accessing project files or connectors. Apply its fail-closed write-policy preflight before any state change.
+
+Read `../../references/owner-communication.md` before producing any owner-facing response. Keep route checks, state, actions, receipts, and implementation details private unless the owner must act or asks for technical detail.
+
+The value is not a generic clean-inbox lecture or a menu. It is a diagnosis of the owner's real mailbox, one evidence-based recommendation, and a controlled path from proposal to verified change. Evaluate alternatives internally and show them only when the owner asks.
+
+## Contract
+
+**What it reads.** The mailboxes in `Approved Sources`, their visible labels, categories, or folders, the four context files, and `Inbox Assistant State`. Use the native connector first for mail reads, with Zapier find actions only as the recorded fallback. A read that changes state is not a read route.
+
+**What it produces.** An Inbox organization review using `references/output-schemas.md`, one recommended provider-aware plan, a preview of that plan, or a verified application report.
+
+**What it never does.** Treat a plan choice as permission, combine archive and delete candidates, use a native connector for a write, substitute a nearby tool, bootstrap actions during a scheduled run, or act on escalated threads.
+
+**What needs approval.** Every write action must complete the Stage 2 ritual once. Every live application batch then gets one immediate yes for its exact targets. Deletion gets its own target list and yes, separate from archive.
+
+## Audit rules
+
+Load safety-escalation and business-context first. Read the four context files, then the state ledger. Inventory at most 500 candidate messages or 90 days. State when provider pagination or connector limits covered less.
+
+Classify observations, not people. A recurring sender is not automatically noise. A newsletter is not automatically deletion. A stale thread is not automatically closed. The audit may recommend, count, and explain. It never acts.
+
+Evaluate exactly three plans internally:
+
+1. Minimal inbox
+2. Client operations
+3. Aggressive cleanup
+
+Recommend exactly one. Show the owner only that plan, the evidence behind it, approximate effects, reversibility, and estimated Zapier task use. End with **Preview this plan** and **Not now**. Show alternatives only if the owner asks. Internally, each plan still resolves to required action IDs and the estimate uses two tasks per successful Zapier MCP tool call unless live Zapier documentation says the rate changed. Use the zapier-limits-and-cost skill for allowances and prices.
+
+## Preview rules
+
+Use real representative items. Show the owner the current state, proposed state, reversibility, and any boundary that blocks the change. Resolve action IDs, exact tools, and account routes internally. If something is unavailable, give only the action the owner can take to fix it. Never invent a mapping.
+
+A preview does not update Task Settings or Inbox Assistant State. It starts the accepted plan's required capability sequence in plain language. Request, authorize, and test each required action separately, one at a time. Never bundle permissions. Keep the safest-first action list internal unless the owner asks for technical detail.
+
+## Apply rules
+
+Apply only from a preview visible in the current live session. Check action controls and the kill switch before the plan and again before each write. Run the task-auditor once per write. One provider call may touch multiple action classes, so every class must pass and every class receives receipts.
+
+The first batch is at most five items. Unknown outcomes stop the relevant class. Sending, paying, unsubscribing, changing payment details, signing, publishing, and touching CRM or project records remain outside this skill.
+
+## Provider language
+
+- Gmail: labels, archive, inbox, trash.
+- Outlook: categories, folders, inbox, Deleted Items.
+
+Describe the member's provider truthfully. Do not tell an Outlook member to apply a Gmail label or a Gmail member to create an Outlook category.
+
+## Delete discipline
+
+Delete candidates are a separate section and separate batch. Prefer archive for reversible cleanup. Never schedule deletion as the recommended course path. If `delete` is not enabled and tested, the entire delete list remains a proposal with no partial substitution.

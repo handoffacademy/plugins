@@ -1,7 +1,7 @@
 {
   "name": "inbox-assistant",
-  "version": "3.6.0",
-  "description": "An Inbox Assistant for your business that reads email, prepares briefs, finds stalled follow-ups, and drafts replies with every action off until you enable it.",
+  "version": "3.7.3",
+  "description": "Start read-only, receive inbox briefs, and enable one controlled Gmail or Outlook action only when a specific outcome needs it.",
   "author": {
     "name": "Mother of AI",
     "url": "https://themotherofai.com"
@@ -12,8 +12,8 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "Inbox Assistant",
-    "shortDescription": "Inbox briefs, follow-ups, and safe email drafts",
-    "longDescription": "Read email, prepare a daily inbox brief, find stalled follow-ups, draft replies in your voice, and schedule recurring reviews with every mailbox action disabled until you explicitly enable and test it.",
+    "shortDescription": "Inbox audits, organization, briefs, and follow-ups",
+    "longDescription": "Start with a read-only inbox brief, receive one evidence-based organization recommendation, and apply chosen changes only through explicit Zapier action controls.",
     "developerName": "Mother of AI",
     "category": "Productivity",
     "capabilities": ["Interactive", "Read", "Write"],

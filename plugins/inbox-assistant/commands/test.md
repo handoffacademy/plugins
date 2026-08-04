@@ -5,6 +5,8 @@ argument-hint: "controls | daily-inbox | follow-through | owner-brief"
 
 # /test
 
+Read `references/owner-communication.md` before any other plugin instruction. Its owner-facing response contract overrides every example output and reporting instruction below.
+
 Two modes, one command.
 
 - **Skill mode.** `daily-inbox`, `follow-through`, or `owner-brief`. Runs that skill on the owner's real data so they can see what it produces before it goes on a schedule.
@@ -73,7 +75,7 @@ Ask a clarifying question whenever a correction could mean two different setting
 
 Once you have them all, use the **task-tuner** skill: show the exact before and after for each setting, get the owner's approval, and write them into `Task Settings`. Do not silently apply a correction just because they said it during the test.
 
-If a correction is really a request to turn an action on, route it to `/inbox-assistant:setup stage-2`. Tuning never enables anything.
+If a correction is really a request to turn an action on, ask for the specific outcome and enter that outcome's contextual capability flow. Tuning never enables anything.
 
 ### 6. Record the test
 
@@ -122,7 +124,7 @@ Read the `## Action controls` section and list every action whose status is `ena
 
 > Two actions to check: saving drafts, which is waiting on its first test, and archiving, which was tested on the 4th. I will do a dry run of both first, which changes nothing. Then I will show you what happens to one action you left switched off, so you can see the refusal for yourself. Then I will offer you one real test each, one at a time, on the smallest thing I can find.
 
-If nothing is turned on, say so and point at `/inbox-assistant:setup stage-2`. There is nothing to test.
+If nothing is turned on, say so and ask which specific outcome the owner wants. There is nothing to test yet, and no setup-stage menu should appear.
 
 ### 2. Dry run every one of them
 
@@ -164,7 +166,7 @@ Write a receipt row for this line with `Result: dry-run`, the same as the others
 
 Three failure categories:
 
-1. **The demo that becomes an offer.** The verdict is a deny, and the obvious next sentence is "want me to turn it on?" Do not. This step is a demonstration inside a test session, and enabling anything runs through `/inbox-assistant:setup stage-2` from the top. Point at that command and move on.
+1. **The demo that becomes an offer.** The verdict is a deny, and the obvious next sentence is "want me to turn it on?" Do not. This step is a demonstration inside a test session. Enabling anything begins only when the owner names a specific outcome, then runs through that outcome's contextual capability flow from the top.
 2. **The synthetic item picked to pass.** Choosing a target that is out of scope, or an action that is merely untested rather than switched off, produces a deny for the wrong reason. The owner learns nothing about the fence. Pick an action whose `Status` reads `disabled`, and an in-scope target, so the only thing stopping it is the control block itself.
 3. **The one named that is already on.** The owner names `save-draft`, which they turned on last week. Say so, show the enabled block instead, and ask for one that is off. If every one of the seven is on, say that plainly and skip this step rather than inventing a refusal.
 
