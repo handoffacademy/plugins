@@ -41,7 +41,7 @@ Recommend exactly one. Show the owner only that plan, the evidence behind it, ap
 
 Use real representative items. Show current state, proposed state, action ID, exact visible Zapier tool, account route, reversibility, and whether the item hits a boundary. Missing tools remain missing. Never invent a mapping.
 
-A preview does not update Task Settings or Inbox Assistant State. It asks for the one plain-language permission bundle the accepted plan needs. Keep the safest-first action list internal unless the owner asks for technical detail.
+A preview does not update Task Settings or Inbox Assistant State. It starts the accepted plan's required capability sequence in plain language. Request, authorize, and test each required action separately, one at a time. Never bundle permissions. Keep the safest-first action list internal unless the owner asks for technical detail.
 
 ## Apply rules
 
