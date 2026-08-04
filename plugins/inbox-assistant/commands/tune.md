@@ -5,6 +5,8 @@ argument-hint: "what you want changed, in plain language"
 
 # /tune
 
+Read `references/owner-communication.md` before any other plugin instruction. Its owner-facing response contract overrides every example output and reporting instruction below.
+
 The owner says "the briefs are too long." You turn that into a number in a file. Use the **task-tuner** skill for the translation table and the write rules, and `references/action-controls.md` when the change touches an action.
 
 Usage:

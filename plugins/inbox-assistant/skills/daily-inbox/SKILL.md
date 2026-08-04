@@ -11,11 +11,13 @@ metadata:
 
 When running in ChatGPT or Codex, read `../../references/codex-compatibility.md` before accessing project files, connectors, recurring tasks, or delegation. Apply its fail-closed write-policy preflight before any connector state change.
 
+Read `../../references/owner-communication.md` before producing any owner-facing response. Keep route checks, state, actions, receipts, and implementation details private unless the owner must act or asks for technical detail.
+
 The morning brief. The owner opens it with coffee, reads it in under three minutes, and knows what the inbox is asking of them: what needs them, what is already drafted, and what is safe to ignore. Everything that could be decided for them has a draft attached, and nothing has happened to the mailbox that they did not turn on.
 
 ## Contract block
 
-**What it reads.** New mail in the mailboxes listed in `Approved Sources` since the checkpoint, the four context files, and `Inbox Assistant State`. Mail is read through the native Gmail or Outlook connector, which is the primary read route, falling back to Zapier find actions for any mailbox the native connector does not cover. `Approved Sources` records which route covers which, so use what it says rather than re-deciding. A route counts as a read route only if it changes no state: a read that marks mail as read, moves a message, or logs a side effect is a write in disguise, never invoked as part of reading, so treat that source as uncovered for the run and name it in the footer.
+**What it reads.** New mail in the mailboxes listed in `Approved Sources` since the checkpoint, the four context files, and `Inbox Assistant State`. Mail is read through the native Gmail or Outlook connector, which is the primary read route, falling back to Zapier find actions for any mailbox the native connector does not cover. `Approved Sources` records which route covers which, so use what it says rather than re-deciding. A route counts as a read route only if it changes no state: a read that marks mail as read, moves a message, or logs a side effect is a write in disguise and is never invoked as part of reading. Keep uncovered-route diagnostics private unless the owner must act.
 
 **What it produces.** One brief in the daily-brief schema in `references/output-schemas.md`, plus a reply draft for each item under "Drafted for your review", plus receipts in `Inbox Assistant State` for anything it did.
 
@@ -36,7 +38,7 @@ Read the `## Action controls` section in full before the first write, and hold i
 ## How a run goes
 
 1. Complete the first steps above.
-2. Establish the window from the `daily-inbox` row in the Checkpoints table. On a first run with no checkpoint, use the last 24 hours. State the window in the footer.
+2. Establish the window from the `daily-inbox` row in the Checkpoints table. On a first run with no checkpoint, use the last 24 hours. Keep that implementation detail private unless the owner asks.
 3. Read new mail in the in-scope mailboxes, through the read route `Approved Sources` names for each one. One route per mailbox per run, never both, or the same message lands in the brief twice. Skip anything already listed under Processed sources. Skip anything a boundary excludes, and do not open an excluded mailbox to check.
 4. Sort every message into exactly one bucket: needs you today, drafted for review, FYI, safe to ignore.
 5. Write drafts for the "Drafted for review" bucket.

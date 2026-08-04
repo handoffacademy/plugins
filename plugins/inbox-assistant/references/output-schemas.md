@@ -2,6 +2,8 @@
 
 The exact shape of every Inbox Assistant output. Consistency is the point: when the shape is fixed, the owner learns to skim it in seconds, and a correction in one run can be turned into a durable setting rather than a one-off fix.
 
+Read `owner-communication.md` first. Its owner-facing response contract overrides every schema note below. Internal route, action, receipt, and state details never appear in the owner's output.
+
 Section names and order are fixed. Length caps are ceilings, not targets. `Task Settings` may shorten a cap or drop a whole section. Nothing may add a section that is not defined here.
 
 ## Shared rules
@@ -11,22 +13,12 @@ Section names and order are fixed. Length caps are ceilings, not targets. `Task 
 - Never use: elevate, seamless, unleash, streamline, leverage, robust, delve, navigate the landscape, in today's fast-paced world.
 - Every item names the person and the thread so the owner can find it. "Rowan, Thursday, re: the March invoice" beats "a client emailed about billing."
 - Empty sections are stated, not padded. Write "Nothing today." and move on.
-- Every run ends with a footer stating the window covered, any route that was unavailable, and one actions line.
+- No technical footer. Show a plain outcome sentence only when the mailbox changed, the run is incomplete, or the owner must act.
 - Never invent a date, amount, name, or commitment. If a detail is missing from the source, say it is missing.
 
-### The actions line
+### Outcome sentence
 
-Every footer carries exactly one actions line, and it reads one of two ways.
-
-```
-Actions taken: 3 save-draft.
-```
-
-```
-Actions taken: none, all proposals.
-```
-
-List every action class that ran, each with its count. When a consult failure left items behind as proposals, say so on the same line: `Actions taken: 22 archive, 12 more left as a proposal.` When nothing ran, the line is exactly "none, all proposals", whether that is because no action is turned on, because the kill switch is on, or because nothing this run qualified. Never omit the line, and never replace it with a reassuring sentence.
+If the mailbox changed, say what the owner can observe in plain language: `Saved 3 drafts. Nothing was sent.` If nothing changed, add no sentence unless the owner needs reassurance before approving a proposed change. If a result is unknown, name the affected message and tell the owner where to check. Never show action IDs, route names, receipts, internal status, or control decisions.
 
 ## 1. Daily brief (daily-inbox)
 
@@ -52,9 +44,7 @@ Skimmable in under three minutes. That is roughly 400 to 600 words total.
 ## Safe to ignore
 [One line with a count and the categories. Never a list of individual items.]
 
----
-Covered [window]. [Any route that was unavailable and what it cost you.]
-Actions taken: [n per action class, or "none, all proposals"].
+[Only when needed: one plain outcome sentence.]
 ```
 
 Ranking for "Needs you today": a VIP asking a direct question outranks a deadline the owner already knows about, which outranks a scheduling request, which outranks a general update. Escalated threads (legal, financial, personnel, emotionally charged) always sit at the top of the section, flagged, with no draft.
@@ -77,9 +67,8 @@ Maximum 10 items, ranked. Nothing below the tenth item is shown, but the run sta
   Recommendation: [Nudge / Let it go / Delegate] because [half a line].
   Draft: [the actual text, or where the draft is saved]
 
----
 [N] items shown of [M] found. Covered [window].
-Actions taken: [n per action class, or "none, all proposals"].
+[Only when needed: one plain outcome sentence.]
 ```
 
 Ranking across both directions, most consequential first: money at stake, then a VIP waiting, then a commitment you made with a date attached, then age. Age alone never lifts an item into the top three.
@@ -110,12 +99,10 @@ One page. Roughly 500 to 700 words. If it does not fit on a page it is not a bri
 2. 
 3. 
 
----
-Covered [window]. Sources: [mailboxes and approved sources used].
-Actions taken: none, all proposals.
+[No technical footer.]
 ```
 
-The owner brief takes no action, ever, so its actions line is always exactly that.
+The owner brief takes no action, ever, and carries no technical footer.
 
 Exactly three decisions. If there are fewer real ones, say so rather than padding. If there are more, pick the three with the shortest fuse and note how many were left out.
 
@@ -143,9 +130,7 @@ Estimated Zapier use: [successful calls] calls, [tasks] tasks at the current doc
 ## Kept separate
 Delete candidates: [count and categories only; no targets are deleted or mixed into archive]
 
----
-Covered [window]. Nothing changed in the mailbox.
-Actions taken: none, all proposals.
+Nothing changed in your mailbox.
 Next: Preview this plan | Not now
 ```
 

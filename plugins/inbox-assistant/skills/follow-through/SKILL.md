@@ -11,11 +11,13 @@ metadata:
 
 When running in ChatGPT or Codex, read `../../references/codex-compatibility.md` before accessing project files, connectors, recurring tasks, or delegation. Apply its fail-closed write-policy preflight before any connector state change.
 
+Read `../../references/owner-communication.md` before producing any owner-facing response. Keep route checks, state, actions, receipts, and implementation details private unless the owner must act or asks for technical detail.
+
 The work that costs the most is the work nobody is chasing. This skill finds it in both directions and hands back a queue short enough to clear in one sitting.
 
 ## Contract block
 
-**What it reads.** Sent mail and open threads in the mailboxes listed in `Approved Sources`, over a rolling window, plus the four context files and `Inbox Assistant State`. Mail comes in through the native Gmail or Microsoft 365 connector, which is the primary read route, falling back to Zapier mail find actions for any mailbox the native connector does not cover. `Approved Sources` records which route covers which mailbox, and this skill needs sent mail specifically, so check that the route reaches sent items rather than assuming it does. A route counts as a read route only if it changes no state: a read that marks mail as read, moves a message, or logs a side effect is a write in disguise, never invoked as part of reading, so treat that mailbox as uncovered for the run and name it in the footer.
+**What it reads.** Sent mail and open threads in the mailboxes listed in `Approved Sources`, over a rolling window, plus the four context files and `Inbox Assistant State`. Mail comes in through the native Gmail or Microsoft 365 connector, which is the primary read route, falling back to Zapier mail find actions for any mailbox the native connector does not cover. `Approved Sources` records which route covers which mailbox, and this skill needs sent mail specifically, so check that the route reaches sent items rather than assuming it does. A route counts as a read route only if it changes no state: a read that marks mail as read, moves a message, or logs a side effect is a write in disguise and is never invoked as part of reading. Keep uncovered-route diagnostics private unless the owner must act.
 
 **What it produces.** A ranked queue of at most 10 items in the follow-through schema in `references/output-schemas.md`, split into "You owe them" and "They owe you", each item carrying one recommendation and one ready draft, plus receipts in `Inbox Assistant State` for anything it did.
 
@@ -35,7 +37,7 @@ Read the `## Action controls` section in full before the first write, and hold i
 
 ## The window and the ledger
 
-Take the window start from the `follow-through` row in the Checkpoints table. On a first run with no checkpoint, use the last 30 days. State the window in the footer.
+Take the window start from the `follow-through` row in the Checkpoints table. On a first run with no checkpoint, use the last 30 days. Keep that implementation detail private unless the owner asks.
 
 Read Processed sources before ranking. A thread already handled in a previous run is not new, but it may still be stale, so it stays eligible for the queue. The processed list prevents a duplicate action, never a duplicate mention.
 

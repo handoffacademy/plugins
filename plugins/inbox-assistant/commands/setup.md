@@ -4,6 +4,8 @@ description: Hire a read-only Inbox Assistant and receive your first Daily Brief
 
 # /setup
 
+Read `references/owner-communication.md` before any other plugin instruction. Its owner-facing response contract overrides every example output and reporting instruction below.
+
 Run the guided onboarding. Use the **setup-concierge** skill for the drafting rules, the file templates, and the stage logic. Use the **safety-escalation** skill for the defaults you restate. Read `references/connector-matrix.md` before the route check and `references/action-controls.md` before anything in stage 2.
 
 The owner sees one setup product: a read-only Inbox Assistant. Do not present Stage 2, action IDs, organization plans, or operating modes during first-run setup. The machinery stays inside the plugin until the owner asks for a specific outcome later.
@@ -33,7 +35,7 @@ Before you say anything about setup, work out where the owner is. The full decis
 3. State absent and `## Action controls` present: this is a damaged install. Use the recovery-mode procedure in `references/state-file.md`.
 4. Nothing found: run stage 1.
 
-Say the user-facing status in one line before you start: read-only setup required, read-only assistant ready, upgrade, or repair. Never name an internal stage.
+Do not announce the classification or the checks behind it. Start the work silently. If the owner must act before setup can continue, give only that action in plain language.
 
 ## First-run setup
 
@@ -49,28 +51,10 @@ Six steps, in this order, after the old-file rename in step 0 above. The detail 
 
    Four bounds on that read, and setup-concierge has the detail. **Native route only**, because 30 full-body reads through Zapier spend the owner's tasks in a stage that is meant to cost nothing. **The scan stops at 30 qualifying samples, 12 months, or 200 candidate messages, whichever comes first.** **Fewer than 30** means build from what qualified and say the count; **under about five, or sent mail unreachable on the native route,** means write no guide at all, fall back to the sample email and the `Draft voice` defaults, and say which it was with the fix attached, because three emails is not a pattern. It asks nothing, so the two-question budget is untouched. A voice sample is never a setting: this read writes the voice guide and nothing else, and it never adds a VIP, a scope, or a line in `Boundaries`.
 4. **At most two questions, and only the ones the context did not already answer.** Q1 is when the Daily Brief should arrive, proposed as a weekday morning default. Q2 is anyone the owner wants treated as a VIP that the mail did not reveal. If the supplied context answers one, skip it. Never ask a third, and never ask the owner to restate something already given to you. A question about drafted content carries that content: before Q2 is asked, the drafted names are printed in the message body with a word on why each is there — answer options like "drop the personal ones" must never reference a list nobody has been shown.
-5. **One review, then save in one pass.** Show the nine-line summary from setup-concierge covering all five files, ask "Anything to adjust?" once, apply whatever the owner changes, then save `Business Profile`, `Approved Sources`, `Boundaries`, `Task Settings`, and `Inbox Assistant State` together. No file is read back on its own and no file gets its own approval. Always write the escalation topics into `Boundaries` whether or not the owner named them.
+5. **One short review, then save in one pass.** Show at most three owner-facing bullets: the brief time, the people treated as important, and any inferred boundary or scope choice that could surprise the owner. Ask "Anything to adjust?" once, apply whatever the owner changes, then save `Business Profile`, `Approved Sources`, `Boundaries`, `Task Settings`, and `Inbox Assistant State` together. Never name those files in the owner-facing review. No file is read back on its own and no file gets its own approval. Always write the escalation topics into `Boundaries` whether or not the owner named them.
 6. **A real brief before the owner leaves.** Load safety-escalation and business-context by name, run daily-inbox read-only on their actual mail, print every draft in the output, save nothing. This is the step that turns a file-creation exercise into a hire. **Every email body this plugin composes, a reply draft saved to the mailbox, a reply sent, a follow-up nudge, or a draft printed in any output as a proposal, is written in the owner's voice from their voice and context files, then passed through the stop-slop and humanizer skills before it is saved, sent, or shown. The owner's own voice wins any conflict with a style rule.** See `references/email-voice.md`. Printing these rather than saving them changes nothing about that: the owner copies them straight out of the brief.
 
-Restate the defaults before the brief. Lead with "today", because stage 2 can change some of this and nobody should later feel that a permanent promise moved:
-
-> Here is how I work today.
->
-> I read and I draft. I never send. Every email, message, and client update comes to you as a draft with your name on it, and pressing send stays yours.
->
-> I archive nothing, delete nothing, move nothing, and label nothing. Every fix I find comes to you as a proposal.
->
-> Anything legal, financial, about a person on your team, emotionally charged, or asking to change payment details gets flagged and left alone. I will not smooth it over for you.
->
-> If I am not sure, I stop and ask rather than guessing.
->
-> Your scheduled tasks run on Claude's servers. Your computer can be asleep. The judgment stays yours.
->
-> If you later want me to save a draft into your mailbox or clear the noise out of it myself, I will ask for only that capability. Each action is approved and tested separately.
-
-Then point at what comes next.
-
-> Next: `/inbox-assistant:test daily-inbox` when you want to tune the shape of that brief, and `/inbox-assistant:schedule` to put it on a cadence. Both work today.
+Before the brief, say only: "Your Inbox Assistant is ready and remains read-only. Your first Daily Brief is below." Do not recite the internal defaults, action list, route details, file list, or next-command menu unless the owner asks.
 
 ## Internal capability enablement
 
@@ -95,9 +79,4 @@ Use the safest action that unlocks the chosen result first. Deletion is optional
 
 ## If something is blocked
 
-End the run with a short block. Do what is possible, name what is not, and never present a partial setup as finished.
-
-> **Done:** business profile, approved sources, boundaries, task settings, state ledger. Reading your Gmail through your Claude connector, verified just now.
-> **Working today:** daily brief, follow-through, weekly reset. Drafts come to you as text in the brief.
-> **Blocked:** saving those drafts into your mailbox, no Zapier connection found.
-> **Unblocks it:** the Setting up Zapier MCP lesson at portal.themotherofai.com. Then ask me to save a draft, and I will enable only that capability.
+Do what is possible and never present a partial setup as finished. Tell the owner only the one action that can unblock the requested result. Do not show a Done, Working, or Blocked breakdown, and do not expose the internal diagnosis.

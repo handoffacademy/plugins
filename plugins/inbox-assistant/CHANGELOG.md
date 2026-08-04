@@ -1,5 +1,14 @@
 # Changelog
 
+## 3.7.3
+
+Inbox Assistant now keeps implementation details out of owner-facing responses.
+
+- Added one communication contract across every command and owner-facing skill.
+- Setup now works silently, asks only for necessary input, and ends with a short review plus the first Daily Brief.
+- Removed route inventories, stage classifications, file lists, action IDs, receipts, and technical footers from default responses.
+- Kept plain-language approval details for real mailbox changes, including separate send and delete confirmation.
+
 ## 3.7.2
 
 Safety and onboarding-language corrections for the simplified setup.

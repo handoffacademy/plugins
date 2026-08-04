@@ -5,6 +5,8 @@ argument-hint: "daily-inbox | follow-through | owner-brief"
 
 # /schedule
 
+Read `references/owner-communication.md` before any other plugin instruction. Its owner-facing response contract overrides every example output and reporting instruction below.
+
 Turn a tested skill into a scheduled task that runs in the cloud. Propose, confirm, create. One skill per invocation.
 
 Usage:

@@ -97,6 +97,14 @@ for (const path of files(pluginRoot)) {
 }
 
 for (const command of commandNames) {
+  const commandPath = join(pluginRoot, "commands", `${command}.md`);
+  const commandSource = readFileSync(commandPath, "utf8");
+  if (!commandSource.includes("references/owner-communication.md")) {
+    failures.push(
+      `commands/${command}.md: must load the owner-facing communication contract.`,
+    );
+  }
+
   const adapter = join(
     pluginRoot,
     "skills",
@@ -135,6 +143,16 @@ if (JSON.stringify(commandFiles) !== JSON.stringify(commandNames)) {
   failures.push(
     `commands/: expected ${commandNames.join(", ")}; found ${commandFiles.join(", ") || "(none)"}`,
   );
+}
+
+for (const skill of ["daily-inbox", "follow-through", "inbox-organization", "owner-brief"]) {
+  const source = readFileSync(
+    join(pluginRoot, "skills", skill, "SKILL.md"),
+    "utf8",
+  );
+  if (!source.includes("../../references/owner-communication.md")) {
+    failures.push(`skills/${skill}/SKILL.md: must load the owner-facing communication contract`);
+  }
 }
 
 const scheduleSource = readFileSync(
@@ -181,8 +199,41 @@ const setupConciergeSource = readFileSync(
   join(pluginRoot, "skills", "setup-concierge", "SKILL.md"),
   "utf8",
 );
+if (!setupConciergeSource.includes("../../references/owner-communication.md")) {
+  failures.push("skills/setup-concierge/SKILL.md: must load the owner-facing communication contract");
+}
 if (setupConciergeSource.toLowerCase().includes("that is stage 2")) {
   failures.push("skills/setup-concierge/SKILL.md: owner-facing setup still exposes internal stage terminology");
+}
+
+const ownerCommunicationSource = (() => {
+  try {
+    return readFileSync(
+      join(pluginRoot, "references", "owner-communication.md"),
+      "utf8",
+    );
+  } catch {
+    failures.push("Missing references/owner-communication.md.");
+    return "";
+  }
+})();
+for (const phrase of [
+  "Do the work silently",
+  "Share only what the owner needs to do next",
+  "Never show internal execution details",
+  "Required safety approvals are the exception",
+]) {
+  if (!ownerCommunicationSource.includes(phrase)) {
+    failures.push(`references/owner-communication.md: missing response contract: ${phrase}`);
+  }
+}
+for (const phrase of [
+  "Say the user-facing status in one line",
+  "Report the result in plain language, one line per route",
+]) {
+  if (setupSource.includes(phrase) || setupConciergeSource.includes(phrase)) {
+    failures.push(`Setup must not expose internal diagnostics: ${phrase}`);
+  }
 }
 
 const organizeSource = readFileSync(

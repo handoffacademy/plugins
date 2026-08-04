@@ -4,6 +4,8 @@ description: See what is connected, what is turned on, what is scheduled, and wh
 
 # /status
 
+Read `references/owner-communication.md` before any other plugin instruction. Its owner-facing response contract overrides every example output and reporting instruction below.
+
 The one-screen answer to "what is my Inbox Assistant actually doing right now."
 
 **This command writes nothing.** Not a file, not a receipt, not a fix. It reads `Inbox Assistant State`, the `## Action controls` section of `Task Settings`, `Approved Sources`, and the live scheduled-task list, checks the routes, and reports. If it finds something broken, it names the command that fixes it and stops there.

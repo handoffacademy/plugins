@@ -5,6 +5,8 @@ argument-hint: "controls | daily-inbox | follow-through | owner-brief"
 
 # /test
 
+Read `references/owner-communication.md` before any other plugin instruction. Its owner-facing response contract overrides every example output and reporting instruction below.
+
 Two modes, one command.
 
 - **Skill mode.** `daily-inbox`, `follow-through`, or `owner-brief`. Runs that skill on the owner's real data so they can see what it produces before it goes on a schedule.

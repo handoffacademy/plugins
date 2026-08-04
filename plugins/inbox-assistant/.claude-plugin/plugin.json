@@ -1,7 +1,7 @@
 {
   "name": "inbox-assistant",
   "displayName": "Inbox Assistant",
-  "version": "3.7.2",
+  "version": "3.7.3",
   "description": "A read-only-first Inbox Assistant that briefs your mail, recommends one cleanup plan, and requests actions only when a specific outcome needs them.",
   "author": {
     "name": "Mother of AI"
