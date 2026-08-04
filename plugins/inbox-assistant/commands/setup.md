@@ -1,26 +1,27 @@
 ---
-description: Hire your Inbox Assistant. Stage 1 gets it reading your mail and briefing you. Stage 2, later and optional, lets it make changes itself.
-argument-hint: "optional: stage-1 | stage-2"
+description: Hire a read-only Inbox Assistant and receive your first Daily Brief.
 ---
 
 # /setup
 
 Run the guided onboarding. Use the **setup-concierge** skill for the drafting rules, the file templates, and the stage logic. Use the **safety-escalation** skill for the defaults you restate. Read `references/connector-matrix.md` before the route check and `references/action-controls.md` before anything in stage 2.
 
+The owner sees one setup product: a read-only Inbox Assistant. Do not present Stage 2, action IDs, organization plans, or operating modes during first-run setup. The machinery stays inside the plugin until the owner asks for a specific outcome later.
+
 Stage 1 is draft-first. You do the work and the owner checks it. Two questions at the very most, one review at the end, and nothing saved until the owner says yes.
 
 Usage:
 
 ```
-/setup $ARGUMENTS
+/setup
 ```
 
-`stage-1` and `stage-2` are the only accepted arguments and both are optional. With no argument, detect the stage yourself. With an argument you cannot recognize, say the two valid ones and ask which the owner meant rather than guessing.
+With no argument, detect the stage and continue safely. Keep `stage-1` and `stage-2` as compatibility inputs for existing links and internal handoffs, but never advertise them as choices during onboarding. With an argument you cannot recognize, ignore it and run stage detection rather than asking the owner to understand setup internals.
 
-Setup is two stages because reading and writing are two different risks.
+Internally, setup remains two stages because reading and writing are two different risks.
 
-- **Stage 1 is reading.** Under ten minutes, once. The owner leaves with a working Inbox Assistant.
-- **Stage 2 is writing.** Optional, later, one action at a time. Nobody has to do it.
+- **Stage 1 is reading.** Under ten minutes, once. This is the only first-run product the owner sees.
+- **Stage 2 is writing.** Optional, contextual, and one action at a time. It appears only when a later organization or follow-up request needs one capability.
 
 ## Detect the stage first
 
@@ -34,7 +35,7 @@ Before you say anything about setup, work out where the owner is. The full decis
 
 Say which one you found, in one line, before you start.
 
-## Stage 1
+## First-run setup
 
 Six steps, in this order, after the old-file rename in step 0 above. The detail is in setup-concierge.
 
@@ -71,17 +72,19 @@ Then point at what comes next.
 
 > Next: `/inbox-assistant:test daily-inbox` when you want to tune the shape of that brief, and `/inbox-assistant:schedule` to put it on a cadence. Both work today.
 
-## Stage 2
+## Internal capability enablement
+
+This is not a setup menu. Enter it only from a specific later request such as saving drafts, applying the recommended organization plan, or reviewing narrow follow-up nudges. Ask for consent to the one capability that unlocks that result. Never ask the owner to choose an operating mode.
 
 Requires `Setup stage: stage-1-complete`. If it is not there, say so and run stage 1.
 
-1. **Zapier.** Point at the Setting up Zapier MCP lesson at portal.themotherofai.com. Never recite the setup steps from memory. Before the owner starts, say to add only the actions they actually intend to turn on, because a tool you cannot see is a tool you cannot use by mistake. Never ask for a server URL and never put one in a file or a chat.
-2. **Choose the capability path.** Ask which result the owner wants unless the current conversation already says it plainly:
+1. **Zapier.** Point at the Setting up Zapier MCP lesson at portal.themotherofai.com. Never recite the setup steps from memory. Before the owner starts, say to add only the action required by the current request. Never ask for a server URL and never put one in a file or a chat.
+2. **Use the requested outcome.** The current conversation must already name the result. Do not offer a menu:
    - `saved-drafts`: start with `save-draft`.
    - `organization`: use the selected `/inbox-assistant:organize preview` and proceed `label`, `archive`, `mark-read`, `move`, then optional `delete`, skipping actions the plan does not need.
    - `follow-up`: start with `save-draft`, then offer `send-reply` only for the owner's narrowly scoped "They owe you" nudge mode.
    - `specific action`: use the action ID the owner named.
-   Do not infer a broader path from a narrower request. A saved-draft request is not a send request. An archive plan is not a delete plan.
+   Do not infer a broader path from a narrower request. A saved-draft request is not a send request. An archive plan is not a delete plan. If no result is clear, return to the read-only product instead of presenting the four paths.
 3. **`## Action controls`.** If `Task Settings` does not have that heading, append it: the intro paragraph and all seven blocks with `Status: disabled`. Append only, skip if present, never touch another section. A section written by an earlier version carries a `Per-run limit:` line that runs ignore: drop it from any block the ritual is already editing, and leave the rest of the section alone.
 4. **The ritual, one action at a time.** Follow `references/action-controls.md` exactly: exact tool and what it reaches, an example before and after on the owner's real data, the risk sentence for the two irreversible actions, the typed `ENABLE <ACTION> UNATTENDED`, then the control block written with `Status: pending-test`. Then stop and ask whether the owner wants the next action in the selected path.
 5. **Reconcile the cadences.** **Before any action flips to `enabled` with `Unattended: yes`, inspect the live scheduled-task list and reconcile it: at most one write-enabled task per skill, distinct start times, and every existing overlapping or duplicate read-only task covering that skill either consolidated or explicitly pinned read-only. The reconciliation finishes before the enablement does.** The existing tasks were created when overlap was free, because nothing a read-only run does is repeatable harm. **A read-only scheduled task never inherits a write. Only a task created or recreated by `/inbox-assistant:schedule` after the enablement carries the write-enabled preamble, and enabling an action never upgrades a task that already exists.** If the list will not load or the owner wants to think about which duplicate to drop, the action stays `pending-test` and the test waits.
@@ -97,4 +100,4 @@ End the run with a short block. Do what is possible, name what is not, and never
 > **Done:** business profile, approved sources, boundaries, task settings, state ledger. Reading your Gmail through your Claude connector, verified just now.
 > **Working today:** daily brief, follow-through, weekly reset. Drafts come to you as text in the brief.
 > **Blocked:** saving those drafts into your mailbox, no Zapier connection found.
-> **Unblocks it:** the Setting up Zapier MCP lesson at portal.themotherofai.com, then `/inbox-assistant:setup stage-2` to turn on one action at a time.
+> **Unblocks it:** the Setting up Zapier MCP lesson at portal.themotherofai.com. Then ask me to save a draft, and I will enable only that capability.

@@ -1,5 +1,15 @@
 # Changelog
 
+## 3.7.1
+
+Inbox Assistant now feels like a product instead of a configuration console.
+
+- First-run setup exposes one complete read-only product and finishes with the member’s first Daily Brief.
+- Stage arguments, action IDs, organization plans, and operating modes stay out of first-run setup.
+- `/inbox-assistant:organize` audits automatically and shows one evidence-based recommendation, with alternatives only on request.
+- Capability enablement is contextual: the plugin asks for only the action needed by the outcome the owner requested.
+- The internal `audit | preview | apply` lifecycle, exact-tool tests, send/delete separation, receipts, kill switch, and fail-closed behavior are unchanged.
+
 ## 3.7.0
 
 Inbox Assistant can now diagnose and organize a real inbox instead of stopping at read-only briefs.

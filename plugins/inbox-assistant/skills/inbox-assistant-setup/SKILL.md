@@ -1,6 +1,6 @@
 ---
 name: inbox-assistant-setup
-description: Set up, upgrade, repair, or enable actions for Inbox Assistant in ChatGPT or Codex. Use when the user types /inbox-assistant:setup, asks to install or configure Inbox Assistant, needs its project files repaired, or wants to begin setup stage 1 or stage 2.
+description: Set up, upgrade, repair, or contextually enable one needed Inbox Assistant action in ChatGPT or Codex. Use when the user types /inbox-assistant:setup, asks to install or configure Inbox Assistant, needs its project files repaired, or asks for a specific mailbox outcome.
 ---
 
 # Inbox Assistant Setup

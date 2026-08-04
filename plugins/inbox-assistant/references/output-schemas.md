@@ -121,7 +121,7 @@ Exactly three decisions. If there are fewer real ones, say so rather than paddin
 
 ## 4. Inbox organization review (inbox-organization)
 
-The audit is read-only. Exactly three plans appear in this order.
+The audit is read-only. Evaluate Minimal inbox, Client operations, and Aggressive cleanup internally. Show exactly one recommendation. Show alternatives only if the owner asks.
 
 ```
 # Inbox organization review, [date]
@@ -133,39 +133,23 @@ The audit is read-only. Exactly three plans appear in this order.
 - Open loops: [awaiting the owner / awaiting someone else]
 - Existing structure: [Gmail labels or Outlook categories and folders]
 
-## Minimal inbox
-Best when: [one line]
+## Recommended: [Minimal inbox | Client operations | Aggressive cleanup]
+Why this fits: [evidence from the real inbox]
 Would change: [provider-aware description]
 Approximate items: [count]
-Required actions: [action IDs or none]
 Reversibility: [one line]
 Estimated Zapier use: [successful calls] calls, [tasks] tasks at the current documented rate
 
-## Client operations
-Best when: [one line]
-Would change: [provider-aware description]
-Approximate items: [count]
-Required actions: [action IDs]
-Reversibility: [one line]
-Estimated Zapier use: [successful calls] calls, [tasks] tasks at the current documented rate
-
-## Aggressive cleanup
-Best when: [one line]
-Would change: [provider-aware description]
-Approximate items: [count]
-Required actions: [action IDs]
-Reversibility: [one line]
-Estimated Zapier use: [successful calls] calls, [tasks] tasks at the current documented rate
-
-## Delete candidates, separate review
-[Count and categories only during audit. No targets are deleted or mixed into archive.]
+## Kept separate
+Delete candidates: [count and categories only; no targets are deleted or mixed into archive]
 
 ---
 Covered [window]. Nothing changed in the mailbox.
 Actions taken: none, all proposals.
+Next: Preview this plan | Not now
 ```
 
-Plans recommend operations. They do not authorize them. Gmail output says labels and archive. Outlook output says categories and folders. A plan that needs no visible provider capability says so rather than promising it.
+The recommendation proposes operations. It does not authorize them. Gmail output says labels and archive. Outlook output says categories and folders. Keep action IDs and tool names internal until preview or until the owner asks for technical detail. A plan that needs no visible provider capability says so rather than promising it.
 
 ## Corrections capture
 

@@ -109,7 +109,7 @@ Only when something above is actually broken, and name the right screen for the 
 - **A native connector.** Inside claude.ai: Settings, then Connectors, then Gmail or Outlook. One sign-in. Walk the owner through it here if they want.
 - **Zapier.** The Setting up Zapier MCP lesson at portal.themotherofai.com. Never recite the steps from memory, and never ask for a server URL.
 - **A missing or damaged state file.** `/inbox-assistant:setup`, which repairs it with the owner confirming each value.
-- **An action that is not running.** `/inbox-assistant:test controls` if it is waiting on a test, `/inbox-assistant:setup stage-2` if it was never turned on.
+- **An action that is not running.** `/inbox-assistant:test controls` if it is waiting on a test. If it was never turned on, ask for the specific outcome and enter that outcome's capability flow.
 
 ## Three failure categories
 

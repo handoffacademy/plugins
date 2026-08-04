@@ -38,7 +38,7 @@ The owner's words are the input, not the output. Restate them as a rule specific
 | "Only draft for the client mailbox" | `save-draft` scope narrowed from both mailboxes to `clients@` only. |
 | "Stop archiving for now" | `archive` set to `Status: disabled`, in one step. |
 | "I want the brief earlier" | Cadence change, not a settings change. Route to the schedule command. |
-| "Start sending the easy ones" | Not a tuning change. Route to `/inbox-assistant:setup stage-2`. |
+| "Start sending the easy ones" | Not a tuning change. Ask for the exact follow-up outcome, then use its contextual capability flow. |
 
 If the correction is ambiguous, ask one question before writing anything. "Too long" could mean fewer items or shorter items, and those are different settings.
 
@@ -55,7 +55,7 @@ One more section is out of reach, for a different reason. **A voice correction i
 
 Three failure categories:
 
-1. **The enable request in tuning clothes.** "Just let you send the easy ones" or "go ahead and start archiving." Say plainly that turning an action on takes the ritual in `/inbox-assistant:setup stage-2`, describe it in one line, and offer what tuning can do instead.
+1. **The enable request in tuning clothes.** "Just let you send the easy ones" or "go ahead and start archiving." Say plainly that turning an action on takes the exact-tool ritual, ask for the specific outcome, and use that outcome's contextual capability flow. Do not expose setup-stage language. Offer what tuning can do instead.
 2. **The scope widened by a wish.** "Do the same thing for my second mailbox." The scope is what the test verified, so widening it is a setup conversation. Do not append a mailbox to a `Scope` line.
 3. **The re-enable after an off.** The owner switched `archive` off last week and now wants it back. Off is one step, back on is the full ritual again, including a fresh test. Say that up front when something gets switched off, so the asymmetry is not a surprise later.
 

@@ -1,7 +1,7 @@
 {
   "name": "inbox-assistant",
-  "version": "3.7.0",
-  "description": "Audit, organize, draft, and follow up from Gmail or Outlook through a portable Zapier action layer with every mailbox action explicitly controlled.",
+  "version": "3.7.1",
+  "description": "Start read-only, receive inbox briefs, and enable one controlled Gmail or Outlook action only when a specific outcome needs it.",
   "author": {
     "name": "Mother of AI",
     "url": "https://themotherofai.com"
@@ -13,7 +13,7 @@
   "interface": {
     "displayName": "Inbox Assistant",
     "shortDescription": "Inbox audits, organization, briefs, and follow-ups",
-    "longDescription": "Review a real inbox, compare three provider-aware organization systems, apply chosen changes through explicit Zapier action controls, prepare daily briefs, and automate narrowly scoped follow-up nudges.",
+    "longDescription": "Start with a read-only inbox brief, receive one evidence-based organization recommendation, and apply chosen changes only through explicit Zapier action controls.",
     "developerName": "Mother of AI",
     "category": "Productivity",
     "capabilities": ["Interactive", "Read", "Write"],

@@ -40,7 +40,7 @@ The owner can override any of these and schedule anyway. Say plainly what that c
 
 **Read-only cadences need nothing else.** A daily brief with no action turned on still lands every morning with its drafts as text to copy, and a follow-through queue whose tidy-ups are all proposals is still the whole queue. Schedule those, and say in one line what the scheduled run will and will not do, so the first Monday is not a surprise.
 
-**A cadence that exercises a write needs `Setup stage: stage-2-complete`.** Read it from `Inbox Assistant State`. If the stage is not there, the task can still be created as a read-only cadence today, and `/inbox-assistant:setup stage-2` is what turns actions on later. Say which of the two the owner is getting.
+**A cadence that exercises a write needs `Setup stage: stage-2-complete`.** Read it from `Inbox Assistant State`. If the stage is not there, create the cadence read-only today. When the owner later asks for a specific write-enabled outcome, that outcome's capability flow can turn on the one required action. Do not expose setup-stage language to the owner.
 
 ### Choose an approval mode that can finish unattended
 
