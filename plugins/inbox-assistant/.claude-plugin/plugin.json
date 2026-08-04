@@ -1,8 +1,8 @@
 {
   "name": "inbox-assistant",
   "displayName": "Inbox Assistant",
-  "version": "3.6.0",
-  "description": "An Inbox Assistant for your business that reads your email, brings you a morning brief, chases what has gone quiet, and writes every reply as a draft. Every action it could take on your behalf starts switched off, and you turn them on one at a time.",
+  "version": "3.7.0",
+  "description": "An Inbox Assistant that audits your real inbox, proposes organization systems, prepares briefs and follow-ups, and applies only the Zapier actions you explicitly enable and test.",
   "author": {
     "name": "Mother of AI"
   }

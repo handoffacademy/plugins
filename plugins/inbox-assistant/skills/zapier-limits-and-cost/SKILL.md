@@ -17,7 +17,7 @@ Keep the explanation short and plain, but never quote a limit, price, task count
 
 Inside the Inbox Assistant plugin the routing is fixed, and it changes the cost story: **mail reads come from the native Gmail or Outlook connector first, and every write goes through Zapier.** Native reads spend nothing. Zapier-routed reads, which are the fallback whenever a native connector does not cover a mailbox, spend tasks like any other Zapier call, and so does every Zapier write. **So the count that matters is Zapier-routed calls, reads-as-fallback included, never runs.** A daily brief reading natively spends Zapier tasks on the drafts it saves and on nothing else; the same brief reading a mailbox through Zapier spends tasks on those reads as well; a read-only setup on native connectors, where drafts print in the brief instead of saving into the mailbox, spends none at all. See `references/connector-matrix.md` for which capability takes which route.
 
-**Cost follows the actions that are turned on.** Every action starts off, so a member on stage 1 spends nothing in Zapier no matter how many runs they have. Once actions are on, a run spends one task per action it takes, so the arithmetic is the volume of mail that qualifies, times the runs per month. Read which actions are on and what each one's `Scope` covers out of the `## Action controls` section in `Task Settings` rather than assuming, because the scope is what decides how much mail qualifies. When a member wants a cheaper month, narrowing a scope or switching an action off through `/inbox-assistant:tune` is the most direct lever there is, one sentence each. Widening a scope back or re-enabling an action goes through the ritual in `/inbox-assistant:setup stage-2`. See `references/action-controls.md`.
+**Cost follows the actions that are turned on.** Every action starts off, so a member on stage 1 spends no Zapier tasks when native reads cover the mailbox. Once actions are on, count every successful Zapier MCP tool call and apply the current task rate verified from live Zapier documentation. At the time of plugin 3.7.0, Zapier documents two tasks per successful MCP tool call and zero for failed calls, but live documentation wins. Read which actions are on and what each `Scope` covers from the `## Action controls` section in `Task Settings`. Narrowing a scope or switching an action off through `/inbox-assistant:tune` is the direct cost lever. Widening a scope or re-enabling an action goes through `/inbox-assistant:setup stage-2`.
 
 ## This Skill Is Process-Only: Verify Every Current Fact
 
@@ -74,16 +74,17 @@ I can help write the task prompt, but I cannot create or turn on the scheduled t
 
 ## Other Connectors Outside Zapier
 
-The user may also have direct/native connectors available in Claude, such as Gmail, Outlook, Drive, Notion, Slack, GitHub, or another app connector. For mail reads these are the primary route, not an alternative to consider.
+The user may also have direct/native connectors available in Claude. These connectors can expose both reads and writes, and current capabilities vary by provider, plan, administrator policy, and host product. Inbox Assistant still uses them for reads only and routes its writes through Zapier as a deliberate cross-platform policy.
 
 When direct connectors exist:
 
-- Prefer direct connectors for every read they cover. This is the default rather than an optimization.
-- Use Zapier for the writes, and for any read a direct connector does not cover. Saving a draft and tidying a thread are Zapier-only, so those tasks are not avoidable by switching layers.
+- Prefer direct connectors for every read they cover.
+- Use Zapier for Inbox Assistant writes and for any read a direct connector does not cover.
+- Do not claim native write tools are absent. Explain that the plugin does not rely on them because Claude and Codex need one consistent action route.
 - Explain Zapier task usage only for Zapier-powered steps, and verify the current task rule before quoting it.
-- Do not tell the user to add something in Zapier if a direct connector already covers it. Reading mail is the common case: if the native Gmail connector is on, adding Gmail in Zapier buys nothing and spends tasks.
-- Explicitly minimize Zapier calls. For example, use direct Gmail reads when available, then use Zapier only for the capability nothing else covers.
-- When the user wants a cheaper version, the lever is usually fewer Zapier-routed calls, fallback reads and writes alike, rather than fewer runs. A daily brief on native reads whose drafts print in the output costs nothing in Zapier tasks and still lands every morning.
+- Do not tell the user to add a Zapier read action when a direct connector already covers the read.
+- Minimize Zapier calls. Use direct Gmail or Microsoft 365 reads when available, then Zapier only for the configured plugin actions or uncovered reads.
+- When the user wants a cheaper version, the lever is usually fewer Zapier-routed calls, not fewer read-only runs.
 
 Use direct connectors for safe discovery/listing when available. If only Zapier can fetch the options, a focused Zapier list/search may be worth it, but avoid broad scans.
 

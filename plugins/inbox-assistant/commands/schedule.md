@@ -36,7 +36,7 @@ The argument names exactly one skill: `daily-inbox`, `follow-through`, or `owner
 
 The owner can override any of these and schedule anyway. Say plainly what that choice is: an untested skill means finding out it is wrong on a Monday morning instead of now. Then do it if they still want it.
 
-**The routes are connected.** Check against `references/connector-matrix.md`. Reads come from the native Gmail or Outlook connector, with Zapier find actions as the fallback. Do not offer to schedule a skill that has no read route. Say which connection it needs and where that connection is made: native connectors in Claude's Settings, Connectors, and Zapier through the Turn On Automation lesson at portal.themotherofai.com.
+**The routes are connected.** Check against `references/connector-matrix.md`. Reads come from the native Gmail or Microsoft 365 connector, with Zapier find actions as the fallback. Do not offer to schedule a skill that has no read route. Say which connection it needs and where that connection is made: native connectors in the host product's connector settings, and Zapier through the Setting up Zapier MCP lesson at portal.themotherofai.com.
 
 **Read-only cadences need nothing else.** A daily brief with no action turned on still lands every morning with its drafts as text to copy, and a follow-through queue whose tidy-ups are all proposals is still the whole queue. Schedule those, and say in one line what the scheduled run will and will not do, so the first Monday is not a surprise.
 
@@ -94,13 +94,18 @@ Use the preferred brief time and time zone from `Business Profile`. Say why, and
 
 ### If the owner asks what a cadence costs
 
-Only Zapier-routed calls spend Zapier tasks, and that includes a fallback read as well as every action. Reads through the native Gmail or Outlook connector spend nothing, so a read-only cadence on native connectors spends nothing at all, and a cadence with actions turned on spends a task on every action it takes.
-
-Use the **zapier-limits-and-cost** skill for the actual arithmetic. It counts only the Zapier-powered steps, multiplies by runs per month, and looks the current task rule up in Zapier's live docs rather than quoting a number from memory. Do not quote a task rate, a plan allowance, or a price yourself. If a cadence would be expensive, the cheaper version is usually fewer Zapier-routed calls rather than fewer runs, and narrowing an action's scope to the mailbox that actually needs it is the most direct lever.
+Only Zapier-routed calls spend Zapier tasks, and that includes a fallback read as well as every action. Reads through the native Gmail or Microsoft 365 connector spend nothing in Zapier, so a read-only cadence on native connectors spends nothing there. Zapier's current documentation charges two tasks per successful MCP tool call and no tasks for failed calls. Use the **zapier-limits-and-cost** skill for actual arithmetic and current plan allowances. Do not quote allowances or prices from memory.
 
 ## 4. Confirm it, then create it
 
 State the exact name, schedule, read source, approval mode, what it will do, and which actions it may take. Wait for a clear yes. In Claude Cowork, that yes is the Schedule button: do not add a second consent ritual before or after it. Then create the task and confirm it exists.
+
+If enabled and tested actions apply to the selected skill, offer two honest modes before the proposal:
+
+1. **Read-only.** The prompt fixes every action as proposal-only even when Task Settings later changes.
+2. **Action-enabled.** The prompt names only the enabled, tested, in-scope actions selected for this task. For a Daily Brief, that may include `save-draft`, `label`, `archive`, or `mark-read`. For follow-through, it may include `save-draft` and the narrowly scoped `send-reply` nudge mode. Do not recommend scheduled deletion. Owner Brief is always read-only.
+
+The proposal lists every permitted action and every prohibited action. A write-enabled Daily Brief may save drafts, apply labels, archive confirmed low-value mail, or deliberately mark selected categories read only when those exact controls pass at run time. Everything else remains a proposal.
 
 > **Inbox Assistant: Daily Brief**
 > Weekdays at 7:30am, America/New_York.
