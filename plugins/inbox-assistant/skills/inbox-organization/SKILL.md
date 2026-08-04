@@ -1,8 +1,8 @@
 ---
 name: inbox-organization
-description: Audits a real inbox, proposes three provider-aware organization systems, previews exact changes, and applies a selected system only through enabled and tested Zapier actions. Use when the owner asks to clean up, organize, label, archive, move, mark read, or delete inbox mail.
+description: Audits a real inbox, recommends one provider-aware organization plan, previews exact changes, and applies it only through enabled and tested Zapier actions. Use when the owner asks to clean up, organize, label, archive, move, mark read, or delete inbox mail.
 metadata:
-  version: 1.0.0
+  version: 1.1.0
 ---
 
 # Inbox Organization
@@ -11,13 +11,13 @@ metadata:
 
 When running in ChatGPT or Codex, read `../../references/codex-compatibility.md` before accessing project files or connectors. Apply its fail-closed write-policy preflight before any state change.
 
-The value is not a generic clean-inbox lecture. It is a diagnosis of the owner's real mailbox, three systems fitted to what is actually there, and a controlled path from proposal to verified change.
+The value is not a generic clean-inbox lecture or a menu. It is a diagnosis of the owner's real mailbox, one evidence-based recommendation, and a controlled path from proposal to verified change. Evaluate alternatives internally and show them only when the owner asks.
 
 ## Contract
 
 **What it reads.** The mailboxes in `Approved Sources`, their visible labels, categories, or folders, the four context files, and `Inbox Assistant State`. Use the native connector first for mail reads, with Zapier find actions only as the recorded fallback. A read that changes state is not a read route.
 
-**What it produces.** An Inbox organization review using `references/output-schemas.md`, a provider-aware preview of one selected plan, or a verified application report.
+**What it produces.** An Inbox organization review using `references/output-schemas.md`, one recommended provider-aware plan, a preview of that plan, or a verified application report.
 
 **What it never does.** Treat a plan choice as permission, combine archive and delete candidates, use a native connector for a write, substitute a nearby tool, bootstrap actions during a scheduled run, or act on escalated threads.
 
@@ -29,19 +29,19 @@ Load safety-escalation and business-context first. Read the four context files, 
 
 Classify observations, not people. A recurring sender is not automatically noise. A newsletter is not automatically deletion. A stale thread is not automatically closed. The audit may recommend, count, and explain. It never acts.
 
-Always produce exactly three plans:
+Evaluate exactly three plans internally:
 
 1. Minimal inbox
 2. Client operations
 3. Aggressive cleanup
 
-Each plan names required action IDs and estimated Zapier task use. The estimate uses two tasks per successful Zapier MCP tool call unless live Zapier documentation says the rate changed. Use the zapier-limits-and-cost skill for allowances and prices.
+Recommend exactly one. Show the owner only that plan, the evidence behind it, approximate effects, reversibility, and estimated Zapier task use. End with **Preview this plan** and **Not now**. Show alternatives only if the owner asks. Internally, each plan still resolves to required action IDs and the estimate uses two tasks per successful Zapier MCP tool call unless live Zapier documentation says the rate changed. Use the zapier-limits-and-cost skill for allowances and prices.
 
 ## Preview rules
 
 Use real representative items. Show current state, proposed state, action ID, exact visible Zapier tool, account route, reversibility, and whether the item hits a boundary. Missing tools remain missing. Never invent a mapping.
 
-A preview does not update Task Settings or Inbox Assistant State. It ends with a safest-first Stage 2 action list.
+A preview does not update Task Settings or Inbox Assistant State. It asks for the one plain-language permission bundle the accepted plan needs. Keep the safest-first action list internal unless the owner asks for technical detail.
 
 ## Apply rules
 

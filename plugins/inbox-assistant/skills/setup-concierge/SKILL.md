@@ -1,8 +1,8 @@
 ---
 name: setup-concierge
-description: Runs the two-stage guided onboarding for the Inbox Assistant role. Use when the owner installs or upgrades the plugin, runs the setup command, says their briefs are not working because Claude does not know their business, wants to turn on an action so a run can save a draft or tidy a thread itself, or needs to check which cloud tools are connected before a run can start.
+description: Runs read-only first-run setup and contextual capability enablement for Inbox Assistant. Use when the owner installs or upgrades the plugin, runs setup, says briefs lack business context, asks for a specific mailbox outcome, or needs connected routes checked.
 metadata:
-  version: 3.1.0
+  version: 3.2.0
 ---
 
 # Setup Concierge
@@ -13,12 +13,12 @@ When running in ChatGPT or Codex, read `../../references/codex-compatibility.md`
 
 You are walking a nontechnical business owner through hiring their first digital employee. The owner is capable and busy, and has already told the academy about the business once. Do the work first and show the result. Draft everything, ask at most two questions, review once.
 
-Setup has two stages and they are separate sessions' worth of work.
+The owner sees one setup product. The internal implementation has two stages, and they are separate sessions' worth of work.
 
-- **Stage 1 is reading.** Ten minutes or less. Provider check, live read verification, a silent drafting pass, at most two questions, one review, and a real brief on real mail before the owner leaves. They have a working Inbox Assistant at the end of it.
-- **Stage 2 is writing.** Optional, later, one action at a time. This is where a run gets permission to save a draft or archive a thread by itself.
+- **First-run setup is reading.** Ten minutes or less. Provider check, live read verification, a silent drafting pass, at most two questions, one review, and a real brief on real mail before the owner leaves. They have a working Inbox Assistant at the end of it.
+- **Capability enablement is writing.** Optional, contextual, and one action at a time. It appears only when a later request needs to save a draft, archive a thread, or perform another exact action.
 
-Nobody has to do stage 2. Stage 1 on its own is the read-only tier and it is a real product, not a half-install.
+Nobody has to enable a mailbox action. Read-only setup is the complete default product, not a half-install.
 
 ## Contract block
 
@@ -35,7 +35,7 @@ Nobody has to do stage 2. Stage 1 on its own is the read-only tier and it is a r
 Work this out before saying anything about setup, in this order.
 
 0. **Files left by the old plugin.** Run this check first, on every run, before the decision table below. See "Files left by the old plugin" for the procedure. Detection below runs against the new names.
-1. **`Inbox Assistant State` exists.** Read `Setup stage`. `not-started` means run stage 1. `stage-1-complete` means offer stage 2. `stage-2-complete` means maintenance: report what is on, and offer to turn on another action or to re-check the routes. On either of the last two, check whether `Task Settings` has a `## Voice guide` section and follow "The voice guide on an older setup" if it does not.
+1. **`Inbox Assistant State` exists.** Read `Setup stage`. `not-started` means run first-run setup. `stage-1-complete` means the read-only product is live: report that state and ask what outcome the owner wants today, without offering a capability menu. `stage-2-complete` means maintenance: report what is on and re-check routes relevant to the current request. On either of the last two, check whether `Task Settings` has a `## Voice guide` section and follow "The voice guide on an older setup" if it does not.
 2. **State is absent and `## Action controls` is absent, with the four v1.1 context files present.** This is a v1.1 install to upgrade. Follow "Upgrading a v1.1 install" below. Do not re-draft files the owner already has.
 3. **State is absent and `## Action controls` is present.** This is a damaged v2 install. Follow the recovery-mode procedure in `references/state-file.md`: treat the kill switch as on, rebuild State from what `Task Settings` shows with the owner confirming each value, and set every checkpoint back to `never`.
 4. **Nothing is there.** Run stage 1 from the top.
@@ -440,9 +440,9 @@ This is the point of stage 1. The owner sees their own inbox come back sorted, i
 
 Then point at what comes next.
 
-> Next: `/inbox-assistant:test daily-inbox` when you want to tune the shape of that brief, and `/inbox-assistant:schedule` to put it on a cadence so it lands before you open your laptop. Both work today. Stage 2 is only for letting me make changes myself, and it can wait as long as you like.
+> Next: `/inbox-assistant:schedule` can put this brief on a cadence so it lands before you open your laptop. If you later ask me to save a draft or clean up the inbox, I will request only the capability that outcome needs.
 
-## Stage 2: turning on one action at a time
+## Internal capability enablement: one action at a time
 
 Requires `Setup stage: stage-1-complete`. If it is not there, say so and run stage 1 first.
 
@@ -563,7 +563,7 @@ Read-only is a tier, not a failure. A member with a native mail connector and no
 > **Done:** business profile, approved sources, boundaries, task settings, and your state ledger. Reading your Gmail through your Claude connector, verified just now.
 > **Working today:** daily brief, follow-through, weekly reset. Drafts come to you as text in the brief.
 > **Not yet:** anything I do myself. Every action is off, which is the default.
-> **Turns it on:** the Setting up Zapier MCP lesson at portal.themotherofai.com, then `/inbox-assistant:setup stage-2` for one action at a time.
+> **Turns it on:** the Setting up Zapier MCP lesson at portal.themotherofai.com, then ask me for the exact outcome you want. I will enable only the capability it needs.
 
 When the gap is one named write tool instead, the block names that tool rather than Zapier as a whole:
 

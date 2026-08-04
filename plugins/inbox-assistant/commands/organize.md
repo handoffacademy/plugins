@@ -1,19 +1,20 @@
 ---
-description: Audit the inbox, preview a chosen organization system, or apply it through already enabled Zapier actions.
-argument-hint: "audit | preview | apply"
+description: Review the inbox and recommend one cleanup plan. Nothing changes until the owner approves it.
 ---
 
 # /organize
 
 Review and organize a real mailbox without confusing a recommendation with permission. Use the **inbox-organization** skill for the bounded scan, provider-aware plans, cost estimate, and application rules. Load **safety-escalation** and **business-context** before reading mail. Read `references/connector-matrix.md`, `references/action-controls.md`, and `references/output-schemas.md` before this workflow.
 
+The owner sees one recommendation, not a menu. The internal lifecycle remains `audit | preview | apply`, and Nothing changes during audit or preview.
+
 Usage:
 
 ```
-/organize $ARGUMENTS
+/organize
 ```
 
-`audit`, `preview`, and `apply` are the only accepted arguments. With no argument, list the three modes and ask which one the owner means. Do not guess. Nothing changes during audit or preview. Selecting a plan is not authorization.
+With no argument, run the audit, recommend exactly one plan, and stop for review. Do not ask the owner to choose a mode. Keep `audit`, `preview`, and `apply` as compatibility inputs and internal lifecycle controls. Selecting a plan is not authorization.
 
 ## `audit`
 
@@ -23,11 +24,11 @@ Run a bounded read-only review of the mailboxes in `Approved Sources`.
 2. Inspect enough recent mail to describe the inbox honestly, stopping at 500 candidate messages or 90 days, whichever comes first. State the actual coverage.
 3. Inventory inbox volume and age, recurring senders, newsletters and promotions, VIP and client threads, messages awaiting the owner, messages awaiting someone else, stale threads, and the labels, categories, or folders visible on the provider.
 4. Count likely archive candidates and likely delete candidates separately. A candidate is evidence for a proposal, never an action.
-5. Return exactly three plans in the Inbox organization review schema:
+5. Build these three plans internally so the recommendation is evidence-based:
    - **Minimal inbox.** Inbox means unresolved. Archive completed threads, label recurring reference mail, and keep VIP mail visible. No deletion by default.
    - **Client operations.** Provider-aware client or project labels, Waiting on me, Waiting on them, and completed mail archived. Folder moves are optional.
    - **Aggressive cleanup.** Archive bulk noise, mark selected low-value categories read, move recurring categories where useful, and put deletion candidates in a separate review list.
-6. For every plan, state what changes, the approximate item count, the required action IDs, reversibility, and estimated Zapier task use.
+6. Recommend exactly one plan. Show only that plan, why it fits, what would change, approximate item counts, reversibility, and estimated Zapier task use. End with **Preview this plan** and **Not now**. Show alternatives only if the owner asks.
 
 Use provider language. Gmail has labels and archive. Outlook has categories and folders. Do not promise an operation the connected provider cannot represent.
 
@@ -35,17 +36,17 @@ Zapier's current documented rate is **two tasks per successful Zapier MCP tool c
 
 ## `preview`
 
-Preview one plan from the current audit. If no audit is visible in this session, run `audit` first rather than reconstructing a plan from memory.
+Preview the recommended plan from the current audit. If no audit is visible in this session, run `audit` first rather than reconstructing a plan from memory.
 
-1. Ask the owner which of the three plans to preview.
+1. Continue with the recommended plan the owner accepted. Do not ask them to choose among three plans unless they requested alternatives.
 2. Show representative real items and the proposed before and after state.
 3. Resolve every change to one of the seven action IDs.
 4. Name the exact Zapier tool currently visible for each required action. If it is missing, say so. Never guess a tool name.
 5. Keep archive and delete separate. Delete candidates stay separate even when the owner picked Aggressive cleanup.
 6. Show the estimated successful tool calls and multiply by two tasks per successful call.
-7. End with the actions the owner would need to enable through `/inbox-assistant:setup stage-2`, in safest-first order.
+7. Ask for the one contextual permission bundle the plan needs in plain language. Keep action IDs and setup-stage language internal unless the owner asks for technical detail.
 
-No mailbox action runs in preview. Do not write a control block, do not update a setting, and do not interpret plan selection as authorization.
+No mailbox action runs in preview. Do not write a control block, do not update a setting, and do not interpret plan selection as authorization. Selecting a plan is not authorization.
 
 ## `apply`
 

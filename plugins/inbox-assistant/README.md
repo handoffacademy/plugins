@@ -1,6 +1,6 @@
 # Inbox Assistant
 
-An Inbox Assistant for your business. It reviews your real inbox, proposes three ways to organize it, applies only the Zapier actions you explicitly enable and test, brings you a morning brief, and chases what has gone quiet.
+An Inbox Assistant for your business. It reviews your real inbox, recommends one cleanup plan, applies only the Zapier actions you explicitly enable and test, brings you a morning brief, and chases what has gone quiet.
 
 It runs on Claude's servers on a schedule, so your laptop can be closed.
 
@@ -63,13 +63,13 @@ Setup finds the files that plugin saved, renames them to the names this one uses
 
 Leaving both plugins installed is the one thing worth avoiding. Two plugins means two sets of scheduled tasks and two ledgers, and the old one's tasks will be looking for files that have been renamed.
 
-## Two stages
+## One setup product
 
-**Stage 1 is reading.** Under ten minutes, once. It checks what is connected, verifies it can really read your mail, drafts your five files from what you have already told the academy and a quick look at your own mail, asks you at most two questions, shows you one summary to adjust, and then runs a real brief on your real inbox before you leave. At the end of stage 1 you have a working Inbox Assistant that changes nothing in your mailbox.
+**Setup is read-only.** Under ten minutes, once. It checks what is connected, verifies it can really read your mail, drafts your five files from what you have already told the academy and a quick look at your own mail, asks you at most two questions, shows you one summary to adjust, and then runs a real brief on your real inbox before you leave. You now have a working Inbox Assistant that changes nothing in your mailbox.
 
-**Stage 2 is acting.** Optional, later, and one action at a time. Audit and preview the inbox first, then choose whether to save drafts, organize and archive, clean up selected clutter, or automate narrow follow-up nudges. You see the exact Zapier tool, scope, and change on your own data before it happens, type the action confirmation phrase, and run one real test. Nothing is on until that test passes.
+**Actions appear only when you ask for an outcome that needs one.** If you later ask Inbox Assistant to save a draft or clean up the inbox, it requests only that capability. You see the exact Zapier tool, scope, and change on your own data before it happens, type the action confirmation phrase, and run one real test. Nothing is on until that test passes.
 
-Plenty of people stay on stage 1 forever. That is a real way to use this, not a half-finished setup.
+Plenty of people stay read-only forever. That is the complete default product, not a half-finished setup.
 
 ## The safety model
 
@@ -85,8 +85,8 @@ What it will never do, whatever you turn on: buy, pay, refund, subscribe, sign, 
 
 | Command                     | What it does                                                                                                   |
 | --------------------------- | -------------------------------------------------------------------------------------------------------------- |
-| `/inbox-assistant:setup`    | Stage 1, stage 2, upgrades, and repairs. Start here.                                                           |
-| `/inbox-assistant:organize` | Audit the real inbox, preview three systems, or apply a chosen system through enabled Zapier actions.          |
+| `/inbox-assistant:setup`    | Set up the read-only Inbox Assistant, upgrade, or repair it. Start here.                                       |
+| `/inbox-assistant:organize` | Audit the real inbox, recommend one plan, preview it, and apply only explicitly enabled actions.               |
 | `/inbox-assistant:test`     | Run one skill on your real data, or test an action you turned on.                                              |
 | `/inbox-assistant:schedule` | Put one skill on a cadence as a cloud scheduled task.                                                          |
 | `/inbox-assistant:status`   | What is connected, what is on, what is scheduled, what did not finish. Reads only.                             |

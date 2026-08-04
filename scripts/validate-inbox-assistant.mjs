@@ -155,6 +155,23 @@ for (const phrase of [
   }
 }
 
+const setupSource = readFileSync(
+  join(pluginRoot, "commands", "setup.md"),
+  "utf8",
+);
+for (const phrase of [
+  "The owner sees one setup product: a read-only Inbox Assistant",
+  "Do not present Stage 2, action IDs, organization plans, or operating modes during first-run setup",
+  "first Daily Brief",
+]) {
+  if (!setupSource.includes(phrase)) {
+    failures.push(`commands/setup.md: missing simplified setup policy: ${phrase}`);
+  }
+}
+if (/^argument-hint:.*stage-1.*stage-2/m.test(setupSource)) {
+  failures.push("commands/setup.md: stage arguments must not be advertised during first-run setup");
+}
+
 const organizeSource = readFileSync(
   join(pluginRoot, "commands", "organize.md"),
   "utf8",
@@ -163,6 +180,8 @@ for (const phrase of [
   "audit | preview | apply",
   "Nothing changes during audit or preview",
   "Selecting a plan is not authorization",
+  "recommend exactly one plan",
+  "Show alternatives only if the owner asks",
   "Delete candidates stay separate",
   "two tasks per successful Zapier MCP tool call",
 ]) {

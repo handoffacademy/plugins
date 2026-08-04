@@ -36,7 +36,7 @@ Nobody will ever ask you to paste your Zapier server URL into a chat. That URL c
 
 ## Turning on an action
 
-Being connected is not the same as being turned on. All seven actions start off, and each one goes through the same short ritual in `/inbox-assistant:setup stage-2`:
+Being connected is not the same as being turned on. All seven actions start off. When you ask for an outcome that needs one, Inbox Assistant requests that capability through the same short ritual:
 
 1. You see the exact Zapier tool and which mailbox it reaches.
 2. You see what the change would look like on one real item of yours, before anything happens.

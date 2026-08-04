@@ -29,7 +29,7 @@ Restate the owner's words as something specific enough to apply mechanically. Va
 | "Only draft for the client mailbox" | `save-draft` scope narrowed from both mailboxes to `clients@` only. |
 | "Stop archiving for now" | `archive` set to `Status: disabled` in one step. |
 | "I want it earlier" | Not a setting. Cadence lives in `/inbox-assistant:schedule`. |
-| "Also start sending the easy ones" | Not a tuning change. Turning an action on lives in `/inbox-assistant:setup stage-2`. |
+| "Also start sending the easy ones" | Not a tuning change. Ask for the exact follow-up outcome, then use its contextual capability flow. |
 
 Ask one clarifying question when a correction could land on two different settings. "Too long" might mean fewer items or shorter items. Ask, then translate.
 
@@ -44,7 +44,7 @@ Tuning may never set `Status: enabled` or `pending-test`, may never edit `Zapier
 
 Three failure categories:
 
-1. **The enable request in tuning clothes.** "Just let you send the easy ones" or "go ahead and start archiving." Say plainly that turning an action on takes the full ritual in `/inbox-assistant:setup stage-2`, name what that involves in one line, and offer what tuning can do instead: draft more of them, or tighten where the actions already on are allowed to reach.
+1. **The enable request in tuning clothes.** "Just let you send the easy ones" or "go ahead and start archiving." Say plainly that turning an action on takes the full exact-tool ritual, ask for the specific outcome, and enter that outcome's contextual capability flow. Do not expose setup-stage language. Offer what tuning can do instead: draft more of them, or tighten where the actions already on are allowed to reach.
 2. **The scope widened by a wish.** "Do the same thing for my second mailbox." That is a widening, which the ritual owns, because the scope is what the test verified. Route it to setup. Do not append a mailbox to a `Scope` line.
 3. **The off switch expected to come back.** "Turn archiving off while I am away, then back on Monday." The off half is one step and happens now. The back-on half is not tuning: re-enabling runs the full ritual again, including the test. Say both halves plainly in the same breath, so Monday is not a surprise, and do not schedule a future re-enable.
 

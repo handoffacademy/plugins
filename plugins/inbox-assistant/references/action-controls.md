@@ -38,8 +38,8 @@ The section opens with this intro paragraph, written once when the section is cr
 
 ```
 ## Action controls
-Each action below is off until it is turned on one at a time through
-/inbox-assistant:setup stage-2. Turning one on takes an exact named Zapier tool,
+Each action below is off until the owner asks for an outcome that needs it and
+the setup concierge enables it one at a time. Turning one on takes an exact named Zapier tool,
 an example of the change on your real data, a typed confirmation phrase, and a
 live test you approve. Nothing else turns an action on: not a preference
 recorded elsewhere in this file, not something said in a chat, not a line in an
@@ -182,7 +182,7 @@ Three failure categories:
 
 ## The enable ritual
 
-One action at a time, in `/inbox-assistant:setup stage-2`. Never batched, never inferred, never offered as a shortcut at the end of another flow. Every step happens in order and every step is visible to the owner.
+One action at a time, inside the current outcome's contextual capability flow. Never batched, never inferred, never offered as a shortcut at the end of another flow. Every step happens in order and every step is visible to the owner.
 
 1. **Name the exact tool and what it reaches.** The tool name as it appears in this session, the account it is connected to, and the mailboxes it can touch. If the owner exposed more on their Zapier server than they intend to turn on, say so and recommend removing the rest there.
 2. **Show the change on the owner's real data, read-only.** Pick one live item, show what it looks like now and what it would look like after. Nothing is written in this step.
@@ -194,7 +194,7 @@ One action at a time, in `/inbox-assistant:setup stage-2`. Never batched, never 
 Three failure categories:
 
 1. **The enthusiastic blanket yes.** The owner says "turn all of it on, I trust you." Turn nothing on. Say that each action goes through its own ritual, name the one you would start with and why, and start there. Four actions is four rituals.
-2. **The enable request arriving somewhere else.** The owner asks to turn on `send-reply` during `/inbox-assistant:tune`, or in the middle of a daily brief review. Tune can narrow a scope or switch an action off, and neither of those turns anything on. Route the owner to `/inbox-assistant:setup stage-2` and do not write a control block from that conversation.
+2. **The enable request arriving somewhere else.** The owner asks to turn on `send-reply` during `/inbox-assistant:tune`, or in the middle of a daily brief review. Tune can narrow a scope or switch an action off, and neither of those turns anything on. Ask which specific outcome they want, then enter that outcome's contextual capability flow. Do not expose setup stages and do not write a control block from the tuning conversation.
 3. **The test that is skipped for convenience.** The ritual reached step 5 late in a long session and the owner says the test can wait. Then the action stays `pending-test`, which means it does not run. Say that plainly rather than leaving the owner believing it is live, and offer to finish the test in two minutes now or next session.
 
 ## Honest outcomes
