@@ -73,7 +73,7 @@ read. There is no version of this that runs afterwards, because after is too lat
 three cases.
 
 **This rule covers email bodies only.** The brief itself, the follow-through queue's
-framing lines, the Weekly Owner Reset prose, footers, receipts, status output, and anything
+framing lines, the upkeep report, footers, receipts, status output, and anything
 else this plugin writes to the owner about their mail are internal reports and are governed
 by their schemas rather than by this rule. An email body embedded in one of those reports
 is still an email body and is still covered.

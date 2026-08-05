@@ -57,7 +57,7 @@ read and every enabled action in the run is done or recorded as a partial failur
 | Skill | Window end (UTC) | Run finished | Notes |
 | daily-inbox | never | never | |
 | follow-through | never | never | |
-| owner-brief | never | never | |
+| inbox-upkeep | never | never | |
 
 ## Processed sources
 Message and event IDs already handled, newest first, for duplicate prevention only.

@@ -27,7 +27,7 @@ No skill in this plugin starts cold. Before a single message is ranked or a sing
 
 | File | Holds | Used by |
 |---|---|---|
-| `Business Profile` | What the business does, the owner's role, VIP clients and partners with their email addresses, current quarter priorities, working hours and time zone | Ranking, meeting prep, weekly synthesis |
+| `Business Profile` | What the business does, the owner's role, VIP clients and partners with their email addresses, current quarter priorities, working hours and time zone | Ranking, meeting prep, follow-up timing |
 | `Approved Sources` | Which mailboxes are in scope, which read route covers each one, which senders and domains are trusted signal, which are known noise | Every read step |
 | `Boundaries` | Hard limits: people, threads, topics, and mailboxes Claude must not touch or draft for | Every step, as a veto |
 | `Task Settings` | Brief length, definition of urgent, draft tone, the `## Voice guide` section built from the owner's own sent mail, section preferences, capability notes, last-tested records, tuning history, and the `## Action controls` section | Output shape and voice, and every write decision |

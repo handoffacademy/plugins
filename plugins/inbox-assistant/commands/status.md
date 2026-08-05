@@ -68,7 +68,7 @@ Read the live task list and filter to this plugin's names. Show state, next run,
 Scheduled
   Inbox Assistant: Daily Brief         Active   next tomorrow 7:30am
   Inbox Assistant: Follow-Through      Active   next Thursday 8:00am
-  Inbox Assistant: Weekly Owner Reset  Active   next Friday 3:00pm   recreate via /schedule
+  Inbox Assistant: Daily Cleanup       Active   next tomorrow 6:30am   recreate via /schedule
 ```
 
 A task without the `Preamble: v2` marker gets that "recreate via /schedule" note and one line of explanation: it was written against the old rules, it is safe and it still runs, and it cannot use anything turned on since. Never present it as broken.
@@ -83,7 +83,7 @@ Read the Checkpoints table and say it in plain language, not as a UTC table.
 Last full runs
   Daily brief        this morning, 7:31am
   Follow-through     Thursday
-  Weekly reset       never run
+  Daily cleanup      never run
 ```
 
 A checkpoint that has not moved in a while is worth a sentence. "Your follow-through has not completed since Jul 29, and its task is active, so something is failing on the run itself" tells the owner something they cannot see anywhere else.

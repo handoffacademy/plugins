@@ -30,7 +30,7 @@ Do them in that order. Setting the switch first leaves a window where a cadence 
 
 Say what it does and what it cannot do, plainly:
 
-> Everything is stopped. All three scheduled tasks are paused, and the safety switch is on, so nothing will write to your mail even if a run is already going. One thing I cannot do is unsend something already sent or un-archive something already archived. Anything that landed in the last few minutes has landed.
+> Everything is stopped. Every scheduled task with this plugin's name on it is paused, and the safety switch is on, so nothing will write to your mail even if a run is already going. One thing I cannot do is unsend something already sent or un-archive something already archived. Anything that landed in the last few minutes has landed.
 
 Resuming is never silent. When the owner asks to resume, say that the switch is on, ask whether to turn it off as well as unpausing the tasks, and do only what they confirm:
 
@@ -55,7 +55,7 @@ Your Inbox Assistant scheduled tasks:
 
 1. Inbox Assistant: Daily Brief          Active    next tomorrow 7:30am
 2. Inbox Assistant: Follow-Through       Active    next Thursday 8:00am
-3. Inbox Assistant: Weekly Owner Reset   Paused    since Jul 12
+3. Inbox Assistant: Daily Cleanup        Paused    since Jul 12
 ```
 
 Show only tasks belonging to this plugin. If the owner has other scheduled tasks, do not list them, do not count them, and do not touch them. If the owner asks about one of those, say it is outside this plugin and can be managed from the scheduled-task list directly.
@@ -66,13 +66,13 @@ If nothing is scheduled, say so and point at `/inbox-assistant:schedule`.
 
 Repeat back the exact task name and the exact action, then do it, then confirm.
 
-> Pausing **Inbox Assistant: Daily Brief**. Nothing else changes. Your follow-through and your weekly reset stay on.
+> Pausing **Inbox Assistant: Daily Brief**. Nothing else changes. Your follow-through and your daily cleanup stay on.
 
 Three failure categories for the only-what-was-named rule:
 
-1. **The plural that is not a list.** The owner says "pause everything while I am away." That is `all`, so read the set back with all three names and the switch, get a yes, then do it in the two-step order, then confirm.
+1. **The plural that is not a list.** The owner says "pause everything while I am away." That is `all`, so read the live list back, every task whose name starts with Inbox Assistant, including any task an earlier plugin version created under an older name, plus the switch, and get a yes, then do it in the two-step order, then confirm.
 2. **The helpful extra.** The owner asks to pause the daily brief. The follow-through cadence leans on the same reading and looks pointless without it. Do not pause it too. Pause what was named, then mention the other one and ask.
-3. **The wrong-direction inference.** The owner says "the Friday one is too much right now." That is a complaint, not an instruction, and it might mean pause, might mean tune. Ask which: pause it, or make it shorter with `/inbox-assistant:tune`.
+3. **The wrong-direction inference.** The owner says "the Thursday one is too much right now." That is a complaint, not an instruction, and it might mean pause, might mean tune. Ask which: pause it, or make it shorter with `/inbox-assistant:tune`.
 
 Update the `## Scheduled tasks` table in `Inbox Assistant State` whenever a state changes, so `/inbox-assistant:status` reads true.
 
@@ -82,7 +82,7 @@ Deleting removes the task and its schedule. Since the task is the only place the
 
 Confirm deletion separately, and default to pausing when the owner has not clearly said delete.
 
-> **Inbox Assistant: Weekly Owner Reset** would be removed, not paused. Rebuilding it later means running schedule again, though your settings and business profile stay. Pause it instead?
+> **Inbox Assistant: Daily Cleanup** would be removed, not paused. Rebuilding it later means running schedule again, though your settings and business profile stay. Pause it instead?
 
 ## 5. Confirm the resulting state
 
@@ -95,7 +95,7 @@ Safety switch: on. Nothing will write to your mail.
 
 1. Inbox Assistant: Daily Brief          Paused
 2. Inbox Assistant: Follow-Through       Paused
-3. Inbox Assistant: Weekly Owner Reset   Paused
+3. Inbox Assistant: Daily Cleanup        Paused
 
 Resume any of these whenever you want with `/inbox-assistant:pause`.
 ```

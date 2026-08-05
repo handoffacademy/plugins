@@ -1,6 +1,6 @@
 ---
 name: task-tuner
-description: Turns the owner's plain-language corrections about an output into concrete, durable settings in their Task Settings file, and narrows where an action applies or switches it off, always showing the exact before and after. Use whenever the owner says a brief is too long, the wrong things are being flagged, drafts sound wrong, an action is reaching mail it should leave alone, or anything one of the three skills produces should be different from now on.
+description: Turns the owner's plain-language corrections about an output into concrete, durable settings in their Task Settings file, and narrows where an action applies or switches it off, always showing the exact before and after. Use whenever the owner says a brief is too long, the wrong things are being flagged, drafts sound wrong, an action is reaching mail it should leave alone, or anything in the daily brief, the follow-through queue, or the upkeep report should be different from now on.
 metadata:
   version: 3.0.0
 ---
@@ -52,6 +52,8 @@ Two powers over the `## Action controls` section, and no others:
 Never write `Status: enabled` or `Status: pending-test`. Never touch `Zapier tool`, `Account route`, `Enabled on`, `Enable phrase recorded`, or `Last tested`. Never widen a `Scope` or remove a line from `Restrictions`. Those belong to the enable ritual, because the ritual is what tested them.
 
 One more section is out of reach, for a different reason. **A voice correction is written into `## Draft voice`, never into `## Voice guide`.** The guide is a record of how the owner actually writes, built by setup from their own sent mail, and an instruction of theirs outranks it wherever the two disagree, so `Draft voice` is where the instruction belongs and it is already the field that wins. Editing the guide to match a correction destroys the record and leaves nothing to have outranked. If the owner wants the guide itself rebuilt, that is a fresh voice read and it belongs to `/inbox-assistant:setup`.
+
+The `## Upkeep rules` section follows the action-control asymmetry, not the settings default. Narrowing a rule or removing one is a tuning write like any other: applied directly, announced with the exact before and after, logged. Creating a rule or widening one is not tuning, whatever words it arrives in. A standing rule drives unattended writes every morning, so it exists only through a live `/inbox-assistant:organize` apply and the one clear yes that saves it. "Also archive the old invoices every day" is a new rule: route it to `/inbox-assistant:organize` and write nothing.
 
 Three failure categories:
 

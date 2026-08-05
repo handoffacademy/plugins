@@ -77,7 +77,7 @@ Last tested: never
 - **Enable phrase recorded.** The exact phrase the owner typed.
 - **Last tested.** The date the real-data test passed, or `never`.
 
-`Status` and `Last tested` in this block are the only authority on whether an action may run. The skill-level `Last tested` table elsewhere in `Task Settings` is history for the three output skills and says nothing about actions.
+`Status` and `Last tested` in this block are the only authority on whether an action may run. The skill-level `Last tested` table elsewhere in `Task Settings` is history for daily-inbox, follow-through, and inbox-upkeep, and says nothing about actions.
 
 ## The six-condition consult
 

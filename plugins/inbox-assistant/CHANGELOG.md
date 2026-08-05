@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.9.0
+
+The cleanup you approve can now keep itself up, every day.
+
+- After `/inbox-assistant:organize` applies a plan you approved, you can save its recurring rules as standing upkeep rules. `/inbox-assistant:schedule upkeep` then puts an "Inbox Assistant: Daily Cleanup" task on a cadence that applies only those rules.
+- A daily cleanup run touches nothing outside your saved rules, runs only the actions you enabled and tested for unattended use, and never deletes anything on a schedule. Anything a rule cannot justify comes back as a proposal.
+- The Weekly Owner Reset is retired. `/inbox-assistant:test` and `/inbox-assistant:schedule` now take `upkeep` in its place. An existing scheduled Weekly Owner Reset task keeps running on its saved prompt; end it any time with `/inbox-assistant:pause`.
+
 ## 3.8.0
 
 Corrections you give are applied and shown to you, instead of coming back as a question.

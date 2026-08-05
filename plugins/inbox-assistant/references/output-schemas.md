@@ -77,36 +77,7 @@ Every item carries exactly one recommendation verb, and every verb but one carri
 
 The verb vocabulary is closed and direction-aware. "You owe them" takes Reply, Close, or Delegate. "They owe you" takes Nudge, Let it go, or Delegate. Never use "escalate" here: in this plugin that word is reserved for a legal, financial, personnel, or emotionally charged matter flagged for the owner, and reusing it for "chase harder" makes those two look alike in the same queue.
 
-## 3. Weekly owner brief (owner-brief)
-
-One page. Roughly 500 to 700 words. If it does not fit on a page it is not a brief.
-
-```
-# Owner brief, week of [date]
-[Two sentences. What this week actually was.]
-
-## What moved
-[Max 5 bullets. Each names the thing and the evidence.]
-
-## What stalled
-[Max 5 bullets. Each names the thing, how long, and who is holding it.]
-
-## Risks
-[Max 3. Each: the risk, the early signal you already have, the cheapest next step.]
-
-## Three decisions only you can make
-1. **[The decision]** [The options, in one line each. What you need in order to choose.]
-2. 
-3. 
-
-[No technical footer.]
-```
-
-The owner brief takes no action, ever, and carries no technical footer.
-
-Exactly three decisions. If there are fewer real ones, say so rather than padding. If there are more, pick the three with the shortest fuse and note how many were left out.
-
-## 4. Inbox organization review (inbox-organization)
+## 3. Inbox organization review (inbox-organization)
 
 The audit is read-only. Evaluate Minimal inbox, Client operations, and Aggressive cleanup internally. Show exactly one recommendation. Show alternatives only if the owner asks.
 
@@ -135,6 +106,33 @@ Next: Preview this plan | Not now
 ```
 
 The recommendation proposes operations. It does not authorize them. Gmail output says labels and archive. Outlook output says categories and folders. Keep action IDs and tool names internal until preview or until the owner asks for technical detail. A plan that needs no visible provider capability says so rather than promising it.
+
+## 4. Inbox upkeep run (inbox-upkeep)
+
+Short by design. The owner reads it to confirm that nothing surprising happened, so anything past half a screen means a rule is doing too much.
+
+```
+# Inbox upkeep, [date]
+
+## Rules applied
+- **[the rule, quoted as it reads in Task Settings]** [N] items
+
+## Skipped
+- **[the rule]** [why: cap reached / not turned on / auditor denied / malformed rule]
+
+## Proposals
+- [What a rule could not justify, with the count and the exact targets you need.]
+- [Candidate rules, phrased as rules, for you to add through /inbox-assistant:organize.]
+
+## Coverage
+[Mailbox] through [route], [window]
+
+Nothing outside your standing rules was touched.
+```
+
+Every rule in `## Upkeep rules` appears exactly once, under Rules applied or under Skipped, including a rule that matched nothing today: a rule quietly missing from the report reads as a rule that ran. Skipped names the reason in the owner's terms, not the condition ID. Proposals carry counts and targets, because a proposal the owner cannot act on is a line of noise. Coverage is one line per mailbox and stays honest about a window that ended early.
+
+The closing line is fixed and it is the point of the whole report. Write it whether or not anything applied.
 
 ## Corrections capture
 

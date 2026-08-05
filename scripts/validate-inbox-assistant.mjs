@@ -145,7 +145,7 @@ if (JSON.stringify(commandFiles) !== JSON.stringify(commandNames)) {
   );
 }
 
-for (const skill of ["daily-inbox", "follow-through", "inbox-organization", "owner-brief"]) {
+for (const skill of ["daily-inbox", "follow-through", "inbox-organization", "inbox-upkeep"]) {
   const source = readFileSync(
     join(pluginRoot, "skills", skill, "SKILL.md"),
     "utf8",

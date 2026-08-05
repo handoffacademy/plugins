@@ -1,6 +1,6 @@
 ---
 name: inbox-assistant-test
-description: Test an Inbox Assistant job or action control in ChatGPT or Codex. Use when the user types /inbox-assistant:test, asks to test daily-inbox, follow-through, owner-brief, or controls, or wants proof that enabled and disabled actions obey their settings.
+description: Test an Inbox Assistant job or action control in ChatGPT or Codex. Use when the user types /inbox-assistant:test, asks to test daily-inbox, follow-through, upkeep, or controls, or wants proof that enabled and disabled actions obey their settings.
 ---
 
 # Inbox Assistant Test
