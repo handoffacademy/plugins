@@ -1,6 +1,6 @@
 # The State File
 
-`Inbox Assistant State` is the fifth file in the owner's Claude account and the only one the plugin writes on its own. The other four belong to the owner: they are created after one consolidated setup review, and every change after that is shown to the owner before it is saved. This one is the plugin's working memory, and the owner reads it through `/inbox-assistant:status`.
+`Inbox Assistant State` is the fifth file in the owner's Claude account and the only one the plugin writes on its own. The other four belong to the owner: they are created after one consolidated setup review, and every change after that is applied as the owner gives it and announced with the exact before and after. This one is the plugin's working memory, and the owner reads it through `/inbox-assistant:status`.
 
 In member-facing copy this is never called a fifth context file. Say "four context files plus one safety ledger."
 
