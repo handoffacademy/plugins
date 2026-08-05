@@ -21,7 +21,7 @@ No skill in this plugin starts cold. Before a single message is ranked or a sing
 
 **What it never does.** Edit a context file on its own initiative, invent a value for a missing field, treat a boundary as negotiable, or read a preference as permission to act.
 
-**What needs your approval.** Any change to any of the four context files. Only the setup and tune flows write to them: setup drafts all four and creates them after one summary review covering every one, and every change after that is shown to you as the exact before and after. The state ledger is different: the plugin writes it, you read it through `/inbox-assistant:status`.
+**What needs your approval.** Setup drafts all four context files and creates them after one summary review covering every one. After that, a change you ask for or a correction you give is applied directly and announced with the exact before and after, and the assistant asks before saving only if you have asked it to. The state ledger is different: the plugin writes it, you read it through `/inbox-assistant:status`.
 
 ## The files
 

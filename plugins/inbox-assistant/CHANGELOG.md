@@ -1,5 +1,14 @@
 # Changelog
 
+## 3.8.0
+
+Corrections you give are applied and shown to you, instead of coming back as a question.
+
+- A correction or an answer you give is the approval. Inbox Assistant makes the change to your own files and tells you the exact before and after, rather than ending on "Save it?".
+- Say "confirm changes with me" and it asks before saving for the rest of that session. Ask for it always and it saves that as a preference.
+- If you object after seeing a change, it puts the setting back. Anything that would widen where an action reaches, a scope un-narrowed or an action switched back on, still goes through its usual approval steps.
+- Setup's single review, every mailbox-action approval, and the schedule confirmation are unchanged.
+
 ## 3.7.5
 
 Setup now stops after the owner reviews and saves the five setup files.

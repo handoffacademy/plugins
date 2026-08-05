@@ -58,9 +58,9 @@ Tuning changes ranking, filtering, length, voice, and reach. It never changes wh
 - "Stop flagging that thread, it is stressful" would silence an escalation. Do not write it. Offer the version you can do, which is moving the flag out of the top position while keeping it in the brief, and say why the flag stays.
 - Anything that would let a run act on a legal, financial, personnel, emotionally charged, or payment-detail thread is refused outright. That is not a setting, it is the contract.
 
-## 4. Show the exact before and after
+## 4. Write it, then show the exact before and after
 
-Always the actual text, never a description of the change.
+The correction is the approval. Write the change, then show what changed in the same breath, as a statement. Always the actual text, never a description of it.
 
 ```
 File: Task Settings
@@ -74,7 +74,7 @@ After:
   Daily brief length: 350 words maximum
   Needs you today: up to 3 items
 
-This takes effect on tomorrow's brief. Save it?
+Saved. This takes effect on tomorrow's brief.
 ```
 
 For an action change, show the block field, not a summary:
@@ -89,22 +89,24 @@ Before:
 After:
   Scope: clients@
 
-This takes effect on the next run. Save it?
+Saved. This takes effect on the next run.
 ```
 
 If the change touches `Boundaries`, say so in its own sentence before the diff: "This one changes a hard limit, not a preference."
 
-Several corrections at once: show every diff in one block, and let the owner approve or reject each. Do not fold four changes into one yes.
+Several corrections at once: apply each one, then show every diff in one block as the record of what was written. Four changes are four visible rows, never one blurred summary. If the owner vetoes any of them after reading, revert that one, within the widening limit in step 5.
 
-## 5. Save, log, confirm
+Ask before saving only when the owner has asked you to, in words like "check with me before saving" or "show me first", and honor that for the rest of the session. If they want every change confirmed from now on, write `Confirm context edits: ask first` under `## Output preferences`, directly like any other correction; later sessions read that row before their first context write and honor it.
 
-On approval, write the change and append a row to the tuning history in `Task Settings`.
+## 5. Log and confirm
+
+The write already happened in step 4. Append a row to the tuning history in `Task Settings` for each change.
 
 ```
 | 2026-08-04 | Daily brief length | default, up to 5 | 350 words, up to 3 |
 | 2026-08-04 | save-draft scope | clients@ and hello@ | clients@ |
 ```
 
-Then one line on what changes and when the owner will see it. If they decline, change nothing and say so.
+Then one line on what changes and when the owner will see it. If the owner objects after seeing the change, revert it and say so. A revert follows tuning's own limits: putting a preference back is direct, but un-narrowing a scope, re-enabling an action, or removing a restriction is a widening that belongs to the ritual, even right after the change it undoes. Say that plainly instead of writing it.
 
 > Saved. Tomorrow's brief will be shorter and drafts will only be saved in clients@. Want me to run today's again with the new settings so you can see it now?
