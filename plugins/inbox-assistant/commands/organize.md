@@ -1,5 +1,5 @@
 ---
-description: Review the inbox and recommend one cleanup plan. Nothing changes until the owner approves it.
+description: Review the inbox and recommend one cleanup plan. Nothing changes until the owner approves it, and an applied plan can become standing upkeep rules for a scheduled daily cleanup.
 ---
 
 # /organize
@@ -73,6 +73,34 @@ Organization work proceeds in this order when the selected plan needs the action
 5. `delete`
 
 Deletion is optional and comes last. The first deletion application is interactive, separated from every archive batch, and requires a fresh list of exact targets plus a yes immediately before the batch. The course path never recommends unattended scheduled deletion.
+
+### Offer to keep it up
+
+Once a batch has applied and you have verified the result, that part of the plan has proved itself on the owner's real mail. Offer to save its recurring part so a daily run can hold the mailbox where the owner just put it.
+
+Ask once, in one question:
+
+> Want these as standing rules so a daily run can keep this up?
+
+That question is the whole gate. Saving standing rules is a new standing automation, so it gets one clear yes of its own, the same way creating a scheduled task does. Once the owner says yes, or asks for it themselves, write the rules and announce them with the exact before and after, like every other write to their files. Do not ask a second time and do not put each rule to a separate vote.
+
+The rules go under `## Upkeep rules` in `Task Settings`. Append the heading if it is not there, never rewrite the file, and never touch another section.
+
+Each rule is concrete and provider-aware, so a run months from now can apply it without re-deciding anything:
+
+```
+## Upkeep rules
+- Messages from known-noise senders older than 2 days: archive.
+- Receipts from payment processors: label Receipts, mark read.
+- Newsletters in the Promotions category older than 7 days: archive.
+```
+
+Two limits on what a rule may say, and both are hard:
+
+- **A rule may only name one of the four cleanup actions, `label`, `archive`, `mark-read`, or `move`, and only one whose control block is enabled and tested.** Drafting and sending belong to follow-through, never to a standing rule. A rule pointing at an action that is off produces a proposal every morning and never a change, which teaches the owner to stop reading the report. Leave it out, say which action it would need, and say what turning that action on takes.
+- **`delete` may never appear in a rule.** Not for one category, not for one sender, not when the owner asks for it directly. The delete-shaped case is the pile of aging newsletters the owner wants gone: archive is the rule, and deletion stays a live `/organize` decision with a fresh list of exact targets and a yes immediately before the batch. A standing rule cannot produce that list and cannot carry that yes, so a scheduled run never gets to hold either.
+
+Then point at the cadence. `/inbox-assistant:schedule upkeep` puts those rules on a daily run named `Inbox Assistant: Daily Cleanup`, and that run applies these rules and nothing else.
 
 ## Follow-up automation boundary
 

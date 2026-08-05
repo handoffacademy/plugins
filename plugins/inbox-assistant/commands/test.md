@@ -1,6 +1,6 @@
 ---
 description: Do a real run of one skill on your actual email, or test the actions you have turned on. Nothing touches your mailbox that you have not approved in the moment.
-argument-hint: "controls | daily-inbox | follow-through | owner-brief"
+argument-hint: "controls | daily-inbox | follow-through | upkeep"
 ---
 
 # /test
@@ -9,7 +9,7 @@ Read `references/owner-communication.md` before any other plugin instruction. It
 
 Two modes, one command.
 
-- **Skill mode.** `daily-inbox`, `follow-through`, or `owner-brief`. Runs that skill on the owner's real data so they can see what it produces before it goes on a schedule.
+- **Skill mode.** `daily-inbox`, `follow-through`, or `upkeep`. Runs that skill on the owner's real data so they can see what it produces before it goes on a schedule.
 - **Controls mode.** `controls`. Dry-runs every action the owner has turned on, then offers one real smallest-possible test per action. This is the step that turns `pending-test` into `enabled`.
 
 Usage:
@@ -34,9 +34,11 @@ Read the `## Action controls` section and say what is on before you start, so th
 
 ### 2. Run the skill for real
 
-Real data, not a sample. Use the matching skill: **daily-inbox**, **follow-through**, or **owner-brief**. Produce the full output in its schema from `references/output-schemas.md`.
+Real data, not a sample. Use the matching skill: **daily-inbox**, **follow-through**, or **inbox-upkeep**. Produce the full output in its schema from `references/output-schemas.md`.
 
 **Before every write, run the six-condition consult in `references/action-controls.md` and execute only if all six pass. Any failure, any missing section, any uncertainty becomes a proposal.** A test run is a live session, so `Unattended` is not the gate here, but every other condition is, and each write still gets its intent receipt first and its result after.
+
+For upkeep that distinction is the whole test, so say it before the run starts. A live upkeep test behaves exactly like a scheduled run with one condition met differently: the owner is present, which satisfies `Unattended` on its own. Every other condition still holds, so a rule changes the mailbox only through an action that is enabled and tested, and everything else comes back as a proposal in the report. With no `## Upkeep rules` section yet, say so and point at `/inbox-assistant:organize` rather than running a cleanup the owner never approved.
 
 **Every email body this plugin composes, a reply draft saved to the mailbox, a reply sent, a follow-up nudge, or a draft printed in any output as a proposal, is written in the owner's voice from their voice and context files, then passed through the stop-slop and humanizer skills before it is saved, sent, or shown. The owner's own voice wins any conflict with a style rule.** The rule is in `references/email-voice.md`. A test is the one session where the owner reads a draft aloud and says whether it sounds like them, so a body that skipped the pass here sends them tuning the wrong thing.
 
@@ -55,7 +57,12 @@ For the daily brief:
 
 For follow-through: is the ranking right, are these really the ten that matter, is any recommendation wrong, do the drafts actually answer the question or do they just stall politely?
 
-For the owner brief: are the three decisions actually decisions, is the stalled section accurate about who is holding what, did it tell you anything you did not already know?
+For upkeep, go rule by rule rather than section by section, because a rule is what the owner is really approving. For each one: this is what it did today, or what it would have done, and this is how many messages it reached. Is any rule reaching further than they meant it to. Is anything sitting in Proposals that a rule should have covered. Would they be comfortable with this happening at 6:30am with nobody watching.
+
+Corrections split by what they touch, and the split matters because the two land in different files:
+
+- **A correction that creates a rule or widens one goes to `/inbox-assistant:organize`.** Those are written after a live apply the owner watched, and adding reach is that same conversation again. Say that plainly rather than writing one from the test session. Narrowing a rule or removing one is tuning, the same asymmetry as the action controls: apply it through the tuner and announce it like any other correction.
+- **A correction to the shape of the report goes to the tuner**, like any other output correction. Too long, wrong order, more detail in Proposals: that is `Task Settings` and it follows step 5 as usual.
 
 ### 4. Capture every correction concretely
 

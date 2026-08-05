@@ -1,6 +1,6 @@
 ---
 name: inbox-assistant-schedule
-description: Create, repair, or explain a recurring Inbox Assistant task in ChatGPT or Codex. Use when the user types /inbox-assistant:schedule, asks to schedule a daily brief, follow-through review, or owner reset, or needs a legacy scheduled task recreated safely.
+description: Create, repair, or explain a recurring Inbox Assistant task in ChatGPT or Codex. Use when the user types /inbox-assistant:schedule, asks to schedule a daily brief, follow-through review, or daily cleanup, or needs a legacy scheduled task recreated safely.
 ---
 
 # Inbox Assistant Schedule

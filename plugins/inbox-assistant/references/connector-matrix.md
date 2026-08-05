@@ -22,18 +22,18 @@ Tool names differ between Zapier accounts and connector versions. Read routing m
 
 | Capability | Primary route | Fallback or degradation | Used by |
 |---|---|---|---|
-| Read new mail | Native Gmail or native Microsoft 365 | Zapier mail find action | daily-inbox, follow-through, owner-brief, inbox-organization |
-| Read sent mail | Native connector scoped to sent | Zapier mail find action scoped to sent | follow-through, owner-brief, setup voice read when native sent access exists |
+| Read new mail | Native Gmail or native Microsoft 365 | Zapier mail find action | daily-inbox, follow-through, inbox-organization, inbox-upkeep |
+| Read sent mail | Native connector scoped to sent | Zapier mail find action scoped to sent | follow-through, setup voice read when native sent access exists |
 | Read a full thread | Native connector returning message bodies | Zapier find action returning bodies | all mail skills |
 | Save or update a reply draft | Exact Zapier tool in `save-draft` control | Draft text appears in the output | daily-inbox, follow-through |
 | Send or reply | Exact Zapier tool in `send-reply` control | Draft or nudge remains a proposal | follow-through |
-| Archive | Exact Zapier tool in `archive` control | Archive list remains a proposal | daily-inbox, inbox-organization |
+| Archive | Exact Zapier tool in `archive` control | Archive list remains a proposal | daily-inbox, inbox-organization, inbox-upkeep |
 | Delete or move to trash | Exact Zapier tool in `delete` control | Delete candidates remain a separate proposal | inbox-organization |
-| Move between folders | Exact Zapier tool in `move` control | Move list remains a proposal | inbox-organization |
-| Apply labels, tags, categories, flags, or stars | Exact Zapier tool in `label` control | Organization labels remain a proposal | daily-inbox, inbox-organization |
-| Mark read or unread | Exact Zapier tool in `mark-read` control | Read-state changes remain proposals | daily-inbox, inbox-organization |
+| Move between folders | Exact Zapier tool in `move` control | Move list remains a proposal | inbox-organization, inbox-upkeep |
+| Apply labels, tags, categories, flags, or stars | Exact Zapier tool in `label` control | Organization labels remain a proposal | daily-inbox, inbox-organization, inbox-upkeep |
+| Mark read or unread | Exact Zapier tool in `mark-read` control | Read-state changes remain proposals | daily-inbox, inbox-organization, inbox-upkeep |
 | Save the four context files and state ledger | Files in the member's project or workspace | Return proposed contents and name the persistence gap | setup, tune, every run |
-| Run on a schedule | Host product recurring task retaining the full safety preamble | Prepare the exact proposal without claiming it was scheduled | daily-inbox, follow-through, owner-brief |
+| Run on a schedule | Host product recurring task retaining the full safety preamble | Prepare the exact proposal without claiming it was scheduled | daily-inbox, follow-through, inbox-upkeep |
 
 Write rows have no fallback write route. A missing Zapier tool degrades to a proposal, never to a native write or another Zapier action.
 
@@ -92,7 +92,7 @@ Name the capability, effect, route, and fix.
 | Zapier entirely, native mail read present | Full audit, briefs, queues, drafts as text, all changes as proposals | Any Inbox Assistant mailbox write |
 | Zapier draft tool | Draft text in outputs | Drafts saved into the mailbox |
 | Zapier organization tools | Audit and preview in full | Applying the missing organization actions |
-| Sent-mail access on both routes | Daily inbox and partial owner brief | The "They owe you" half of follow-through |
+| Sent-mail access on both routes | Daily inbox | The "They owe you" half of follow-through |
 | Every mail read route | Nothing | Every mail skill |
 
 A partial run says what it covered and what it did not. It never presents limited coverage as complete.
