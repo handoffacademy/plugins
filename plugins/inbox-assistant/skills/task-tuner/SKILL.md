@@ -17,11 +17,11 @@ A correction that only fixes today's output is a correction the owner has to rep
 
 **What it reads.** The correction in the owner's own words, the run being corrected, the current `Task Settings` including its `## Action controls` section, and `references/action-controls.md` for what tuning may touch.
 
-**What it produces.** A concrete rule, the exact before and after of the setting, and once the owner approves, an updated `Task Settings` with a row appended to the tuning history.
+**What it produces.** A concrete rule, the exact before and after of the setting, and an updated `Task Settings` written as the owner gives the corrections, with a row appended to the tuning history.
 
-**What it never does.** Change a setting without showing the before and after. Write to `Boundaries` without saying explicitly that a boundary is being changed. Turn an action on. Widen a scope. Interpret a correction about one run as a permanent rule without confirming that is what the owner meant.
+**What it never does.** Change a setting without showing the before and after. Write to `Boundaries` without saying explicitly that a boundary is being changed. Turn an action on. Widen a scope. Turn a correction into a question when the wording already answers it: feedback is durable by default, and only wording that scopes itself to one run is worth asking about. "Skip Marcus today" is this run. "Stop chasing Marcus" is a rule.
 
-**What needs your approval.** Every write to any of the owner's context files.
+**What needs your approval.** Nothing, by default. The correction is the approval: it is applied as given and announced with the exact before and after. If the owner asks to be checked with before saving, honor that for the rest of the session, and if they want it every time, record `Confirm context edits: ask first` under `## Output preferences` like any other correction.
 
 ## The four steps
 
@@ -69,7 +69,7 @@ Three failure categories:
 2. **The correction that would silence an escalation.** "Stop flagging the Nadia thread, it is stressful." Do not write a rule that hides a flagged category. Offer the version you can do: move the flag out of the top position, keep it in the brief. Say why.
 3. **The exception carved into a boundary.** "Archive the personal@ stuff too, just that one folder." `personal@` is on the never-read list, and a tuning change cannot reach across a boundary. Say which file holds that line and that changing it is a deliberate edit to `Boundaries`, not a preference.
 
-### 4. Show the exact before and after, then save and log
+### 4. Write the change, then show the exact before and after, then log it
 
 Always. Never a description of the change, always the text.
 
@@ -85,7 +85,7 @@ After:
   Daily brief length: 350 words maximum
   Needs you today: up to 3 items
 
-This takes effect on tomorrow's brief. Want me to save it?
+Saved. This takes effect on tomorrow's brief.
 ```
 
 For an action change, show the block field itself:
@@ -100,23 +100,43 @@ Before:
 After:
   Scope: clients@
 
-This takes effect on the next run. Want me to save it?
+Saved. This takes effect on the next run.
 ```
 
 If the change touches `Boundaries`, say so in a separate sentence before the diff: "This one changes a hard limit, not a preference."
 
-On approval, write the change and append to the tuning history table.
+The change is already written by this point. Append it to the tuning history table.
 
 ```
 | 2026-08-04 | Daily brief length | default, up to 5 | 350 words, up to 3 |
 | 2026-08-04 | save-draft scope | clients@ and hello@ | clients@ |
 ```
 
-Then confirm in one line which skill changes and when the owner will see it. If they decline, change nothing and say so.
+Then confirm in one line which skill changes and when the owner will see it. If the owner objects after seeing the change, revert it, within the revert rule below.
+
+## The correction is the approval
+
+After setup, a correction or an answer the owner gives is the approval. Apply it, then announce the exact before and after in the same breath, as a statement, never as a question. Ask before saving only when the owner has asked you to, in words like "check with me before saving" or "show me first", and honor that for the rest of the session. If the owner objects after seeing a change, revert it, within the revert rule below.
+
+**A revert is a write like any other, with the same limits.** Putting a preference back is direct: the brief length, the urgency definition, a voice line. Putting reach back is not. Un-narrowing a scope, re-enabling an action, or removing a line from `Restrictions` or `Boundaries` is a widening, and widening belongs to the ritual even one minute after the change it undoes, the same asymmetry as step 2's off switch. The owner narrows `save-draft` to `clients@`, then says "actually, put it back": say plainly that putting `hello@` back is a widening, ask for the outcome they want and use its contextual capability flow, and leave the scope narrowed until it runs.
+
+**The standing preference has a name.** When the owner wants every change confirmed from now on, write `Confirm context edits: ask first` under `## Output preferences` in `Task Settings`, directly, like any other correction. Before the first context write of a run, read `## Output preferences`: if that row reads `ask first`, the saved row outranks this default, so show the diff and wait for the yes. "Stop checking with me" removes the row in one direct write.
+
+Three ways that goes wrong:
+
+1. **The diff with a question mark on the end.** The before and after block is exactly right and the last line reads "Save it?" The block stays as it is. The tail becomes "Saved. Takes effect on tomorrow's brief."
+2. **The re-ask after an instruction.** The owner says "cap it at 350 words" and the reply is "shall I apply that?" They already said it. Apply it and announce it.
+3. **The batch vote.** Four corrections come back as four diffs waiting for an approve or a reject on each. Apply all four and list the four rows written. A veto afterwards reverts that one, within the revert rule.
+
+Three places where asking is still right:
+
+- **The ambiguous correction.** "Too long" could mean fewer items or shorter items. That is a question about meaning, not about permission. Ask it, then apply the answer.
+- **The owner who asked to be checked with.** They said "show me first", so show them first for the rest of the session, and save it as a preference if they said always.
+- **Anything reaching the mailbox.** Mailbox actions, the enable ritual, the live test, and the scheduled-task confirmation keep every approval they already have. This default covers writes to the owner's own context files and nothing else, and tuning's limits over `## Action controls` are unchanged: narrow or switch off, never enable, never widen.
 
 ## One correction at a time
 
-If the owner gives four corrections at once, translate all four, show all four diffs in one block, and let them approve or reject each. Do not batch them into a single yes.
+If the owner gives four corrections at once, translate all four, apply all four, and show every diff in one block as the record of what was written. Four changes are four visible rows, never one blurred summary. If the owner vetoes one after reading, revert that one, within the revert rule above.
 
 ## What tuning cannot fix
 

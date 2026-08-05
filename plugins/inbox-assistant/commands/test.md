@@ -1,5 +1,5 @@
 ---
-description: Do a real run of one skill on your actual email, or test the actions you have turned on. Nothing happens that you have not approved in the moment.
+description: Do a real run of one skill on your actual email, or test the actions you have turned on. Nothing touches your mailbox that you have not approved in the moment.
 argument-hint: "controls | daily-inbox | follow-through | owner-brief"
 ---
 
@@ -73,7 +73,7 @@ Ask a clarifying question whenever a correction could mean two different setting
 
 ### 5. Hand corrections to the tuner
 
-Once you have them all, use the **task-tuner** skill: show the exact before and after for each setting, get the owner's approval, and write them into `Task Settings`. Do not silently apply a correction just because they said it during the test.
+Once you have them all, use the **task-tuner** skill. It writes each correction into `Task Settings` as the owner gave it, then reports each row with its exact before and after. The correction the owner said out loud is the approval, so the thing to get right is visibility: no setting changes without the owner reading the text that changed.
 
 If a correction is really a request to turn an action on, ask for the specific outcome and enter that outcome's contextual capability flow. Tuning never enables anything.
 
@@ -81,7 +81,7 @@ If a correction is really a request to turn an action on, ask for the specific o
 
 Sessions do not remember each other. When the owner runs `/inbox-assistant:schedule` next week, that session has no way to know this test happened unless it was written down. So write it to the `Last tested` table in `Task Settings`.
 
-Show the row first and get a yes, the same as any other write to the owner's files.
+Write the row, then show it as written, the same as any other write to the owner's files.
 
 ```
 File: Task Settings
@@ -91,15 +91,15 @@ Before:
   | daily-inbox | not yet tested | | |
 
 After:
-  | daily-inbox | 2026-08-04 | tuned, output approved | Gmail hello@ through the Claude connector. save-draft on, 3 drafts saved. Personal mailbox out of scope. |
+  | daily-inbox | 2026-08-04 | tuned then approved | Gmail hello@ through the Claude connector. save-draft on, 3 drafts saved. Personal mailbox out of scope. |
 
-Save it?
+Recorded.
 ```
 
 Fill the three columns honestly, because a later run trusts them:
 
 - **Date.** When the test actually ran.
-- **Result.** One of: output approved, tuned then approved, or needs work. If the owner was not happy with the output, write "needs work" and say what is unresolved. Never record approval they did not give.
+- **Result.** One of: output approved, tuned then approved, or needs work. Write "output approved" only if the owner actually said during the walkthrough that the output was good. Write "tuned then approved" only once the owner has said, after the corrections landed, that the output now works for them, which usually happens after the re-run in step 7. Corrections applied with no verdict after them is "needs work", with a note that the re-run is pending. The verdict on the output belongs to the owner, so never record one they did not give.
 - **Coverage.** Which mailboxes the test actually read, which route each one came through, which actions were on and how many times each ran, and anything out of scope or unavailable. A test that read Gmail through Zapier does not prove the native connector works, and a schedule run six weeks later has no other way to know that.
 
 If the owner stopped the test partway, record what happened rather than leaving the row untouched. A row saying "needs work, stopped before the drafting section" is more useful to a future session than a blank.
