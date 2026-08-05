@@ -88,7 +88,7 @@ Take inventory of three routes, matching on capability rather than on an exact t
 
 | Route | Look for | Gives the owner |
 |---|---|---|
-| Native mail read | The Gmail or Outlook connector Anthropic ships in claude.ai | Every brief, every follow-through queue, every weekly reset |
+| Native mail read | The Gmail or Outlook connector Anthropic ships in claude.ai | Every daily brief and every follow-through queue |
 | Zapier mail read | A find-email action for that mailbox | The same reads, spending Zapier tasks, for a mailbox no native connector reaches |
 | Zapier tools visible at all | Any Zapier action in this session | Whether stage 2 has anything to work with yet |
 
@@ -321,7 +321,7 @@ Always write those escalation lines into the file even if the owner does not nam
 | Skill | Date | Result | Coverage |
 | daily-inbox | not yet tested | | |
 | follow-through | not yet tested | | |
-| owner-brief | not yet tested | | |
+| inbox-upkeep | not yet tested | | |
 
 ## Definition of urgent
 - 
@@ -515,10 +515,10 @@ Three failure categories:
 
 Do what is possible, name what is blocked, never fake completeness. When something is missing, end with a short block that names the route and the place the fix lives.
 
-Read-only is a tier, not a failure. A member with a native mail connector and no Zapier gets every brief, every follow-through queue, and every weekly reset, with drafts as text they copy and tidy-ups as things they apply.
+Read-only is a tier, not a failure. A member with a native mail connector and no Zapier gets every daily brief and every follow-through queue, with drafts as text they copy and tidy-ups as things they apply. The daily cleanup is not part of that tier: it applies standing rules through actions, so it arrives once the owner has run `/inbox-assistant:organize` and saved its rules.
 
 > **Done:** business profile, approved sources, boundaries, task settings, and your state ledger. Reading your Gmail through your Claude connector, verified just now.
-> **Working today:** daily brief, follow-through, weekly reset. Drafts come to you as text in the brief.
+> **Working today:** daily brief and follow-through. Drafts come to you as text in the brief.
 > **Not yet:** anything I do myself. Every action is off, which is the default.
 > **Turns it on:** the Setting up Zapier MCP lesson at portal.themotherofai.com, then ask me for the exact outcome you want. I will enable only the capability it needs.
 

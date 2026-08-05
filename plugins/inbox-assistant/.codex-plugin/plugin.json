@@ -1,6 +1,6 @@
 {
   "name": "inbox-assistant",
-  "version": "3.8.0",
+  "version": "3.9.0",
   "description": "Start read-only, receive inbox briefs, and enable one controlled Gmail or Outlook action only when a specific outcome needs it.",
   "author": {
     "name": "Mother of AI",

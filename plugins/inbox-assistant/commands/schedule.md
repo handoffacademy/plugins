@@ -1,6 +1,6 @@
 ---
 description: Put one skill on a cadence as a cloud scheduled task, after you approve the exact name, time, and what it will do.
-argument-hint: "daily-inbox | follow-through | owner-brief"
+argument-hint: "daily-inbox | follow-through | upkeep"
 ---
 
 # /schedule
@@ -15,7 +15,7 @@ Usage:
 /schedule $ARGUMENTS
 ```
 
-The argument names exactly one skill: `daily-inbox`, `follow-through`, or `owner-brief`. With no argument, or one you do not recognize, list those three and ask which the owner means. Do not guess, and do not schedule two skills from one run of this command. If the owner wants all three, that is three runs of this command, and say so plainly rather than treating one yes as three.
+The argument names exactly one skill: `daily-inbox`, `follow-through`, or `upkeep`. With no argument, or one you do not recognize, list those three and ask which the owner means. Do not guess, and do not schedule two skills from one run of this command. If the owner wants all three, that is three runs of this command, and say so plainly rather than treating one yes as three.
 
 ## 1. Say how this works before proposing anything
 
@@ -37,6 +37,8 @@ The argument names exactly one skill: `daily-inbox`, `follow-through`, or `owner
 | Coverage names a mailbox that is no longer connected      | Say the test does not cover the current setup and recommend a fresh test              |
 
 The owner can override any of these and schedule anyway. Say plainly what that choice is: an untested skill means finding out it is wrong on a Monday morning instead of now. Then do it if they still want it.
+
+This gate covers upkeep exactly as it covers the other two. Its `Last tested` row is written by `/inbox-assistant:test upkeep`, which runs the owner's standing rules on real mail and walks them through what each rule did. A cleanup nobody has watched run once is the worst of the three to schedule blind, because it is the one that changes the mailbox every single morning.
 
 **The routes are connected.** Check against `references/connector-matrix.md`. Reads come from the native Gmail or Microsoft 365 connector, with Zapier find actions as the fallback. Do not offer to schedule a skill that has no read route. Say which connection it needs and where that connection is made: native connectors in the host product's connector settings, and Zapier through the Setting up Zapier MCP lesson at portal.themotherofai.com.
 
@@ -92,7 +94,7 @@ Use the preferred brief time and time zone from `Business Profile`. Say why, and
 | -------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
 | daily-inbox    | Weekday mornings, at the owner's preferred time, typically 7:00 or 8:00am | Ready before the day starts, five days a week. Weekends off unless the owner asks.                                                    |
 | follow-through | Twice weekly, Monday and Thursday mornings                                | Monday catches what went quiet over the weekend, Thursday catches it before the week closes. Daily is too often and turns into noise. |
-| owner-brief    | Friday afternoon, around 3:00pm                                           | The week is done enough to synthesize and there is still time to act on a decision.                                                   |
+| upkeep         | Daily, typically early morning before the daily brief                     | A tidy inbox every morning without spending the owner's attention on it.                                                              |
 
 ### If the owner asks what a cadence costs
 
@@ -105,7 +107,9 @@ State the exact name, schedule, read source, approval mode, what it will do, and
 If enabled and tested actions apply to the selected skill, offer two honest modes before the proposal:
 
 1. **Read-only.** The prompt fixes every action as proposal-only even when Task Settings later changes.
-2. **Action-enabled.** The prompt names only the enabled, tested, in-scope actions selected for this task. For a Daily Brief, that may include `save-draft`, `label`, `archive`, or `mark-read`. For follow-through, it may include `save-draft` and the narrowly scoped `send-reply` nudge mode. Do not recommend scheduled deletion. Owner Brief is always read-only.
+2. **Action-enabled.** The prompt names only the enabled, tested, in-scope actions selected for this task. For a Daily Brief, that may include `save-draft`, `label`, `archive`, or `mark-read`. For follow-through, it may include `save-draft` and the narrowly scoped `send-reply` nudge mode. For upkeep, it may include `label`, `archive`, `mark-read`, or `move`, and only the ones the owner's standing rules actually name. Do not recommend scheduled deletion, and never put `delete` in an upkeep task whatever a rule seems to ask for.
+
+**Upkeep is inherently action-enabled.** Its whole job is applying rules the owner already approved, so an upkeep task with nothing turned on is a task with nothing to do. Create one anyway if the owner asks, and say exactly what they get: a task whose rules name actions that are off, untested, or not marked `Unattended: yes` produces a report of what it would have done and one line per rule saying why nothing ran. That is a useful dry run every morning, and it is not a cleanup. Say which of the two you are creating before the confirmation, not after the first run.
 
 The proposal lists every permitted action and every prohibited action. A write-enabled Daily Brief may save drafts, apply labels, archive confirmed low-value mail, or deliberately mark selected categories read only when those exact controls pass at run time. Everything else remains a proposal.
 
@@ -121,7 +125,7 @@ Naming convention, so `/inbox-assistant:pause` and `/inbox-assistant:status` can
 
 - `Inbox Assistant: Daily Brief`
 - `Inbox Assistant: Follow-Through`
-- `Inbox Assistant: Weekly Owner Reset`
+- `Inbox Assistant: Daily Cleanup`
 
 Then record it in the `## Scheduled tasks` table in `Inbox Assistant State`: task name, the date created, `v2` in the Preamble column, and its state. That is what `/inbox-assistant:status` reads.
 
@@ -331,28 +335,43 @@ means writing a draft addressed to the right person, never messaging them and ne
 task for them.
 ```
 
-### Skill block: owner-brief
+### Skill block: upkeep
 
 ```
 Load these skills by name before reading anything: safety-escalation, business-context,
-owner-brief. Read all four context files first, Boundaries before the others, then
+inbox-upkeep. Read all four context files first, Boundaries before the others, then
 Inbox Assistant State.
 
-Then produce the Weekly Owner Reset from the past week of mail in the mailboxes listed in
-Approved Sources, and anything listed under trusted sources in that file. The owner-brief row in
-the Checkpoints table records what the last reset covered. Read through the route that file
-names for each source, one route per mailbox. This run takes no action of any kind: it uses no
-write route, connected or not, enabled or not, so there is nothing here to consult the action
-controls about.
+Then apply the owner's standing rules and nothing else. Read the "## Upkeep rules" section of
+Task Settings. If that section is missing or empty, this run has nothing to do: return a short
+report saying there are no standing rules yet and that /inbox-assistant:organize is where they
+are created, and stop. This run never writes a rule, never widens one, and never decides on a
+cleanup of its own. A scheduled run never bootstraps an organization plan.
 
-Follow the owner-brief schema in references/output-schemas.md exactly. One page. What moved,
-what stalled, risks, and the three decisions only the owner can make. Each stalled item names who is
-holding it. Each risk names the signal already present in the data. If there
-are fewer than three real decisions, say so rather than padding. If there are more, take the
-three with the shortest fuse and say how many were left out.
+For each rule, find the messages that rule describes in the mailboxes listed in Approved
+Sources, using the read route that file names for each one. The window starts at the
+inbox-upkeep row in the Checkpoints table and ends now; on a first run with no checkpoint, use
+the last 7 days. Skip anything already listed under Processed sources, and skip anything a
+boundary excludes.
 
-Synthesize, do not summarize. Cite no source you did not actually read this run. Everything the
-brief surfaces is the owner's to act on.
+Before every write, run the six-condition consult in references/action-controls.md and execute
+only if all six pass. Any failure, any missing section, any uncertainty becomes a proposal in
+the report. A rule acts only through an action that is enabled, tested, and marked
+Unattended: yes, and only inside that action's scope and outside its restrictions. Anything a
+rule does not clearly cover is a proposal with its counts and its exact targets, never an
+action.
+
+Delete nothing. No rule may name deletion, and a rule whose effect resolves to delete,
+including moving mail to trash or spam, is refused and reported as a malformed rule.
+
+A rule may resolve only to label, archive, mark-read, or move. A rule that resolves to any
+other action, saving a draft, sending anything, or deleting, is malformed: refuse the write
+and report the rule in Skipped.
+
+At most 50 items in one run, counted across every rule together. Count what was left over and
+say so in the report, so the next run picks it up.
+
+Follow the inbox-upkeep schema in references/output-schemas.md exactly.
 ```
 
 ## 6. No scheduled task may reference anything local

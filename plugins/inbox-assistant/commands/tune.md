@@ -44,6 +44,8 @@ Tuning has exactly two powers over the `## Action controls` section:
 
 Tuning may never set `Status: enabled` or `pending-test`, may never edit `Zapier tool`, `Account route`, `Enable phrase recorded`, or `Last tested`, and may never widen a scope or remove a restriction. Those belong to the ritual.
 
+The `## Upkeep rules` section works the same way: narrowing a rule or removing one is immediate tuning, and creating or widening one belongs to a live `/inbox-assistant:organize` apply, never to tuning.
+
 Three failure categories:
 
 1. **The enable request in tuning clothes.** "Just let you send the easy ones" or "go ahead and start archiving." Say plainly that turning an action on takes the full exact-tool ritual, ask for the specific outcome, and enter that outcome's contextual capability flow. Do not expose setup-stage language. Offer what tuning can do instead: draft more of them, or tighten where the actions already on are allowed to reach.
