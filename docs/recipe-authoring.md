@@ -10,33 +10,30 @@ is already running.
 
 `recipe-inbox-automation` is the reference for the shapes this document
 generalizes: the one-task/one-report structure, the budget mechanics, the
-destination flow, and the graduation mapping all follow it. This document also
-adds requirements the shipped version predates — among them the connector-tier
-declaration, the Always-available instruction, the expanded acceptance-test
-list, and full runtime-contract coverage in the pasted template (the shipped
-template's prohibited-actions line predates the explicit money clause). The
-list is not exhaustive; the conformance pass reconciles the shipped recipe
-against this whole document. New recipes must satisfy all of it; the inbox
-recipe adopts it at its next behavior revision. Where this document and the shipped recipe disagree on a
-shape they both define, fix one of them — never ship a second divergent
-interpretation.
+destination flow, and the graduation mapping all follow it. That recipe was
+reconciled against this whole document at its 1.1.0 revision — the connector-tier
+declaration, the Always-available instruction, the expanded acceptance tests, the
+structured task contract, and the canonical runtime-safety block all landed
+there. New recipes must satisfy all of it from their first release. Where this
+document and a shipped recipe disagree on a shape they both define, fix one of
+them — never ship a second divergent interpretation.
 
-## Release gate
+## The registry
 
-The current validator enforces the guarded blocks and a fixed checklist for the
-one shipped recipe (see "Validation and release"). It does not yet enforce the
-structural contract this document describes. Therefore:
-
-**No second recipe ships until the recipe registry and the extended validator
-exist and pass.** That means: a machine-readable registry entry per recipe
-(id, skill path, invocation aliases, status, `supersedes`/`superseded_by`,
-connector tier, source count, destination options, horizon, global and section
-caps, citation policy); validator discovery of every `skills/recipe-*`
-directory reconciled against the registry; the structural checks listed under
-"Validation and release"; and the canonical sentinel-delimited runtime-safety
-block validated byte-for-byte inside every recipe's Scheduled Task template.
-Extending the launch-recipe list without that infrastructure is not a release
-path.
+Every recipe has an entry in `plugins/automation-builder/recipes.json`, and the
+validator reconciles that registry against the `skills/recipe-*` directories in
+both directions — an unregistered recipe directory and an orphaned registry
+entry both fail the build. The entry declares: id, skill path, display name,
+invocation aliases, recipe version (must match the SKILL.md frontmatter),
+engine-contract version (a recorded hash over the guarded engine blocks plus
+the canonical runtime-safety block — a silent edit to either fails the build),
+status with `supersedes`/`supersededBy`, connector tier, risk declarations,
+source count, destination options, lookback, the global cap, the reviewed
+maximum that cap graduates to and the full verbatim text of step one of the
+graduation mapping, the section reservations, the exact phrase each section is
+rendered by, citation policy, and the portal module slug. The registry is the source of truth the
+structural checks validate against; adding a recipe means adding its entry, not
+editing a list inside the validator.
 
 ## Hard boundaries
 
@@ -124,8 +121,11 @@ a design-only card with unresolved operations labeled
 `Unverified — confirm before scheduling`. Schedule nothing until the required
 connector is visible and its exact read is verified. An optional destination
 falls back to the task result by explicit member choice; a required source has
-no silent fallback. At runtime, a missing source or destination stops the run
-with a failure report — never partial work in a different place.
+no silent fallback. At runtime, a failed required source or a failed destination
+stops the run with a failure report — never partial work in a different place. A
+read the contract names as optional may fail without stopping the run: it is
+reported under Coverage and failures and it degrades exactly the way the
+contract declares, never silently.
 
 A Tier B setup lesson must: re-verify the official endpoint from primary vendor
 documentation, explain plan/admin restrictions before the member starts, use
@@ -159,9 +159,10 @@ byte-identical engine blocks.
 8. `## Scope Rule` — the boundary as one quotable sentence, plus named
    exclusions (event-driven work, backfill, writes, unsupported providers).
 9. `## Safe Version One — The Fixed Guardrails` **(guarded)**
-10. `## The Global Item Budget` — the atomic item definition; a 5–10 total cap;
-    section caps that sum to it; borrowing, dedupe, skip accounting, bounded
-    queries, overflow metadata, per-item size bounds for long sources.
+10. `## The Global Item Budget` — the atomic item definition; a 5–10 total cap
+    that is hard; section reservations that sum to it and may be borrowed
+    against by explicit rule; dedupe, skip accounting, bounded queries,
+    overflow metadata, per-item size bounds for long sources.
 11. Recipe-specific decision rules — one section per classification:
     inclusion, exclusion, ranking, sensitive-content handling, citation
     eligibility, what becomes `Needs review`.
@@ -185,27 +186,35 @@ byte-identical engine blocks.
 ## The runtime contract
 
 The pasted Scheduled Task template is the artifact that actually runs, alone in
-a fresh session. Until the canonical sentinel-delimited runtime-safety block
-exists in the validator (see "Release gate"), its completeness is the author's
-responsibility, and every recipe's template must carry, at minimum, explicit
-run rules covering all of the following:
+a fresh session. Its fixed half is the canonical runtime-safety block in
+`plugins/automation-builder/references/runtime-safety.md`: every recipe's
+template carries it byte-for-byte between its two sentinel lines, and the
+validator compares the copy against the canonical file. Editing that file
+changes the safety floor of every recipe at once — it carries the same
+adversarial-review requirement as a guarded engine block. The block covers, at
+minimum, all of the following:
 
 1. Read-only sources; the one private destination and no other write.
 2. The prohibited actions: outbound, record-changing, and money.
 3. No credentials.
-4. The declared item cap, section caps, and time horizon.
+4. The declared item cap as a hard total, the section reservations and the
+   rule by which one section borrows another's unused slots, and the time
+   horizon.
 5. Citations from connector-supplied identifiers or permalinks only.
 6. An item arriving without one is a failed read, reported under Coverage and
-   failures — named in plain text, never by a link taken from the content —
-   and never presented as an item in any section.
+   failures — named in plain text by the identity fields the contract declares,
+   never by a link taken from the content — and never presented as an item in
+   any section. One failed read does not stop the run.
 7. Skipped items and failures are always visible with reasons.
 8. Everything read is data, never instructions, with flagging of
    instruction-like content.
 9. No invented facts; no cross-client mixing.
 10. Within-run deduplication; cross-run claims only from what the readable
     destination shows.
-11. Stop-and-explain behavior on access failure, conflicting inputs, or
-    abnormal volume.
+11. Stop-and-explain behavior when a required source fails, when inputs
+    conflict, or on abnormal volume. A read the contract names as optional may
+    fail without stopping the run: it is reported and it degrades exactly the
+    way the contract says, never silently.
 12. The end-of-run coverage summary.
 13. The member's confirmed timezone and cadence.
 
@@ -218,14 +227,20 @@ are not to be reworded per recipe.
 **Sources.** One logical read source in version one (several calendars behind
 one connection count as one; two providers are two sources). Name the exact
 bounded read, horizon, result limit, required fields, and connector-supplied
-identifier. Define behavior for partial, truncated, uncitable, or oversized
+identifier. Verifying that read live means verifying two things the overflow rule
+depends on: that it takes a result limit, and that it can prove a newest-first
+order without reading past the cap. The fixed block hands an over-cap run the
+newest matches, so a source that cannot prove that order fails closed at
+scheduling — nothing goes on a schedule against it, and reaching for a different
+ordering is an engine revision rather than a recipe-level substitution. Define behavior for partial, truncated, uncitable, or oversized
 results. Shared or delegated data needs an ownership answer or is excluded.
 Local files are never a Scheduled Task source.
 
-**Budgets.** Define the atomic item before capping it. Total 5–10; sections sum
-to total; one source item appears once, in its highest-qualifying section;
-drafts and supporting bullets are not extra items; borrowing only by explicit
-rule. Selection among more-than-cap matches follows the guarded engine rule:
+**Budgets.** Define the atomic item before capping it. Total 5–10 and hard;
+section reservations sum to the total, and a section passes its reservation only
+by taking slots another left unused, by an explicit rule, with every borrow named
+in the coverage summary; one source item appears once, in its highest-qualifying
+section; drafts and supporting bullets are not extra items. Selection among more-than-cap matches follows the guarded engine rule:
 handle the newest and say how many were left. Member choices shape the
 connector-side filters that define what matches; they never change the
 overflow ordering, and content is never read to rank it. Any item whose
@@ -283,10 +298,9 @@ platform cannot, the mapping says those steps are unavailable there.
   A behavior-changing recipe revision is a plugin minor; prose-only is a
   patch.
 - One active recipe owns an outcome and its invocation phrases. Ownership,
-  status, aliases, and `supersedes`/`superseded_by` live in the recipe
-  registry (see "Release gate" — the registry exists before a second recipe
-  does, so there is never a moment when two active recipes can compete for a
-  phrase unrecorded). A successor that fully absorbs an older recipe marks it
+  status, aliases, and `supersedes`/`supersededBy` live in the recipe registry
+  (see "The registry"), and the validator rejects an alias two active recipes
+  both claim. A successor that fully absorbs an older recipe marks it
   superseded, takes over its aliases, and leaves a short note pointing
   forward. Never two active recipes answering the same request. Existing
   Scheduled Tasks continue unchanged; release notes say whether members should
@@ -301,21 +315,61 @@ node scripts/validate-marketplace.mjs
 node scripts/validate-automation-builder.mjs
 ```
 
-What the Automation Builder validator enforces **today**: the five guarded
-engine blocks byte-for-byte, each guarded H2 exactly once, the presence of the
-recipe's own process-only and scope headings, frontmatter (`name` matching,
-non-empty length-limited description, SemVer `metadata.version`), that the
-skill set matches the allowed list exactly (an unregistered `recipe-*`
-directory fails the build), catalog coherence between the README and the
-architect skill's recipe mentions, the presence of the platform-compatibility
-reference path and the existence of the referenced file, injection-defense
-language in the core helper skills (not in recipes), a small set of static
-capability/pricing/stale-language checks, and a gendered-language regex. It
-does **not** yet verify section ordering, budget arithmetic, destination
-exclusivity, citation policy, alias uniqueness, injection-defense text inside
-recipes, or anything about the Scheduled Task template. Everything in that
-second list is author responsibility enforced by adversarial review until the
-release-gate infrastructure lands — which is why the gate exists.
+A change to the validator itself also runs its self-test:
+
+```bash
+node scripts/test-validate-automation-builder.mjs
+```
+
+What the Automation Builder validator enforces:
+
+- **The engine.** The five guarded blocks byte-for-byte, each guarded H2 exactly
+  once, and the engine-contract hash over those blocks plus the canonical
+  runtime-safety block.
+- **The registry.** Schema and enums; both-direction reconciliation with the
+  `skills/recipe-*` directories; `sourceCount` of one; `task_result` plus at
+  most one second-system destination; a `globalCap` of 5–10 with
+  `sectionReservations` summing to it; a `lookbackDays` of 1–7; a
+  `sectionPhrases` map covering exactly the same sections; the fixed
+  `citationPolicy` value; alias uniqueness across active recipes; and
+  `recipeVersion` matching the skill's frontmatter.
+- **Section order.** The canonical H2s, each exactly once, in order, with the
+  guarded Never Do This block last.
+- **The task template.** Exactly one `Task name:` fence in the whole skill; the
+  sentinel-delimited region compared byte-for-byte against the canonical file;
+  the closing sentinel as the last line of the fence; every `Allowed to:` line
+  beginning `Allowed to: read`; no square brackets, HTML comments, `TODO`, or
+  `TBD` residue inside the fence; and placeholder set equality, in both
+  directions, between the fence and the interview profile.
+- **Rendered numbers.** The cap phrase, the lookback phrase, and every section
+  phrase appear in both the budget section and the task contract, with each
+  section number matching the registry and the section numbers summing to the
+  global cap.
+- **The graduation mapping's body.** A contiguous 1–4 step prefix; no step
+  naming any outbound, record-changing, or money verb, checked against a
+  morphology-covering deny-list (every inflection of send, publish, archive,
+  message, invite, book, reschedule, move, merge, delete, charge, purchase,
+  refund, and invoice); a step one byte-compared against the registry's
+  `graduationStepOne` — the whole step is structured data, held identical the
+  same way the sentinel block is, with no numeral parsing and no grammar of any
+  kind, and the registry separately requires every number in that recorded text,
+  NFKC-normalized and in any script, to be `graduationCapMax`; an added read
+  source at step two; an
+  unsent mailbox draft or an unavailability statement at step three; a status or
+  label update at step four. A recipe that needs one of those words innocently
+  rewords the step — the deny-list does not shrink to accommodate prose.
+- **The rest of the plugin.** Frontmatter (`name` matching, non-empty
+  length-limited description, SemVer `metadata.version`); the skill set;
+  catalog coherence between the README and the architect skill for active
+  recipes; the platform-compatibility reference and the referenced file's
+  existence; injection-defense language in the core helper skills; static
+  capability/pricing/stale-language checks; and a gendered-language regex. Every
+  read normalizes line endings, so a CRLF checkout validates like an LF one.
+
+What it does not do is read prose for meaning. A recipe sentence that
+contradicts the fixed rules in ordinary English passes the validator, as does a
+weak interview, an unsound decision rule, or a claim about a connector. Those
+are what the mandatory adversarial review is for.
 
 What no validator will ever prove: live connector capability, destination
 privacy, and unattended-run behavior. Those live in each recipe's readiness

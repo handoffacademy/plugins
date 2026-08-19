@@ -75,15 +75,23 @@ its design engine at one connector or workflow. A recipe lives in
 `## This Skill Is Process-Only` and `## Scope Rule` sections.
 
 Every recipe copies the engine's five guarded safety blocks from
-`skills/automation-architect/SKILL.md` verbatim. `scripts/validate-automation-builder.mjs`
-holds them identical after line-ending normalization and fails on any drift, so
-those five blocks cannot come apart one recipe at a time. That is the whole of what the script holds. The
-text inside the guarded blocks, and every other instruction around them, is
-guarded by the adversarial review rather than by the validator.
+`skills/automation-architect/SKILL.md` verbatim, and pastes the canonical
+runtime-safety block from `references/runtime-safety.md` between its sentinel
+lines inside its Scheduled Task template. `scripts/validate-automation-builder.mjs`
+holds both identical after line-ending normalization, so neither can come apart
+one recipe at a time. It also holds the registry (`recipes.json`, reconciled
+against the `skills/recipe-*` directories in both directions, with a recorded
+hash over the guarded blocks plus the runtime-safety block), the recipe's
+section order, the structure of the pasted task (one task block per skill, the
+fixed rules last, read-only allowances, no authoring residue), the budget and
+lookback values it renders against the registry, its interview placeholders, and
+the steps of its graduation mapping. What the script cannot do is read prose for
+meaning: a sentence that contradicts the fixed rules in ordinary English still
+passes, which is what the adversarial review is for.
 
 Adding a recipe means: the new directory, a mention in the engine skill and the
-plugin README, its name in the validator's `LAUNCH_RECIPES` list, and a minor
-version bump. Changing the text of a guarded block is a different kind of change:
+plugin README, its entry in `plugins/automation-builder/recipes.json`, and a
+minor version bump. Changing the text of a guarded block is a different kind of change:
 it rewrites the safety floor for every recipe at once, so it needs an adversarial
 review before release.
 

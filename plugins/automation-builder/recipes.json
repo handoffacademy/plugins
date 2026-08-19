@@ -1,0 +1,47 @@
+{
+  "recipes": [
+    {
+      "id": "recipe-inbox-automation",
+      "skillPath": "skills/recipe-inbox-automation/SKILL.md",
+      "displayName": "Inbox Automation",
+      "aliases": [
+        "the inbox recipe",
+        "inbox automation",
+        "a daily inbox digest",
+        "a morning mail brief",
+        "a follow-up radar"
+      ],
+      "recipeVersion": "1.1.0",
+      "engineContractVersion": "1:5242b3e966f732910c9c8dc08dc71d813f6a2c94afafed7c05804392f4ac50db",
+      "status": "active",
+      "supersedes": null,
+      "supersededBy": null,
+      "connectorTier": "A",
+      "declarations": [
+        "drafts",
+        "second_system_destination"
+      ],
+      "sourceCount": 1,
+      "destinations": [
+        "task_result",
+        "notion_private_page"
+      ],
+      "lookbackDays": 7,
+      "globalCap": 10,
+      "graduationCapMax": 15,
+      "graduationStepOne": "**Raise the item cap to 15.** 15 is the reviewed maximum for this recipe, not a first increment on the way to something larger, and the section reservations scale with it. A replacement task, never an edit to the running one.",
+      "sectionReservations": {
+        "triage": 4,
+        "follow-ups": 4,
+        "declutter": 2
+      },
+      "sectionPhrases": {
+        "triage": "up to 4 that need attention today",
+        "follow-ups": "up to 4 waiting on a reply",
+        "declutter": "up to 2 candidates to clear"
+      },
+      "citationPolicy": "connector_identifier_or_permalink",
+      "portalModuleSlug": "recipe-inbox-automation"
+    }
+  ]
+}
