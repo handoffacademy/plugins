@@ -29,8 +29,9 @@ engine-contract version (a recorded hash over the guarded engine blocks plus
 the canonical runtime-safety block — a silent edit to either fails the build),
 status with `supersedes`/`supersededBy`, connector tier, risk declarations,
 source count, destination options, lookback, the global cap, the reviewed
-maximum that cap graduates to and the full verbatim text of step one of the
-graduation mapping, the section reservations, the exact phrase each section is
+maximum that cap graduates to, the full verbatim text of step one of the
+graduation mapping, the number of ladder steps that mapping ends at, the
+section reservations, the exact phrase each section is
 rendered by, citation policy, and the portal module slug. The registry is the source of truth the
 structural checks validate against; adding a recipe means adding its entry, not
 editing a list inside the validator.
@@ -60,7 +61,8 @@ decisions:
 Route the idea before designing it:
 
 - **Recipe** — clock-based recurrence creates the value, the source can be read
-  within the fixed bounds (5–10 items, 7-day horizon), and one private review
+  within the fixed bounds (5–10 items, and either a horizon of at most 7 days or
+  a declared current-state read with no history window), and one private review
   is useful without changing the source.
 - **Skill** — an on-demand capability needing fresh judgment or an explicit
   approval moment each time (proposal drafting, video editing, image
@@ -198,8 +200,9 @@ minimum, all of the following:
 2. The prohibited actions: outbound, record-changing, and money.
 3. No credentials.
 4. The declared item cap as a hard total, the section reservations and the
-   rule by which one section borrows another's unused slots, and the time
-   horizon.
+   rule by which one section borrows another's unused slots, and the bounds the
+   contract declares — a time horizon where the source has one, a filter set
+   over a current-state read where it does not.
 5. Citations from connector-supplied identifiers or permalinks only.
 6. An item arriving without one is a failed read, reported under Coverage and
    failures — named in plain text by the identity fields the contract declares,
@@ -329,7 +332,10 @@ What the Automation Builder validator enforces:
 - **The registry.** Schema and enums; both-direction reconciliation with the
   `skills/recipe-*` directories; `sourceCount` of one; `task_result` plus at
   most one second-system destination; a `globalCap` of 5–10 with
-  `sectionReservations` summing to it; a `lookbackDays` of 1–7; a
+  `sectionReservations` summing to it; a `lookbackDays` of 0–7, where 0 is a
+  source with no history window at all — a current-state directory read rather
+  than a date range — and renders as the fixed snapshot phrase the validator
+  holds as a constant instead of "at most N days"; a
   `sectionPhrases` map covering exactly the same sections; the fixed
   `citationPolicy` value; alias uniqueness across active recipes; and
   `recipeVersion` matching the skill's frontmatter.
@@ -345,7 +351,10 @@ What the Automation Builder validator enforces:
   phrase appear in both the budget section and the task contract, with each
   section number matching the registry and the section numbers summing to the
   global cap.
-- **The graduation mapping's body.** A contiguous 1–4 step prefix; no step
+- **The graduation mapping's body.** A contiguous 1–4 step prefix of exactly
+  the length recorded in the registry's `graduationStepCount`, so a mapping that
+  stops early cannot be extended by a later step even when that step's own text
+  would satisfy every other check; no step
   naming any outbound, record-changing, or money verb, checked against a
   morphology-covering deny-list (every inflection of send, publish, archive,
   message, invite, book, reschedule, move, merge, delete, charge, purchase,

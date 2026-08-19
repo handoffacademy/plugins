@@ -12,7 +12,7 @@
         "a follow-up radar"
       ],
       "recipeVersion": "1.1.0",
-      "engineContractVersion": "1:5242b3e966f732910c9c8dc08dc71d813f6a2c94afafed7c05804392f4ac50db",
+      "engineContractVersion": "1:cc875879d82bba5d7bd38a77d4df97f78925555e60c0ea1e1cc4fea8c4df9231",
       "status": "active",
       "supersedes": null,
       "supersededBy": null,
@@ -29,6 +29,7 @@
       "lookbackDays": 7,
       "globalCap": 10,
       "graduationCapMax": 15,
+      "graduationStepCount": 4,
       "graduationStepOne": "**Raise the item cap to 15.** 15 is the reviewed maximum for this recipe, not a first increment on the way to something larger, and the section reservations scale with it. A replacement task, never an edit to the running one.",
       "sectionReservations": {
         "triage": 4,
@@ -42,6 +43,47 @@
       },
       "citationPolicy": "connector_identifier_or_permalink",
       "portalModuleSlug": "recipe-inbox-automation"
+    },
+    {
+      "id": "recipe-prospect-shortlist",
+      "skillPath": "skills/recipe-prospect-shortlist/SKILL.md",
+      "displayName": "Prospect Shortlist",
+      "aliases": [
+        "the prospect recipe",
+        "a prospect shortlist",
+        "weekly prospecting",
+        "find speaking-engagement prospects"
+      ],
+      "recipeVersion": "1.0.0",
+      "engineContractVersion": "1:cc875879d82bba5d7bd38a77d4df97f78925555e60c0ea1e1cc4fea8c4df9231",
+      "status": "active",
+      "supersedes": null,
+      "supersededBy": null,
+      "connectorTier": "A",
+      "declarations": [
+        "drafts"
+      ],
+      "sourceCount": 1,
+      "destinations": [
+        "task_result"
+      ],
+      "lookbackDays": 0,
+      "globalCap": 10,
+      "graduationCapMax": 15,
+      "graduationStepCount": 2,
+      "graduationStepOne": "**Raise the item cap to 15.** 15 is the reviewed maximum for this recipe, not a first increment on the way to something larger, and the section reservations scale with it. A replacement task, never an edit to the running one.",
+      "sectionReservations": {
+        "strongest": 5,
+        "review": 3,
+        "skipped": 2
+      },
+      "sectionPhrases": {
+        "strongest": "up to 5 strongest matches",
+        "review": "up to 3 that need review",
+        "skipped": "up to 2 inspected and skipped"
+      },
+      "citationPolicy": "connector_identifier_or_permalink",
+      "portalModuleSlug": "recipe-prospect-shortlist"
     }
   ]
 }

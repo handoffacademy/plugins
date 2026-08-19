@@ -36,6 +36,11 @@ const SENTINEL_START = "FIXED SAFETY RULES — part of every recipe, do not edit
 const SENTINEL_END = "END OF FIXED SAFETY RULES";
 const ENGINE_CONTRACT_GENERATION = "1";
 const CITATION_POLICY = "connector_identifier_or_permalink";
+// A source with no history window at all — a current-state directory read
+// rather than a date range — declares lookbackDays 0 and renders it with this
+// exact phrase. The phrase is a constant here rather than a registry field so
+// that every snapshot recipe says the same thing in the same words.
+const SNAPSHOT_LOOKBACK_PHRASE = "current state only, with no lookback window";
 const STATUSES = new Set(["active", "deprecated", "superseded"]);
 const CONNECTOR_TIERS = new Set(["A", "B"]);
 const DECLARATIONS = new Set([
@@ -441,11 +446,25 @@ for (const [position, entry] of registry.entries()) {
       );
     }
   }
-  if (!Number.isInteger(entry.lookbackDays) || entry.lookbackDays < 1 || entry.lookbackDays > 7) {
-    failures.push(`${label}: lookbackDays must be a whole number from 1 to 7.`);
+  if (!Number.isInteger(entry.lookbackDays) || entry.lookbackDays < 0 || entry.lookbackDays > 7) {
+    failures.push(
+      `${label}: lookbackDays must be a whole number from 0 to 7, where 0 is a current-state snapshot.`,
+    );
   }
   if (!Number.isInteger(entry.globalCap) || entry.globalCap < 5 || entry.globalCap > 10) {
     failures.push(`${label}: globalCap must be a whole number from 5 to 10.`);
+  }
+  // The mapping's length is structured data too. A mapping that stops early
+  // records where it stops, so a later step cannot be appended to it — not even
+  // one whose own text would satisfy every other check.
+  if (
+    !Number.isInteger(entry.graduationStepCount) ||
+    entry.graduationStepCount < 1 ||
+    entry.graduationStepCount > 4
+  ) {
+    failures.push(
+      `${label}: graduationStepCount must be the whole number of ladder steps the mapping ends at, from 1 to 4.`,
+    );
   }
   if (!Number.isInteger(entry.graduationCapMax) || entry.graduationCapMax <= entry.globalCap) {
     failures.push(
@@ -689,7 +708,9 @@ for (const recipe of recipeDirectories) {
     if (entry && Number.isInteger(entry.globalCap) && Number.isInteger(entry.lookbackDays)) {
       const phrases = [
         `${entry.globalCap} items per run, in total`,
-        `at most ${entry.lookbackDays} days`,
+        entry.lookbackDays === 0
+          ? SNAPSHOT_LOOKBACK_PHRASE
+          : `at most ${entry.lookbackDays} days`,
       ];
       for (const phrase of phrases) {
         if (!contract.includes(phrase)) {
@@ -797,6 +818,13 @@ for (const recipe of recipeDirectories) {
     if (steps.length === 0 || steps.length > 4) {
       failures.push(
         `${label}: "${mapping.text}" must map 1 to 4 ladder steps, found ${steps.length}.`,
+      );
+    } else if (
+      Number.isInteger(entry?.graduationStepCount) &&
+      steps.length !== entry.graduationStepCount
+    ) {
+      failures.push(
+        `${label}: "${mapping.text}" maps ${steps.length} ladder steps, and the registry records ${entry.graduationStepCount}.`,
       );
     }
     for (const [offset, step] of steps.entries()) {

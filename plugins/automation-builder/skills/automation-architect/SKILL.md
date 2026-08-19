@@ -28,6 +28,8 @@ Do NOT use this skill for one-off tasks ("summarize this document", "write this 
 
 When the user wants the ready-made inbox automation — one morning digest of what needs them today, who is still waiting on a reply, and what looks safe to clear — the `recipe-inbox-automation` skill carries that design already made. Use it instead of running the interview below, and come back here for anything outside its shape.
 
+When the user wants the ready-made prospect shortlist — one weekly private list of people matching the targeting rules they confirm, read from a single bounded Apollo people search, with optional short first-touch drafts sitting inside the report — the `recipe-prospect-shortlist` skill carries that design already made. Same rule: use it instead of the interview below, and come back here for anything outside its shape.
+
 ## Design Mode and Ship Mode — Know Which Sitting You Are In
 
 This work often happens in two sittings, and they have different stopping points.

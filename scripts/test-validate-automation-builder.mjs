@@ -15,6 +15,7 @@ const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const VALIDATOR = "scripts/validate-automation-builder.mjs";
 const PLUGIN = "plugins/automation-builder";
 const RECIPE = "skills/recipe-inbox-automation/SKILL.md";
+const SNAPSHOT_RECIPE = "skills/recipe-prospect-shortlist/SKILL.md";
 
 function sandbox() {
   const root = mkdtempSync(join(tmpdir(), "automation-builder-validate-"));
@@ -383,6 +384,84 @@ const cases = [
         parsed.recipes[0].aliases.push("The Inbox Recipe");
       }),
     expect: 'alias "the inbox recipe" is claimed 2 times',
+  },
+  {
+    name: "a current-state budget section rendering a day window instead of the snapshot phrase",
+    mutate: (root) =>
+      rewrite(root, SNAPSHOT_RECIPE, (source) =>
+        source.replace(
+          "each one a unique Apollo person record the run actually inspected, read from the current state only, with no lookback window",
+          "each one a unique Apollo person record the run actually inspected, read over at most 0 days",
+        ),
+      ),
+    expect:
+      '"## The Global Item Budget" must state "current state only, with no lookback window"',
+  },
+  {
+    name: "a current-state task contract rendering a day window instead of the snapshot phrase",
+    mutate: (root) =>
+      rewrite(root, SNAPSHOT_RECIPE, (source) =>
+        source.replace(
+          "Lookback window: none. This task reads the current state only, with no lookback window, and reads no history of the source at all.",
+          "Lookback window: at most 0 days.",
+        ),
+      ),
+    expect:
+      'recipe contract must state "current state only, with no lookback window"',
+  },
+  {
+    name: "a registry lookback that contradicts a rendered current-state read",
+    mutate: (root) =>
+      registry(root, (parsed) => {
+        parsed.recipes.find((entry) => entry.id === "recipe-prospect-shortlist").lookbackDays = 7;
+      }),
+    expect: 'recipe contract must state "at most 7 days"',
+  },
+  {
+    name: "a lookback window below the snapshot floor",
+    mutate: (root) =>
+      registry(root, (parsed) => {
+        parsed.recipes[0].lookbackDays = -1;
+      }),
+    expect: "lookbackDays must be a whole number from 0 to 7",
+  },
+  {
+    name: "a lookback window past the seven-day ceiling",
+    mutate: (root) =>
+      registry(root, (parsed) => {
+        parsed.recipes[0].lookbackDays = 8;
+      }),
+    expect: "lookbackDays must be a whole number from 0 to 7",
+  },
+  {
+    name: "a forbidden step appended past the end of a mapping that stopped early",
+    mutate: (root) =>
+      rewrite(root, SNAPSHOT_RECIPE, (source) =>
+        source.replace(
+          "\n\n**This mapping stops after step two",
+          "\n\n3. **Send the approved first-touch drafts.**\n\n**This mapping stops after step two",
+        ),
+      ),
+    expect: 'graduation step 3 names "Send"',
+  },
+  {
+    name: "an otherwise-valid step appended past the end of a mapping that stopped early",
+    mutate: (root) =>
+      rewrite(root, SNAPSHOT_RECIPE, (source) =>
+        source.replace(
+          "\n\n**This mapping stops after step two",
+          "\n\n3. **Save an unsent draft into the mailbox.** The exact draft-writing capability and nothing else, approval still on.\n\n**This mapping stops after step two",
+        ),
+      ),
+    expect: "maps 3 ladder steps, and the registry records 2",
+  },
+  {
+    name: "a mapping length the registry does not record",
+    mutate: (root) =>
+      registry(root, (parsed) => {
+        delete parsed.recipes[0].graduationStepCount;
+      }),
+    expect: "graduationStepCount must be the whole number of ladder steps",
   },
 ];
 
