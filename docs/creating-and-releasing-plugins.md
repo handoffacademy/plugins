@@ -87,6 +87,28 @@ version bump. Changing the text of a guarded block is a different kind of change
 it rewrites the safety floor for every recipe at once, so it needs an adversarial
 review before release.
 
+### Agents in Automation Builder (deferred)
+
+Automation Builder ships skills only, deliberately. Add a Claude agent to it when
+one of the following becomes true, not before:
+
+- **A capability-evidence agent** covering the Step 0 inventory, the exact-read
+  verification, and the cost and policy reads. Justified once a single design
+  routinely verifies across several apps, or once context loss during those reads
+  is a measured failure rather than a worry. Reading documentation is not on its
+  own a reason to add one.
+- **A graduation auditor**, only once the plugin itself orchestrates writes and can
+  put an immutable payload, the full effect set, the enforced tool reach, and
+  duplicate receipts in front of every write. An auditor is never the only safety
+  control.
+- **A read-stage analyst**, if the opportunity scan or the manual test stage grows
+  past its current bounded single-source shape, or starts losing its evidence of
+  what was covered.
+
+Any Claude-only agent stays an optional optimization with an inline skill fallback,
+under the cross-platform rules above: the workflow must still run correctly, and
+fail closed, on a platform that has no agents.
+
 ## 3. Keep the member README complete
 
 The scaffold writes the minimum required member documentation. Preserve and
