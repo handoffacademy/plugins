@@ -55,9 +55,15 @@ After three clean supervised runs it can take on one more permission at a time, 
 
 Plenty of people stop at version one and stay there for good. An automation that reliably prepares work you review in thirty seconds is a finished product, not a half-built one.
 
-## Recipes are coming
+## Recipes
 
-Future updates add ready-made recipes: MOAI-recommended automations built around specific tools and workflows, so a common job starts from a working design instead of a blank page. They arrive as plugin updates, with nothing to re-download and nothing to reinstall.
+Recipes are MOAI-recommended automations that arrive already designed, so a common job starts from a working shape instead of a blank page. In Claude Cowork they arrive as ordinary plugin updates, with nothing to re-download and nothing to reinstall. In ChatGPT and Codex, updates follow the reinstall steps above.
+
+**The first one is here: Inbox Automation.** Ask for it by name and you get one automation that reads your mailbox every weekday morning and prepares a private digest in three parts: who needs you today, who is still waiting on a reply in either direction with a draft for each one that is safe to draft, and what looks safe to clear. Nothing sends, nothing gets archived, nothing gets deleted. Anything legal, financial, personnel, or upset comes to you flagged with no draft attached, because those threads need you rather than a head start. It still asks about your mailbox, your rules, and where the digest should land, and it still tests on your real mail before anything goes on a schedule. The skill behind it is `recipe-inbox-automation`.
+
+Growing this one later follows the same ladder, ending at labels: a bigger batch, a second source, drafts saved in your mailbox, then one label on the items you approved. Archiving is not on the ladder — if you ever want it, it comes afterwards as its own separate change with its own testing. Sending on your behalf is never on it.
+
+More recipes follow the same way, each aimed at a job worth doing every week.
 
 ## Questions
 

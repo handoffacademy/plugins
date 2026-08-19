@@ -16,7 +16,7 @@ const CORE_SKILLS = [
   "automation-connector-discovery",
   "automation-zapier-cost",
 ];
-const LAUNCH_RECIPES = [];
+const LAUNCH_RECIPES = ["recipe-inbox-automation"];
 
 const GUARDED_HEADINGS = [
   "## Step 0 — Readiness Check (Before You Promise Anything)",

@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.1.0
+
+- The first recipe: **Inbox Automation**. Ask for it and Automation Builder builds one weekday-morning digest of who needs you today, who is still waiting on a reply in either direction with a draft for each one that is safe to draft, and what looks safe to clear. It reads and prepares. It never sends, archives, labels, or deletes.
+- Anything legal, financial, personnel, or upset arrives flagged with no draft attached. Those are the threads that need you, not a head start written by something that was not in the room.
+- The design still belongs to you. The recipe fixes the shape, then asks about your mailbox, which messages count as needing you, how long is too long to wait, how you like to sound in a reply, and where the digest should land.
+- The same safety floor as everything else here: ten threads a run, a seven-day window, every item cited from your mail app itself, everything skipped listed with its reason, and one manual test on your real mail before anything goes on a schedule.
+- Growing it later follows a fixed ladder that ends where it should. A bigger batch, then a second source, then drafts saved in your mailbox, then one label on the items you approved. Archiving is not on the ladder at all: if you ever want it, it comes later as its own separate change with its own testing. Sending on your behalf is never on it.
+
 ## 1.0.1
 
 - The connection check now reports back quietly during a design session instead of interrupting with its own questions.

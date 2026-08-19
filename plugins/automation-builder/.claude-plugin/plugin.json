@@ -1,7 +1,7 @@
 {
   "name": "automation-builder",
   "displayName": "Automation Builder",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Asks what tools you use and what outcome you want, then designs one safe automation around your process.",
   "author": {
     "name": "Mother of AI"
