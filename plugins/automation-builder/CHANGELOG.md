@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.1
+
+- The connection check now reports back quietly during a design session instead of interrupting with its own questions.
+
 ## 1.0.0
 
 The automation design work from the Academy, as a plugin you install once.
