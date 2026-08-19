@@ -5,6 +5,18 @@
   },
   "plugins": [
     {
+      "name": "automation-builder",
+      "source": {
+        "source": "local",
+        "path": "./plugins/automation-builder"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
       "name": "inbox-assistant",
       "source": {
         "source": "local",

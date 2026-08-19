@@ -67,6 +67,26 @@ plugins always begin at `1.0.0`. Do not hand-create a second entry or add a
 - Test the real install in both products. A valid manifest is necessary but does
   not prove the workflow loads or behaves correctly.
 
+### Recipe convention (Automation Builder)
+
+Automation Builder is built as a port for recipes: thin-profile skills that aim
+its design engine at one connector or workflow. A recipe lives in
+`plugins/automation-builder/skills/recipe-<outcome>/` and carries its own
+`## This Skill Is Process-Only` and `## Scope Rule` sections.
+
+Every recipe copies the engine's five guarded safety blocks from
+`skills/automation-architect/SKILL.md` verbatim. `scripts/validate-automation-builder.mjs`
+holds them identical after line-ending normalization and fails on any drift, so
+those five blocks cannot come apart one recipe at a time. That is the whole of what the script holds. The
+text inside the guarded blocks, and every other instruction around them, is
+guarded by the adversarial review rather than by the validator.
+
+Adding a recipe means: the new directory, a mention in the engine skill and the
+plugin README, its name in the validator's `LAUNCH_RECIPES` list, and a minor
+version bump. Changing the text of a guarded block is a different kind of change:
+it rewrites the safety floor for every recipe at once, so it needs an adversarial
+review before release.
+
 ## 3. Keep the member README complete
 
 The scaffold writes the minimum required member documentation. Preserve and
@@ -111,6 +131,7 @@ Fetch the current release baseline and run:
 ```bash
 git fetch origin main
 node scripts/validate-marketplace.mjs --base origin/main
+node scripts/validate-automation-builder.mjs
 node scripts/test-inbox-assistant-hook.mjs
 claude plugin validate . --strict
 ```

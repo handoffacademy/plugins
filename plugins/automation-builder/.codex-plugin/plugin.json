@@ -1,0 +1,28 @@
+{
+  "name": "automation-builder",
+  "version": "1.0.0",
+  "description": "Asks what tools you use and what outcome you want, then designs one safe automation around your process.",
+  "author": {
+    "name": "Mother of AI",
+    "url": "https://themotherofai.com"
+  },
+  "homepage": "https://themotherofai.com",
+  "repository": "https://github.com/handoffacademy/plugins",
+  "keywords": ["automation", "scheduled-tasks", "connectors", "zapier", "small-business"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Automation Builder",
+    "shortDescription": "Design one safe automation around the tools you already use",
+    "longDescription": "Asks what tools you actually use and what outcome you want, verifies what those tools can really do against their current documentation, and designs one automation around your process. Version one reads bounded information, prepares a private review only you see, and stops until a real test run comes back clean.",
+    "developerName": "Mother of AI",
+    "category": "Productivity",
+    "capabilities": ["Interactive", "Read", "Write"],
+    "websiteURL": "https://themotherofai.com",
+    "defaultPrompt": [
+      "Help me automate something I do every week.",
+      "What would you need to know to automate my follow-ups?",
+      "What can Automation Builder do?"
+    ],
+    "brandColor": "#F7FE91"
+  }
+}

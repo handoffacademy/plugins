@@ -60,6 +60,9 @@ jobs:
       - name: Validate Inbox Assistant content
         run: node scripts/validate-inbox-assistant.mjs
 
+      - name: Validate Automation Builder content
+        run: node scripts/validate-automation-builder.mjs
+
       - name: Verify Inbox Assistant registers no runtime hooks
         run: node scripts/test-inbox-assistant-hook.mjs
 
