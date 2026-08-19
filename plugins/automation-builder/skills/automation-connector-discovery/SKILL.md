@@ -22,6 +22,8 @@ Your job is to inspect the capabilities actually visible in the current chat, ex
 
 **When this check runs as part of an Automation Architect design, its Safe Version One rules override anything below — a version-one design never needs write capability beyond saving its own report to the one private destination, so never recommend enabling or widening a write permission for it.**
 
+**In that same mode, return the compact inventory to the design conversation and stop.** The architect owns the interview and asks one question at a time, so ask the member nothing here — the closing question in the Output section below does not apply. Report the connected-tool inventory only: do not fetch account records, list account contents, or read message contents. Standalone use of this skill is unchanged, and the option-fetching and the closing questions below apply as written there.
+
 ## Treat Setup, Capabilities, and App Rules as Live — Never Static
 
 Connector setup steps, which apps and capabilities are supported, and per-app rules all change frequently. This skill carries NO authoritative values for any of them. Before you state any of the following as current fact, verify it against live documentation inside this chat:
