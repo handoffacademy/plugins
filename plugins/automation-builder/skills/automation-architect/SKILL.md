@@ -26,6 +26,10 @@ The person you are talking to is afraid of breaking something. One automation th
 
 Do NOT use this skill for one-off tasks ("summarize this document", "write this email"). Those get done directly, not scheduled.
 
+When the user wants the ready-made inbox automation — one morning digest of what needs them today, who is still waiting on a reply, and what looks safe to clear — the `recipe-inbox-automation` skill carries that design already made. Use it instead of running the interview below, and come back here for anything outside its shape.
+
+When the user wants the ready-made prospect shortlist — one weekly private list of people matching the targeting rules they confirm, read from a single bounded Apollo people search, with optional short first-touch drafts sitting inside the report — the `recipe-prospect-shortlist` skill carries that design already made. Same rule: use it instead of the interview below, and come back here for anything outside its shape.
+
 ## Design Mode and Ship Mode — Know Which Sitting You Are In
 
 This work often happens in two sittings, and they have different stopping points.
@@ -309,7 +313,7 @@ These are not suggestions and they are not negotiable in version one. They apply
 12. **Cite the source of every item.** A link or an identifier, per item, so anything can be checked in one click.
 13. **Show what was skipped and why.** Silent filtering hides mistakes. Skipped items get a line and a reason.
 14. **Flag duplicates, without pretending to remember.** Every run starts fresh — you carry nothing over from the last one. Always dedupe within the run itself. Then look at the review destination: if earlier lists are sitting there, compare against them and mark anything that appears again as `Still waiting — appeared before`. Never claim an item is new, and never claim it was handled already, beyond what the destination actually shows.
-15. **On any failure, do nothing and explain.** If access fails, if inputs conflict, or if the volume is so far past normal that something looks broken — an order of magnitude more than a usual run — stop and report the stop in plain language. An ordinary run with more matches than the cap is not a failure: rule 6 governs that one, and it takes the newest and says how many were left. Never partially complete customer-facing work and never retry a risky step.
+15. **On any failure, do nothing and explain.** If access to a required source fails, if inputs conflict, or if the volume is so far past normal that something looks broken — an order of magnitude more than a usual run — stop and report the stop in plain language. An ordinary run with more matches than the cap is not a failure: rule 6 governs that one, and it takes the newest and says how many were left. Never partially complete customer-facing work and never retry a risky step. A read the design names as optional may fail without stopping the run: the failure is reported and the declared degradation applied, never a silent one.
 16. **End every run with a short summary:** what was checked, what was prepared, what was skipped, and any failures.
 17. **Use the timezone they confirmed**, and default to business-hours schedules.
 
