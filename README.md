@@ -49,7 +49,7 @@ Claude Code users can add the same Git marketplace through the plugin interface.
 
 ```bash
 codex plugin marketplace add handoffacademy/plugins
-codex plugin add inbox-assistant@plugins
+codex plugin add automation-builder@plugins
 ```
 
 Start a new Codex task after installation so its skills load.
@@ -58,7 +58,7 @@ To refresh the marketplace and reinstall a plugin:
 
 ```bash
 codex plugin marketplace upgrade plugins
-codex plugin add inbox-assistant@plugins
+codex plugin add automation-builder@plugins
 ```
 
 Claude's Auto-update setting does not update Codex installations.
@@ -67,7 +67,9 @@ Claude's Auto-update setting does not update Codex installations.
 
 | Plugin | Purpose |
 |---|---|
-| [Inbox Assistant](plugins/inbox-assistant) | Email briefs, stalled follow-ups, safe draft replies, and recurring inbox reviews with mailbox actions disabled until you enable and test them |
+| [Automation Builder](plugins/automation-builder) | Asks what tools you use and what outcome you want, checks what those tools can really do, and designs one automation around your process that reads and prepares a private review before anything else |
+
+Plugins under `archived/` are kept for reference and are not part of the marketplace listing.
 
 ## Create or release a plugin
 
