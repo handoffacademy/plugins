@@ -5,7 +5,7 @@ import { dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const pluginRoot = join(repoRoot, "plugins", "inbox-assistant");
+const pluginRoot = join(repoRoot, "archived", "inbox-assistant");
 const allowTag = "terminology-allow";
 const commandNames = [
   "organize",
