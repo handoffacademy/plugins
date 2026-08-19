@@ -1,3 +1,8 @@
+> **Archived.** This plugin was retired from the marketplace listing on 2026-08-18.
+> It is preserved here unchanged in case it is released again later. While it is
+> archived it cannot be installed from the marketplace, so the installation steps
+> below do not apply for now.
+
 # Inbox Assistant
 
 An Inbox Assistant for your business. It reviews your real inbox, recommends one cleanup plan, applies only the Zapier actions you explicitly enable and test, brings you a morning brief, and chases what has gone quiet.

@@ -5,10 +5,10 @@
   },
   "plugins": [
     {
-      "name": "inbox-assistant",
+      "name": "automation-builder",
       "source": {
         "source": "local",
-        "path": "./plugins/inbox-assistant"
+        "path": "./plugins/automation-builder"
       },
       "policy": {
         "installation": "AVAILABLE",

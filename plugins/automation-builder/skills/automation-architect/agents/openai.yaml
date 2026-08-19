@@ -1,0 +1,4 @@
+interface:
+  display_name: "Automation Architect"
+  short_description: "Design one safe automation around the tools you already use"
+  default_prompt: "Use $automation-architect to design my first automation."
