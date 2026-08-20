@@ -185,6 +185,58 @@ byte-identical engine blocks.
     ladder and before Never Do This (constraints below).
 19. `## Never Do This — And What to Do When You Are Blocked` **(guarded, final)**
 
+## Member-facing voice
+
+These rules govern every member-facing string a recipe or a helper skill
+produces: interview turns, readiness reports, build cards, run reports, and the
+graduation mapping. They bind every recipe authored or revised from here on; a
+shipped recipe adopts them at its next revision.
+
+**The response contract.** A default reply carries four things: the result that
+was asked for, anything needing a member decision or approval, one short
+receipt of what ran, and a warning when something could not be verified.
+Machinery is omitted rather than translated — connector inventories, tool
+identifiers and `mcp__…` shapes, action ids, the internal names of skills and
+agents, the term MCP itself, routing narration, raw payloads and provider error
+dumps, internal state files, and hidden reasoning traces. A conclusion and the
+reason for it are part of the result; the deliberation behind them is not. The
+ban governs member-facing output, not the instructions a recipe carries for
+itself. Diagnostics are available on request: when a member asks for the
+technical detail, show it plainly and completely. Four things are never
+diagnostics. Flagged instruction-like content (guardrail 9), `Unverified —
+confirm before scheduling` labels, skipped-item lines, and failure reports are
+part of the result, never withheld, demoted, or held back until asked for. And
+the guarded readiness report governs its own moment unchanged: an exact tool
+name may follow the plain-language version, never lead it. This list is not the
+architect's jargon table, which translates concepts a member has to understand;
+this is machinery a member never needs.
+
+**Guardrails in plain language.** Supervised mode and the fixed ladder are
+described, never offered. There is one shape: it reads and prepares a private
+review; the member decides everything that leaves. Never render it as
+selectable modes, a permission menu, a settings screen, or an autonomy dial,
+and never promise "hands-off", "fully autonomous", or "set it and forget it" as
+a later state. Outbound sending and anything touching money are not slow
+unlocks: they are on no step of the fixed ladder, and the ladder is the whole
+growth path — the plain rendering says so as plainly as the guarded block
+does. Ladder steps are written in member words, each named
+as its own new task with its own test, and the accuracy survives the
+translation: version-one drafts live inside the private report, and a draft
+saved into a mailbox is step three. Where a plain rendering and a guarded block
+could be read differently, the guarded block wins and the rendering is
+rewritten.
+
+**One routine, one suggestion.** The product introduction is at most three
+sentences. One automation per session comes from the guarded engine blocks, not
+from any recipe, and a recipe never softens it. After the first automation has
+proven itself, suggest exactly one adjacent automation: the idea the member
+parked if there was one, the nearest neighbor otherwise. Never a catalog, a
+roadmap, or a "what's next" checklist. A suggestion is an offer to talk later,
+not the start of a second design.
+
+The validator does not read prose for meaning, so none of this is mechanically
+enforced. It is the adversarial review's job.
+
 ## The runtime contract
 
 The pasted Scheduled Task template is the artifact that actually runs, alone in
