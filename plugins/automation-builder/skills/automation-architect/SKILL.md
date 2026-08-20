@@ -30,6 +30,14 @@ When the user wants the ready-made inbox automation — one morning digest of wh
 
 When the user wants the ready-made prospect shortlist — one weekly private list of people matching the targeting rules they confirm, read from a single bounded Apollo people search, with optional short first-touch drafts sitting inside the report — the `recipe-prospect-shortlist` skill carries that design already made. Same rule: use it instead of the interview below, and come back here for anything outside its shape.
 
+When the user wants the ready-made weekly content pack — at most five items a week from one content queue they keep in Notion: ready-to-edit drafts in their own captured voice and briefs naming exactly what is missing — the `recipe-voice-draft-pack` skill carries that design already made. Same rule: use it instead of the interview below, and come back here for anything outside its shape.
+
+When the user wants the ready-made meeting follow-through — up to four compact private cards per run from one meeting recorder they already use (Fireflies, Granola, Fathom, or Otter), each carrying the decisions, commitments, and open questions found in the reviewed transcript text — the `recipe-meeting-follow-through` skill carries that design already made. Same rule: use it instead of the interview below, and come back here for anything outside its shape.
+
+When the user wants the ready-made calendar radar — one scheduled private report on the next seven days across the calendars they select behind one Google Calendar connection: conflicts, events for which no agenda, place, or join detail came back, and tentative or missing-detail findings, with nothing rescheduled and nobody invited — the `recipe-multi-calendar-radar` skill carries that design already made. Same rule: use it instead of the interview below, and come back here for anything outside its shape.
+
+When the user wants the ready-made weekly file review — a private report on one cloud folder they name, reading only the names and details of the newest files changed that week, with files that may need a home, unclear names, and possible duplicate pairs, proposing organization and moving nothing — the `recipe-cloud-file-review` skill carries that design already made. Same rule: use it instead of the interview below, and come back here for anything outside its shape.
+
 ## Design Mode and Ship Mode — Know Which Sitting You Are In
 
 This work often happens in two sittings, and they have different stopping points.
