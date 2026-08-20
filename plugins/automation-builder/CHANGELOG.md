@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.4.0
+
+- **Tasks already running are untouched.** This release adds four new recipes. Nothing changes for any automation you already built, and the fixed safety rules every task carries are exactly what they were.
+- **Voice Draft Pack.** Ask for it by name and you get one weekly automation that reads a content queue you keep in Notion and prepares a private pack of at most five items: ready-to-edit drafts in your own captured voice, and briefs naming exactly what an idea still needs from you. Where a fact is missing there is no draft at all — you get a brief that says so. Nothing is published anywhere.
+- **Meeting Follow-Through.** One automation that reads up to five recent transcripts from the meeting recorder you already use — Fireflies, Granola, Fathom, or Otter — and prepares private meeting cards: decisions, commitments, and open questions, each tied to its transcript. An action item with no named owner stays unassigned rather than guessed, nobody from the meeting is contacted, and nothing is written to any CRM.
+- **Multi-Calendar Radar.** One automation that reads the next seven days across the calendars you select behind your Google Calendar connection and prepares a private report of conflicts, events missing details, and tentative entries. It never reschedules, declines, invites, or edits anything.
+- **Cloud File Review.** One automation that looks at one folder you name in your cloud drive each week and prepares a private report of files that may need a home, unclear names, and possible duplicate pairs. It proposes and moves nothing — organizing stays in your hands.
+- **Every recipe still works the same way:** it interviews you, checks what your connections can really do, tests on your real data while you watch, and schedules nothing until you have seen a run you trust.
+
 ## 1.3.1
 
 - **Tasks already running are untouched, and no limit moved.** This release changes how Automation Builder talks to you while you design one. What it builds, what it is allowed to do, and every number it works inside are exactly what they were.

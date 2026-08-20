@@ -84,6 +84,174 @@
       },
       "citationPolicy": "connector_identifier_or_permalink",
       "portalModuleSlug": "recipe-prospect-shortlist"
+    },
+    {
+      "id": "recipe-voice-draft-pack",
+      "skillPath": "skills/recipe-voice-draft-pack/SKILL.md",
+      "displayName": "Voice Draft Pack",
+      "aliases": [
+        "the voice draft recipe",
+        "a weekly content draft pack",
+        "turn my content queue into drafts",
+        "draft content in my voice",
+        "prepare my Notion content queue"
+      ],
+      "recipeVersion": "1.0.0",
+      "engineContractVersion": "1:cc875879d82bba5d7bd38a77d4df97f78925555e60c0ea1e1cc4fea8c4df9231",
+      "status": "active",
+      "supersedes": null,
+      "supersededBy": null,
+      "connectorTier": "A",
+      "declarations": [
+        "drafts",
+        "second_system_destination"
+      ],
+      "sourceCount": 1,
+      "destinations": [
+        "task_result",
+        "notion_private_page"
+      ],
+      "lookbackDays": 0,
+      "globalCap": 5,
+      "graduationCapMax": 8,
+      "graduationStepCount": 2,
+      "graduationStepOne": "**Raise the item cap to 8.** 8 is the reviewed maximum for this recipe, not a first increment on the way to something larger, and the section reservations scale with it. A replacement task, never an edit to the running one.",
+      "sectionReservations": {
+        "drafts": 3,
+        "briefs": 2
+      },
+      "sectionPhrases": {
+        "drafts": "up to 3 ready-to-edit drafts",
+        "briefs": "up to 2 briefs needing input"
+      },
+      "citationPolicy": "connector_identifier_or_permalink",
+      "portalModuleSlug": "recipe-voice-draft-pack"
+    },
+    {
+      "id": "recipe-meeting-follow-through",
+      "skillPath": "skills/recipe-meeting-follow-through/SKILL.md",
+      "displayName": "Meeting Follow-Through",
+      "aliases": [
+        "the meeting follow-through recipe",
+        "meeting follow-through",
+        "a weekly meeting follow-through",
+        "meeting transcript cards",
+        "meeting decisions and commitments"
+      ],
+      "recipeVersion": "1.0.0",
+      "engineContractVersion": "1:cc875879d82bba5d7bd38a77d4df97f78925555e60c0ea1e1cc4fea8c4df9231",
+      "status": "active",
+      "supersedes": null,
+      "supersededBy": null,
+      "connectorTier": "A",
+      "declarations": [
+        "review_only",
+        "second_system_destination"
+      ],
+      "sourceCount": 1,
+      "destinations": [
+        "task_result",
+        "notion_private_page"
+      ],
+      "lookbackDays": 7,
+      "globalCap": 5,
+      "graduationCapMax": 8,
+      "graduationStepCount": 4,
+      "graduationStepOne": "**Raise the item cap to 8.** 8 is the reviewed maximum for this recipe, not a first increment on the way to something larger, and the section reservations scale with it. A replacement task, never an edit to the running one.",
+      "sectionReservations": {
+        "meeting-cards": 4,
+        "needs-review": 1
+      },
+      "sectionPhrases": {
+        "meeting-cards": "up to 4 meeting cards",
+        "needs-review": "up to 1 meeting that needs review"
+      },
+      "citationPolicy": "connector_identifier_or_permalink",
+      "portalModuleSlug": "recipe-meeting-follow-through"
+    },
+    {
+      "id": "recipe-multi-calendar-radar",
+      "skillPath": "skills/recipe-multi-calendar-radar/SKILL.md",
+      "displayName": "Multi-Calendar Radar",
+      "aliases": [
+        "the calendar radar recipe",
+        "a multi-calendar radar",
+        "upcoming calendar conflicts",
+        "a weekly calendar conflict check",
+        "calendar preparation gaps"
+      ],
+      "recipeVersion": "1.0.0",
+      "engineContractVersion": "1:cc875879d82bba5d7bd38a77d4df97f78925555e60c0ea1e1cc4fea8c4df9231",
+      "status": "active",
+      "supersedes": null,
+      "supersededBy": null,
+      "connectorTier": "A",
+      "declarations": [
+        "review_only"
+      ],
+      "sourceCount": 1,
+      "destinations": [
+        "task_result"
+      ],
+      "lookbackDays": 7,
+      "globalCap": 10,
+      "graduationCapMax": 15,
+      "graduationStepCount": 4,
+      "graduationStepOne": "**Raise the item cap to 15.** 15 is the reviewed maximum for this recipe, not a first increment on the way to something larger, and the section reservations scale with it. A replacement task, never an edit to the running one.",
+      "sectionReservations": {
+        "conflicts": 4,
+        "preparation-gaps": 3,
+        "tentative-or-missing-detail": 3
+      },
+      "sectionPhrases": {
+        "conflicts": "up to 4 conflict findings",
+        "preparation-gaps": "up to 3 preparation-gap findings",
+        "tentative-or-missing-detail": "up to 3 tentative or missing-detail findings"
+      },
+      "citationPolicy": "connector_identifier_or_permalink",
+      "portalModuleSlug": "recipe-multi-calendar-radar"
+    },
+    {
+      "id": "recipe-cloud-file-review",
+      "skillPath": "skills/recipe-cloud-file-review/SKILL.md",
+      "displayName": "Cloud File Review",
+      "aliases": [
+        "the cloud file review recipe",
+        "a weekly cloud file review",
+        "review my Google Drive",
+        "find files that need organizing",
+        "a cloud file organization review"
+      ],
+      "recipeVersion": "1.0.0",
+      "engineContractVersion": "1:cc875879d82bba5d7bd38a77d4df97f78925555e60c0ea1e1cc4fea8c4df9231",
+      "status": "active",
+      "supersedes": null,
+      "supersededBy": null,
+      "connectorTier": "A",
+      "declarations": [
+        "review_only"
+      ],
+      "sourceCount": 1,
+      "destinations": [
+        "task_result"
+      ],
+      "lookbackDays": 7,
+      "globalCap": 8,
+      "graduationCapMax": 12,
+      "graduationStepCount": 2,
+      "graduationStepOne": "**Raise the item cap to 12.** 12 is the reviewed maximum for this recipe, not a first increment on the way to something larger, and the section reservations scale with it. A replacement task, never an edit to the running one.",
+      "sectionReservations": {
+        "files-needing-a-home": 4,
+        "unclear-names": 2,
+        "duplicate-candidates": 2
+      },
+      "sectionPhrases": {
+        "files-needing-a-home": "up to 4 files that may need a home",
+        "unclear-names": "up to 2 files with unclear names",
+        "duplicate-candidates": "up to 2 files in possible duplicate pairs"
+      },
+      "citationPolicy": "connector_identifier_or_permalink",
+      "portalModuleSlug": "recipe-cloud-file-review"
     }
   ]
 }
