@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.3.1
+
+- **Tasks already running are untouched, and no limit moved.** This release changes how Automation Builder talks to you while you design one. What it builds, what it is allowed to do, and every number it works inside are exactly what they were.
+- **Replies stay on what you asked for.** You get the answer, anything waiting on your decision, one short line about what it did, and a plain warning when something could not be checked. Tool names, lists of connected apps, and raw error text stay out of the way — ask for the technical detail at any point and it will show you all of it. What never waits to be asked for: something it skipped, something that failed, a step it could not verify, and anything it read that tried to give it instructions.
+- **The safety rules get explained in words you already use.** There are no permission levels to pick from and no autonomy setting to turn up. It reads and prepares a private review, and you decide everything that leaves. Ask how it grows later and it walks you through the growth steps in plain language, and is just as clear about what is not on that path at all: sending on your behalf, publishing, and anything touching money.
+- **One suggestion, not a list.** After your first automation has three clean runs behind it, it offers exactly one next idea, usually the one you parked while building this one, instead of handing you a menu of five.
+
 ## 1.3.0
 
 - **Tasks already running are untouched.** Nothing in this release reaches a Scheduled Task you have already created. It adds a second recipe, and it also rewords one line of the fixed safety block that every recipe writes into the task it hands you. The limits themselves are unchanged, so an inbox task built from here on does the same work in the same bounds as one built last week — it simply carries that one line in its newer wording. Both changes are described below.
