@@ -70,8 +70,9 @@ or its manual test because it moved up the list.
 **What it is for.** [One or two sentences, their words.]
 
 **What it reads.**
-- [Source] — [connector name] — Verified [date] / Unverified — confirm at office hours
-- [Source with no connector] — watched routine, you at the keyboard, reading and summarizing only, never on a schedule — Verified [date] / Unverified — confirm at office hours
+- [Source] — [connector name], directly in Claude — Verified [date] / Unverified — confirm at office hours
+- [Source with no direct connection] — through your Zapier connection[, once it is set up — keep this clause wherever the connection is not in place yet; drop it where Step 0 found the connection in place, whether or not this particular read has been checked] — Verified [date] / Unverified — confirm at office hours
+- [Source with no connection of either kind] — watched routine, you at the keyboard, reading and summarizing only, never on a schedule — Verified [date] / Unverified — confirm at office hours
 
 **The Claude Project itself.**
 
@@ -202,6 +203,7 @@ cost. Then this ordered reading list is the standing arrangement rather than a s
 Each connection appears once here, however many projects use it.
 
 - [ ] [App] — [what it is for, which projects use it] — Verified [date] / Unverified — confirm at office hours
+- [ ] Your Zapier connection — the route to [apps with no direct connection, named], set up once. [Include this line whenever any project above reads through Zapier and that connection is not set up yet, and name the projects that are waiting on it.] — Verified [date] / Unverified — confirm at office hours
 - [ ] Notion — the hub's home base, where every digest, record, and dashboard lands. [Include this line whenever Notion is not connected yet, and name which projects start writing to it once it is.] — Verified [date] / Unverified — confirm at office hours
 
 ## What This Hub Will Never Do
@@ -250,6 +252,7 @@ Come back through this document once a week while you are building it. Cross off
 ## Rules for filling it in
 
 - **A card is complete when a stranger could build the space from it and the member could use it on the day it exists.** Missing its knowledge reasons, its day-to-day use block, its Notion destination, its sensitivity line, or any label makes it half-designed. **And a card whose only described behavior is the scheduled task is a task with a project wrapped around it, not a space.** A card with no scheduled task at all can be complete; a card that would collapse into nothing without its task is not.
+- **A source reached through the member's Zapier connection is its own route and is written as one.** It is not a direct connection and it is not a watched routine: it is the rung between them, and it is the one that can still carry scheduled work. Two states get recorded separately here, and one part of the line carries each. **The clause carries the connection:** Step 0's inventory says whether it is in place, and the route line keeps ", once it is set up" wherever it is not. **The label carries the read:** `Verified` or `Unverified` is the only thing that says whether this particular source has been checked through it. A connection that is in place with a read nobody has checked yet is the short clause plus an unverified label, and that is a normal state rather than a gap. Where any project depends on the connection **and it is not set up yet**, setting it up is its own one-time line on the Connections Checklist, exactly as connecting Notion is — the same condition the checklist entry states. A connection the member already has gets no setup line.
 - **A knowledge item with no reason attached is a guess about what the member has lying around, not a setup instruction.** Every item names what it teaches the project about acting in this space, or it comes out.
 - **Skills and plugins are decisions, and "none, because…" is one of them.** A named skill with no argument for why it is a skill rather than a line in the instructions is boilerplate. So is a plugin line that only lists additions: in any space that drafts or handles sensitive material, what is deliberately not enabled belongs on the card, because the absence is the safety property.
 - **The handoff line to the design engine is fixed, including the never-list clause.** Describe the job the task should do; never write the task text here. The engine runs its own interview, verifies the exact read, and tests on real data. A task specified in this document skips all three — and a refusal that lives only in the project instructions never reaches a scheduled run, which is why the handoff carries the project's never-list forward.

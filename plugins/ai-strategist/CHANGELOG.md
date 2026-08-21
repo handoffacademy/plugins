@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.0.1
+
+When an app has no direct connection, your strategy now has one more route to try before it gives up on it.
+
+- **The Zapier bridge joins the ladder.** A source Claude cannot reach directly used to leave two answers: a routine you sit and watch, or nothing on a schedule at all. Now there is a rung between them — your own Zapier connection, set up once, which can carry scheduled reads for apps no direct connection covers. Mail on a personal account, where the direct connection only reaches work accounts, is the case this was written for. It used to come back as impossible to schedule. It is not.
+- **The rungs are tried in order, top down.** A direct connection first, checked for the kind of account you actually have. Then the Zapier route. Then a watched routine. Only when all three are gone does your strategy say a source is out of reach, and it says which rungs it ruled out and why.
+- **It is checked, never assumed.** The route goes into your document as something to set up, with the setup on your connections list, carrying the same Verified or Unverified label as every other line. Whether your Zapier connection can really reach that app, and what running it every morning costs, are two separate checks — and both happen before anything goes on a schedule.
+- **None of the limits moved.** A first version still reads and reports into one private place. A watched routine is still watched, still never scheduled, and still never pointed at a bank. The bridge changes what is reachable, not what is allowed.
+- **The two helper skills now speak this plugin's name.** The connection check and the cost check do the same work they always did; they simply stopped describing themselves as parts of the retired Automation Builder.
+- **Strategies already written do not change on their own.** A document says what it said the day it was written. The next time its capabilities are re-checked, which is what happens before you build from it, the new route gets picked up then.
+
 ## 1.0.0
 
 The Academy's hub strategy work, as a plugin you install once.

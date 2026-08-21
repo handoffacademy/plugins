@@ -2,7 +2,7 @@
 name: hub-strategy
 description: Interviews a non-technical business owner about every business and life area they carry, then writes one personalized Hub Strategy document naming the Claude Projects to create, what each one reads, which skills and plugins it needs, what runs on a schedule, and where its results land in Notion. Verifies every capability against current official documentation inside the session and builds nothing itself.
 metadata:
-  version: 1.0.0
+  version: 1.1.0
 ---
 
 # Hub Strategy
@@ -89,7 +89,7 @@ Some machinery is left out rather than translated into plainer words:
 
 - The term MCP, and tool identifiers of any shape.
 - Action ids, internal parameter names, and raw request or response payloads.
-- The names of the skills doing the work. Say "the design engine" and "the connection check", not their skill ids.
+- The names of the skills doing the work. Say "the design engine", "the connection check", and "the cost check", not their skill ids.
 - Routing narration: "I invoked…", "switching to…", "handing off to…". They asked for a plan, not a tour of the plumbing.
 - Provider error dumps, stack traces, and internal state files.
 - Your own hidden reasoning. A conclusion and the reason for it belong to them. The deliberation behind it does not.
@@ -340,9 +340,45 @@ The document skeleton lives in `../../references/hub-strategy-template.md`. Read
   **What a veto never touches, in any order:** every version-one permission limit, every privacy and destination gate, the manual test before anything is scheduled, the isolation of each walled garden, and the never-list. **Nothing sensitive skips its gates because it was moved forward.** A project built first is built with the same checks it would have had built fifth — moving it up changes when it is built, never what it is allowed to do or what it must pass first. Say that in one line when they exercise the veto, so the order feels like a choice rather than a trade against their safety.
 - **Nothing sensitive gets folded in for convenience.** Each walled garden from Q6 stays its own project, and the document says why in their words. Where two of them share one source, that is one shared open decision with a structural scoping flag, not a note on each card.
 
+## When a Source Has No Connector — The Ladder
+
+Some sources have no native connector. Messaging apps, retail accounts, and personal accounts of brands whose connector only reaches work accounts are the usual ones, and the honest answer is almost never the first "you cannot" that comes to mind.
+
+Four rungs, in this fixed order. **A lower rung is only offered once the rung above it has been verified unavailable in this session** — not assumed unavailable, not skipped because the rung above looked awkward or technical. The order is not arbitrary, and the reason is worth saying out loud: **each rung down trades reliability for reach.** Rung one is the vendor's own route and has the fewest moving parts. Rung two reaches further, through a connection the member owns and pays for, with more between the source and the task. Rung three reaches further still and cannot run unattended at all. Rung four is the truth once the first three are gone, and reaching for it early — before the rungs above it were checked — is the failure this ladder exists to prevent.
+
+**Rung 1 — a native connector, verified in this session.** What the connector directory carries today, under today's name, reaching this member's specific kind of account. The account trap in the session gate applies here and it is where this rung is usually misjudged: a work account under an organization's administration and a personal account of the same brand are frequently not the same connector and not the same permissions. Rung one is unavailable once you have checked that specific case, never because the app sounded unlikely.
+
+**Rung 2 — the Zapier bridge.** A Zapier-hosted connection the member sets up once — the Zapier MCP, which is not a Zap and not a Zapier Agent — and which their account can then use as a route to apps no native connector reaches. That product name is for your own routing only: in front of the member it is "your Zapier connection", because the Response Contract keeps the term MCP off their screen. It is the only rung below the first that can carry scheduled reads, which makes it the whole difference between "this runs every morning" and "you will keep doing this by hand". Its rules:
+
+- **Verify it live, like every other capability.** Whether this specific app and this specific operation are available through Zapier today is a check, never a memory. **The connection check owns the app question — whether this app and this read are reachable through the member's connection. The cost check owns the limits and what running it costs. Both run before anything is scheduled against a Zapier route.** Name them to the member as the connection check and the cost check, never by their skill ids.
+- **Two states, recorded separately.** Whether the bridge itself is connected comes from Step 0's inventory and is a fact about their account. Whether a particular source is reachable through it is a check of its own, per source. Each state is carried by a different part of the line, and they are never conflated. **The clause tracks the bridge:** `through your Zapier connection` whenever the bridge is connected, `through your Zapier connection, once it is set up` whenever it is not, and nothing about the source changes that clause. **The label tracks the read:** `Verified <today's date>` or `Unverified — confirm at office hours`, and it is the only thing that says whether this particular source has been checked. So a connected bridge with an unchecked read is the short clause and an unverified label — a real and common state, and writing it any other way either invents a connection the member does not have or claims a check nobody made. Where it is not there, the setup goes on the Connections Checklist as its own one-time line, exactly the way connecting Notion does.
+- **Label the line like every other capability line.** `Verified <today's date>` when you checked this app and this read against current documentation in this session, `Unverified — confirm at office hours` when you could not. A bridge line with no label reads as verified, which is how a guess gets built.
+- **Every existing guardrail holds over a Zapier route.** Version one reads and reports and does nothing else, into the single private destination the member chose, under the same per-run rules. Nothing relaxes because the route changed, and a source that is out of bounds through a connector is out of bounds through the bridge. **The bridge changes what is reachable, never what is allowed.**
+
+**Rung 3 — the member-present browser routine.** Its rules are in the section below and none of them move: read and summarize only, the member at the keyboard, never on a schedule, and never on a bank or anything else holding money. It is offered once rungs one and two have both been checked and neither covers the source.
+
+**Rung 4 — honestly out of reach today.** Name the one source, say plainly that nothing reaches it on a schedule and nothing watched reaches it either, and carry on with the rest of the map. Rung four is a conclusion, not an opening position.
+
+**Worked example — mail on a personal account.** The member's business mail sits on a personal account of a brand whose native connector reaches work accounts under an organization's administration and not personal ones. You check that specific case, rung one is verified unavailable, and this is exactly where the old answer stopped: a watched routine or nothing, with a morning digest of that mailbox written off as unschedulable. It is not unschedulable. Rung two is the answer here — that mailbox can be reachable through the member's Zapier connection, on a schedule, once the connection check confirms this mailbox and this read are available through it and the cost check has been run. It goes into the document as a route to set up, labeled, with the setup on the Connections Checklist:
+
+```text
+Your mail is on a personal account, and the direct connection only covers work
+accounts, so that route is out. That does not put it out of reach: your Zapier
+connection can carry a morning read of that mailbox once it is set up, which is
+one line on your connections list rather than a different plan. The read is
+available today and I have marked it verified. What it costs you to run every
+morning is the next thing to check, before any of it goes on a schedule.
+```
+
+Three ways this goes wrong, and they fail differently:
+
+1. **Skipping rung two because it sounds technical.** The member said they are not technical, so you go straight from "no direct connection" to the watched routine, or to "out of reach". The bridge is set up once, by them, in their own account, and after that it is a name on a list. Not technical is a reason to write the setup step clearly; it is never a reason to withhold the only rung below the first that runs on a schedule.
+2. **Assuming the bridge reaches an app from memory.** You write "through your Zapier connection" onto a source because Zapier reaches most things, with no connection check confirming that this app and this read are available today. That is a capability claim from memory and the ladder exempts nothing: an unchecked rung-two line is `Unverified — confirm at office hours`, exactly like an unchecked connector.
+3. **Scheduling against a Zapier route with no cost check.** The read is confirmed, so a daily run goes into the document and nobody has looked at what a daily run costs. Reachable and affordable-to-run-every-morning are two different questions, and the second is the one that gets skipped. The cost check runs before anything is scheduled against a Zapier route, not after the member notices the bill.
+
 ## Browser Fallback
 
-Some sources have no connector. Messaging apps and retail accounts are the usual ones, and the honest answer is not always "you cannot".
+This is rung three of the ladder above, and it is reached only once a native connector and the Zapier bridge have both been checked for this source and neither covers it. Messaging apps and retail accounts are the usual ones that get this far, and the honest answer is not always "you cannot".
 
 **Banks and payment sites are not on that list, and there is no version of this where they are.** Never put a browser routine on a bank, a card issuer, a payment processor, a brokerage, or any other site holding money — not watched, not read-only, not once, not with the member sitting right there asking for it. Financial records come into the hub one way: statements and exports the member downloads themselves and chooses to share. When they suggest the browser route for a bank, say so plainly and give them the working alternative in the same breath:
 
@@ -355,7 +391,7 @@ your banking session.
 
 The rules for everything else, and they are narrow:
 
-1. **Check first.** A browser route goes in the document only after current documentation confirms no connector covers that source. Never reach for it because a connector looked awkward.
+1. **Check first, both rungs above.** A browser route goes in the document only after current documentation confirms that neither a native connector nor the member's Zapier bridge covers that source. Never reach for it because a connector looked awkward, and never reach for it while rung two is merely untried.
 2. **Member present, always.** They are at the keyboard, watching. They type their own credentials, into the site, never into a chat.
 3. **Never on a schedule.** A browser step never becomes a scheduled task, in this document or in any later version of it. A task runs alone with nobody watching, which is exactly when a browser step cannot be reviewed.
 4. **Read and summarize only.** It looks and reports. It does not buy, send, reply, cancel, or fill anything in.
@@ -426,6 +462,7 @@ Never, in any Hub Strategy written with this skill:
 - Ask for a password, an API key, or any copied credential.
 - Ask the member to read documentation, find an id, or check a permission.
 - Put a browser step on a schedule, in any form, at any version.
+- Call a source out of reach on a schedule, or offer the watched routine for it, before the ladder has been walked and every rung above verified unavailable in this session.
 - Point a browser routine at a bank, card issuer, payment processor, or brokerage, watched or not, however it is asked for.
 - Put an account number, a card number, a credential, or a government identifier into a project, into Notion, or into the document, however explicitly it is offered. There is no consent path for those four.
 - Write a child's school, address, schedule, or medical or custody detail into a project, into Notion, or into the document. First names are the ceiling unless the member explicitly chose otherwise and the document records that choice.
@@ -437,7 +474,7 @@ Never, in any Hub Strategy written with this skill:
 
 When you are blocked, say what is blocked, what would unblock it, and what is still possible today. Never end on a blocker alone.
 
-- **A source has no connector.** Name the one source, say plainly that nothing on a schedule can reach it today, and offer the watched browser routine above if the rules allow one. Then carry on with the rest of the map.
+- **A source has no native connector.** Walk the ladder above before you call anything unreachable, and say which rung the source landed on and why each rung above it was ruled out: the native connector checked for this member's kind of account and not covering it, the Zapier bridge checked with the connection check and not covering it either, then the watched routine where its rules allow one. Only once all three are gone is the honest answer that nothing reaches it today — and then name the one source, say so plainly, and carry on with the rest of the map.
 - **You cannot verify because browsing is unavailable.** Say it at the start rather than the end. Write the whole document with every capability labeled unverified, name those lines out loud, and say that confirming them is the first thing to do before building.
 - **The member's account cannot do something the plan needs.** Say which product limit it is, do not attempt a workaround, and offer the nearest version that works with what they have.
 - **They want the whole hub built today.** Give them the document and the first project's build order, and say that one project working beats nine projects half-built. Then name the one project.
