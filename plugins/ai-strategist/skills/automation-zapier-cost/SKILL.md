@@ -2,7 +2,7 @@
 name: automation-zapier-cost
 description: Works out Zapier limits, cost, and safer alternatives before anything is scheduled against a Zapier route, always verifying current pricing, task usage, and per-app rules against live Zapier and third-party documentation instead of memory. Use this as the cost step of an Automation Architect design or of a Hub Strategy that names a Zapier route, not as general Zapier account support.
 metadata:
-  version: 1.2.1
+  version: 1.2.4
 ---
 
 # Zapier Limits and Cost
@@ -10,11 +10,11 @@ metadata:
 ## Platform compatibility
 
 Read `../../references/codex-compatibility.md` on **every** platform, Claude and
-Cowork included. Two parts of it are plugin-wide policy that binds everywhere:
-the two browser rules under "Connectors and tools", and the whole of "Web
-verification". Read those two before inspecting connectors or proposing
-scheduled work, whatever product you are in. Nothing in this file may narrow
-them.
+Cowork included. Three parts of it are plugin-wide policy that binds everywhere:
+the two browser rules under "Connectors and tools", the whole of "Web
+verification", and the whole of "Writes and graduation". Read those three before
+inspecting connectors or proposing scheduled work, whatever product you are in.
+Nothing in this file may narrow them.
 
 The rest of that file applies when running in ChatGPT or Codex, where it also
 wins over any instruction below that conflicts with it.
@@ -92,6 +92,8 @@ When direct connectors exist:
 - Do not tell the user to add something in Zapier if a direct connector already covers it.
 - Explicitly minimize Zapier calls. For example, use direct Gmail and direct Calendar reads when available, then use Zapier only for the capability nothing else covers.
 
+**One exception, and it is not a small one: where the member has already declined the native route, the preference rule above does not apply.** Somebody who was offered the direct connection and said no has answered that question — because of what the account is, because of who administers it, or for a reason they did not give and do not owe. Preferring it again re-litigates a decision that was already made, from the skill that owns no part of the interview and heard none of the conversation where it was made. **Report the cost of the route in front of you and stop:** the steps that use it, the current rule you verified, and what it comes to per month. Do not name the direct connector as the cheaper option, do not ask whether they would reconsider, and do not leave the preference in the plan as a note for later — a recorded decline is carried in the design skill's own *Choices Already Made*, and reopening it is that skill's call and only on the member's word.
+
 Use direct connectors for safe discovery/listing when available. If only Zapier can fetch the options, a focused Zapier list/search may be worth it, but avoid broad scans.
 
 ## When a Scheduled Task Is Not the Best Fit
@@ -161,7 +163,7 @@ If a Scheduled Task might scan or update lots of records, cap the run. Examples:
 
 ### Duplicate Outputs
 
-If a Scheduled Task sends, posts, creates, or updates, include a duplicate-prevention rule. If duplicate prevention is not possible, recommend a read-only or internal-only first version.
+A scheduled task designed here does not send or post at all, so the duplicate risk that remains is a task that creates or updates the same record twice — a review row written again, a draft prepared again. Include a duplicate-prevention rule wherever a task creates or updates anything. Where duplicate prevention is not possible, keep the task read-only.
 
 ### Partial Completion
 
@@ -196,20 +198,31 @@ Here is how the cost works out, using Zapier's current task rule from their docs
 => roughly [n x runs x rate] tasks/month, against your plan's current allowance.
 ```
 
-Reduce cost by using direct connectors first and Zapier only for what nothing else covers. Note that successful test calls can also count and can make real changes, and that what does and does not count toward usage is itself a thing to verify in Zapier's current docs rather than assert.
+Unless the native route is recorded as declined, reduce cost by using direct connectors first and Zapier only for what nothing else covers. Where it is declined, that route is not a saving available to this member, and naming it again here is the re-litigation the exception above refuses. Note that successful test calls can also count and can make real changes, and that what does and does not count toward usage is itself a thing to verify in Zapier's current docs rather than assert.
 
-## Safer Version 1
+## Safer Version 1, and the Only Two Steps Past It
 
-For anything risky, recommend a safer first version (this guidance is stable):
+Version one reads, prepares a private review, and stops (this guidance is stable):
 
-- customer emails -> draft and summarize first
-- public posts -> send an internal preview first
+- customer emails -> draft and summarize first, and never send on a schedule
+- public posts -> prepare the text for a person to post; a scheduled task never publishes
 - CRM updates -> produce a review list first
-- deletes -> never in version 1
-- money changes -> never in version 1
+- deletes -> never, at any version
+- money changes -> never, at any version
+
+**There are exactly two steps past version one, and neither of them is "more active".** Both are available only where the product can *both* enforce approval before an action and restrict which tools the task can reach; where it cannot do both, say so and the task stays at version one on that product:
+
+1. A private, **unsent** draft in the member's own mailbox.
+2. One low-risk **internal** status update, gated on their approval.
+
+**Sending, publishing, posting, messaging anyone, and anything touching money are never later unlocks.** There is no third step, no "once it has run for a month", and no version number at which a scheduled task starts acting on its own. Never describe the path as the task becoming more autonomous over time, because a member reads that as a promise.
 
 ```text
-For the first version, I would have Claude prepare a review list instead of changing records automatically. Once you trust the output, you can make it more active.
+For the first version, Claude prepares a review list instead of changing records
+automatically. That does not turn into sending later — the most it ever does is leave
+a draft sitting unsent in your own mailbox for you to look at, and only where the
+product can hold it behind your approval. Anything that goes out stays something you
+pressed.
 ```
 
 ## Worked Examples (verify first, every time)
