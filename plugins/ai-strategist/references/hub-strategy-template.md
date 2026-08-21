@@ -54,7 +54,14 @@ Done means: [what they will be able to point at].
 
 **Step 3 onward: [projects, in order].**
 
-Nothing sensitive is in step 1, on purpose. Sensitive projects come after you know how the pieces behave.
+Step 1 is deliberately something low-risk, so the early mistakes happen where they cost
+an hour rather than a relationship. That is the recommendation, and you can overrule it:
+if a different project is the one you actually need first, say so and it goes first, and
+this document records that you chose it.
+
+What does not change with the order: every project is built with the same limits and the
+same checks whenever it is built. Nothing skips its privacy gates, its permission limits,
+or its manual test because it moved up the list.
 
 ## Project Plans
 
@@ -136,12 +143,16 @@ back.] — Verified [date] / Unverified — confirm at office hours
   [The page in your hub] is named and gated until the check is made. **Nothing is
   scheduled into a page whose per-run privacy check nobody has made.**
 
-Moving from the task result to a page is a rebuild, never a switch: connect Notion;
-have the design engine redesign the task with the page as its destination; verify the
-write, the page's privacy, and that a run can perform the per-run privacy check; run
-one manual test into the page; create the replacement task; retire the task-result
-version. The running task never changes destination on its own and is never edited to
-point somewhere new.
+Moving from the task result to a page is a rebuild, never a switch:
+
+1. Connect Notion.
+2. Have the design engine redesign the task, with the Notion page as its destination.
+3. Verify the write operation, the page's privacy, and that a scheduled run can perform the per-run privacy check.
+4. Run one manual test into the page, then open the page and read it there.
+5. Create the replacement task.
+6. Retire the task-result version.
+
+The running task never changes destination on its own and is never edited to point somewhere new.
 — Verified [date] / Unverified — confirm at office hours
 
 **Sensitivity.** [Why this project is separate, if it is. What it will never do. Their words.]
@@ -167,9 +178,16 @@ point somewhere new.
 **Your morning read until the hub is live.** [While tasks are still landing in their
 own results, the one place is your scheduled-task list, read in this order: [task],
 then [task]. Name the order rather than leaving several results to be found.]
-Build order does not run ahead of the hub: get Notion connected and its per-run check
-cleared before a third task goes live, so you are never opening more than two separate
+
+Two interim tasks is the preferred limit: get Notion connected and its per-run check
+cleared before a third goes live, so you are never opening more than two separate
 results.
+
+[Where Notion is genuinely unavailable — not connected, or connected without a run
+being able to re-check a page's privacy — and your task results are themselves verified
+private, a third task and beyond can go ahead once you have agreed to it knowing the
+cost. Then this ordered reading list is the standing arrangement rather than a stopgap:
+[task], then [task], then [task]. Revisit it if Notion becomes available.]
 
 **How notes get written so Claude can find them again.** [The naming pattern, the properties that are always filled in, and what a good page looks like here.]
 

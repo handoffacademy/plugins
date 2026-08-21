@@ -204,14 +204,18 @@ Never write the same output to two destinations, and never add a second as a bac
 
 A task that has been running into its own result does not start writing to Notion because Notion got connected. **Never retarget a live task**, and never tell the member their digests will "move" on their own — a task carries the text it was created with, and editing that text underneath them is exactly the never-widen-a-running-task rule this plugin holds everywhere else.
 
-The migration is a replacement, in this order:
+The migration is a replacement. These six steps are the canonical wording, carried identically in `hub-strategy/SKILL.md` and in the document template — reproduce them as written rather than paraphrasing, so the member reads the same six steps wherever they meet them:
 
-1. Notion gets connected.
-2. The design engine runs again for the replacement task, with the Notion page as its destination.
-3. The write operation and the destination's privacy are verified, and the per-run preflight above is confirmed possible.
-4. One manual test run produces one real digest into that page, and the member opens it and reads it there.
-5. The replacement task is created.
-6. The old task-result version is retired.
+```text
+1. Connect Notion.
+2. Have the design engine redesign the task, with the Notion page as its destination.
+3. Verify the write operation, the page's privacy, and that a scheduled run can perform the per-run privacy check.
+4. Run one manual test into the page, then open the page and read it there.
+5. Create the replacement task.
+6. Retire the task-result version.
+```
+
+The running task never changes destination on its own and is never edited to point somewhere new.
 
 Say it that way when it comes up, so nobody is waiting for something automatic:
 
@@ -294,7 +298,7 @@ Never guess at this list from memory in either direction. Claiming the connectio
 4. **Never change sharing, never publish a page, and never add anyone to anything.** Sharing is theirs, and the privacy check above depends on nobody having quietly widened it.
 5. **Every mutation passes the privacy gate, not just task destinations.** Resolve the parent, establish its sharing from evidence, state what you found, and confirm against their current message — before creating any page, database, or property. Re-verify privacy immediately before every write.
 6. **Sensitive material never lands under a shared parent, judged by what goes in rather than by the name.** Custody, legal, medical, children's, or financial content — in the body, the properties, the rows, an import, or the title — means a private parent or nothing, whatever is asked in the moment. A neutral name is not a mitigation. An unestablished parent counts as shared.
-7. **Plan and build at category level, in bodies, properties, rows, and titles alike.** Never in, with no consent path: account and card numbers, credentials, government identifiers. Only on the member's explicit recorded choice, never proposed by you: documents and records themselves, and a child's details beyond a first name. An institution's own name in a label or a filter is organizational metadata rather than a child's identifier; what stays out is a recorded link between a child and their institution. Where a structure needs to select a sensitive slice, prefer the pattern where the member files into their own label and the workspace holds only the reference. Same default when this skill is invoked on its own.
+7. **Plan and build at category level, in bodies, properties, rows, and titles alike.** Never in, with no consent path: account and card numbers, credentials, government identifiers. Only on the member's explicit recorded choice, never proposed by you: documents and records themselves, and a child's details beyond a first name. An institution's own name is organizational metadata rather than a child's identifier **only where it cannot be combined with a child-specific project, page, property, or identifier** — a school's name in a property on a page named for one child reconstructs the link as surely as writing the sentence would, and two permitted halves that compose into the protected fact are the protected fact. Where the surrounding structure is child-specific, the selector stays generic ("School"); naming the actual institution there needs the member's explicit recorded choice and is never proposed. Where a structure needs to select a sensitive slice, prefer the pattern where the member files into their own generically-named label and the workspace holds only the reference. Same default when this skill is invoked on its own.
 8. **A Notion destination is only offered where a scheduled run can check its privacy every time.** Verify that like any other capability. Where it cannot, the destination is the task's own result.
 9. **Never retarget a running task.** Moving a task's destination to Notion is a replacement built, tested, and swapped in, never an edit to a task already running.
 10. **No probe content, ever.** No test rows, no placeholder pages, no "checking this works" lines in the member's workspace.

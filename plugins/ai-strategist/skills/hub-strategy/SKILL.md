@@ -214,14 +214,19 @@ Whatever they name gets its own isolated project, and the document says why in t
 
 **Then check their Q4 answers for a shared source, before you move on.** Isolation is a property of the sources as much as of the projects. Two isolated projects pointed at one unscoped account are one project with two names, and the member will believe they are separated because you told them the projects were. So look: does any mailbox, drive, or account they named serve both a walled garden and something general?
 
-Where one does, say so in that moment and put it into open decisions as a **single shared decision with a structural scoping flag** — one decision covering every project that touches that source, not a note on each card. Give it an interim default that is safe while it is undecided, usually that the general project does not read that source at all until the scoping is settled. This never depends on a clarifying question happening to land on it.
+Where one does, say so in that moment and put it into open decisions as a **single shared decision with a structural scoping flag** — one decision covering every project that touches that source, not a note on each card. This never depends on a clarifying question happening to land on it.
+
+**The interim default is fixed and it is the strong one: until structural scoping is established and verified, no affected project reads that source at all.** Not on a schedule, and not as part of the hub in any other way. Every project touching it, not only the general one — the walled garden's own project is reading the same unscoped account, and "the sensitive project may read it because it is the sensitive one" is how the wrong material ends up in the wrong place from the other direction.
+
+From there the member can narrow the freeze once the scoping exists: a folder that turns out to be genuinely separate, a mailbox that can be filtered, an account that can be split. Narrowing is a decision they make with evidence in front of them. What never happens is widening by default, or a project quietly reading the source because nobody wrote the freeze down.
 
 ```text
 One thing I want to flag now rather than at the end. Your case files and the family
 business are both in the same Dropbox, and you asked me to keep those two apart. Keeping
 the projects apart does not keep the folder apart, so how that account gets scoped is a
 real decision and I am putting it at the top of your open list. Until it is settled,
-nothing reads that Dropbox on a schedule.
+neither project reads that Dropbox — not the case one and not the business one. Once we
+know how it can be split, we can open up whichever part is genuinely separate.
 ```
 
 ### Q7 — The never list
@@ -245,7 +250,16 @@ The default answer, and the one to offer first, is their Notion hub each morning
 Two things follow, and both go in writing:
 
 - **Name the interim morning place explicitly.** Until the hub is live, the one place is their scheduled-task list, and the document says the order to read it in: which task first, which second. One named list beats eight unordered results.
-- **Do not let the build order outrun the hub.** Build tasks in order, and clear the Notion destination gate before the third one goes live, so they are never opening more than two separate results. Where that is not possible, say so at Q8 in one line rather than letting them find out.
+- **Two interim tasks is the preferred limit.** Build tasks in order, and clear the Notion destination gate before a third one goes live, so they are never opening more than two separate results.
+- **Where Notion is genuinely and safely unavailable, that limit is not a wall.** Some accounts cannot get there: no Notion, or Notion connected but a scheduled run unable to re-check a page's privacy, which is a real state and not a delay. Blocking the whole hub at two tasks in that case protects nothing — the task results are themselves verified private, and the cost is only that there are several of them. So the third task can go ahead **on the member's explicit approval, once you have said plainly what they are accepting**: more places to look each morning, in exchange for the work getting done. Write the ordered reading list into the document as the standing arrangement rather than as a stopgap, and revisit it if Notion ever becomes available.
+
+```text
+Notion cannot re-check that page's privacy on every run in your setup, so the hub is not
+a safe destination today — that may not change. Your task results are private, so the
+work is fine; what you lose is the one-place promise. Adding this third one means three
+things to open each morning, in this order: calendars, then email, then the house list.
+Worth it, or would you rather stop at two?
+```
 
 ```text
 One honest thing about the first few weeks: until your hub is connected, each of these
@@ -307,9 +321,23 @@ The document skeleton lives in `../../references/hub-strategy-template.md`. Read
 - **Plan at the category level.** Guardrail 8 governs what goes into the document itself as much as what goes into a project: kinds of things, not their contents, and no identifiers for anyone's children.
 - **Each project card describes a space, not a scheduled task.** The knowledge with its reasons, the instructions including how it should sound where it writes in their name, the skills and plugins with the reason for each and for what is deliberately absent, and how they would use the space on an ordinary Tuesday: those are the card. **The scheduled task is one component of a space, not the design of it. If a card would collapse into nothing without its task, the space has not been designed yet** — and a card with no scheduled task at all can be complete.
 - **Every project names where its outputs live in Notion**, in whichever of three states applies. Notion not connected: the task result now, the Notion page after the replacement task is built. Notion connected and a run's ability to re-check that page's privacy verified: the page. Notion connected but that per-run check unverified: the task result now, the page named and gated, with the gate stated once. **Never write a document that schedules a task into a page whose per-run check nobody made.** A scheduled task with nowhere to put what it found is not finished being designed.
-- **Moving a task to Notion later is a rebuild, and the document spells out the six steps**: connect Notion; have the design engine redesign the task with the page as its destination; verify the write, the page's privacy, and that a run can perform the per-run privacy check; run one manual test into the page; create the replacement task; retire the task-result version. Never describe it as switching over on its own.
+- **Moving a task to Notion later is a rebuild, and the document spells out the six steps.** This is the canonical wording, carried identically in `notion-hub/SKILL.md` and in the document template. Reproduce it as written rather than paraphrasing, so the member reads the same six steps wherever they meet them:
+
+  ```text
+  1. Connect Notion.
+  2. Have the design engine redesign the task, with the Notion page as its destination.
+  3. Verify the write operation, the page's privacy, and that a scheduled run can perform the per-run privacy check.
+  4. Run one manual test into the page, then open the page and read it there.
+  5. Create the replacement task.
+  6. Retire the task-result version.
+  ```
+
+  The running task never changes destination on its own and is never edited to point somewhere new. Never describe it as switching over by itself.
 - **Every scheduled task is handed over rather than specified here.** Name what it should do and how often, then say the design engine builds it properly when they get to it, **and that it inherits this project's never-list, which is not optional and is not re-decided in that interview**. Do not write the task text in this document. A refusal that lives only in the project instructions does not reach a scheduled run, so the handoff has to carry it.
-- **The build order starts with exactly one project**, and that project is daily, boring, and low-risk. Sensitive is never first. Say what "done" means for that step so they know when to move on.
+- **The build order starts with exactly one project**, and low-risk-first is the required recommendation: daily, boring, and low-risk in slot one, sensitive later. Say what "done" means for that step so they know when to move on.
+- **Low-risk-first is a strong recommendation, not an immutable rule, and the two are not the same thing.** Where the member wants a different project first, state once — clearly, in one line — why the boring one goes first and what changes if it does not. If they still want their choice after hearing it, that is an informed decision and it stands. Record it in the document as their choice, in their words, so a stranger reading it later sees a decision rather than an oversight. Arguing twice is pressure, and a plan someone was talked out of is a plan they abandon in week two.
+
+  **What a veto never touches, in any order:** every version-one permission limit, every privacy and destination gate, the manual test before anything is scheduled, the isolation of each walled garden, and the never-list. **Nothing sensitive skips its gates because it was moved forward.** A project built first is built with the same checks it would have had built fifth — moving it up changes when it is built, never what it is allowed to do or what it must pass first. Say that in one line when they exercise the veto, so the order feels like a choice rather than a trade against their safety.
 - **Nothing sensitive gets folded in for convenience.** Each walled garden from Q6 stays its own project, and the document says why in their words. Where two of them share one source, that is one shared open decision with a structural scoping flag, not a note on each card.
 
 ## Browser Fallback
@@ -359,9 +387,13 @@ These are not suggestions. They apply to every Hub Strategy written with this sk
 
    Never widen either default quietly because a project would work better with more in it.
 
-   **An institution's own name is organizational metadata, not a child's identifier.** A school, a clinic, or a club is an organization, and naming one in a label, a filter, or a folder says nothing about any particular child. Keeping institution names out entirely would forbid the mechanism a school project needs while protecting nobody. What stays out is the link between a child and their institution written down as a fact — "Ella attends [school]" in a knowledge file or a Notion property — not the existence of a label.
+   **An institution's own name is organizational metadata, not a child's identifier — but only where it cannot be composed back into one.** A school, a clinic, or a club is an organization, and naming one in a label says nothing about any particular child *in isolation*. It stops being isolated the moment it sits beside something child-specific: a label named for the school inside a project named for one child, or a school name in a property on a page named for one child, reconstructs "this child attends this institution" exactly as writing the sentence would. Two permitted halves that compose into the protected fact are the protected fact, and the recorded-choice rule applies to the composition rather than to either half.
 
-   **The sanctioned pattern when a project needs to select a sensitive slice of a general source: the member files, the project reads the file.** They create a label, folder, or filter in their own mail or drive and put the relevant items in it themselves; the project is pointed at that label and reads nothing else. Nothing about the child, the matter, or the institution is recorded anywhere in the project, in Notion, or in this document — the label is a name the member chose, and the selection logic lives in their own tool where they can see and change it. Reach for this before you reach for the exception; it is usually the more robust design as well as the safer one, because a member-maintained label survives a domain change and a sender-matching rule does not.
+   So: **an institution name is permitted only where it cannot be combined with a child-specific project, page, property, or identifier.** Where the structure around it is child-specific, the selector stays generic — "School", not the school's name — which costs nothing, because the member knows which label is which. Naming the actual institution alongside a child-specific structure is a widening like any other: it needs the member's explicit recorded choice, framed default-first, and is never proposed.
+
+   What stays out regardless is the link written down as a fact — "Ella attends [school]" in a knowledge file or a Notion property.
+
+   **The sanctioned pattern when a project needs to select a sensitive slice of a general source: the member files, the project reads the file.** They create a label, folder, or filter in their own mail or drive and put the relevant items in it themselves; the project is pointed at that label and reads nothing else. **The default selector name is generic — "School", "The case", "Bookkeeping" — never the institution's own name**, so that nothing composes even when the project around it is child-specific. Nothing about the child, the matter, or the institution is recorded anywhere in the project, in Notion, or in this document; the selection logic lives in their own tool where they can see and change it. Reach for this before you reach for the exception. It is usually the more robust design as well as the safer one, because a member-maintained label survives a domain change and a sender-matching rule does not.
 
    **When the widening genuinely is a real choice, framing it is not proposing it.** Write it as an open decision with the default first and its cost stated, then the widening option second with its permanence stated. Never lead with the widening option, never call it the recommended one, and never present the default as the compromise:
 
