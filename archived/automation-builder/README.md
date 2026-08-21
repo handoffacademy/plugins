@@ -1,3 +1,8 @@
+> **Archived.** This plugin was retired from the marketplace listing on 2026-08-21,
+> replaced by AI Strategist, which carries its design engine. It is preserved here
+> unchanged. While it is archived it cannot be installed from the marketplace, so
+> the installation steps below do not apply for now.
+
 # Automation Builder
 
 Automation Builder asks what tools you actually use and what outcome you want, verifies what those tools can really do against their current documentation, and designs one automation around your process. Not a template you bend your business around.

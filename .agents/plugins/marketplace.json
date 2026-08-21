@@ -5,10 +5,10 @@
   },
   "plugins": [
     {
-      "name": "automation-builder",
+      "name": "ai-strategist",
       "source": {
         "source": "local",
-        "path": "./plugins/automation-builder"
+        "path": "./plugins/ai-strategist"
       },
       "policy": {
         "installation": "AVAILABLE",

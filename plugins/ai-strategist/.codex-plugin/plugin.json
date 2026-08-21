@@ -1,0 +1,28 @@
+{
+  "name": "ai-strategist",
+  "version": "1.0.0",
+  "description": "Interviews you about your business and your life, then designs the AI hub that runs them: which Claude Projects to create, what each one reads, and what runs on a schedule.",
+  "author": {
+    "name": "Mother of AI",
+    "url": "https://themotherofai.com"
+  },
+  "homepage": "https://themotherofai.com",
+  "repository": "https://github.com/handoffacademy/plugins",
+  "keywords": ["ai-strategy", "claude-projects", "notion", "connectors", "scheduled-tasks", "small-business"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "AI Strategist",
+    "shortDescription": "Design the AI hub that runs your business and your life",
+    "longDescription": "Interviews you about every business and life area you carry, then writes one Hub Strategy document: which Claude Projects to create, what each one reads, the skills and plugins it needs, what runs on a schedule, and where the results land in your Notion hub. It checks every capability against current documentation in the session rather than working from memory, and it builds nothing without you.",
+    "developerName": "Mother of AI",
+    "category": "Productivity",
+    "capabilities": ["Interactive", "Read"],
+    "websiteURL": "https://themotherofai.com",
+    "defaultPrompt": [
+      "Design my AI Hub strategy.",
+      "Help me set up my Notion hub.",
+      "What would you need to know to plan my projects?"
+    ],
+    "brandColor": "#F7FE91"
+  }
+}

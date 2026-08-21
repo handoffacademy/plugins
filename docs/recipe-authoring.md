@@ -1,5 +1,10 @@
 # Authoring a recipe for Automation Builder
 
+> **Archived convention.** Automation Builder was retired from the marketplace
+> listing and now lives at `archived/automation-builder/`. Its validators still
+> run against that path, and this document is kept as the convention any future
+> recipe port would be rebuilt from. No listed plugin ships recipes today.
+
 A recipe is a pre-designed automation that ships as a skill inside the
 `automation-builder` plugin, named `recipe-<outcome>`. It is a versioned
 compiler: it collects a small set of member-specific parameters through the
@@ -20,7 +25,7 @@ them — never ship a second divergent interpretation.
 
 ## The registry
 
-Every recipe has an entry in `plugins/automation-builder/recipes.json`, and the
+Every recipe has an entry in `archived/automation-builder/recipes.json`, and the
 validator reconciles that registry against the `skills/recipe-*` directories in
 both directions — an unregistered recipe directory and an orphaned registry
 entry both fail the build. The entry declares: id, skill path, display name,
@@ -241,7 +246,7 @@ enforced. It is the adversarial review's job.
 
 The pasted Scheduled Task template is the artifact that actually runs, alone in
 a fresh session. Its fixed half is the canonical runtime-safety block in
-`plugins/automation-builder/references/runtime-safety.md`: every recipe's
+`archived/automation-builder/references/runtime-safety.md`: every recipe's
 template carries it byte-for-byte between its two sentinel lines, and the
 validator compares the copy against the canonical file. Editing that file
 changes the safety floor of every recipe at once — it carries the same

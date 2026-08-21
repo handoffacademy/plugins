@@ -63,6 +63,9 @@ jobs:
       - name: Validate Automation Builder content
         run: node scripts/validate-automation-builder.mjs
 
+      - name: Validate AI Strategist content
+        run: node scripts/validate-ai-strategist.mjs
+
       - name: Verify Inbox Assistant registers no runtime hooks
         run: node scripts/test-inbox-assistant-hook.mjs
 
