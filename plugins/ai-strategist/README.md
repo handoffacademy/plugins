@@ -1,0 +1,73 @@
+# AI Strategist
+
+AI Strategist interviews you about everything you are running — every business, every role, and the parts of your life that take real work — and writes you one Hub Strategy document: which Claude Projects to create, what each one reads, the skills and plugins each one needs, what runs on a schedule, and where the results land in your Notion hub.
+
+It is a plan, not a build. Nothing gets created, connected, or scheduled during the interview. You leave with a document you understand and an order to work through it in, starting with one project rather than nine.
+
+It checks what Claude and Notion can currently do against their own documentation while you are sitting there, every session, instead of working from memory. Anything it could not check comes to you labeled unverified rather than quietly guessed at.
+
+## What comes with it
+
+- **Hub Strategy** — the interview and the document. Ask for it by name, or say "design my AI hub strategy".
+- **Notion Hub** — the Notion expert. It designs your workspace during the strategy session, and when you sit down to build, it walks you through creating the pages and databases with you watching every step.
+- **The design engine** — the automation designer that came over from Automation Builder. When your strategy says a project should check something every morning, this is what turns that line into a real scheduled task: its own interview, a check on what your connection can actually read, and a test on your real data before anything goes on a schedule.
+- **Two helpers** — one that reports which connected apps can actually be used, and one that works out Zapier limits and cost from Zapier's current documentation rather than memory.
+
+## Install in Claude Cowork
+
+1. Open **Cowork** → **Customize** → **Plugins**.
+2. Under **Personal plugins**, select **+** → **Add marketplace**.
+3. Add `https://github.com/handoffacademy/plugins` from a repository.
+4. Open **Handoff Academy Plugins** and turn on its **Auto-update** toggle. Claude leaves automatic updates off by default for third-party marketplaces.
+5. Install **AI Strategist**, then start a new Cowork session so it loads.
+
+## Updates
+
+Claude's native marketplace updater is the supported update path. When **Auto-update** is enabled, Claude checks for newer releases after startup. The check can take several minutes, and the current session keeps the version it loaded. Start a new session after an update; in Claude Code, `/reload-plugins` can load most changes immediately.
+
+If an update does not appear, confirm **Auto-update** is enabled, open Handoff Academy Plugins, select **Update**, and start a new session. Do not add a self-updater or a SessionStart network version check to this plugin.
+
+## Install in ChatGPT/Codex
+
+```bash
+codex plugin marketplace add handoffacademy/plugins
+codex plugin add ai-strategist@plugins
+```
+
+Start a new Codex task so the plugin loads. To update it, refresh the marketplace, reinstall the plugin, and start another new task:
+
+```bash
+codex plugin marketplace upgrade plugins
+codex plugin add ai-strategist@plugins
+```
+
+Claude's Auto-update toggle does not update Codex installations. Product names, connector availability, and recurring-task controls differ by product, so AI Strategist uses only the tools visible in the current conversation and says plainly where a product cannot do something rather than quietly doing something weaker. Where a product cannot schedule recurring work, it hands you the finished task to schedule yourself.
+
+## If you have Automation Builder installed
+
+**Remove Automation Builder before you install AI Strategist.** The automation designer inside AI Strategist is the same skill Automation Builder carried, so running both leaves two copies of it active at once. Claude can load either one, and only one of them receives updates.
+
+Scheduled tasks you already built are not affected by any of this. A task runs on the text it was created with, so removing the plugin that designed it changes nothing about what it does tomorrow morning. The same goes for the ready-made automations: an inbox digest or a prospect shortlist you built with Automation Builder keeps running exactly as it is.
+
+Automation Builder is no longer listed in the marketplace. If you keep it installed it will keep working, and it will stop receiving updates.
+
+If you added Automation Architect as an uploaded file rather than through the marketplace, remove that uploaded copy in Claude's skill settings too, for the same reason.
+
+## The safety model
+
+**The strategy session writes a document. That is all it does.** No project is created, no connector is turned on, no task is scheduled, and no page is written while you are being interviewed.
+
+- Every capability in your document is labeled. `Verified` with a date means it was checked against current documentation in that session. `Unverified` means it could not be checked, and it says so rather than guessing.
+- **Those labels expire.** A verified line is a record of one check on one day. Before you build any project in the document, ask for its capabilities to be re-checked, however recent the date looks.
+- Anything you said should never happen goes into the document in your own words, alongside a floor that applies whatever else changes: nothing sends, publishes, pays, or deletes on its own, no passwords or keys go into a chat, legal and medical judgment stays with your professional, and anything to do with money prefers a statement you exported yourself.
+- Anything sensitive — legal, medical, your children, your finances — gets its own separate project, and the document says why in your words.
+
+**When you build, one project at a time.** The build order starts with a single project, chosen because it is daily, boring, and low-risk. Sensitive projects are never first. Nine projects half-built is the failure this is designed around.
+
+**Scheduled tasks keep the limits they always had.** Every task the design engine builds reads bounded information, prepares a private review only you see, and stops. Nothing goes on a schedule until one manual test run comes back clean on your real data.
+
+**Building your Notion hub happens with you watching.** The Notion expert creates one thing at a time, each one something you asked for in that message. It never deletes, moves, renames, or shares anything, and it never leaves a test page behind in your workspace.
+
+## Questions
+
+The Help Center at portal.themotherofai.com is the place to ask anything this file does not answer.

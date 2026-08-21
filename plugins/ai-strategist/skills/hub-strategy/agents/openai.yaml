@@ -1,0 +1,4 @@
+interface:
+  display_name: "Hub Strategy"
+  short_description: "Design the AI hub that runs your business and your life"
+  default_prompt: "Design my AI Hub strategy."
