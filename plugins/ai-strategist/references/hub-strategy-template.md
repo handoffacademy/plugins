@@ -2,7 +2,9 @@
 
 This is the shape of the deliverable, and it is the only one. Fill every section, in this order, with the member's own words. Nothing here is optional: a section with nothing to say says so in one line rather than being dropped, because a missing section reads as an oversight and an empty one reads as an answer.
 
-Every capability line carries exactly one label. `Verified <date>` when it was checked against current documentation in the session that wrote the line. `Unverified — confirm at office hours` when it was not. There is no unlabeled capability line anywhere in the document.
+Every capability line carries exactly one label. `Verified <date>` when it was checked against current documentation in the session that wrote the line. `Unverified — confirm at office hours` when it was not. Those two are the only capability states, and there is no unlabeled capability line anywhere in the document.
+
+**Some unverified items cannot be settled at office hours, and those carry a resolution note as well as the label.** Whether a work account under somebody else's administration permits a connection is not a documentation question and not an Academy question. On any such line, keep the `Unverified` label and add one line beneath it: `Needs your account administrator — one specific question`, then the exact yes-or-no to put to whoever runs that account, then the fallback version of the project if the answer is no. One question with the fallback already written is the only research this document ever hands back to the member.
 
 **The label is not only for sources and connections.** Skills, plugins, scheduled tasks, Notion writes, dashboards, and by-hand steps are all capability claims, and each one carries its own label. The test is about meaning, not vocabulary: **any statement about what a product, connector, or tool does, can do, or will do carries a label.** Do not check for a list of verbs — a sentence can make a capability claim without using any particular word, and a claim written in the passive or as a noun phrase ("a daily digest into your hub") is still a claim. Ask of each sentence: is this asserting something about how a product behaves? If yes, it is labeled.
 
@@ -37,6 +39,10 @@ however recent the date above looks.
 | Project | What it is for | What it reads | Build order |
 |---|---|---|---|
 | [Project name in their words] | [One line, their words] | [Sources] — Verified [date] / Unverified | [1, 2, 3, or "later"] |
+| [Area they named that is deliberately not designed today] | [Deferred — why, in one line: it needs a decision first, it has no route yet, or it can wait] | — | later |
+
+[Every area they named gets a row, including the ones deliberately left undesigned.
+A named area with no row reads as forgotten rather than as decided.]
 
 ## Build Order
 
@@ -64,40 +70,79 @@ Nothing sensitive is in step 1, on purpose. Sensitive projects come after you kn
 
 Instructions to paste in when you create it:
 
-> [Starter instructions, written out in full, ready to paste. Role, scope, what it never does, how it should answer.]
+> [Written out in full, ready to paste — not a sketch to improve later.
+> Role, scope, and what this project never does.
+> Then how it should answer YOU: the shape of a reply, the length, what it leads with.
+> Then, WHERE THIS PROJECT DRAFTS ANYTHING IN YOUR NAME, how it should sound when it
+> writes AS you: register, length, what it opens with, the specific phrases it must
+> never use, and what it does when it does not have the facts to draft honestly.
+> Where the project writes as you, this part is not optional. It is the difference
+> between a draft you edit and a draft you have to proofread for tone.
+> Then the refusals this space needs, in your own words.]
 
-Knowledge to add: [Kinds of material by default — "invoices", "client agreements",
-"school newsletters" — rather than the material itself.
-NEVER, whatever is decided later: account and card numbers, passwords, API keys or
-other credentials, government identifiers.
+**Knowledge to add.** Two questions, in this order, and the second never stands in for
+the first.
+
+*First, what it should hold and why.* [For each item: name it, and say in one clause
+what it teaches this project about acting in this space — the judgment, the voice, the
+vocabulary, or the standard it cannot infer from the sources it reads. Three to five
+items is the working range. "Nothing, and here is why" is a legitimate answer and is
+written as one.]
+
+*Then the filter.* [NEVER, whatever is decided later: account and card numbers,
+passwords, API keys or other credentials, government identifiers.
 ONLY where the member explicitly chose it, never proposed to them: the documents and
 records themselves, and a child's details beyond a first name. Where they chose one,
-name it here and record on one line that they chose it and what for.]
+name it here and record on one line that they chose it and what for.
+Default to kinds of material — "invoices", "client agreements", "school newsletters" —
+rather than the material itself.]
 — Verified [date] / Unverified — confirm at office hours
 
-**Skills.** [Which existing skill to use, or which one to create and what it should
-do.] — Verified [date] / Unverified — confirm at office hours
-
-**Plugins.** [Which to enable on this project's surface, and what each one adds.]
+**Skills.** [Which existing skill to use, or which to create and what it does — and in
+one clause, why it is a skill rather than a line in the project instructions. Common
+reason: it is a rule that erodes over a long conversation and needs re-asserting every
+turn. "None needed, because [reason]" is a legitimate answer.]
 — Verified [date] / Unverified — confirm at office hours
+
+**Plugins.** [Which to enable on this project's surface and what each one adds — and
+what is deliberately NOT enabled here, and why. In a space that drafts, prepares, or
+handles sensitive material, what a project cannot reach is part of its design rather
+than an omission: nothing that can send in a drafting space, nothing that can reach a
+bank or a browser in a money space, nothing that can write to a shared location in a
+private one.]
+— Verified [date] / Unverified — confirm at office hours
+
+**How you use this space day to day.**
+- What it does without being asked: [the scheduled work, in one line]
+- What you ask it: [three to five real questions in your own phrasing]
+- What stays manual, permanently: [what you will always do yourself, and why that is
+  the design rather than a gap]
+- [One line specific to this space: what it needs from you, what it will get wrong at
+  first, or the habit it depends on]
+
+[This block restates capabilities that are labeled elsewhere in the same card and
+carries no labels of its own. Anything in it that is a new claim gets labeled inline.]
 
 **What runs on a schedule.** [What it should check, how often, and what you want
 back.] — Verified [date] / Unverified — confirm at office hours
-> The design engine builds this task properly when you get to it. Ask for it by describing the job in this line, and it runs its own interview, verifies the read, and tests on your real data before anything goes on a schedule.
+> The design engine builds this task properly when you get to it. Ask for it by describing the job in this line, and it runs its own interview, verifies the read, and tests on your real data before anything goes on a schedule. It inherits this project's never-list, which is not optional and is not re-decided in that interview.
 
-**Where its results live in Notion.**
-Now: [the task's own result inside Claude, where Notion is not connected yet — or
-the Notion page, where it is].
-After Notion is connected: [the exact page or database in your Notion hub that this
-project will write into, named the way it appears there]. Getting there is a rebuild,
-not a switch: connect Notion, have the design engine build the replacement task
-pointed at that page, verify the write and that the page is private, run one manual
-test into it, then retire the task-result version. The running task never changes
-destination on its own and is never edited to point somewhere new.
+**Where its results live in Notion.** [One of three states, and only one.]
+- *Notion not connected:* now, the task's own result inside Claude. After the
+  replacement task is built and tested, [the page in your hub].
+- *Notion connected and a scheduled run's ability to re-check that page's privacy
+  verified:* [the page in your hub].
+- *Notion connected but that per-run check unverified:* now, the task's own result.
+  [The page in your hub] is named and gated until the check is made. **Nothing is
+  scheduled into a page whose per-run privacy check nobody has made.**
+
+Moving from the task result to a page is a rebuild, never a switch: connect Notion;
+have the design engine redesign the task with the page as its destination; verify the
+write, the page's privacy, and that a run can perform the per-run privacy check; run
+one manual test into the page; create the replacement task; retire the task-result
+version. The running task never changes destination on its own and is never edited to
+point somewhere new.
 — Verified [date] / Unverified — confirm at office hours
-
-[Where both lines are the same because Notion is already connected, say so in one
-line rather than repeating it.]
 
 **Sensitivity.** [Why this project is separate, if it is. What it will never do. Their words.]
 
@@ -117,7 +162,14 @@ line rather than repeating it.]
 - [Page name] — [what it shows, and which database each view pulls from] — Verified [date] / Unverified — confirm at office hours
 
 **Where each scheduled task lands.** One destination per task, and no task shares one.
-- [Project] → now: [the task result, until Notion is connected] → after the replacement task is built and tested: [the page or database it writes into] — Verified [date] / Unverified — confirm at office hours
+- [Project] → now: [the task result, until Notion is connected and its per-run privacy check is verified] → after the replacement task is built and tested: [the page or database it writes into] — Verified [date] / Unverified — confirm at office hours
+
+**Your morning read until the hub is live.** [While tasks are still landing in their
+own results, the one place is your scheduled-task list, read in this order: [task],
+then [task]. Name the order rather than leaving several results to be found.]
+Build order does not run ahead of the hub: get Notion connected and its per-run check
+cleared before a third task goes live, so you are never opening more than two separate
+results.
 
 **How notes get written so Claude can find them again.** [The naming pattern, the properties that are always filled in, and what a good page looks like here.]
 
@@ -179,8 +231,10 @@ Come back through this document once a week while you are building it. Cross off
 
 ## Rules for filling it in
 
-- **Every project card is complete or it is not on the page.** A card missing its Notion destination, its sensitivity line, or its labels is a half-designed project, and a half-designed project is what gets built wrong.
-- **The handoff line to the design engine is fixed.** Describe the job the task should do; never write the task text here. The engine runs its own interview, verifies the exact read, and tests on real data. A task specified in this document skips all three.
+- **A card is complete when a stranger could build the space from it and the member could use it on the day it exists.** Missing its knowledge reasons, its day-to-day use block, its Notion destination, its sensitivity line, or any label makes it half-designed. **And a card whose only described behavior is the scheduled task is a task with a project wrapped around it, not a space.** A card with no scheduled task at all can be complete; a card that would collapse into nothing without its task is not.
+- **A knowledge item with no reason attached is a guess about what the member has lying around, not a setup instruction.** Every item names what it teaches the project about acting in this space, or it comes out.
+- **Skills and plugins are decisions, and "none, because…" is one of them.** A named skill with no argument for why it is a skill rather than a line in the instructions is boilerplate. So is a plugin line that only lists additions: in any space that drafts or handles sensitive material, what is deliberately not enabled belongs on the card, because the absence is the safety property.
+- **The handoff line to the design engine is fixed, including the never-list clause.** Describe the job the task should do; never write the task text here. The engine runs its own interview, verifies the exact read, and tests on real data. A task specified in this document skips all three — and a refusal that lives only in the project instructions never reaches a scheduled run, which is why the handoff carries the project's never-list forward.
 - **Open decisions carry real options.** Two or three, each with what it means and what it costs. "It depends on your preference" is not an option, and neither is a recommendation with the alternatives left out.
 - **The never list is quoted, not summarized.** The member has to be able to find their own sentence in it.
 - **The Notion Hub section gives every scheduled task somewhere to land**, now and once Notion is connected. Check this by walking the project cards and confirming each destination appears in the Notion section. A task with no home is the most common gap in a first draft.
