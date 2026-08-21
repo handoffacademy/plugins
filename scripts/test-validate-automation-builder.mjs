@@ -13,7 +13,7 @@ import { fileURLToPath } from "node:url";
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const VALIDATOR = "scripts/validate-automation-builder.mjs";
-const PLUGIN = "plugins/automation-builder";
+const PLUGIN = "archived/automation-builder";
 const RECIPE = "skills/recipe-inbox-automation/SKILL.md";
 const SNAPSHOT_RECIPE = "skills/recipe-prospect-shortlist/SKILL.md";
 

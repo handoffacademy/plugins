@@ -67,11 +67,16 @@ plugins always begin at `1.0.0`. Do not hand-create a second entry or add a
 - Test the real install in both products. A valid manifest is necessary but does
   not prove the workflow loads or behaves correctly.
 
-### Recipe convention (Automation Builder)
+### Recipe convention (Automation Builder, archived)
+
+Automation Builder was retired from the marketplace listing and now lives at
+`archived/automation-builder/`. This section is kept because its validators still
+run against that path, and because the convention is what any future recipe port
+would be rebuilt from. Nothing here describes a listed plugin today.
 
 Automation Builder is built as a port for recipes: thin-profile skills that aim
 its design engine at one connector or workflow. A recipe lives in
-`plugins/automation-builder/skills/recipe-<outcome>/` and carries its own
+`archived/automation-builder/skills/recipe-<outcome>/` and carries its own
 `## This Skill Is Process-Only` and `## Scope Rule` sections.
 
 Every recipe copies the engine's five guarded safety blocks from
@@ -90,7 +95,7 @@ meaning: a sentence that contradicts the fixed rules in ordinary English still
 passes, which is what the adversarial review is for.
 
 Adding a recipe means: the new directory, a mention in the engine skill and the
-plugin README, its entry in `plugins/automation-builder/recipes.json`, and a
+plugin README, its entry in `archived/automation-builder/recipes.json`, and a
 minor version bump. Changing the text of a guarded block is a different kind of change:
 it rewrites the safety floor for every recipe at once, so it needs an adversarial
 review before release.
@@ -162,6 +167,7 @@ Fetch the current release baseline and run:
 git fetch origin main
 node scripts/validate-marketplace.mjs --base origin/main
 node scripts/validate-automation-builder.mjs
+node scripts/validate-ai-strategist.mjs
 node scripts/test-inbox-assistant-hook.mjs
 claude plugin validate . --strict
 ```

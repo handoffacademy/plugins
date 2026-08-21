@@ -18,7 +18,7 @@ import { dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const pluginRoot = join(repoRoot, "plugins", "automation-builder");
+const pluginRoot = join(repoRoot, "archived", "automation-builder");
 const skillsRoot = join(pluginRoot, "skills");
 const architectSkill = "skills/automation-architect/SKILL.md";
 const allowTag = "terminology-allow";
