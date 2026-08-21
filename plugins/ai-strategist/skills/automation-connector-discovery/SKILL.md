@@ -2,7 +2,7 @@
 name: automation-connector-discovery
 description: Reports which connected apps and tools Claude can actually use when designing an automation with Automation Architect, verifying connector setup, capabilities, and per-app rules against live documentation rather than memory. Use this as the connector step of an Automation Architect design or of a Hub Strategy that needs to know which apps a route can reach, not as a general audit of a mailbox or workspace assistant.
 metadata:
-  version: 1.2.1
+  version: 1.2.3
 ---
 
 # Connector Discovery
@@ -10,11 +10,11 @@ metadata:
 ## Platform compatibility
 
 Read `../../references/codex-compatibility.md` on **every** platform, Claude and
-Cowork included. Two parts of it are plugin-wide policy that binds everywhere:
-the two browser rules under "Connectors and tools", and the whole of "Web
-verification". Read those two before inspecting connectors or proposing
-scheduled work, whatever product you are in. Nothing in this file may narrow
-them.
+Cowork included. Three parts of it are plugin-wide policy that binds everywhere:
+the two browser rules under "Connectors and tools", the whole of "Web
+verification", and the whole of "Writes and graduation". Read those three before
+inspecting connectors or proposing scheduled work, whatever product you are in.
+Nothing in this file may narrow them.
 
 The rest of that file applies when running in ChatGPT or Codex, where it also
 wins over any instruction below that conflicts with it.
@@ -119,7 +119,7 @@ If the only available path is Zapier, remember that successful reads/searches ca
 
 ## What to Tell the User
 
-Summarize what you can see in plain English. List only capabilities you actually verified in the tool list just now — the lines below are an example of the format, not defaults to copy:
+Summarize what you can see in plain language. List only capabilities you actually verified in the tool list just now — the lines below are an example of the format, not defaults to copy:
 
 ```text
 I checked what I can see from your connected tools. Right now I can work with:
@@ -131,7 +131,7 @@ I checked what I can see from your connected tools. Right now I can work with:
 I will only design the Scheduled Task around what is actually available here.
 ```
 
-If the exact tool names are useful, put them after the plain-English version, not before it. Usually they are not useful for non-technical users.
+If the exact tool names are useful, put them after the plain-language version, not before it. Usually they are not useful for non-technical users.
 
 ```text
 For reference, the visible connector entries are:

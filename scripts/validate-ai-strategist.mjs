@@ -64,12 +64,13 @@ const REQUIRED_TEMPLATE_SECTIONS = [
   "## Your Hub at a Glance",
   "## Build Order",
   "## Project Plans",
-  "## Your Notion Hub",
+  "## Your Hub Home Base",
   "## Connections Checklist",
   "## What This Hub Will Never Do",
   "## Open Decisions — All in One Place",
+  "## Choices Already Made — Revisit Only If You Raise Them",
   "## When Things Change",
-  "**Where its results live in Notion.**",
+  "**Where its results live in your hub home base.**",
 ];
 
 const REFERENCE_LINK = /\.\.\/\.\.\/references\/([A-Za-z0-9._-]+\.md)/g;
