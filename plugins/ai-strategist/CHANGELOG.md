@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.2
+
+Your scheduled work now prefers to run somewhere your laptop lid does not affect.
+
+- **Tasks are planned to run in the cloud by default.** Where your setup can host a recurring task on its own side, that is what your plan asks for, so the morning report is waiting whether your computer was open at six or shut in a bag. Which run locations your setup actually offers gets checked while you are sitting there, like every other capability — never assumed in either direction.
+- **A task that has to run on your computer says so, and says why.** Some work genuinely depends on your machine: files that only live there, an app installed nowhere else. When that is the reason, your plan names it in one line rather than leaving you to wonder why this one is different.
+- **And you are told what that costs you, before anything is scheduled.** A task running on your computer needs the computer on, awake, and logged in at the time it runs — asleep or shut means it does not run and nothing is waiting for you afterwards. That sentence goes into the summary you confirm, not just into the conversation, so it is still there when you read the plan back a month later.
+
 ## 1.0.1
 
 When an app has no direct connection, your strategy now has one more route to try before it gives up on it.

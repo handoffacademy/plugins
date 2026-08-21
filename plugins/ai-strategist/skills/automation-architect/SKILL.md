@@ -2,7 +2,7 @@
 name: automation-architect
 description: Interviews a non-technical business owner about one repetitive task and designs a single safe Scheduled Task that reads bounded information and prepares a private review. Verifies every capability against the tools actually visible and against current official documentation instead of memory.
 metadata:
-  version: 2.2.0
+  version: 2.3.0
 ---
 
 # Automation Architect
@@ -310,11 +310,14 @@ Is any part of this wrong or uncomfortable?
 
 Build this after Q5, once you have verified capability in Step 0 — never before. Show it, let them react, then add the schedule after Q6 and finalize after Q7.
 
-Every step carries one of exactly three labels:
+Every step carries one of exactly four labels. The first three record a check that happened. The fourth is the fail-closed state for **any** line this session could not check, whatever that line is about — a source, a destination, a cost, or where the task runs.
 
 - **Supported** — checked against the app's current documentation in this chat, for their kind of account, and it does what the card says. It is not a promise about their account specifically: documentation describes the product, and an account can still be scoped, restricted, or connected differently. The manual test run below is what proves it on their account, and nothing goes on a schedule before that run comes back clean.
 - **Supported with a safe-v1 limit** — the same check, plus a cap for version one (item count, lookback window, private output only).
 - **Not supported** — say so plainly, then offer the nearest private, read-only alternative as ONE conditional question, not a lecture about why.
+- **Unverified — confirm at office hours before scheduling** — the check could not be made in this chat, so nothing is claimed in either direction. It is not a softer `Not supported` and it is not a quiet "probably fine": it is an open question, it is named out loud in the reply rather than left sitting on the card, and no line carrying it goes on a schedule until it has been confirmed.
+
+**These are the card's labels, and the Hub Strategy document records the same facts in different words.** `Supported` is written into that document as `Verified <date>`. `Supported with a safe-v1 limit` is also `Verified <date>`, **with the limit written into the line itself** — the cap is part of the fact, and dropping it in translation turns a bounded check into an unbounded claim. `Unverified — confirm at office hours before scheduling` becomes `Unverified — confirm at office hours`. `Not supported` becomes no capability line at all: what the document records is what was chosen instead — the next rung down, a different source, or the open decision — so a verified negative has nothing left to mistranslate. Translate whenever a line moves between the two artifacts, never carry one vocabulary into the other, and never let the same fact end up checked in one and unchecked in the other.
 
 ```text
 Here is what I have so far.
@@ -324,13 +327,14 @@ Where it reads from: [source] — Supported
 What counts: [inclusion rules] — Supported
 What it ignores: [exclusion rules] — Supported
 What you get: [private output], in [destination] — Supported with a safe-v1 limit: up to 10 items per run
+Where it runs: [in the cloud, so nothing here depends on your computer being on / on your computer, because [the dependency / this is the only place this product can run a scheduled task] — it has to be on, awake, and logged in at [time], or this will not run] — [Supported / Unverified — confirm at office hours before scheduling]
 What I am assuming: [each assumption on its own line]
 Fixed safety limits: reads only, prepares a private review, sends nothing, changes nothing
 
 Anything in there I have wrong?
 ```
 
-Keep the card short enough to read on a phone. Assumptions get their own lines so they are easy to correct.
+Keep the card short enough to read on a phone. Assumptions get their own lines so they are easy to correct. The run-location line follows *Where the Task Runs* below and carries a card label like every other line on the card, including the fail-closed one wherever the locations or the location-scoped checks could not be made.
 
 ### When They Say "I Don't Know What I Want"
 
@@ -442,7 +446,7 @@ The deliverable is a block the user pastes into Claude Cowork to create the Sche
 ```text
 Task name: [plain-language name]
 
-Runs: [frequency] at [time] [timezone]
+Runs: [frequency] at [time] [timezone][, on your computer — it has to be on, awake, and logged in at run time, or this task will not run]
 
 Reads from: [each source, named as the user knows it]
 
@@ -539,11 +543,45 @@ The prohibited-actions line and the run rules stay in the pasted task. They are 
 
 One more thing to tell them, because it saves an argument later: when they want it to do more, they make a new task with the new permissions and retire this one. Never widen a task that is already running. Rebuilding deliberately is how the version they trust stays the version they trust.
 
+## Where the Task Runs — Cloud by Default
+
+A scheduled task has to run somewhere, and on some products that is a choice: a run hosted on the vendor's side, or a run on the user's own machine. It is a design decision rather than an interview question — Q3 already told you where the information comes from, so you already know whether anything here lives on their computer — and it is settled before the build card is confirmed.
+
+1. **Where both are offered, the hosted run is the default and the draft says so.** A hosted run happens whether or not their laptop is open, which is the behavior they assume they are buying when they agree to something that runs every morning. Choose it unless something in this design makes it impossible.
+2. **Which locations exist is a capability, checked in this chat like every other one.** Verify against current documentation what run locations this user's surface offers today, and never assume in either direction — not that a hosted run exists because it usually does, and not that everything runs locally because this design conversation happens to be running locally. If you cannot check, label the run-location line `Unverified — confirm at office hours before scheduling` and schedule nothing, exactly as with any other unchecked step.
+3. **Where both are offered, a local run is chosen for a real local dependency, and the reason is named in one line.** Files that live on their machine, an app installed only there, a tool bound to that one device. "It is simpler", "it is what I am running in", and "it does not really matter" are not dependencies. A local run with no named dependency, on a surface that offered a hosted one, is an unmade decision wearing the clothes of a choice.
+
+   **Where both locations exist, a local run needs a verified named dependency. Where local is the only verified location, no dependency is needed — it is the only way the task can run — but the disclosure is not optional in either case.** Whenever the task will run locally, however it came to be local, the member is told in plain words that their computer has to be on, awake, and logged in at run time or the task will not run, and that sentence goes into whatever they confirm before the task is created: the build card and the `Runs:` line in a task design, the task's own line in a Hub Strategy document. A sole-local surface removes the choice, never the disclosure.
+4. **A local run is disclosed in plain words, and the disclosure goes into what they confirm.** Say it before anything is created, and put it in the build card and in the `Runs:` line of the pasted block:
+
+```text
+This one runs on your computer, because [the dependency / this is the only place
+this product can run a scheduled task]. That means your computer has to be on,
+awake, and logged in at the time it runs — if it is closed or asleep, the task
+does not run, and there is nothing waiting for you afterwards.
+```
+
+**A local task scheduled without that sentence in what they confirmed is not finished**, however clearly it was said out loud earlier in the conversation.
+
+5. **Choosing the location starts the checking rather than ending it.** That a hosted run exists says nothing about whether a hosted run can do *this* task. A location is a different execution environment, so once one is selected, everything this design leans on is re-verified inside that location:
+   - **The exact read, from there.** The same connector or bridge reachable from that location, returning the same fields. Where the read goes through the Zapier bridge, its reach and its cost are checked for that location at this task's cadence rather than carried over from the design conversation.
+   - **The destination, from there.** The write itself, and whether a run in that location can perform the privacy preflight the destination rule requires. A location that cannot make that check cannot use that destination, and the task-result rule applies instead.
+   - **Approval mode and tool reach, in there.** Verify what that location can actually enforce: whether the approval setting binds there, and whether what the task can reach can be restricted there. Where it cannot do both, say so plainly — on that location the task stays at version one permanently, with no graduation later, and that permanence goes into the summary the member confirms rather than being discovered when they ask for more. Version one itself still schedules there: it reads, and it writes once into its own private destination, and neither of those depends on a control the location does not have.
+
+   Anything on that list you could not check for the selected location is `Unverified — confirm at office hours before scheduling`, and nothing goes on a schedule while a line reads that. Guardrail 18 does not move for any of it: no location makes a browser, a shell, or a remote-control tool acceptable in a scheduled task.
+
+Four ways this goes wrong, and they fail differently:
+
+1. **Defaulting to local because the design session happens to be running locally.** Where you are talking to them is not where the task has to run, and the surface you are in is not evidence about the locations it offers. Check the options rather than inferring them from your own address.
+2. **Asserting a hosted run exists from memory.** You write "it runs in the cloud, so your laptop can be closed" because that is how it worked the last time you saw it. That is a capability claim with nothing behind it, and the user finds out on the first morning nothing is waiting for them.
+3. **Choosing local for a non-reason.** No local dependency exists, but local was the first option offered or it looked easier to set up, so the task lands there and inherits the computer-on requirement for nothing. Every local choice names its dependency, or it is not a local choice.
+4. **Scheduling a local task with the disclosure missing from the confirmed summary.** You explained it clearly mid-conversation, then the card and the block went over without the sentence in them. What they confirmed is the artifact that outlives the conversation; a requirement that lives only in chat reaches them once and is gone.
+
 ## Test Before You Schedule
 
 Never schedule an automation that has not produced one good real output. This is the step people want to skip, and it is the step that prevents the failure that ends their trust.
 
-1. **Run it once, manually, on a small sample.** Same rules, same limits, run right now instead of on a schedule.
+1. **Run it once, manually, on a small sample, in the execution location the task will actually use.** Same rules, same limits, run right now instead of on a schedule — and run it where it is going to live, or in the product's own nearest equivalent of that location where a manual run cannot be placed there, saying which of the two you did. A clean run in one location is not evidence about the other: this run is what proves the location-scoped checks on their account rather than in the documentation.
 2. **Show what to expect before showing the result**, so they are evaluating against something rather than being impressed by output.
 3. **Check exactly three things** with them:
    - Did it find the right items? (nothing important missing)
@@ -557,6 +595,7 @@ Never schedule an automation that has not produced one good real output. This is
 6. **Set the guardrails where they are actually enforced, before the task is created.** The "not allowed to" line in the task text is necessary, but written instructions are not what stops a connected tool from acting. Two settings are:
    - **Approval mode.** Set the task to require the user's review before any action beyond preparing the private review, and confirm that setting with them in one line rather than trusting a default.
    - **What the task can reach.** Check which connected tools the task is able to use, and for version one keep the ones that can send, post, change, or delete out of its reach wherever the product lets you choose. A task that cannot reach a write tool cannot use one by accident.
+   - **Where it runs.** Confirm the run location as you create it, hosted by default per *Where the Task Runs* above, and where it is local say the computer-on requirement once more in the same breath. This is the last moment before the task is real, and it is the requirement people forget between agreeing to it and living with it.
 7. **Schedule the first real run to happen soon** — within the next hour or two if possible — so they see it work on its own while the conversation is still fresh. A first run three days out means three days of quiet doubt.
 
 ## Supervised Mode and Graduation

@@ -2,7 +2,7 @@
 name: hub-strategy
 description: Interviews a non-technical business owner about every business and life area they carry, then writes one personalized Hub Strategy document naming the Claude Projects to create, what each one reads, which skills and plugins it needs, what runs on a schedule, and where its results land in Notion. Verifies every capability against current official documentation inside the session and builds nothing itself.
 metadata:
-  version: 1.1.0
+  version: 1.2.0
 ---
 
 # Hub Strategy
@@ -58,7 +58,7 @@ What to check, phrased as the questions to answer rather than answers to recite.
 - **Projects.** Which surface is this member on, and what does a project mean there? Ask before you assume: the same word covers more than one thing, and the versions differ on where they live, what they can hold, whether they sync, and whether anything can be scheduled inside them. Never collapse them into one description.
 - **Skills.** How does a custom skill get into this member's account, on their surface specifically? Does a skill added in one place appear in the others, or is that a per-surface job? Which plan tiers can do it at all?
 - **Plugins.** Which surfaces can install a plugin, and how? Which parts of a plugin work on which surface?
-- **Scheduled tasks.** Which surface has them, what can a scheduled run reach, what happens when the member's computer is closed, and what approval controls exist per task?
+- **Scheduled tasks.** Which surface has them, where a run can actually happen — hosted on the vendor's side, on the member's own machine, or both — what can a scheduled run reach, what happens when the member's computer is closed, and what approval controls exist per task?
 - **Connectors.** What is in the directory right now, under what name, and what does each one let a task actually read? Watch for the account trap: a work account under an organization's administration and a personal account of the same brand are frequently not the same connector and not the same permissions. Ask which kind of account each source lives in, then check that specific case.
 - **Browser use.** Is there a current browser tool, what is it called today, and where does it run? Confirm the product name before you print it.
 - **Memory.** Which memory feature applies on this member's surface, and what is its scope? More than one memory system exists, they are scoped differently, and one being on says nothing about the other.
@@ -334,6 +334,7 @@ The document skeleton lives in `../../references/hub-strategy-template.md`. Read
 
   The running task never changes destination on its own and is never edited to point somewhere new. Never describe it as switching over by itself.
 - **Every scheduled task is handed over rather than specified here.** Name what it should do and how often, then say the design engine builds it properly when they get to it, **and that it inherits this project's never-list, which is not optional and is not re-decided in that interview**. Do not write the task text in this document. A refusal that lives only in the project instructions does not reach a scheduled run, so the handoff has to carry it.
+- **Every scheduled task line says where the task runs, and the hosted run is the default.** Where the member's surface offers both, write the task as a hosted run, so nothing in the hub depends on their computer being open at seven in the morning. Where one runs on their own machine, that line carries two things: the reason in one clause — the local dependency (files on that machine, an app installed only there, a tool bound to that device), or, where local is the only place their setup can run a scheduled task, that fact stated plainly instead — and the requirement in plain words, that the computer has to be on, awake, and logged in at the time it runs or the task does not run. **The member reads that in the document, not for the first time on build day.** Run location is a capability line like every other one: it carries a label, the label belongs to the session that wrote it, and the design engine re-verifies where this task can run before it builds it.
 - **The build order starts with exactly one project**, and low-risk-first is the required recommendation: daily, boring, and low-risk in slot one, sensitive later. Say what "done" means for that step so they know when to move on.
 - **Low-risk-first is a strong recommendation, not an immutable rule, and the two are not the same thing.** Where the member wants a different project first, state once — clearly, in one line — why the boring one goes first and what changes if it does not. If they still want their choice after hearing it, that is an informed decision and it stands. Record it in the document as their choice, in their words, so a stranger reading it later sees a decision rather than an oversight. Arguing twice is pressure, and a plan someone was talked out of is a plan they abandon in week two.
 
