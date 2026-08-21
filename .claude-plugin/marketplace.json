@@ -15,14 +15,6 @@
       "description": "Interviews you about your business and your life, then designs the AI hub that runs them: which Claude Projects to create, what each one reads, and what runs on a schedule.",
       "category": "productivity",
       "tags": []
-    },
-    {
-      "name": "automation-builder",
-      "displayName": "Automation Builder",
-      "source": "./plugins/automation-builder",
-      "description": "Asks what tools you use and what outcome you want, then designs one safe automation around your process.",
-      "category": "productivity",
-      "tags": []
     }
   ]
 }
