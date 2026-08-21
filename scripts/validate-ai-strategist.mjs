@@ -39,6 +39,7 @@ const REQUIRED_SECTIONS = {
     "## Step 0 — Readiness Check",
     "## The Interview",
     "## The Hub Strategy Document",
+    "## When a Source Has No Connector — The Ladder",
     "## Browser Fallback",
     "## Fixed Guardrails",
     "## Never Do This — And What to Do When You Are Blocked",
