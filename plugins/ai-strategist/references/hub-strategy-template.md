@@ -4,9 +4,20 @@ This is the shape of the deliverable, and it is the only one. Fill every section
 
 Every capability line carries exactly one label. `Verified <date>` when it was checked against current documentation in the session that wrote the line. `Unverified — confirm at office hours` when it was not. There is no unlabeled capability line anywhere in the document.
 
-**The label is not only for sources and connections.** Skills, plugins, scheduled tasks, Notion writes, and by-hand steps are all capability claims, and each one carries its own label. The rule to check the finished document against: **no sentence containing a product capability verb — can, creates, connects, reads, writes, schedules, sets, syncs — ships unlabeled.**
+**The label is not only for sources and connections.** Skills, plugins, scheduled tasks, Notion writes, dashboards, and by-hand steps are all capability claims, and each one carries its own label. The test is about meaning, not vocabulary: **any statement about what a product, connector, or tool does, can do, or will do carries a label.** Do not check for a list of verbs — a sentence can make a capability claim without using any particular word, and a claim written in the passive or as a noun phrase ("a daily digest into your hub") is still a claim. Ask of each sentence: is this asserting something about how a product behaves? If yes, it is labeled.
 
-**Plan at the category level.** This document describes kinds of things, never their contents. No pasted records, no account numbers, no medical, legal, or custody documents, and no child's school, address, schedule, or other identifier. First names are fine. Anything past that goes in only where the member explicitly chose it after being told what it means, and the document records that they chose it.
+**Plan at the category level, and keep two separate lists straight.** This document describes kinds of things, never their contents.
+
+**Never, with no consent path** — no version of this document carries them, whatever the member offers:
+- Account numbers and card numbers
+- Passwords, API keys, and any other credential
+- Government identifiers
+
+**Only on their explicit, recorded choice** — the default is out, and it is never proposed to them:
+- Documents and records themselves, rather than references to them
+- Details about a child beyond a first name: school, address, schedule, medical or custody information
+
+First names are fine. Where the member chose something from the second list, the document says they chose it and what for.
 
 ---
 
@@ -25,7 +36,7 @@ however recent the date above looks.
 
 | Project | What it is for | What it reads | Build order |
 |---|---|---|---|
-| [Project name in their words] | [One line, their words] | [Sources] | [1, 2, 3, or "later"] |
+| [Project name in their words] | [One line, their words] | [Sources] — Verified [date] / Unverified | [1, 2, 3, or "later"] |
 
 ## Build Order
 
@@ -55,12 +66,14 @@ Instructions to paste in when you create it:
 
 > [Starter instructions, written out in full, ready to paste. Role, scope, what it never does, how it should answer.]
 
-Knowledge to add: [Kinds of material only — "invoices", "client agreements", "school
-newsletters". Never the material itself, never account numbers, and never a child's
-school, address, schedule, or medical or custody documents. Where the member
-explicitly chose to include something more specific, name it here and record on one
-line that they chose it and what for.] — Verified [date] / Unverified — confirm at
-office hours
+Knowledge to add: [Kinds of material by default — "invoices", "client agreements",
+"school newsletters" — rather than the material itself.
+NEVER, whatever is decided later: account and card numbers, passwords, API keys or
+other credentials, government identifiers.
+ONLY where the member explicitly chose it, never proposed to them: the documents and
+records themselves, and a child's details beyond a first name. Where they chose one,
+name it here and record on one line that they chose it and what for.]
+— Verified [date] / Unverified — confirm at office hours
 
 **Skills.** [Which existing skill to use, or which one to create and what it should
 do.] — Verified [date] / Unverified — confirm at office hours
@@ -75,8 +88,12 @@ back.] — Verified [date] / Unverified — confirm at office hours
 **Where its results live in Notion.**
 Now: [the task's own result inside Claude, where Notion is not connected yet — or
 the Notion page, where it is].
-Once Notion is connected: [the exact page or database in your Notion hub that this
-project writes into, named the way it appears there].
+After Notion is connected: [the exact page or database in your Notion hub that this
+project will write into, named the way it appears there]. Getting there is a rebuild,
+not a switch: connect Notion, have the design engine build the replacement task
+pointed at that page, verify the write and that the page is private, run one manual
+test into it, then retire the task-result version. The running task never changes
+destination on its own and is never edited to point somewhere new.
 — Verified [date] / Unverified — confirm at office hours
 
 [Where both lines are the same because Notion is already connected, say so in one
@@ -96,16 +113,19 @@ line rather than repeating it.]
 **Databases to create.**
 - [Name] — [what a row is, in plain words] — columns: [each one, in plain words, with what goes in it]
 
-**Dashboards.** [Which page shows what, and where each view pulls from.]
+**Dashboards.**
+- [Page name] — [what it shows, and which database each view pulls from] — Verified [date] / Unverified — confirm at office hours
 
 **Where each scheduled task lands.** One destination per task, and no task shares one.
-- [Project] → now: [the task result, until Notion is connected] → once connected: [the page or database it writes into] — Verified [date] / Unverified — confirm at office hours
+- [Project] → now: [the task result, until Notion is connected] → after the replacement task is built and tested: [the page or database it writes into] — Verified [date] / Unverified — confirm at office hours
 
 **How notes get written so Claude can find them again.** [The naming pattern, the properties that are always filled in, and what a good page looks like here.]
 
 **Two things to do by hand.** [Anything the Notion connection cannot set up for you and you will click yourself. Confirm what those are in the session, rather than assuming — check the current Notion documentation for what the connection can and cannot do today.] — Verified [date] / Unverified — confirm at office hours
 
-**What does not go in here.** No account numbers, no pasted records, no legal, custody, or medical documents, and nothing identifying a child beyond a first name. Anything about custody, a legal matter, medical information, children, or money lives under a private parent only — never under a page anyone else can open.
+**What does not go in here.** The same two lists as above, applied to page bodies, properties, rows, and titles alike. **Never, whatever you decide:** account and card numbers, credentials, government identifiers. **Only if you deliberately choose it:** documents and records themselves, and details about a child beyond a first name.
+
+**And a rule about where, not what.** Anything to do with custody, a legal matter, medical information, children, or money lives under a private parent only — never under a page anyone else can open. That is judged by what goes in rather than by the name on it: a database called "Records" holding custody rows needs a private parent exactly as much as one called "Custody" does.
 
 ## Connections Checklist
 
@@ -124,7 +144,8 @@ And the floor that applies to every project here, whatever else changes:
 - No passwords or keys go into a chat, ever.
 - Legal and medical work gets organized and flagged. The judgment stays with your professional.
 - Financial records come in as statements and exports you download yourself. Never a live connection to an account, and never a browser tool on a bank, card issuer, payment processor, or brokerage — not even watched. Keep full account numbers out of it; the last four identify an account fine.
-- Your plan describes kinds of things, not their contents. No pasted records, no account numbers, and nothing identifying your children beyond a first name.
+- Your plan describes kinds of things, not their contents. Account numbers, card numbers, passwords and keys, and government identifiers never go in, whatever anyone decides later. Documents and records themselves, and anything identifying your children beyond a first name, go in only if you deliberately choose it — and this document says so where you did.
+- No scheduled task ever changes where it writes on its own. Moving one to your hub means building the new version, testing it once, and retiring the old one.
 
 ## Open Decisions — All in One Place
 
@@ -164,5 +185,6 @@ Come back through this document once a week while you are building it. Cross off
 - **The never list is quoted, not summarized.** The member has to be able to find their own sentence in it.
 - **The Notion Hub section gives every scheduled task somewhere to land**, now and once Notion is connected. Check this by walking the project cards and confirming each destination appears in the Notion section. A task with no home is the most common gap in a first draft.
 - **Notion not being connected yet is never a reason to drop it from the plan.** It stays the home base, connecting it goes on the Connections Checklist as its own step, and each task names both destinations in time. What is never done is scheduling a task against a page that does not exist.
+- **Never write that a task will move to Notion by itself.** Every second destination in this document is reached by building a replacement task, verifying it, testing it once, and retiring the old one. A member who reads "it will move over" waits for something that is never going to happen.
 
-**The last pass before you hand it over.** Read the finished document once more, looking only for this: **no sentence containing a product capability verb — can, creates, connects, reads, writes, schedules, sets, syncs — ships unlabeled.** Sources, connections, skills, plugins, scheduled tasks, Notion writes, by-hand steps, all of them. An unlabeled sentence reads as verified to the person building from it, and that is how a guess becomes a build.
+**The last pass before you hand it over.** Read the finished document once more, asking one question of every sentence: **is this asserting something about what a product, connector, or tool does, can do, or will do?** If yes, it carries a label. Sources, connections, skills, plugins, scheduled tasks, Notion writes, dashboards, by-hand steps, all of them. Do not scan for particular words — a claim can be made in the passive, as a noun phrase, or in a table cell, and it is still a claim. An unlabeled one reads as verified to the person building from it, and that is how a guess becomes a build.
