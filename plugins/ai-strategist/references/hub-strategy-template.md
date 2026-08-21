@@ -4,6 +4,10 @@ This is the shape of the deliverable, and it is the only one. Fill every section
 
 Every capability line carries exactly one label. `Verified <date>` when it was checked against current documentation in the session that wrote the line. `Unverified — confirm at office hours` when it was not. There is no unlabeled capability line anywhere in the document.
 
+**The label is not only for sources and connections.** Skills, plugins, scheduled tasks, Notion writes, and by-hand steps are all capability claims, and each one carries its own label. The rule to check the finished document against: **no sentence containing a product capability verb — can, creates, connects, reads, writes, schedules, sets, syncs — ships unlabeled.**
+
+**Plan at the category level.** This document describes kinds of things, never their contents. No pasted records, no account numbers, no medical, legal, or custody documents, and no child's school, address, schedule, or other identifier. First names are fine. Anything past that goes in only where the member explicitly chose it after being told what it means, and the document records that they chose it.
+
 ---
 
 ## The skeleton
@@ -12,8 +16,10 @@ Every capability line carries exactly one label. `Verified <date>` when it was c
 # [Member's name]'s AI Hub Strategy
 
 Written [date].
-Capabilities in this document were checked against current documentation on [date].
-Re-check anything dated before today before you build from it.
+Capabilities in this document were checked against current documentation in the
+session that wrote it, on [date]. Those labels belong to that session. Re-check
+every capability a project depends on at the start of the session you build it in,
+however recent the date above looks.
 
 ## Your Hub at a Glance
 
@@ -49,16 +55,32 @@ Instructions to paste in when you create it:
 
 > [Starter instructions, written out in full, ready to paste. Role, scope, what it never does, how it should answer.]
 
-Knowledge to add: [the documents, records, or notes that belong in this project and nowhere else.]
+Knowledge to add: [Kinds of material only — "invoices", "client agreements", "school
+newsletters". Never the material itself, never account numbers, and never a child's
+school, address, schedule, or medical or custody documents. Where the member
+explicitly chose to include something more specific, name it here and record on one
+line that they chose it and what for.] — Verified [date] / Unverified — confirm at
+office hours
 
-**Skills.** [Which existing skill to use, or which one to create and what it should do.]
+**Skills.** [Which existing skill to use, or which one to create and what it should
+do.] — Verified [date] / Unverified — confirm at office hours
 
-**Plugins.** [Which to enable in this project's surface, and what each one adds.]
+**Plugins.** [Which to enable on this project's surface, and what each one adds.]
+— Verified [date] / Unverified — confirm at office hours
 
-**What runs on a schedule.** [What it should check, how often, and what you want back.]
+**What runs on a schedule.** [What it should check, how often, and what you want
+back.] — Verified [date] / Unverified — confirm at office hours
 > The design engine builds this task properly when you get to it. Ask for it by describing the job in this line, and it runs its own interview, verifies the read, and tests on your real data before anything goes on a schedule.
 
-**Where its results live in Notion.** [The exact page or database in your Notion hub that this project writes into, named the way it appears there.]
+**Where its results live in Notion.**
+Now: [the task's own result inside Claude, where Notion is not connected yet — or
+the Notion page, where it is].
+Once Notion is connected: [the exact page or database in your Notion hub that this
+project writes into, named the way it appears there].
+— Verified [date] / Unverified — confirm at office hours
+
+[Where both lines are the same because Notion is already connected, say so in one
+line rather than repeating it.]
 
 **Sensitivity.** [Why this project is separate, if it is. What it will never do. Their words.]
 
@@ -77,18 +99,20 @@ Knowledge to add: [the documents, records, or notes that belong in this project 
 **Dashboards.** [Which page shows what, and where each view pulls from.]
 
 **Where each scheduled task lands.** One destination per task, and no task shares one.
-- [Project] → [the page or database it writes into]
+- [Project] → now: [the task result, until Notion is connected] → once connected: [the page or database it writes into] — Verified [date] / Unverified — confirm at office hours
 
 **How notes get written so Claude can find them again.** [The naming pattern, the properties that are always filled in, and what a good page looks like here.]
 
-**Two things to do by hand.** [Anything the Notion connection cannot set up for you and you will click yourself. Confirm what those are in the session, rather than assuming — check the current Notion documentation for what the connection can and cannot do today.]
+**Two things to do by hand.** [Anything the Notion connection cannot set up for you and you will click yourself. Confirm what those are in the session, rather than assuming — check the current Notion documentation for what the connection can and cannot do today.] — Verified [date] / Unverified — confirm at office hours
+
+**What does not go in here.** No account numbers, no pasted records, no legal, custody, or medical documents, and nothing identifying a child beyond a first name. Anything about custody, a legal matter, medical information, children, or money lives under a private parent only — never under a page anyone else can open.
 
 ## Connections Checklist
 
 Each connection appears once here, however many projects use it.
 
 - [ ] [App] — [what it is for, which projects use it] — Verified [date] / Unverified — confirm at office hours
-- [ ] [App] — [same]
+- [ ] Notion — the hub's home base, where every digest, record, and dashboard lands. [Include this line whenever Notion is not connected yet, and name which projects start writing to it once it is.] — Verified [date] / Unverified — confirm at office hours
 
 ## What This Hub Will Never Do
 
@@ -99,7 +123,8 @@ And the floor that applies to every project here, whatever else changes:
 - Nothing sends, publishes, pays, or deletes on its own. Anything that leaves is something you pressed.
 - No passwords or keys go into a chat, ever.
 - Legal and medical work gets organized and flagged. The judgment stays with your professional.
-- Anything to do with money prefers a statement you exported yourself over a live connection to an account.
+- Financial records come in as statements and exports you download yourself. Never a live connection to an account, and never a browser tool on a bank, card issuer, payment processor, or brokerage — not even watched. Keep full account numbers out of it; the last four identify an account fine.
+- Your plan describes kinds of things, not their contents. No pasted records, no account numbers, and nothing identifying your children beyond a first name.
 
 ## Open Decisions — All in One Place
 
@@ -114,7 +139,17 @@ This plan has two halves and they age differently.
 
 **What you decided does not expire.** Your projects, your build order, your never list, and your Notion layout are yours, and they keep until you change them.
 
-**Every capability in this document expires.** Claude changes constantly. A `Verified` label is a record of one check on one day, not a standing fact. **Before you build any project in this document, re-verify every capability that project depends on. Full stop, however recent the date on it looks.** Ask for the check by name at the start of the session: what the connector reads today, what a project holds today, what a scheduled task can reach today. That takes a minute and it is the difference between building on a fact and building on a memory.
+**Every capability in this document expires the moment its session ends.** Claude changes constantly. A `Verified` label is a record of one check inside one conversation, not a standing fact, and it does not carry into the next conversation even if that one starts an hour later. **Before you build any project in this document, re-verify every capability that project depends on. Full stop, however recent the date on it looks.** Ask for the check by name at the start of the session: what the connector reads today, what a project holds today, what a scheduled task can reach today. That takes a minute and it is the difference between building on a fact and building on a memory.
+
+Ask for the same re-check whenever any of these happens, because each one can move what is true underneath you:
+
+- You picked this conversation back up after a break.
+- You switched to a different Claude surface, workspace, or account.
+- You connected, disconnected, or reconnected something.
+- Claude or a plugin updated.
+- You moved from reading this plan to building from it.
+
+And every time something is about to be written into a page in your hub, its privacy gets checked again first. Sharing can change between one write and the next.
 
 Come back through this document once a week while you are building it. Cross off what is done, move anything that turned out to be in the wrong order, and bring what did not work to office hours.
 ```
@@ -127,4 +162,7 @@ Come back through this document once a week while you are building it. Cross off
 - **The handoff line to the design engine is fixed.** Describe the job the task should do; never write the task text here. The engine runs its own interview, verifies the exact read, and tests on real data. A task specified in this document skips all three.
 - **Open decisions carry real options.** Two or three, each with what it means and what it costs. "It depends on your preference" is not an option, and neither is a recommendation with the alternatives left out.
 - **The never list is quoted, not summarized.** The member has to be able to find their own sentence in it.
-- **The Notion Hub section gives every scheduled task somewhere to land.** Check this last, by walking the project cards and confirming each destination appears in the Notion section. A task with no home is the most common gap in a first draft.
+- **The Notion Hub section gives every scheduled task somewhere to land**, now and once Notion is connected. Check this by walking the project cards and confirming each destination appears in the Notion section. A task with no home is the most common gap in a first draft.
+- **Notion not being connected yet is never a reason to drop it from the plan.** It stays the home base, connecting it goes on the Connections Checklist as its own step, and each task names both destinations in time. What is never done is scheduling a task against a page that does not exist.
+
+**The last pass before you hand it over.** Read the finished document once more, looking only for this: **no sentence containing a product capability verb — can, creates, connects, reads, writes, schedules, sets, syncs — ships unlabeled.** Sources, connections, skills, plugins, scheduled tasks, Notion writes, by-hand steps, all of them. An unlabeled sentence reads as verified to the person building from it, and that is how a guess becomes a build.
