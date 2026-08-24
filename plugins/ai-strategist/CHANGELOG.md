@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.4
+
+Two settings now come filled in on a scheduled task that reads and prepares your private review, rather than being left to whatever the default was.
+
+- **Your task is set up to finish on its own.** Something running at seven in the morning has nobody sitting there to answer a question, so it gets created with its approval setting on "Automatically approve (Auto)" and produces the report instead of stopping on a prompt you never see. That is not permission to send anything, and "Skip all approvals" is never the setting. What it can reach gets narrowed first, to the sources named in it plus writing its own report into the one private place you chose, and everything else that could send, post, change, or delete is kept out of that reach as far as your setup allows — with the task's own written rules and the early runs you read yourself covering whatever the setup cannot. Where a setup will not let it be narrowed that far, nothing goes on a schedule there at all: you run the job yourself while you are sitting there, and the report still lands in the same private place. Anything sent or published still happens only after you read the draft and press the button.
+- **And it runs on Sonnet unless there is a reason it should not.** The latest Sonnet handles the reading, sorting, and writing up these tasks are made of, and it is lighter on your usage than running Opus every morning. Where a task has to weigh a genuinely hard judgment call each time it runs, that is the one that gets Opus instead, and the task text you paste in says which it is.
+
 ## 1.0.3
 
 Most of this release is about the sessions that do not go the standard way.
