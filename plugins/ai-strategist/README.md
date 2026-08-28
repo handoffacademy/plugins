@@ -11,7 +11,7 @@ It checks what Claude and Notion can currently do against their own documentatio
 - **Hub Strategy** — the interview and the document. Ask for it by name, or say "design my AI hub strategy".
 - **Notion Hub** — the Notion expert. It designs your workspace during the strategy session, and when you sit down to build, it walks you through creating the pages and databases with you watching every step.
 - **The design engine** — the automation designer that came over from Automation Builder. When your strategy says a project should check something every morning, this is what turns that line into a real scheduled task: its own interview, a check on what your connection can actually read, and a test on your real data before anything goes on a schedule.
-- **Two helpers** — one that reports which connected apps can actually be used, and one that works out Zapier limits and cost from Zapier's current documentation rather than memory.
+- **Two helpers** — one that reports which connected apps can actually be used, and one that works out what a Composio connection allows and what running a job through it costs, read from Composio's current documentation rather than from memory.
 
 ## Install in Claude Cowork
 
