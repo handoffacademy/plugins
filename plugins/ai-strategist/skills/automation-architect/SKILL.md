@@ -2,7 +2,7 @@
 name: automation-architect
 description: Interviews a non-technical business owner about one repetitive task and designs a single safe Scheduled Task that reads bounded information and prepares a private review. Verifies every capability against the tools actually visible and against current official documentation instead of memory.
 metadata:
-  version: 2.6.1
+  version: 2.7.0
 ---
 
 # Automation Architect
@@ -56,6 +56,10 @@ What a connector can read, which apps and operations are supported, per-app limi
 - Anything the user says "changed", "stopped working", or "isn't showing up".
 
 Verification never carries over: a check you ran in an earlier session, a `Verified` label sitting inside a document the user pastes in, and anything written in this file are all history, so re-check it inside this session before you rely on it.
+
+**A Hub Strategy arrives with unverified lines in it, by design, and an unverified line is a stop rather than a gap to design around.** The strategy sitting labels what it could not check and hands the checking to the session that builds, which is this one. The paragraph below is fixed text, word for word the same in the Hub Strategy skill and in the document template, and it is the rule this skill runs on whenever a line from a document reaches a design step:
+
+An Unverified line is a stop, not permission to proceed. Before giving a setup step or creating, connecting, testing, writing, or scheduling anything that depends on it, re-check the exact capability for this account and this source in that build session. If it cannot be confirmed, stop that branch and use only a verified, permitted fallback.
 
 **Five events invalidate a check inside a session too**, and each one re-opens what it touched:
 
