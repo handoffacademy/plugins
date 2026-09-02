@@ -2,7 +2,7 @@
 name: hub-strategy
 description: Interviews a non-technical business owner about every business and life area they carry, then writes one personalized Hub Strategy document naming the Claude Projects to create, what each one reads, which skills and plugins it needs, what runs on a schedule, and where its results land in the hub home base (Notion by default). Runs as a Quick Plan or as the full interview, labels every capability line verified or unverified, and builds nothing itself.
 metadata:
-  version: 1.6.0
+  version: 1.6.1
 ---
 
 # Hub Strategy
@@ -447,7 +447,7 @@ Is that right as it stands, or would you say it differently?
 
 ### The Quick Plan Question Set — Eight Short Exchanges
 
-Quick Plan asks these eight, one at a time, in this order. They are the questions above with four of them compressed, so every rule in this section still governs them: one at a time, never batched, at most three suggested answers plus "I'm not sure", and never asking the member to research anything. **The clarifier cap here is one**, and a ninth question is not available by spending it.
+Quick Plan asks these eight, one at a time, in this order. They are the questions above with four of them compressed, so every rule in this section still governs them: one at a time, never batched, at most three suggested answers plus "I'm not sure" (except Q7, which offers only "I'm not sure"), and never asking the member to research anything. **The clarifier cap here is one**, and a ninth question is not available by spending it.
 
 1. **Q1, open, in their own words, prefilled.** Read what arrived with the prompt — the business description and whatever else the profile carries — show the areas it suggests, and ask what is missing. One correction turn, and their correction is the answer:
 
@@ -483,9 +483,9 @@ folder with the general work?
 
 6. **Q6, the walled gardens**, exactly as written above, and still asked twice where somebody else is in the room.
 
-7. **Q7, the never list**, exactly as written above, recorded in their own words.
+7. **Q7, the never list**, exactly as written above, recorded in their own words. **This is the one exchange with no suggested answers.** Offer only "I'm not sure": a list of refusals somebody in their position might give produces agreement rather than a refusal, and the never list is the one section whose whole value is that the sentence in it is theirs.
 
-8. **Q9, short.** Show the glance, the map with **a filled route-state cell on every row** — one of the six states in the template's map note, and never an empty cell — and the first build step. **Two audits run before you show any of it, in this order.** First, **every row against the shared-source flags from exchange 4**: a row whose sources include an account or a folder serving both a walled garden and something general reads `None — frozen until shared-source scoping is settled` in *What it reads* and `Pending — shared-source scoping` in its route cell, and the one shared open decision with its structural scoping flag goes into Open Decisions rather than a note on each row. Second, **every row against the never list**: a refusal that blocks a route takes that route off the row, which then reads `Deferred — conflicts with never list: [reason]`. Then ask the fixed question:
+8. **Q9, short.** Show the glance, the map with **a filled route-state cell on every row** and with every capability label written out in its full canonical form, exactly as the document will carry it and never shortened to a bare word in the chat — one of the six states in the template's map note, and never an empty cell — and the first build step. **Two audits run before you show any of it, in this order.** First, **every row against the shared-source flags from exchange 4**: a row whose sources include an account or a folder serving both a walled garden and something general reads `None — frozen until shared-source scoping is settled` in *What it reads* and `Pending — shared-source scoping` in its route cell, and the one shared open decision with its structural scoping flag goes into Open Decisions rather than a note on each row. Second, **every row against the never list**: a refusal that blocks a route takes that route off the row, which then reads `Deferred — conflicts with never list: [reason]`. Then ask the fixed question:
 
 ```text
 Is any part of this wrong or uncomfortable?
