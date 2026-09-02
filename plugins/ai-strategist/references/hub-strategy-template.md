@@ -43,13 +43,13 @@ A draft carrying the strategy title is the failure this variant exists to preven
 ```text
 # [Member's name]'s AI Hub Strategy
 
-Quick Plan — your areas, the Academy route for each one, and a full write-up only for a custom area you chose to build first.
+Quick Plan — your areas, the Academy route for each one, a roadmap card for every project you are planning, and a full write-up only for a custom area you chose to build first.
 
 [One mode line, here, directly under the title, and never left out: which mode wrote this
 document is the first thing somebody picking it up needs to know. Where this was the full
 interview, that line reads instead: Full interview — nine questions, capabilities checked
-against current documentation in this session, and the first three projects written out in
-full. One of the two lines, never both.]
+against current documentation in this session, a roadmap card for every project you are
+planning, and the first three projects written out in full. One of the two lines, never both.]
 
 [Where this came out of a proxy or a mixed sitting, this title is instead
 `Draft hub proposal — not ready to build`, followed by the line naming who answered and
@@ -78,7 +78,7 @@ An Unverified line is a stop, not permission to proceed. Before giving a setup s
 
 | Project | Area | Academy route | What it is for | What it reads | Order | State | Why it waits |
 |---|---|---|---|---|---|---|---|
-| [Project name in their words] | [the area it belongs to] | [route state, from the six below] | [One line, their words] | [Sources] — [exactly one label: Verified [date], or Unverified — confirm at office hours, or Needs your account administrator — one specific question: [the yes-or-no], fallback: [the fallback]] | Step [1, 2, 3…] | Not built yet | [blank where a full card was worked today] |
+| [Project name in their words] | [the area it belongs to] | [route state, from the six below] | [One line, their words] | [Sources] — [exactly one label: Verified [date], or Unverified — confirm at office hours, or Needs your account administrator — one specific question: [the yes-or-no], fallback: [the fallback]] | Step [1, 2, 3…] | Not built yet | [blank where a full plan was worked today] |
 | [Planned project left as a row this sitting] | [the area it belongs to] | [route state, from the six below] | [the job it does, one line, their words] | [Sources] — [exactly one label: Verified [date], or Unverified — confirm at office hours, or Needs your account administrator — one specific question: [the yes-or-no], fallback: [the fallback]] | Step [1, 2, 3…] | Not built yet | [why it waits, one line: the session scope, a decision it needs first, or no route yet] |
 | [Area they named with no project ordered yet] | [the area it belongs to] | [route state, from the six below] | [what it would do, one line, their words] | — | later | Deferred | [why it waits, one line: it needs a decision first, it has no route yet, or it can wait] |
 | [Area already served by something that runs] | [the area it belongs to] | Not applicable — already running | [Already running — [the existing job or space, one line]. Not redesigned today.] | — | — | Already running — not redesigned | [blank] |
@@ -114,7 +114,7 @@ is available here.]
 Any planned or deferred row here can be worked into a full plan whenever you want one. Ask for it by name.
 
 [That line is part of this skeleton and is never dropped. How many projects are worked into
-full cards is the session scope rule in the strategy skill, and it is not restated here. The
+full plans is the session scope rule in the strategy skill, and it is not restated here. The
 line covers rows that are planned and not built yet, and rows that are deferred. It never
 covers an already-running row or a retired one: nothing here redesigns what already works,
 and a project that was stopped comes back by asking for that, not by expanding a row.]
@@ -123,7 +123,7 @@ and a project that was stopped comes back by asking for that, not by expanding a
 was given the day it was written into this plan, and it does not change for any reason
 afterwards. State is the only column that moves: Not built yet, Built with the date,
 Retired with the date and "task stopped". **A planned project keeps its step number and its
-Not built yet state whether it was worked into a full card this sitting or left as a row.**
+Not built yet state whether it was worked into a full plan this sitting or left as a row.**
 Being a row is a matter of how much of it is written out, never a lifecycle state, and
 `later` with `Deferred` belongs only to an area with no project ordered yet. A project that
 has been built keeps its number and changes its state; a project that has been stopped does
@@ -142,13 +142,81 @@ unlocks].**
 Why this one first: [daily, boring, low-risk, and buildable this week, in one line — or,
 for the unblocking version: what is blocking everything, and what it frees up].
 Done means: [what they will be able to point at].
+What it is for: [the map's exact What it is for value]
+What it reads: [the map's exact What it reads value, its label written out in full]
+Runs on its own: [the job its scheduled task does, in one line, how often it runs, and when it lands] — [exactly one label: Verified [date], or Unverified — confirm at office hours, or Needs your account administrator — one specific question: [the yes-or-no], fallback: [the fallback]]
+Lands in: [this project's line from *Where each scheduled task lands* in *Your Hub Home Base*, word for word, its now-and-later wording and its one label included]
+Built in: [the module title from the routing reference], starting at [its first lesson slug]
+
+[Where Step 1 is the named unblocking action rather than a project, it keeps its Why this one
+first and Done means lines and carries no roadmap card, and the project it unlocks takes the
+next step block with all five lines under it.]
 
 **Step 2: [project].** Start it once step 1 has run on its own for a week and you trust what it gives you.
 [Where step 2 is waiting on something — a connection, an answer from whoever runs an
 account, a decision on this document's own list — name that one thing here and what it
 unblocks, so the wait is visible rather than discovered on the day you sit down to build.]
+What it is for: [from this project's map row]
+What it reads: [from this project's map row, its label written out in full]
+Runs on its own: [the job, the cadence, and when it lands] — [exactly one label: Verified [date], or Unverified — confirm at office hours, or Needs your account administrator — one specific question: [the yes-or-no], fallback: [the fallback]]
+Lands in: [this project's line from *Where each scheduled task lands* in *Your Hub Home Base*, word for word, its now-and-later wording and its one label included]
+Built in: [the module title from the routing reference], starting at [its first lesson slug]
 
-**Step 3 onward: [projects, in order].**
+**Step 3 onward.** One block per project, in the order they are built, each with its own
+step line and the same five lines under it.
+
+**Step [N]: [project].**
+What it is for: [from this project's map row]
+What it reads: [from this project's map row, its label written out in full]
+Runs on its own: [the job, the cadence, and when it lands] — [exactly one label: Verified [date], or Unverified — confirm at office hours, or Needs your account administrator — one specific question: [the yes-or-no], fallback: [the fallback]]
+Lands in: [this project's line from *Where each scheduled task lands* in *Your Hub Home Base*, word for word, its now-and-later wording and its one label included]
+Built in: [the module title from the routing reference], starting at [its first lesson slug]
+
+[**Those five lines are the roadmap card, and every planned project in this section carries
+one, in both modes.** They restate what the map row and *Your Hub Home Base* already decided
+for that project, gathered in one place so the member reads a project's whole shape without
+holding three sections in their head at once.
+**A roadmap card is never a full plan and never stands in for one.** A full plan is a
+*Project Plans* card, with the instructions, the knowledge, the skills, and the plugins, and
+how many get written is the session scope rule in the strategy skill. Any planned or deferred
+row becomes one whenever the member asks for it by name, which the line under the map already
+says.
+
+**Only planned projects carry a roadmap card.** A row marked already running is not
+redesigned here, and a retired row has been stopped, so neither one is a planned project and
+neither carries a card. A deferred row is not in the build order at all, so it carries none
+either, and what it keeps is its map row and the offer under the map.
+
+**A named unblocking action is not a project either.** Where Step 1 is one, that block carries
+its Why this one first and its Done means lines and no roadmap card: there is nothing to route,
+nothing to schedule, and nowhere for results to land, because nothing has been built yet. The
+project it unlocks takes the next step block, immediately after it, and that block carries all
+five lines.
+
+**What it is for and What it reads are copied from that project's map row, word for word**,
+the label on *What it reads* included. **Runs on its own names the job and the cadence, and
+never the task's own text**: what it checks, how often it runs, and when it lands, then its
+label like any other capability line. Task text comes only out of the design engine's own
+sitting. **Lands in copies this project's line from *Where each scheduled task lands* in
+*Your Hub Home Base*, word for word**: whichever of the three destination states that section
+gives it, its now-and-later wording, and its label. It carries exactly the one label that
+copied line already has and never a second one added here, and the two no-task sentences
+below carry none. Copying rather than restating is what stops the two sections saying
+different things about the same task. **Where a project has no scheduled task**, those two
+lines read
+`Runs on its own: Nothing. This one is a space you open, not a task that runs.`
+and
+`Lands in: Nothing runs, so nothing lands. You open the space yourself.`
+Neither one carries a label, because neither one claims anything about what a product does.
+
+**Built in is written from the route cell, and every route a planned row can carry has its
+own form.** Where the cell is a module id: the module title from the routing reference, then
+`starting at` and its first lesson slug. Where it reads `custom`: `No Academy lesson builds
+this one. If its full plan is not already in this document, ask for the row by name. If it
+needs a scheduled task, the design engine writes that task in its own sitting.` Where it is
+anything else, which is either of the two `Pending` states or a route the never list took
+off: copy that cell exactly and add nothing to it. A route is curriculum routing rather than
+a capability claim, so this line carries no label whichever form it takes.]
 
 [Where this document is being amended rather than written fresh, **none of these numbers
 move.** A step number is assigned once and kept: a project that has been built keeps its
@@ -448,7 +516,7 @@ Come back through this document once a week while you are building it. Cross off
 ## Rules for filling it in
 
 - **Your Hub at a Glance is written last and placed first.** It is the first section of the document, and it holds five plain sentences in the member's own words, one idea each: what this hub is for, the first project they are building and why it goes first, the first job they want running on its own, where they chose for the results to land, and the one thing to do this week. **It restates their decisions and makes no claim about what any product, connector, or tool does.** Every claim of that kind stays on the card that carries it, with its label. It is written last because it restates a document that does not exist until the rest is finished.
-- **How many projects get full cards is the session scope rule in the strategy skill, and it is not restated here.** Every project that rule leaves as a row keeps its own row in the map, carrying the job it does, the area it belongs to, and one line on why it waits, along with the step number and the `Not built yet` state any planned project has. The line under the map saying any planned or deferred row can be worked into a full plan on request is part of the document rather than an optional courtesy, and it never reaches an already-running row or a retired one.
+- **How many projects get full plans is the session scope rule in the strategy skill, and it is not restated here.** Every project that rule leaves as a row keeps its own row in the map, carrying the job it does, the area it belongs to, and one line on why it waits, along with the step number and the `Not built yet` state any planned project has. **Being left as a row never means being left off the build order**: a planned row carries its roadmap card there like every other planned project, under the note in that section. The line under the map saying any planned or deferred row can be worked into a full plan on request is part of the document rather than an optional courtesy, and it never reaches an already-running row or a retired one.
 - **A card is complete when a stranger could build the space from it and the member could use it on the day it exists.** Missing its knowledge reasons, its day-to-day use block, its home-base destination, its sensitivity line, or any label makes it half-designed. **And a card whose only described behavior is the scheduled task is a task with a project wrapped around it, not a space.** A card with no scheduled task at all can be complete; a card that would collapse into nothing without its task is not.
 - **A source with no native connector is never written as a scheduled route.** It is one of two things and the card says which: a watched routine, with the member at the keyboard, read-and-summarize only, and never on a schedule; or honestly out of reach today. There is no route in between, so nothing in this document ever describes a second connection, a written-rules arrangement, or any other stand-in that would let an unreachable source run on a schedule. Where a project depends on a connector the member has not added yet, adding it is its own one-time line on the Connections Checklist, exactly as connecting the home base is.
 
