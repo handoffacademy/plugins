@@ -1,6 +1,6 @@
 # The Hub Strategy document
 
-This is the shape of the deliverable, and it is the only one. Fill every section, in this order, with the member's own words. Nothing here is optional: a section with nothing to say says so in one line rather than being dropped, because a missing section reads as an oversight and an empty one reads as an answer.
+This is the shape of the deliverable, and it is the only one. Fill every section, in this order, with the member's own words. Nothing here is optional: **a section with nothing in it reads `None` on its own line rather than being dropped**, because a missing section reads as an oversight and a blank one reads as an answer. That holds in both modes, and it holds for every section in the skeleton below.
 
 Every capability line carries exactly one label. `Verified <date>` when it was checked against current documentation in the session that wrote the line. `Unverified — confirm at office hours` when it was not. Those two are the only capability states, and there is no unlabeled capability line anywhere in the document.
 
@@ -43,6 +43,14 @@ A draft carrying the strategy title is the failure this variant exists to preven
 ```text
 # [Member's name]'s AI Hub Strategy
 
+Quick Plan — your areas, the Academy route for each one, and a full write-up only for a custom area you chose to build first.
+
+[One mode line, here, directly under the title, and never left out: which mode wrote this
+document is the first thing somebody picking it up needs to know. Where this was the full
+interview, that line reads instead: Full interview — nine questions, capabilities checked
+against current documentation in this session, and the first three projects written out in
+full. One of the two lines, never both.]
+
 [Where this came out of a proxy or a mixed sitting, this title is instead
 `Draft hub proposal — not ready to build`, followed by the line naming who answered and
 which intended members were not present. The four canonical changes are above.]
@@ -63,24 +71,45 @@ a connector, or a tool does. Every claim of that kind stays on the card that car
 with its label.]
 
 Written [date].
-Capabilities in this document were checked against current documentation in the
-session that wrote it, on [date]. Those labels belong to that session. Re-check
-every capability a project depends on at the start of the session you build it in,
-however recent the date above looks.
+
+An Unverified line is a stop, not permission to proceed. Before giving a setup step or creating, connecting, testing, writing, or scheduling anything that depends on it, re-check the exact capability for this account and this source in that build session. If it cannot be confirmed, stop that branch and use only a verified, permitted fallback.
 
 ## The Map
 
-| Project | Area | What it is for | What it reads | Order | State | Why it waits |
-|---|---|---|---|---|---|---|
-| [Project name in their words] | [the area it belongs to] | [One line, their words] | [Sources] — Verified [date] / Unverified | Step [1, 2, 3…] | Not built yet | [blank where a full card was worked today] |
-| [Planned project left as a row this sitting] | [the area it belongs to] | [the job it does, one line, their words] | [Sources] — Verified [date] / Unverified | Step [1, 2, 3…] | Not built yet | [why it waits, one line: the session scope, a decision it needs first, or no route yet] |
-| [Area they named with no project ordered yet] | [the area it belongs to] | [what it would do, one line, their words] | — | later | Deferred | [why it waits, one line: it needs a decision first, it has no route yet, or it can wait] |
-| [Area already served by something that runs] | [the area it belongs to] | [Already running — [the existing job or space, one line]. Not redesigned today.] | — | — | Already running — not redesigned | [blank] |
-| [Project from this plan that now exists] | [the area it belongs to] | [One line, their words] | [Sources] — Verified [date] / Unverified | Step [the number it has always had] | Built — [date] | [blank] |
-| [Project from this plan they have stopped] | [the area it belongs to] | [One line, their words] | — | Step [the number it has always had] | Retired [date] — task stopped | [blank] |
+| Project | Area | Academy route | What it is for | What it reads | Order | State | Why it waits |
+|---|---|---|---|---|---|---|---|
+| [Project name in their words] | [the area it belongs to] | [route state, from the six below] | [One line, their words] | [Sources] — [exactly one label: Verified [date], or Unverified — confirm at office hours, or Needs your account administrator — one specific question: [the yes-or-no], fallback: [the fallback]] | Step [1, 2, 3…] | Not built yet | [blank where a full card was worked today] |
+| [Planned project left as a row this sitting] | [the area it belongs to] | [route state, from the six below] | [the job it does, one line, their words] | [Sources] — [exactly one label: Verified [date], or Unverified — confirm at office hours, or Needs your account administrator — one specific question: [the yes-or-no], fallback: [the fallback]] | Step [1, 2, 3…] | Not built yet | [why it waits, one line: the session scope, a decision it needs first, or no route yet] |
+| [Area they named with no project ordered yet] | [the area it belongs to] | [route state, from the six below] | [what it would do, one line, their words] | — | later | Deferred | [why it waits, one line: it needs a decision first, it has no route yet, or it can wait] |
+| [Area already served by something that runs] | [the area it belongs to] | Not applicable — already running | [Already running — [the existing job or space, one line]. Not redesigned today.] | — | — | Already running — not redesigned | [blank] |
+| [Project from this plan that now exists] | [the area it belongs to] | [route state, from the six below] | [One line, their words] | [Sources] — [exactly one label: Verified [date], or Unverified — confirm at office hours, or Needs your account administrator — one specific question: [the yes-or-no], fallback: [the fallback]] | Step [the number it has always had] | Built — [date] | [blank] |
+| [Project from this plan they have stopped] | [the area it belongs to] | [route state, from the six below] | [One line, their words] | — | Step [the number it has always had] | Retired [date] — task stopped | [blank] |
 
 [Every area they named gets a row, including the ones deliberately left undesigned.
 A named area with no row reads as forgotten rather than as decided.]
+
+[**Area, Project, and Academy route are three separate fields and none of them stands in for
+another.** The area is the member's own label. The project is the one Claude Project serving
+that area, one per area, never one project shared across two areas — and where one module
+serves two areas, each project takes an area-qualified name of its own, "Bakery Inbox Agent"
+and "Consulting Inbox Agent", because the module's own Project name is a stem rather than a
+name. **The Academy route cell is one of exactly six states, and they are the whole set:**
+
+1. a module id from the routing reference;
+2. `custom`, where nothing in that reference covers the area;
+3. `Deferred — conflicts with never list: [reason]`;
+4. `Pending — shared-source scoping`;
+5. `Not applicable — already running`.
+6. `Pending — [the decision it waits on]`, where no route is chosen yet because a decision the member owns comes first.
+
+**No row is left with an empty route cell**, and the cell is filled only after the walled
+gardens and the never list have been answered and both audits have run — the shared-source
+audit first, then the never list. A walled garden keeps its own project even where it uses the
+same module as a general area. A row frozen by a shared source reads `None — frozen until
+shared-source scoping is settled` in *What it reads* and carries state 4 here, with one shared
+open decision carrying the structural scoping flag. **A route is curriculum routing and never a
+capability claim**, so it carries no label of its own and it is never evidence that a connector
+is available here.]
 
 Any planned or deferred row here can be worked into a full plan whenever you want one. Ask for it by name.
 
@@ -151,8 +180,8 @@ or its manual test because it moved up the list.
 **What it is for.** [One or two sentences, their words.]
 
 **What it reads.**
-- [Source] — [connector name], directly in Claude — Verified [date] / Unverified — confirm at office hours
-- [Source with no connector] — watched routine, you at the keyboard, reading and summarizing only, never on a schedule — Verified [date] / Unverified — confirm at office hours
+- [Source] — [connector name], directly in Claude — [exactly one label: Verified [date], or Unverified — confirm at office hours, or Needs your account administrator — one specific question: [the yes-or-no], fallback: [the fallback]]
+- [Source with no connector] — watched routine, you at the keyboard, reading and summarizing only, never on a schedule — [exactly one label: Verified [date], or Unverified — confirm at office hours, or Needs your account administrator — one specific question: [the yes-or-no], fallback: [the fallback]]
 
 **What each source is read through.** [Mandatory field. Name the connector for every
 source that has one, and say in one line that what this project's scheduled work can
@@ -230,13 +259,13 @@ the member administers that adult's affairs under standing authority this knowle
 holds the operational metadata that carve permits and never the material underneath.
 Default to kinds of material — "invoices", "client agreements", "school newsletters" —
 rather than the material itself.]
-— Verified [date] / Unverified — confirm at office hours
+— [exactly one label: Verified [date], or Unverified — confirm at office hours, or Needs your account administrator — one specific question: [the yes-or-no], fallback: [the fallback]]
 
 **Skills.** [Which existing skill to use, or which to create and what it does — and in
 one clause, why it is a skill rather than a line in the project instructions. Common
 reason: it is a rule that erodes over a long conversation and needs re-asserting every
 turn. "None needed, because [reason]" is a legitimate answer.]
-— Verified [date] / Unverified — confirm at office hours
+— [exactly one label: Verified [date], or Unverified — confirm at office hours, or Needs your account administrator — one specific question: [the yes-or-no], fallback: [the fallback]]
 
 **Plugins.** [Which to enable on this project's surface and what each one adds — and
 what is deliberately NOT enabled here, and why. In a space that drafts, prepares, or
@@ -244,7 +273,7 @@ handles sensitive material, what a project cannot reach is part of its design ra
 than an omission: nothing that can send in a drafting space, nothing that can reach a
 bank or a browser in a money space, nothing that can write to a shared location in a
 private one.]
-— Verified [date] / Unverified — confirm at office hours
+— [exactly one label: Verified [date], or Unverified — confirm at office hours, or Needs your account administrator — one specific question: [the yes-or-no], fallback: [the fallback]]
 
 **How you use this space day to day.**
 - What it does without being asked: [the scheduled work, in one line]
@@ -262,7 +291,7 @@ back.] [Runs in the cloud / runs on your computer — it must be on, awake, and
 logged in at run time, because [the local dependency / this is the only place your
 setup can run a scheduled task] / run location not established this session —
 confirm which locations your surface offers before this task is built.] —
-Verified [date] / Unverified — confirm at office hours
+[exactly one label: Verified [date], or Unverified — confirm at office hours, or Needs your account administrator — one specific question: [the yes-or-no], fallback: [the fallback]]
 > The design engine builds this task properly when you get to it. Ask for it by pasting this line and this project's never-list, in full, and it runs its own interview, re-verifies the exact read, where this task will run, and the reach and control checks that depend on where it runs, then tests on your real data before anything goes on a schedule. It inherits this project's never-list, which is not optional and is not re-decided in that interview.
 
 **Where its results live in your hub home base.** [Notion by default, or the tool you
@@ -285,7 +314,7 @@ Moving from the task result to a page is a rebuild, never a switch:
 6. Retire the task-result version.
 
 The running task never changes destination on its own and is never edited to point somewhere new.
-— Verified [date] / Unverified — confirm at office hours
+— [exactly one label: Verified [date], or Unverified — confirm at office hours, or Needs your account administrator — one specific question: [the yes-or-no], fallback: [the fallback]]
 
 **Sensitivity.** [Why this project is separate, if it is. What it will never do. Their
 words, quoted rather than summarized — this list is what the design engine asks them to
@@ -312,10 +341,10 @@ dashboard, and the plan is better for saying that than for pretending.]
 - [Name] — [what a row is, in plain words] — columns: [each one, in plain words, with what goes in it]
 
 **Dashboards.**
-- [Page name] — [what it shows, and which database each view pulls from] — Verified [date] / Unverified — confirm at office hours
+- [Page name] — [what it shows, and which database each view pulls from] — [exactly one label: Verified [date], or Unverified — confirm at office hours, or Needs your account administrator — one specific question: [the yes-or-no], fallback: [the fallback]]
 
 **Where each scheduled task lands.** One destination per task, and no task shares one.
-- [Project] → now: [the task result, until the home base is connected and its per-run privacy check is verified] → after the replacement task is built and tested: [the page or database it writes into] — Verified [date] / Unverified — confirm at office hours
+- [Project] → now: [the task result, until the home base is connected and its per-run privacy check is verified] → after the replacement task is built and tested: [the page or database it writes into] — [exactly one label: Verified [date], or Unverified — confirm at office hours, or Needs your account administrator — one specific question: [the yes-or-no], fallback: [the fallback]]
 
 **Your morning read until the hub is live.** [While tasks are still landing in their
 own results, the one place is your scheduled-task list, read in this order: [task],
@@ -333,7 +362,7 @@ cost. Then this ordered reading list is the standing arrangement rather than a s
 
 **How notes get written so Claude can find them again.** [The naming pattern, the properties that are always filled in, and what a good page looks like here.]
 
-**Two things to do by hand.** [Anything the home base's connection cannot set up for you and you will click yourself. Confirm what those are in the session, rather than assuming — check that tool's current documentation for what its connection can and cannot do today; where the home base is Notion, that is Notion's own documentation.] — Verified [date] / Unverified — confirm at office hours
+**Two things to do by hand.** [Anything the home base's connection cannot set up for you and you will click yourself. Confirm what those are in the session, rather than assuming — check that tool's current documentation for what its connection can and cannot do today; where the home base is Notion, that is Notion's own documentation.] — [exactly one label: Verified [date], or Unverified — confirm at office hours, or Needs your account administrator — one specific question: [the yes-or-no], fallback: [the fallback]]
 
 **What does not go in here.** The same two lists as above, applied to page bodies, properties, rows, and titles alike. **Never, whatever you decide:** account and card numbers, credentials, government identifiers. **Only if you deliberately choose it:** documents and records themselves, and details about a child beyond a first name.
 
@@ -343,8 +372,8 @@ cost. Then this ordered reading list is the standing arrangement rather than a s
 
 Each connection appears once here, however many projects use it.
 
-- [ ] [App] — [what it is for, which projects use it] — Verified [date] / Unverified — confirm at office hours
-- [ ] [The hub home base — Notion by default, or the tool they chose instead] — where every digest and record lands. [Include this line whenever the home base is not connected yet, and name which projects start writing to it once it is.] — Verified [date] / Unverified — confirm at office hours
+- [ ] [App] — [what it is for, which projects use it] — [exactly one label: Verified [date], or Unverified — confirm at office hours, or Needs your account administrator — one specific question: [the yes-or-no], fallback: [the fallback]]
+- [ ] [The hub home base — Notion by default, or the tool they chose instead] — where every digest and record lands. [Include this line whenever the home base is not connected yet, and name which projects start writing to it once it is.] — [exactly one label: Verified [date], or Unverified — confirm at office hours, or Needs your account administrator — one specific question: [the yes-or-no], fallback: [the fallback]]
 
 ## What This Hub Will Never Do
 
