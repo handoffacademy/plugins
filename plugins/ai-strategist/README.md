@@ -2,7 +2,9 @@
 
 AI Strategist interviews you about everything you are running — every business, every role, and the parts of your life that take real work — and writes you one Hub Strategy document: which Claude Projects to create, what each one reads, the skills and plugins each one needs, what runs on a schedule, and where the results land in your Notion hub.
 
-It is a plan, not a build. Nothing gets created, connected, or scheduled during the interview. You leave with a document you understand and an order to work through it in, starting with one project rather than nine.
+It is a plan, not a build. The strategy sitting writes exactly two local files, your document and the page that renders it, and creates nothing in your workspace, your hub home base, your projects, your connections, or your schedules. You leave with a document you understand and an order to work through it in, starting with one project rather than nine.
+
+You get it twice over: the written document, and a one page summary of it. In Cowork that page opens in the panel beside you, with a Download button if you want to keep it on your phone; everywhere else it is saved next to the document. The page is a map of the plan, and the document is what you build from.
 
 **Two ways to run it.** The Quick Plan is the short route: eight short questions, a map naming which Academy module builds each area you named, and a full write-up only for a custom area you choose to build first. The full interview is the long one: nine questions, and the first three projects written out. Your document says at the top which of the two wrote it, and you can ask for the other whenever you want it.
 
@@ -57,7 +59,7 @@ If you added Automation Architect as an uploaded file rather than through the ma
 
 ## The safety model
 
-**The strategy session writes a document. That is all it does.** No project is created, no connector is turned on, no task is scheduled, and no page is written while you are being interviewed.
+**The strategy session writes two files, your document and the page that renders it. That is all it does.** No project is created, no connector is turned on, no task is scheduled, and nothing is created in your workspace or your Notion hub while you are being interviewed.
 
 - Every capability in your document is labeled. `Verified` with a date means it was checked against current documentation in that session. `Unverified` means it could not be checked, and it says so rather than guessing.
 - **Those labels expire.** A verified line is a record of one check on one day. Before you build any project in the document, ask for its capabilities to be re-checked, however recent the date looks.
