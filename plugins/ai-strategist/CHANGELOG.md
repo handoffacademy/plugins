@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.2.1
+
+Same plan, less to wade through. This one is about what you actually read.
+
+- **The first section of your plan is five plain lines.** What this hub is for, the first project you are building and why it goes first, the first job you want running on its own once that is built, where you chose for the results to land, and the one thing to do this week. It is written last and put at the top, in your own words, and it restates the decisions you made rather than describing what any tool can do. Those claims stay on the project pages, each with its confirmed or unconfirmed label.
+- **A full write-up for the first three projects in a standard sitting, one in a rushed one.** Everything else you named keeps its place in the map, with the job it does, the area it belongs to, its step number, and one line on why it is waiting. Any planned or deferred row becomes a full plan the moment you ask for it, and your plan says so underneath the map. Something already running, or something you have stopped, is left where it is.
+- **The block you paste in to set up a scheduled task now comes with one spoken line in front of it.** It is the task's rulebook, written so the job behaves the same way when nobody is watching. You do not have to study it. The build card you approved is the part to check, and that line is said to you rather than pasted in with the block.
+- **The longest things said to you are about a third shorter.** The lines about a shared folder, a personal mailbox, a parent's statements, and where your results land while your hub is still being set up all came down in length. Every refusal, every option with what it costs, and every decision that is yours is still in them, in plainer sentences. Replies read that way from here, one idea at a time, for someone who does not work in this stuff. What never gets shortened is anything fixed: the promises, the questions, the safety lines, and the instructions a scheduled job runs on.
+- **Nothing you already have changes.** A plan written before today still says what it said. This is about how the next one reads.
+
 ## 1.2.0
 
 The route your strategy tried when an app had no direct connection is gone, and what replaces it is a straight answer.

@@ -186,8 +186,38 @@ REQUIRED_PROSE["skills/automation-architect/SKILL.md"] = [
   "Never schedule an automation that has not produced one good real output",
 ];
 
+// The 1.2.1 member-facing pass. Each of these is a fixed member-facing artifact that a
+// later trim takes out silently, and none of them is restated anywhere else: the glance
+// block is the only summary the member reads, the expansion line is the only place the
+// document offers to work a row up, the session-scope sentence is deliberately stated
+// once so no second copy can drift from it, and the spoken line is what keeps the pasted
+// block from reading as homework.
+REQUIRED_PROSE["references/hub-strategy-template.md"] = [
+  // The five glance lines as one block: a dropped or re-worded line breaks the summary,
+  // and a line rewritten as product behavior puts an unlabeled capability claim on page one.
+  [
+    "[What this hub is for, in your words.]",
+    "[The first project you are building, and why it goes first.]",
+    "[The first job you want running on its own once that is built.]",
+    "[Where you chose for its results to land.]",
+    "[The one thing to do this week.]",
+  ].join("\n"),
+  "Any planned or deferred row here can be worked into a full plan whenever you want one. Ask for it by name.",
+];
+REQUIRED_PROSE["skills/hub-strategy/SKILL.md"].push(
+  // Stated once, on purpose. A second copy of a number is a second number to drift.
+  "Session scope: a standard session works the first three projects in the build order into full cards; a rushed session works one. Every other project is a row.",
+);
+REQUIRED_PROSE["skills/automation-architect/SKILL.md"].push(
+  // Spoken, not pasted: the half that says what the block is.
+  "this block is the task's rulebook, written so the run behaves the same way with nobody watching",
+);
+
 const REFERENCE_LINK = /\.\.\/\.\.\/references\/([A-Za-z0-9._-]+\.md)/g;
 const RECIPE_RESIDUE = /recipe-/;
+// The card count is the session-scope sentence and nothing else. "three to five" was the
+// old range, and a second statement of the count anywhere is the drift this catches.
+const CARD_COUNT_RESIDUE = /three to five/i;
 
 const failures = [];
 
@@ -387,6 +417,11 @@ for (const path of everyFile(pluginRoot)) {
         `${name}:${index + 1}: carries a retired recipe identifier: ${lines[index].trim()}`,
       );
     }
+    if (CARD_COUNT_RESIDUE.test(lines[index])) {
+      failures.push(
+        `${name}:${index + 1}: states a card count of its own. How many projects get full cards is the session-scope sentence in hub-strategy, stated once: ${lines[index].trim()}`,
+      );
+    }
     if (RETIRED_RESIDUE_EXEMPT.has(name)) continue;
     if (BRIDGE_VENDORS.test(lines[index])) {
       failures.push(
@@ -444,5 +479,5 @@ if (failures.length > 0) {
 }
 
 process.stdout.write(
-  `Validated AI Strategist across ${SKILLS.length} skills: frontmatter, required sections in the two authored skills and the document template, every emitted task-block field, the exactly-pinned model line, the audit rows, the precedence-scoping, structural-narrowing, administrator-policy, browser-ban and authorship invariants, reference links, the portal invocation phrase, and the absence of retired recipe identifiers, retired bridge vendors, and retired bridge machinery.\n`,
+  `Validated AI Strategist across ${SKILLS.length} skills: frontmatter, required sections in the two authored skills and the document template, every emitted task-block field, the exactly-pinned model line, the audit rows, the precedence-scoping, structural-narrowing, administrator-policy, browser-ban and authorship invariants, reference links, the portal invocation phrase, the member-facing glance block, the row-expansion line, the session-scope sentence and the spoken line before the task block, and the absence of retired recipe identifiers, retired bridge vendors, retired bridge machinery, and any second statement of the card count.\n`,
 );
