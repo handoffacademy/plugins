@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<!-- slot: lang -->
+<html lang="en">
+<!-- end: lang -->
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Every heading and section name in this file is template chrome. Chrome follows the member's language like every other member-facing line; the three canonical capability labels keep their English forms. -->
+<!-- slot: title-text -->
+<title>[the document's title]</title><!-- end: title-text -->
+<style>
+:root { color-scheme: light dark; }
+* { box-sizing: border-box; }
+body { margin: 0 auto; padding: 28px 20px 56px; max-width: 44rem; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; font-size: 17px; line-height: 1.55; color: #1d1c19; background: #fbfaf7; -webkit-text-size-adjust: 100%; }
+.eyebrow, .step, .k, dl.glance dt, h2 { font-size: .68rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #6b675e; }
+.eyebrow { margin: 0 0 .4rem; }
+h2 { margin: 2rem 0 .3rem; font-size: .78rem; }
+.k { display: block; }
+h1 { margin: 0 0 .5rem; font-size: 1.85rem; line-height: 1.2; }
+.subtitle { margin: 0 0 1.6rem; color: #4a4740; }
+.note { margin: 0 0 .8rem; font-size: .9rem; color: #4a4740; }
+.draft, .callout { margin: 0 0 1.4rem; padding: .9rem 1rem; border: 1px solid #c9a08c; border-radius: 10px; background: #fdeee6; }
+.callout { margin: 1.6rem 0 0; border-color: #e0d493; background: #fdf8e3; }
+.draft p, .draft ul, .callout p { margin: 0 0 .6rem; }
+.draft > :last-child, .callout p:last-child, li.card p:last-child { margin-bottom: 0; }
+dl.glance { margin: 0; padding: 0; }
+dl.glance > div { border-top: 1px solid #e4dfd4; padding: .6rem 0; }
+dl.glance dd { margin: .2rem 0 0; }
+ol.cards { list-style: none; margin: 0; padding: 0; }
+li.card { margin: 0 0 .9rem; padding: 1rem 1.1rem; border: 1px solid #e4dfd4; border-radius: 12px; background: #ffffff; break-inside: avoid; }
+li.card p { margin: 0 0 .5rem; }
+li.card h3 { margin: .1rem 0 .5rem; font-size: 1.08rem; }
+.chips { line-height: 2; }
+.chip { display: inline-block; margin: 0 .3rem .2rem 0; padding: .1rem .55rem; border: 1px solid #ded8c9; border-radius: 999px; background: #f1eee5; font-size: .78rem; }
+.slug { color: #6b675e; font-size: .68rem; }
+details { border-top: 1px solid #e4dfd4; padding: .7rem 0; }
+details > *:not(summary) { margin-top: .7rem; }
+summary { cursor: pointer; font-weight: 600; }
+ul { margin: 0; padding-left: 1.15rem; }
+ul li { margin: 0 0 .35rem; }
+footer { margin-top: 2.4rem; padding-top: .9rem; border-top: 1px solid #e4dfd4; font-size: .85rem; color: #6b675e; }
+@media (prefers-color-scheme: dark) {
+  body { color: #e9e6dd; background: #141412; }
+  .eyebrow, h2, dl.glance dt, .k, .slug, .step, footer { color: #a8a49a; }
+  .subtitle, .note { color: #c6c2b8; }
+  dl.glance > div, details, footer, li.card { border-color: #35342e; }
+  li.card { background: #1b1a17; }
+  .chip { border-color: #3d3b34; background: #232220; }
+  .callout { border-color: #5c5427; background: #292617; }
+  .draft { border-color: #7a4c36; background: #2c1d16; }
+}
+@media print {
+  body { max-width: none; padding: 0; font-size: 11pt; color: #000000; background: #ffffff; }
+  li.card, .callout, .draft { border-color: #999999; background: transparent; }
+  details > *:not(summary) { display: block; }
+  details::details-content { content-visibility: visible; block-size: auto; }
+  summary { list-style: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- slot: eyebrow -->
+<!-- the mode and the date the document was written, for example QUICK PLAN - 2 September 2026 -->
+<p class="eyebrow">QUICK PLAN - 2 September 2026</p><!-- end: eyebrow -->
+
+<!-- slot: title -->
+<!-- the document's own title, word for word; a draft carries the draft title and never the strategy one -->
+<h1>[the document's title]</h1><!-- end: title -->
+
+<!-- slot: draft-notice -->
+<!-- Empty between these two markers for a strategy. For a draft: the line naming who answered and which intended members were not present, then one Not established marker per protected section per absent member (Q1, Q6, Q7) in the document's own order and words, then the document's closing line on what would make this a strategy. -->
+<div class="draft">
+  <p>[the line naming who answered and which intended members were not present]</p>
+  <ul><li>[one Not established marker per protected section per absent member, exactly as the document writes it]</li></ul>
+  <p>[the document's closing line on what would make this a strategy]</p>
+</div><!-- end: draft-notice -->
+
+<!-- slot: subtitle -->
+<!-- a strategy keeps the line below; a draft reads: A draft made on someone's behalf. Nothing here is ready to build. -->
+<p class="subtitle">Your areas, the Academy route for each one, and the order to build them in. Nothing here is built, connected, or scheduled. Build from the document; this page is a map of it.</p><!-- end: subtitle -->
+
+<h2>At a glance</h2>
+<dl class="glance">
+<!-- slot: glance-lines -->
+<!-- the five glance lines from the document, in this order, one sentence each, these five labels unchanged -->
+  <div><dt>What it's for</dt><dd>[glance line 1]</dd></div>
+  <div><dt>First build</dt><dd>[glance line 2]</dd></div>
+  <div><dt>First job running on its own</dt><dd>[glance line 3]</dd></div>
+  <div><dt>Where results land</dt><dd>[glance line 4]</dd></div>
+  <div><dt>This week</dt><dd>[glance line 5]</dd></div><!-- end: glance-lines -->
+</dl>
+
+<aside class="callout">
+<p>
+An Unverified line is a stop, not permission to proceed. Before giving a setup step or creating, connecting, testing, writing, or scheduling anything that depends on it, re-check the exact capability for this account and this source in that build session. If it cannot be confirmed, stop that branch and use only a verified, permitted fallback.
+</p>
+<!-- slot: labels-note -->
+<!-- one sentence on which labels this plan carries and what they mean in the mode that wrote it -->
+<p>[one sentence: which labels this plan carries, and what they mean here]</p><!-- end: labels-note -->
+</aside>
+
+<!-- slot: build-order-heading -->
+<!-- a strategy reads The build order; a draft reads Proposed structure - not ready to build -->
+<h2>The build order</h2><!-- end: build-order-heading -->
+<p class="note">These cards are a map. The document holds the full plan for each project.</p>
+<ol class="cards">
+<!-- slot: build-order -->
+<!-- One card per planned map row, in the document's own order, filled with the document's exact Order, Academy route, and State values. Drop the Done means line except where the document carries one, which is Step 1 and the unblocking-action form of it; drop the Waiting on line where the document names nothing. Where Step 1 is an unblocking action rather than a project, the card name is that action and the project it unlocks is named in Done means. On a DRAFT page a card carries only the name, the area, and the route: no Done means, no Waiting on, and no step number presented as an order. -->
+  <li class="card">
+    <p class="step">[the document's exact Order value, for example Step 1]</p>
+    <h3>[project name, exactly as the document names it]</h3>
+    <p class="chips">
+      <span class="chip">[the exact Area value, in their words]</span>
+      <span class="chip">[the exact Academy route cell value, with the module title beside it where the routing reference gives one] <span class="slug">[first lesson slug, where there is one]</span></span>
+      <span class="chip">[the exact State value]</span>
+    </p>
+    <p><span class="k">What it is for</span>[the map's exact What it is for value]</p>
+    <p><span class="k">What it reads</span>[the map's exact What it reads value, its label written out in full]</p>
+    <p><span class="k">Done means</span>[only where the document carries one]</p>
+    <p><span class="k">Waiting on</span>[only where the document names something]</p>
+  </li><!-- end: build-order -->
+</ol>
+
+<details>
+<summary>Project plans in the document</summary>
+<!-- slot: project-plans -->
+<!-- one line per project the document worked into a full card: the name and one line on what it is for. Never reproduce a project plan here. Empty between the markers where the document worked none. -->
+<ul>
+  <li><strong>[project name]</strong> - [what it is for, one line] - see the document</li>
+</ul><!-- end: project-plans -->
+</details>
+<details>
+<summary>Parked for now</summary>
+<!-- slot: parked -->
+<!-- every deferred and pending map row, carrying the document's exact Order, Academy route, and State values -->
+<ul>
+  <li><strong>[name]</strong> - [Order] - [route cell] - [State] - [What it is for] - [why it waits]</li>
+</ul><!-- end: parked -->
+</details>
+<details>
+<summary>Already running</summary>
+<!-- slot: already-running -->
+<!-- every map row marked already running, with the route cell and the state exactly as the document writes them -->
+<ul>
+  <li><strong>[name]</strong> - [Order] - Not applicable — already running - Already running — not redesigned - [What it is for: the existing job or space, one line]</li>
+</ul><!-- end: already-running -->
+</details>
+<details>
+<summary>Built and retired</summary>
+<!-- slot: built-retired -->
+<!-- every map row whose state is Built or Retired, carrying the document's exact Order, Academy route, and State values -->
+<ul>
+  <li><strong>[name]</strong> - [Order] - [route cell] - [State, for example Built — 14 March or Retired 14 March — task stopped] - [What it is for]</li>
+</ul><!-- end: built-retired -->
+</details>
+<details>
+<!-- slot: home-base-name -->
+<!-- the summary below names the home base chosen at Q5; Notion unless they chose otherwise -->
+<summary>Your Notion</summary><!-- end: home-base-name -->
+<!-- slot: home-base -->
+<!-- the starting point, the databases, and where each task lands now and later -->
+<p><span class="k">Starting point</span>[the template, or the workspace they already keep]</p>
+<p><span class="k">Databases</span>[name - what a row is - the columns]</p>
+<p><span class="k">Where each task lands</span>[project - now: the task result - later: the page it writes into]</p><!-- end: home-base -->
+</details>
+<details>
+<summary>What this hub will never do</summary>
+<!-- slot: never-list -->
+<!-- the member's own lines, word for word, then the floor from the document -->
+<ul>
+  <li>[their sentence, quoted exactly as the document carries it]</li>
+</ul>
+<p><span class="k">And the floor, whatever else changes</span></p>
+<ul>
+  <li>[each line of the floor from the document]</li>
+</ul><!-- end: never-list -->
+</details>
+<details>
+<summary>Open decisions</summary>
+<!-- slot: open-decisions -->
+<!-- each question with its options -->
+<ul>
+  <li><strong>[the question]</strong><br>Option A: [what it means, what it costs]<br>Option B: [same]</li>
+</ul><!-- end: open-decisions -->
+</details>
+<details>
+<summary>Connections to set up</summary>
+<!-- slot: connections -->
+<!-- the checklist, each connection once -->
+<ul>
+  <li>[app] - [what it is for, which projects use it] - [the label, written out in full]</li>
+</ul><!-- end: connections -->
+</details>
+<details>
+<summary>Choices already made</summary>
+<!-- slot: choices-made -->
+<!-- what they turned down, what it costs, and what would make it worth another look -->
+<ul>
+  <li>[the choice] - [what it costs, one line]. Yours to revisit whenever you want to.</li>
+</ul><!-- end: choices-made -->
+</details>
+<footer>
+<!-- slot: markdown-filename -->
+<!-- the name of the Markdown file this page was rendered from, filename only -->
+<p>[first-name]-hub-strategy.md is the plan. Build from it; edit it first, and this page is made again from it.</p><!-- end: markdown-filename -->
+</footer>
+
+</body>
+</html>

@@ -34,7 +34,7 @@ On every platform, the only thing version one ever writes is its own report into
 
 Graduation steps 3 and 4 — a private unsent mailbox draft, then one low-risk internal status update — need that same structural narrowing **and** an approval the platform can hold to the single graduated action. Where a platform cannot do both, a job stays at version one permanently there. Say that plainly when it comes up, and never present it as a limit that lifts later.
 
-Designing a hub is not a write. The strategy work produces a document and nothing else. Building the member's workspace is separate, it happens with the member watching, and it follows the same rule as any other write: only what the platform can show them before it happens.
+Designing a hub is not a write into the member's world. The strategy sitting writes exactly two local files, the Markdown document and its page rendering, and creates nothing in the member's workspace, hub home base, projects, connections, or schedules. Building the member's workspace is separate, it happens with the member watching, and it follows the same rule as any other write: only what the platform can show them before it happens.
 
 ## Connectors and tools
 
