@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.5.1
+
+Your plan now says out loud what each thing on it is, and it names your projects the way you would say them out loud.
+
+- **Every card on the page says what it is.** A card that is a project you create says Claude Project beside the step number. Where your first step is a job that clears the way before anything can be built, that card says Unblocking action instead, because it is not a project. A draft shows nothing in a numbered order, so on a draft the card carries the bare words Claude Project or Unblocking action with no step number in front of them.
+- **The document says the same thing at the top of the build order.** One line tells you that each project step is one planned Claude Project, with the name to type, and that a first step which is an unblocking action is the one step that is not a project.
+- **Projects are named for the job they do or the area they serve.** A project called Daily Agenda or Client Meeting Memory tells you what it is for. Calling it Daily Agenda Agent only tells you what kind of thing it is, which you already know, so your plan stops proposing names like that.
+- **A project you already have keeps its name.** Whatever you called it, your plan writes it down the way you have it and never renames your own work.
+- **A project an Academy module builds keeps the lesson's own name.** Your plan uses that name as written. Where the same module builds a project for two different parts of your life, it puts the area in front of that name and changes nothing else, so what is in your plan still matches what the lesson tells you to type.
+- **Three Academy Projects have new names.** The Inbox, Calendar, and Sales modules now build Projects called Inbox Autopilot, Calendar Autopilot, and Sales Autopilot, and your plan uses those names wherever it routes an area to one of them. A Project you already created under an older name keeps that name.
+- **Nothing you already have changes.** A plan written before today says exactly what it said, and no project you have already created needs renaming.
+
 ## 1.5.0
 
 Every project on your build order now comes with a short card of its own, so you can see what each one is for and how it gets built without opening the full write up.

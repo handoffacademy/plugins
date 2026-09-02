@@ -78,12 +78,12 @@ An Unverified line is a stop, not permission to proceed. Before giving a setup s
 
 | Project | Area | Academy route | What it is for | What it reads | Order | State | Why it waits |
 |---|---|---|---|---|---|---|---|
-| [Project name in their words] | [the area it belongs to] | [route state, from the six below] | [One line, their words] | [Sources] — [exactly one label: Verified [date], or Unverified — confirm at office hours, or Needs your account administrator — one specific question: [the yes-or-no], fallback: [the fallback]] | Step [1, 2, 3…] | Not built yet | [blank where a full plan was worked today] |
-| [Planned project left as a row this sitting] | [the area it belongs to] | [route state, from the six below] | [the job it does, one line, their words] | [Sources] — [exactly one label: Verified [date], or Unverified — confirm at office hours, or Needs your account administrator — one specific question: [the yes-or-no], fallback: [the fallback]] | Step [1, 2, 3…] | Not built yet | [why it waits, one line: the session scope, a decision it needs first, or no route yet] |
+| [Project name: the exact existing name where the member already has it; else the routing reference's exact Project value with the area in front where one module serves several areas; else a proposed name that says the job or the area] | [the area it belongs to] | [route state, from the six below] | [One line, their words] | [Sources] — [exactly one label: Verified [date], or Unverified — confirm at office hours, or Needs your account administrator — one specific question: [the yes-or-no], fallback: [the fallback]] | Step [1, 2, 3…] | Not built yet | [blank where a full plan was worked today] |
+| [Project name: the exact existing name where the member already has it; else the routing reference's exact Project value with the area in front where one module serves several areas; else a proposed name that says the job or the area] | [the area it belongs to] | [route state, from the six below] | [the job it does, one line, their words] | [Sources] — [exactly one label: Verified [date], or Unverified — confirm at office hours, or Needs your account administrator — one specific question: [the yes-or-no], fallback: [the fallback]] | Step [1, 2, 3…] | Not built yet | [why it waits, one line: the session scope, a decision it needs first, or no route yet] |
 | [Area they named with no project ordered yet] | [the area it belongs to] | [route state, from the six below] | [what it would do, one line, their words] | — | later | Deferred | [why it waits, one line: it needs a decision first, it has no route yet, or it can wait] |
-| [Area already served by something that runs] | [the area it belongs to] | Not applicable — already running | [Already running — [the existing job or space, one line]. Not redesigned today.] | — | — | Already running — not redesigned | [blank] |
-| [Project from this plan that now exists] | [the area it belongs to] | [route state, from the six below] | [One line, their words] | [Sources] — [exactly one label: Verified [date], or Unverified — confirm at office hours, or Needs your account administrator — one specific question: [the yes-or-no], fallback: [the fallback]] | Step [the number it has always had] | Built — [date] | [blank] |
-| [Project from this plan they have stopped] | [the area it belongs to] | [route state, from the six below] | [One line, their words] | — | Step [the number it has always had] | Retired [date] — task stopped | [blank] |
+| [the exact name of the existing project, job, or space, never the area] | [the area it belongs to] | Not applicable — already running | [Already running — [the existing job or space, one line]. Not redesigned today.] | — | — | Already running — not redesigned | [blank] |
+| [the exact existing name of the project from this plan that now exists] | [the area it belongs to] | [route state, from the six below] | [One line, their words] | [Sources] — [exactly one label: Verified [date], or Unverified — confirm at office hours, or Needs your account administrator — one specific question: [the yes-or-no], fallback: [the fallback]] | Step [the number it has always had] | Built — [date] | [blank] |
+| [the exact existing name of the project from this plan that the member has stopped] | [the area it belongs to] | [route state, from the six below] | [One line, their words] | — | Step [the number it has always had] | Retired [date] — task stopped | [blank] |
 
 [Every area they named gets a row, including the ones deliberately left undesigned.
 A named area with no row reads as forgotten rather than as decided.]
@@ -91,9 +91,23 @@ A named area with no row reads as forgotten rather than as decided.]
 [**Area, Project, and Academy route are three separate fields and none of them stands in for
 another.** The area is the member's own label. The project is the one Claude Project serving
 that area, one per area, never one project shared across two areas — and where one module
-serves two areas, each project takes an area-qualified name of its own, "Bakery Inbox Agent"
-and "Consulting Inbox Agent", because the module's own Project name is a stem rather than a
-name. **The Academy route cell is one of exactly six states, and they are the whole set:**
+serves two areas, each project takes an area-qualified name of its own, "Bakery Inbox Autopilot"
+and "Consulting Inbox Autopilot", because the module's own Project name is a stem rather than a
+name.
+
+**Three rules decide a project's name, and they run in this order.**
+**A project the member already has keeps its exact existing name**, whatever that name
+carries: an already-running row is copied as the member gave it, and nothing here renames
+somebody's own work. **A project an Academy module builds uses the routing reference's
+Project value as its exact base**, which is the name the Academy lesson tells the member to
+type when creating the Project, and where one module serves more than one area
+the area is put in front of that base without changing it,
+exactly as the two names above show. Every other name in this table is one this plan proposes,
+custom projects included, and one rule covers all of them:
+**A project name this plan proposes says the job it does or the area it serves and never what kind of thing it is, so no proposed name carries Agent, Assistant, Bot, AI, or Automation.**
+"Daily Agenda" and "Client Meeting Memory" are names; "Daily Agenda Agent" is not.
+
+**The Academy route cell is one of exactly six states, and they are the whole set:**
 
 1. a module id from the routing reference;
 2. `custom`, where nothing in that reference covers the area;
@@ -136,6 +150,13 @@ rows are untouched by all of this and keep the entries shown above.]
 
 ## Build Order
 
+Each project step below is one planned Claude Project, named exactly as it is written here; a Step 1 that is an unblocking action is the one step that is not a Project.
+
+[That line is part of this skeleton and is never dropped. It is the one place the build order
+says what a step is, and somebody reading a list of steps has no other way to know that each
+project step is a Project they create in their own account, or that an unblocking Step 1 is
+the one exception to that.]
+
 **Step 1: [exactly one buildable project — OR, only where no project can be built with
 what you have today, exactly one named unblocking action plus the first project it
 unlocks].**
@@ -150,7 +171,12 @@ Built in: [the module title from the routing reference], starting at [its first 
 
 [Where Step 1 is the named unblocking action rather than a project, it keeps its Why this one
 first and Done means lines and carries no roadmap card, and the project it unlocks takes the
-next step block with all five lines under it.]
+next step block with all five lines under it. **It is not a Claude Project either**, which is
+what the line at the top of this section says, and on the page it has a card shape of its own.
+A strategy action card carries only the step line Step 1 · Unblocking action, the document's
+exact action name as its heading, Why this one first, and Done means naming the project it
+unlocks: no chips, no What it is for, no What it reads, no roadmap lines, and no Waiting on. A
+draft action card carries only the bare step line Unblocking action and the exact action name.]
 
 **Step 2: [project].** Start it once step 1 has run on its own for a week and you trust what it gives you.
 [Where step 2 is waiting on something — a connection, an answer from whoever runs an
