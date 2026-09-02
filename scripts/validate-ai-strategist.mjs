@@ -157,7 +157,7 @@ const CANONICAL_LABELS = [
 // them on its own and the skill is what does the choosing.
 const PAGE_MODE_AWARE_CHROME = {
   "build-order note, strategy":
-    "These cards are a map. The document is what you build from; it says which projects have a full plan, and any other planned or deferred project becomes one when you ask for it by name.",
+    "These cards are a map: each one is a planned Claude Project, named as written, except a card whose step line says Unblocking action. The document is what you build from; it says which projects have a full plan, and any other planned or deferred project becomes one when you ask for it by name.",
   "build-order note, draft":
     "These cards are a proposal. Nothing here is ready to build, and nothing becomes a plan until the people it is about have answered for themselves.",
   "footer, strategy":
@@ -274,6 +274,55 @@ REQUIRED_PROSE["skills/hub-strategy/SKILL.md"].push(
   "Session scope: every planned project carries a roadmap card in the build order, in both modes; the full interview also works the first three projects in the build order into full plans; Quick Plan writes at most one full plan, only where the member made a custom area the first project; every other area is a row.",
 );
 
+// The naming rules (1.5.1). Three of them, in precedence order, and the precedence is the
+// point: a rule stated without it reads as licence to rename a project the member already
+// runs, or to tidy the Academy's own Project name into something the lesson never mentions.
+// Two of the three are pinned by their own sentence, in the skill that writes the name and in
+// the template's map note that carries the same rule in the document, because a skill and a
+// document disagreeing on what a project may be called is how a kind word reaches a plan whose
+// own map note forbids it. The third is scoped to names this plan proposes, which is what
+// leaves the first two intact.
+const PROJECT_NAME_KEPT_RULE =
+  "A project the member already has keeps its exact existing name";
+const PROJECT_NAME_BASE_RULE =
+  "the area is put in front of that base without changing it";
+const PROJECT_NAMING_RULE =
+  "A project name this plan proposes says the job it does or the area it serves and never what kind of thing it is, so no proposed name carries Agent, Assistant, Bot, AI, or Automation.";
+// The page never re-words a name it was given, and a card that is a named unblocking action is
+// not a Project, so its suffix says so. Both suffix variants are pinned in the page's slot
+// comment and in the skill that fills it: the page cannot pick between them on its own, and a
+// skill carrying only one of them puts "Claude Project" under a step that creates no project.
+const PAGE_STEP_SUFFIX_PROJECT = "the fixed suffix \u00b7 Claude Project";
+const PAGE_STEP_SUFFIX_ACTION = "the fixed suffix \u00b7 Unblocking action";
+const PAGE_NAME_COPY_RULE = "the page copies the document's name exactly";
+const PAGE_DRAFT_STEP_LINE_RULE = "reads Claude Project on its own";
+const PAGE_DRAFT_ACTION_LINE_RULE = "reads Unblocking action on its own";
+REQUIRED_PROSE["skills/hub-strategy/SKILL.md"].push(
+  PROJECT_NAME_KEPT_RULE,
+  PROJECT_NAME_BASE_RULE,
+  PROJECT_NAMING_RULE,
+  PAGE_STEP_SUFFIX_PROJECT,
+  PAGE_STEP_SUFFIX_ACTION,
+  PAGE_NAME_COPY_RULE,
+  PAGE_DRAFT_STEP_LINE_RULE,
+  PAGE_DRAFT_ACTION_LINE_RULE,
+);
+REQUIRED_PROSE["references/hub-strategy-template.md"].push(
+  PROJECT_NAME_KEPT_RULE,
+  PROJECT_NAME_BASE_RULE,
+  PROJECT_NAMING_RULE,
+  // The one member-facing line in the build order that says what a step is, and what the one
+  // step that is not a Project is. Without it the section is a list of names, and nothing in
+  // the document tells the member that a project step is a Project they create themselves.
+  "Each project step below is one planned Claude Project, named exactly as it is written here; a Step 1 that is an unblocking action is the one step that is not a Project.",
+  // The map's own Project-column placeholders. The naming rules live in the note under the
+  // table, and a placeholder that asks for something else is what actually gets filled in: a
+  // live run named an already-running row after the area rather than after the two projects
+  // standing in it, with the note sitting right there saying not to.
+  "the exact existing name where the member already has it; else the routing reference's exact Project value with the area in front where one module serves several areas; else a proposed name that says the job or the area",
+  "[the exact name of the existing project, job, or space, never the area]",
+);
+
 // The stop rule is the whole of what makes build-time verification safe: Quick Plan writes
 // conditional lines it never checked, so the sentence that turns an unverified line into a
 // stop has to be present, identically, in all four artifacts that carry a plan forward - the
@@ -312,11 +361,11 @@ const RUN_MODULES_TABLE_HEADER =
 const RUN_MODULES_TABLE_SEPARATOR = "| --- | --- | --- | --- | --- |";
 const RUN_MODULES_LESSONS = /^[a-z0-9-]+: [^;|]+(; [a-z0-9-]+: [^;|]+)*$/;
 const RUN_MODULE_PROJECTS = {
-  "recipe-inbox-autopilot": "Inbox Agent",
-  "recipe-calendar-autopilot": "Calendar Agent",
+  "recipe-inbox-autopilot": "Inbox Autopilot",
+  "recipe-calendar-autopilot": "Calendar Autopilot",
   "recipe-file-organizer": "File Organizer",
   "recipe-meeting-memory": "Meeting Memory",
-  "recipe-sales-autopilot": "Sales Agent",
+  "recipe-sales-autopilot": "Sales Autopilot",
   "content-engine": "Content Engine",
 };
 const RUN_MODULE_IDS = [
@@ -470,10 +519,48 @@ const ROADMAP_PAGE_DRAFT_EXCLUSION = "no roadmap lines";
 // Pinned whole rather than by their key spans. The clause that carries the rule is the tail of
 // each placeholder - which value to take and that its label is written out in full - and that
 // tail is what a trim takes off while leaving a card that still looks complete.
+// The step line is where a card says what it is, and it is pinned twice: in the exemplar, which
+// is what a renderer copies, and in the slot comment, which is what a renderer reads for the
+// cards the exemplar does not cover. Both suffix variants are pinned, along with the rule that
+// the page never re-words a name and the draft card's step line, because a draft card carries a
+// suffix with no number in front of it.
+const ROADMAP_PAGE_STEP_LINE = `<p class="step">[the document's exact Order value, for example Step 1] \u00b7 Claude Project</p>`;
+const ROADMAP_PAGE_SLOT_PINS = [
+  ROADMAP_PAGE_STEP_LINE,
+  PAGE_STEP_SUFFIX_PROJECT,
+  PAGE_STEP_SUFFIX_ACTION,
+  PAGE_NAME_COPY_RULE,
+  PAGE_DRAFT_STEP_LINE_RULE,
+  PAGE_DRAFT_ACTION_LINE_RULE,
+];
 const ROADMAP_PAGE_PLACEHOLDERS = [
   `<p><span class="k">What it reads</span>[the map's exact What it reads value, its label written out in full]</p>`,
   `<p><span class="k">Runs on its own</span>[the exact value after "Runs on its own:" in the document, its label written out in full where it carries one]</p>`,
   `<p><span class="k">Lands in</span>[the exact value after "Lands in:" in the document, its label written out in full where it carries one]</p>`,
+];
+
+// The alternate card shape (1.5.1). A Step 1 that is a named unblocking action is not a Project,
+// and the shape is what stops it being rendered as one: it carries the bare action suffix, the
+// action's name, and the two lines that say why it comes first and what finishing it means. The
+// four project-card lines are checked for their ABSENCE inside this exemplar alone, because each
+// one of them is a claim about a project that does not exist yet. What it is for and the chips
+// are on that list too: the shape names them as absent in all three artifacts, so a validator
+// that let them back in would contradict the prose it exists to hold up.
+const ACTION_CARD_MARKER = "<!-- the alternate card shape,";
+const ACTION_CARD_REQUIRED = [
+  "Step 1 \u00b7 Unblocking action",
+  "<h3>[the document's exact name for the unblocking action]</h3>",
+  "Why this one first",
+  "Done means",
+];
+const ACTION_CARD_FORBIDDEN = [
+  "Waiting on",
+  "What it is for",
+  "What it reads",
+  "Runs on its own",
+  "Lands in",
+  "Built in",
+  "chips",
 ];
 
 const failures = [];
@@ -1029,6 +1116,39 @@ if (pageSource !== null) {
         `${PAGE_TEMPLATE_FILE}: the build-order slot never says ${JSON.stringify(ROADMAP_PAGE_DRAFT_EXCLUSION)}. A draft page's cards are the name, the area, and the route, and roadmap lines on one dress an unfinished proposal as a plan.`,
       );
     }
+    for (const pinned of ROADMAP_PAGE_SLOT_PINS) {
+      if (!card.includes(pinned)) {
+        failures.push(
+          `${PAGE_TEMPLATE_FILE}: the build-order slot is missing ${JSON.stringify(pinned)}. Every card's step line ends in one of the two fixed suffixes, which is what says whether the card is a Project to create or the one step that is not, and the name beside it is the document's own.`,
+        );
+      }
+    }
+    const actionAt = card.indexOf(ACTION_CARD_MARKER);
+    if (actionAt === -1) {
+      failures.push(
+        `${PAGE_TEMPLATE_FILE}: the build-order slot carries no alternate card shape. A Step 1 that is a named unblocking action is not a Project, and without its own exemplar it gets rendered as one.`,
+      );
+    } else {
+      const closesAt = card.indexOf("</li>", actionAt);
+      const actionCard = card.slice(
+        actionAt,
+        closesAt === -1 ? undefined : closesAt,
+      );
+      for (const wanted of ACTION_CARD_REQUIRED) {
+        if (!actionCard.includes(wanted)) {
+          failures.push(
+            `${PAGE_TEMPLATE_FILE}: the alternate card shape is missing ${JSON.stringify(wanted)}. An action card is the step line, the action's own name, why it comes first, and what done means.`,
+          );
+        }
+      }
+      for (const banned of ACTION_CARD_FORBIDDEN) {
+        if (actionCard.includes(banned)) {
+          failures.push(
+            `${PAGE_TEMPLATE_FILE}: the alternate card shape carries ${JSON.stringify(banned)}. Nothing has been built yet at that step, so a line describing a project on it is a claim about something that does not exist.`,
+          );
+        }
+      }
+    }
     let placeholderCursor = -1;
     for (const placeholder of ROADMAP_PAGE_PLACEHOLDERS) {
       const at = card.indexOf(placeholder, placeholderCursor + 1);
@@ -1122,5 +1242,5 @@ if (failures.length > 0) {
 }
 
 process.stdout.write(
-  `Validated AI Strategist across ${SKILLS.length} skills: frontmatter, required sections in the two authored skills and the document template, every emitted task-block field, the exactly-pinned model line, the audit rows, the precedence-scoping, structural-narrowing, administrator-policy, browser-ban and authorship invariants, reference links, the portal invocation phrase, the member-facing glance block, the row-expansion line, the mode-aware session-scope sentence, the whole stop-rule paragraph appearing exactly once and identically in the four files that carry it, the page template's exact slot allowlist rendered as paired regions with no missing, duplicate, unknown, nested, or out-of-order marker, and its freedom from script, from links, and from anything that fetches or embeds, the Quick Plan heading with its eight exchanges in order and its no-lookup, routing-order and administrator-label invariants, the template's mode line, the roadmap card as an ordered contract in each of the template's three Build Order blocks with a label attached to both of its capability lines, the same three lines placed between What it reads and Done means on the page's build-order card with its three label-copy placeholders pinned whole and its draft carve-out, the one sentence separating a roadmap card from a full plan carried identically by the skill and the template, the two no-task sentences carried by both with no canonical label anywhere on their line, the four mode-aware chrome strings with both draft variants named in the skill, the routing reference as a bounded shape (only its header paragraph, intro sentence, table header and separator, and six module rows, each row five cells with a known id, that id's own Project, a well-formed lesson list whose first slug matches, and no capability verdict), the spoken line before the task block, and the absence of retired recipe identifiers, retired bridge vendors, retired bridge machinery, and any second statement of the full-plan count.\n`,
+  `Validated AI Strategist across ${SKILLS.length} skills: frontmatter, required sections in the two authored skills and the document template, every emitted task-block field, the exactly-pinned model line, the audit rows, the precedence-scoping, structural-narrowing, administrator-policy, browser-ban and authorship invariants, reference links, the portal invocation phrase, the member-facing glance block, the row-expansion line, the mode-aware session-scope sentence, the whole stop-rule paragraph appearing exactly once and identically in the four files that carry it, the page template's exact slot allowlist rendered as paired regions with no missing, duplicate, unknown, nested, or out-of-order marker, and its freedom from script, from links, and from anything that fetches or embeds, the Quick Plan heading with its eight exchanges in order and its no-lookup, routing-order and administrator-label invariants, the template's mode line, the roadmap card as an ordered contract in each of the template's three Build Order blocks with a label attached to both of its capability lines, the same three lines placed between What it reads and Done means on the page's build-order card with its three label-copy placeholders pinned whole and its draft carve-out, the two fixed step-line suffixes on the page pinned in the exemplar, the slot comment and the skill, with the name-copy rule and the draft step line beside them, the three naming rules in precedence order carried identically by the skill and the template's map note with the map's own Project-column placeholders pinned to them, the alternate unblocking-action card shape carrying its bare suffix, its name and its two lines and none of the four project lines, the chips or What it is for, the Build Order line saying which steps are planned Claude Projects and which one is not, the one sentence separating a roadmap card from a full plan carried identically by the skill and the template, the two no-task sentences carried by both with no canonical label anywhere on their line, the four mode-aware chrome strings with both draft variants named in the skill, the routing reference as a bounded shape (only its header paragraph, intro sentence, table header and separator, and six module rows, each row five cells with a known id, that id's own Project, a well-formed lesson list whose first slug matches, and no capability verdict), the spoken line before the task block, and the absence of retired recipe identifiers, retired bridge vendors, retired bridge machinery, and any second statement of the full-plan count.\n`,
 );
