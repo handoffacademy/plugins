@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.3.1
+
+Two things a first timed run of the Quick Plan showed, both small.
+
+- **The never-list question offers no suggested answers.** Every other question comes with up to three, and that one had started to as well. A refusal you agree to from a list is not the same as one you said yourself, so that question now offers only "I'm not sure" and takes whatever you say in your own words.
+- **The map you see in the chat carries the same labels as the document.** It had been shortening them; now it writes each one out in full, so what you read in the chat is what you find on the page.
+
 ## 1.3.0
 
 Your plan now comes two ways, and the quick one is the point of this release.

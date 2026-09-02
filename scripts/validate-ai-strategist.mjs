@@ -157,6 +157,9 @@ const REQUIRED_PROSE = {
   // The ladder's floor, in the skill that writes the document.
   "skills/hub-strategy/SKILL.md": [
     "**A source with no native connector never goes on a schedule.**",
+    // The never-list question offers no suggested refusals, and the chat map keeps full labels (1.3.1).
+    "except Q7, which offers only \"I'm not sure\"",
+    "every capability label written out in its full canonical form",
   ],
   // The helper refuses the authorship its precedence clause would otherwise hand it.
   "skills/automation-connector-discovery/SKILL.md": [
