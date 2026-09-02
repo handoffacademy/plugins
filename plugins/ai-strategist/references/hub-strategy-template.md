@@ -47,34 +47,63 @@ A draft carrying the strategy title is the failure this variant exists to preven
 `Draft hub proposal — not ready to build`, followed by the line naming who answered and
 which intended members were not present. The four canonical changes are above.]
 
+## Your Hub at a Glance
+
+[What this hub is for, in your words.]
+[The first project you are building, and why it goes first.]
+[The first job you want running on its own once that is built.]
+[Where you chose for its results to land.]
+[The one thing to do this week.]
+
+[Five lines, and only five, one plain sentence each, and this is the first section of the
+document. Write it last and put it here. It restates the decisions the member made, in
+their own words: what they are building, what they want running, where they chose to put
+the results, and what they are doing next. Nothing in it is a claim about what a product,
+a connector, or a tool does. Every claim of that kind stays on the card that carries it,
+with its label.]
+
 Written [date].
 Capabilities in this document were checked against current documentation in the
 session that wrote it, on [date]. Those labels belong to that session. Re-check
 every capability a project depends on at the start of the session you build it in,
 however recent the date above looks.
 
-## Your Hub at a Glance
+## The Map
 
-| Project | What it is for | What it reads | Order | State |
-|---|---|---|---|---|
-| [Project name in their words] | [One line, their words] | [Sources] — Verified [date] / Unverified | Step [1, 2, 3…] | Not built yet |
-| [Area they named that is deliberately not designed today] | [Deferred — why, in one line: it needs a decision first, it has no route yet, or it can wait] | — | later | Deferred |
-| [Area already served by something that runs] | [Already running — [the existing job or space, one line]. Not redesigned today.] | — | — | Already running — not redesigned |
-| [Project from this plan that now exists] | [One line, their words] | [Sources] — Verified [date] / Unverified | Step [the number it has always had] | Built — [date] |
-| [Project from this plan they have stopped] | [One line, their words] | — | Step [the number it has always had] | Retired [date] — task stopped |
+| Project | Area | What it is for | What it reads | Order | State | Why it waits |
+|---|---|---|---|---|---|---|
+| [Project name in their words] | [the area it belongs to] | [One line, their words] | [Sources] — Verified [date] / Unverified | Step [1, 2, 3…] | Not built yet | [blank where a full card was worked today] |
+| [Planned project left as a row this sitting] | [the area it belongs to] | [the job it does, one line, their words] | [Sources] — Verified [date] / Unverified | Step [1, 2, 3…] | Not built yet | [why it waits, one line: the session scope, a decision it needs first, or no route yet] |
+| [Area they named with no project ordered yet] | [the area it belongs to] | [what it would do, one line, their words] | — | later | Deferred | [why it waits, one line: it needs a decision first, it has no route yet, or it can wait] |
+| [Area already served by something that runs] | [the area it belongs to] | [Already running — [the existing job or space, one line]. Not redesigned today.] | — | — | Already running — not redesigned | [blank] |
+| [Project from this plan that now exists] | [the area it belongs to] | [One line, their words] | [Sources] — Verified [date] / Unverified | Step [the number it has always had] | Built — [date] | [blank] |
+| [Project from this plan they have stopped] | [the area it belongs to] | [One line, their words] | — | Step [the number it has always had] | Retired [date] — task stopped | [blank] |
 
 [Every area they named gets a row, including the ones deliberately left undesigned.
 A named area with no row reads as forgotten rather than as decided.]
 
-[**The two right-hand columns do different jobs and never merge.** Order is the step number
-a project was given the day it was written into this plan, and it does not change for any
-reason afterwards. State is the only column that moves: Not built yet, Built with the date,
-Retired with the date and "task stopped". A project that has been built keeps its number
-and changes its state; a project that has been stopped does the same; neither row is ever
-deleted, because a plan with a gap in it reads as an oversight and a member who wants that
-work back needs something to point at. A newly named area takes the next unused number
-after the highest one in this table. Deferred rows and already-running rows are untouched
-by all of this and keep the entries shown above.]
+Any planned or deferred row here can be worked into a full plan whenever you want one. Ask for it by name.
+
+[That line is part of this skeleton and is never dropped. How many projects are worked into
+full cards is the session scope rule in the strategy skill, and it is not restated here. The
+line covers rows that are planned and not built yet, and rows that are deferred. It never
+covers an already-running row or a retired one: nothing here redesigns what already works,
+and a project that was stopped comes back by asking for that, not by expanding a row.]
+
+[**Order and State do different jobs and never merge.** Order is the step number a project
+was given the day it was written into this plan, and it does not change for any reason
+afterwards. State is the only column that moves: Not built yet, Built with the date,
+Retired with the date and "task stopped". **A planned project keeps its step number and its
+Not built yet state whether it was worked into a full card this sitting or left as a row.**
+Being a row is a matter of how much of it is written out, never a lifecycle state, and
+`later` with `Deferred` belongs only to an area with no project ordered yet. A project that
+has been built keeps its number and changes its state; a project that has been stopped does
+the same; neither row is ever deleted, because a plan with a gap in it reads as an oversight
+and a member who wants that work back needs something to point at. A newly ordered project takes
+the next unused number after the highest one in this table. A newly named area that is
+still deferred stays `later` with `Deferred` until a project is ordered for it, and only
+then takes a number. Deferred rows and already-running
+rows are untouched by all of this and keep the entries shown above.]
 
 ## Build Order
 
@@ -95,7 +124,7 @@ unblocks, so the wait is visible rather than discovered on the day you sit down 
 [Where this document is being amended rather than written fresh, **none of these numbers
 move.** A step number is assigned once and kept: a project that has been built keeps its
 number and carries Built with the date in the State column, one that has been stopped keeps
-its number and carries Retired, and a newly named area takes the next unused number after
+its number and carries Retired, and a newly ordered project takes the next unused number after
 the highest one here. What moves is a single pointer line, added at the top of this section:
 
 **Next: Step [N] — [the project].** [Why it is next, and what "done" means for it.]
@@ -186,7 +215,7 @@ the first.
 
 *First, what it should hold and why.* [For each item: name it, and say in one clause
 what it teaches this project about acting in this space — the judgment, the voice, the
-vocabulary, or the standard it cannot infer from the sources it reads. Three to five
+vocabulary, or the standard it cannot infer from the sources it reads. Three or four
 items is the working range. "Nothing, and here is why" is a legitimate answer and is
 written as one.]
 
@@ -219,7 +248,7 @@ private one.]
 
 **How you use this space day to day.**
 - What it does without being asked: [the scheduled work, in one line]
-- What you ask it: [three to five real questions in your own phrasing]
+- What you ask it: [three or four real questions in your own phrasing]
 - What stays manual, permanently: [what you will always do yourself, and why that is
   the design rather than a gap]
 - [One line specific to this space: what it needs from you, what it will get wrong at
@@ -389,6 +418,8 @@ Come back through this document once a week while you are building it. Cross off
 
 ## Rules for filling it in
 
+- **Your Hub at a Glance is written last and placed first.** It is the first section of the document, and it holds five plain sentences in the member's own words, one idea each: what this hub is for, the first project they are building and why it goes first, the first job they want running on its own, where they chose for the results to land, and the one thing to do this week. **It restates their decisions and makes no claim about what any product, connector, or tool does.** Every claim of that kind stays on the card that carries it, with its label. It is written last because it restates a document that does not exist until the rest is finished.
+- **How many projects get full cards is the session scope rule in the strategy skill, and it is not restated here.** Every project that rule leaves as a row keeps its own row in the map, carrying the job it does, the area it belongs to, and one line on why it waits, along with the step number and the `Not built yet` state any planned project has. The line under the map saying any planned or deferred row can be worked into a full plan on request is part of the document rather than an optional courtesy, and it never reaches an already-running row or a retired one.
 - **A card is complete when a stranger could build the space from it and the member could use it on the day it exists.** Missing its knowledge reasons, its day-to-day use block, its home-base destination, its sensitivity line, or any label makes it half-designed. **And a card whose only described behavior is the scheduled task is a task with a project wrapped around it, not a space.** A card with no scheduled task at all can be complete; a card that would collapse into nothing without its task is not.
 - **A source with no native connector is never written as a scheduled route.** It is one of two things and the card says which: a watched routine, with the member at the keyboard, read-and-summarize only, and never on a schedule; or honestly out of reach today. There is no route in between, so nothing in this document ever describes a second connection, a written-rules arrangement, or any other stand-in that would let an unreachable source run on a schedule. Where a project depends on a connector the member has not added yet, adding it is its own one-time line on the Connections Checklist, exactly as connecting the home base is.
 
@@ -396,7 +427,7 @@ Come back through this document once a week while you are building it. Cross off
 - **Skills and plugins are decisions, and "none, because…" is one of them.** A named skill with no argument for why it is a skill rather than a line in the instructions is boilerplate. So is a plugin line that only lists additions: in any space that drafts or handles sensitive material, what is deliberately not enabled belongs on the card, because the absence is the safety property.
 - **The handoff line to the design engine is fixed, including the never-list clause.** Describe the job the task should do; never write the task text here, or anywhere else in the conversation that produced this document — asking for the prompt "just in the chat" is the same request with the channel changed. The engine runs its own interview, re-verifies the exact read along with the run location and the reach and control checks that depend on it, and tests on real data. A task specified in this document skips all three — and a refusal that lives only in the project instructions never reaches a scheduled run, which is why the handoff carries the project's never-list forward.
 - **Step 1 is one of exactly two shapes, and never a list.** Normally it is one project that can be built this week with what the member has today — sources reachable now, destination available now, nothing in it waiting on an open decision. **Only where no project passes that test** does it become the second shape: one named unblocking action — the single connection, the single question to whoever runs an account — with the first project it unlocks named beside it, so the step still ends in something rather than in waiting. **A member starting from paper gets that shape by a third route: a digitize-first step** — an account to open, a paper calendar to move into it, a folder to scan — which is the unblocking action for that plan and carries the first project it unlocks beside it like any other. Two projects is never Step 1, and neither is an unblocking action with nothing attached to it.
-- **An amended document keeps every step number it already had, because the ordinal and the lifecycle state are two different columns.** Order is assigned once and never changes. State is where `Built — [date]` and `Retired [date] — task stopped` go, and a row in either state keeps its number and stays in the table. A newly named area takes the next unused number. **The next thing to build is named as `Next: Step [N]` in the Build Order section, never renumbered to Step 1** — a plan that renumbers itself stops being recognizable to the person who has been working through it, and a finished project is never moved back into the order to make room. Whatever `Next` points at gets the buildable-this-week test exactly as Step 1 got it the first time. Deferred rows are unaffected by any of this.
+- **An amended document keeps every step number it already had, because the ordinal and the lifecycle state are two different columns.** Order is assigned once and never changes. State is where `Built — [date]` and `Retired [date] — task stopped` go, and a row in either state keeps its number and stays in the table. A newly ordered project takes the next unused number. A newly named area that is still deferred stays `later` with `Deferred` until a project is ordered for it, and only then takes a number. **Being left as a row rather than worked into a card is not a lifecycle state**, so a planned row keeps its number and its `Not built yet` state exactly as a carded project does. **The next thing to build is named as `Next: Step [N]` in the Build Order section, never renumbered to Step 1** — a plan that renumbers itself stops being recognizable to the person who has been working through it, and a finished project is never moved back into the order to make room. Whatever `Next` points at gets the buildable-this-week test exactly as Step 1 got it the first time. Deferred rows are unaffected by any of this.
 - **A route they declined is a settled choice, not an open decision, and it has its own section.** Where the member turned down a rung of the connector ladder, or the recommended home base, it goes under *Choices Already Made* in their own words, with one line on what that route would have carried and one on what it costs them. **Record the condition that would make them look at it again alongside the decline**, because a refusal recorded without it reads as permanent when it was not. **It never goes in Open Decisions**, because that list is what they take to office hours to answer, and a decision they already made is not a question. Frame it as theirs to revisit rather than as a disagreement kept on the record, and let the document be the only place it is raised again.
 - **Open decisions carry real options.** Two or three, each with what it means and what it costs. "It depends on your preference" is not an option, and neither is a recommendation with the alternatives left out.
 - **The never list is quoted, not summarized.** The member has to be able to find their own sentence in it.
