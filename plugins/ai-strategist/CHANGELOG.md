@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.5.0
+
+Every project on your build order now comes with a short card of its own, so you can see what each one is for and how it gets built without opening the full write up.
+
+- **A roadmap card for every project you are planning.** Under each step you get five lines: what that project is for, what it reads, what runs on its own and how often, where its results land, and which Academy lesson builds it. Every planned project gets them, whether you ran the Quick Plan or the full interview.
+- **The page shows the same three new lines.** Each card on your one page summary now carries what runs on its own, where the results land, and which lesson builds it, alongside what it is for and what it reads.
+- **What runs on its own is a job, never a prompt.** The line says what the task checks, how often it runs, and when it lands, and it carries the same confirmed or unconfirmed label every other capability line does. The task itself is still written in its own sitting with the design engine, and tested on your real data before it goes on a schedule. Where a project is a space you open rather than a job that runs, the line says that instead.
+- **Full write ups are unchanged, and they still come by name.** The instructions, the knowledge, the skills, and the plugins are written out for the projects your plan works all the way through. Any other planned or deferred row becomes a full plan when you ask for it by name. Already running and retired rows stay as they are unless you ask to change or restore them.
+- **Two fixes on the page.** A row that is already running keeps the order value the document gives it, instead of showing the area in its place. A parked row keeps all six of its fields, including the line saying why it waits.
+- **Nothing you already have changes.** A plan written before today says exactly what it said.
+
 ## 1.4.0
 
 Your plan now also comes as a page you can read on your phone and save with one click; the document is still there underneath it.

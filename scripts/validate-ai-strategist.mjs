@@ -134,6 +134,38 @@ const BRIDGE_VENDORS = /composio|zapier/i;
 const BRIDGE_MACHINERY = /whole-app|cost check|knowingly approved|route 2|route-2|both routes/i;
 const RETIRED_RESIDUE_EXEMPT = new Set(["CHANGELOG.md"]);
 
+// A project with no scheduled task states no capability, so these two sentences carry no label.
+// A label appended to one is the same failure as an unlabeled capability line from the other
+// direction: it tells the member something was checked when there was nothing to check.
+const ROADMAP_NO_TASK_SENTENCES = [
+  "Runs on its own: Nothing. This one is a space you open, not a task that runs.",
+  "Lands in: Nothing runs, so nothing lands. You open the space yourself.",
+];
+const ROADMAP_NO_TASK_FILES = [
+  "references/hub-strategy-template.md",
+  "skills/hub-strategy/SKILL.md",
+];
+const CANONICAL_LABELS = [
+  "Verified ",
+  "Unverified — confirm at office hours",
+  "Needs your account administrator",
+];
+
+// Two chrome lines are mode-aware, and a draft that keeps the strategy string hands somebody a
+// build instruction for a plan whose owner has never answered a question. Each string is pinned
+// in the page (comment or exemplar) and in the skill, because the page cannot choose between
+// them on its own and the skill is what does the choosing.
+const PAGE_MODE_AWARE_CHROME = {
+  "build-order note, strategy":
+    "These cards are a map. The document is what you build from; it says which projects have a full plan, and any other planned or deferred project becomes one when you ask for it by name.",
+  "build-order note, draft":
+    "These cards are a proposal. Nothing here is ready to build, and nothing becomes a plan until the people it is about have answered for themselves.",
+  "footer, strategy":
+    "[first-name]-hub-strategy.md is the plan. Build from it; edit it first, and this page is made again from it.",
+  "footer, draft":
+    "[first-name]-hub-strategy.md is the draft. Nothing in it is ready to build; edit it first, and this page is made again from it.",
+};
+
 // Rounds 6 and 7 closed two whole classes of bug — a precedence clause in one file
 // granting what another file forbade, and a shortened restatement of a gate standing in
 // for the audited one. Both were fixed in prose, and prose is exactly what a later edit
@@ -215,11 +247,31 @@ REQUIRED_PROSE["skills/hub-strategy/SKILL.md"].push(
   "render it as a one-page HTML rendering from `../../references/hub-strategy-page.html`",
   "**The page is a rendering, never the source:**",
 );
+REQUIRED_PROSE["references/hub-strategy-template.md"].push(
+  ...ROADMAP_NO_TASK_SENTENCES,
+);
+REQUIRED_PROSE["skills/hub-strategy/SKILL.md"].push(...ROADMAP_NO_TASK_SENTENCES);
+REQUIRED_PROSE["references/hub-strategy-template.md"].push(
+  // The one sentence that keeps the roadmap card from being read as a shrunken full plan. It is
+  // the same words in the skill and in the template on purpose: two artifacts drifting on what
+  // this thing is, is how the instructions and the knowledge start turning up in a build order.
+  "A roadmap card is never a full plan and never stands in for one",
+);
+REQUIRED_PROSE["skills/hub-strategy/SKILL.md"].push(
+  "A roadmap card is never a full plan and never stands in for one",
+  // The draft carve-out. A draft page's cards are name, area, and route; roadmap lines on one
+  // dress an unfinished proposal as a plan somebody can build from.
+  "Those three lines belong to a strategy page only",
+  PAGE_MODE_AWARE_CHROME["build-order note, draft"],
+  PAGE_MODE_AWARE_CHROME["footer, draft"],
+);
 REQUIRED_PROSE["skills/hub-strategy/SKILL.md"].push(
   // Stated once, on purpose. A second copy of a number is a second number to drift. The
   // sentence is mode-aware from 1.3.0: the full interview and Quick Plan produce different
-  // amounts of the same document, and how much is decided here rather than at Q9.
-  "Session scope: the full interview works the first three projects in the build order into full cards; Quick Plan writes module rows and at most one custom card, only where the member made that area the first project; every other area is a row.",
+  // amounts of the same document, and how much is decided here rather than at Q9. From 1.5.0
+  // it opens with what both modes always produce, so a roadmap card cannot be read as the
+  // thing a short sitting drops.
+  "Session scope: every planned project carries a roadmap card in the build order, in both modes; the full interview also works the first three projects in the build order into full plans; Quick Plan writes at most one full plan, only where the member made a custom area the first project; every other area is a row.",
 );
 
 // The stop rule is the whole of what makes build-time verification safe: Quick Plan writes
@@ -337,6 +389,7 @@ const PAGE_SLOTS = [
   "glance-lines",
   "labels-note",
   "build-order-heading",
+  "build-order-note",
   "build-order",
   "project-plans",
   "parked",
@@ -374,9 +427,54 @@ const PAGE_BANNED = [
 
 const REFERENCE_LINK = /\.\.\/\.\.\/references\/([A-Za-z0-9._-]+\.md)/g;
 const RECIPE_RESIDUE = /recipe-/;
-// The card count is the session-scope sentence and nothing else. "three to five" was the
+// The full-plan count is the session-scope sentence and nothing else. "three to five" was the
 // old range, and a second statement of the count anywhere is the drift this catches.
-const CARD_COUNT_RESIDUE = /three to five/i;
+const PLAN_COUNT_RESIDUE = /three to five/i;
+
+// The roadmap card (1.5.0). Every planned project carries the same five lines under its step
+// in the document, and the page renders three of them on every planned card. Both are ordered
+// contracts rather than sets: the order is what makes the block readable as one project's
+// shape, and a line dropped from the template is a line the member never gets, in the one
+// section of the document a Quick Plan writes most of.
+const ROADMAP_TEMPLATE_SECTION = "## Build Order";
+// Anchored on the three step lines rather than scanned across the section: an ordered scan of
+// the whole thing passes a label deleted from one step by matching the same label in the step
+// below, which is the mutation that matters.
+const ROADMAP_TEMPLATE_BLOCKS = ["**Step 1:", "**Step 2:", "**Step [N]:"];
+const ROADMAP_TEMPLATE_LABELS = [
+  "What it is for:",
+  "What it reads:",
+  "Runs on its own:",
+  "Lands in:",
+  "Built in:",
+];
+// Both of these are capability lines, and they carry their label two different ways. Runs on
+// its own is written here, so it attaches its own label. Lands in is copied out of the home
+// base section, which already labeled it, so a second attachment here is a second label on one
+// claim: the two can disagree, and the member cannot tell which one was checked.
+const ROADMAP_LABEL_ATTACHMENT = "[exactly one label:";
+const ROADMAP_ATTACHED_LABEL_LINE = "Runs on its own:";
+const ROADMAP_COPIED_LABEL_LINE = "Lands in:";
+const ROADMAP_COPIED_LABEL_WORDING = "its one label included";
+const ROADMAP_PAGE_SLOT = "build-order";
+// Position, not presence. The three roadmap lines sit between these two, and a card that puts
+// them after Done means is a card the member reads in a different order than the document.
+const ROADMAP_PAGE_OPENS_AFTER = '<span class="k">What it reads</span>';
+const ROADMAP_PAGE_CLOSES_BEFORE = '<span class="k">Done means</span>';
+const ROADMAP_PAGE_LINES = [
+  '<span class="k">Runs on its own</span>',
+  '<span class="k">Lands in</span>',
+  '<span class="k">Built in</span>',
+];
+const ROADMAP_PAGE_DRAFT_EXCLUSION = "no roadmap lines";
+// Pinned whole rather than by their key spans. The clause that carries the rule is the tail of
+// each placeholder - which value to take and that its label is written out in full - and that
+// tail is what a trim takes off while leaving a card that still looks complete.
+const ROADMAP_PAGE_PLACEHOLDERS = [
+  `<p><span class="k">What it reads</span>[the map's exact What it reads value, its label written out in full]</p>`,
+  `<p><span class="k">Runs on its own</span>[the exact value after "Runs on its own:" in the document, its label written out in full where it carries one]</p>`,
+  `<p><span class="k">Lands in</span>[the exact value after "Lands in:" in the document, its label written out in full where it carries one]</p>`,
+];
 
 const failures = [];
 
@@ -581,9 +679,9 @@ for (const path of everyFile(pluginRoot)) {
         `${name}:${index + 1}: carries a retired recipe identifier: ${lines[index].trim()}`,
       );
     }
-    if (CARD_COUNT_RESIDUE.test(lines[index])) {
+    if (PLAN_COUNT_RESIDUE.test(lines[index])) {
       failures.push(
-        `${name}:${index + 1}: states a card count of its own. How many projects get full cards is the session-scope sentence in hub-strategy, stated once: ${lines[index].trim()}`,
+        `${name}:${index + 1}: states a plan count of its own. How many projects get full plans is the session-scope sentence in hub-strategy, stated once: ${lines[index].trim()}`,
       );
     }
     if (RETIRED_RESIDUE_EXEMPT.has(name)) continue;
@@ -827,6 +925,180 @@ if (pageSource !== null) {
   }
 }
 
+// 6e. The roadmap card, in the two artifacts that carry its shape. The sentence naming what it
+//      is, and the draft carve-out, are pinned as prose above.
+if (templateSource !== null) {
+  const opensAt = templateSource.indexOf(ROADMAP_TEMPLATE_SECTION);
+  const endsAt = templateSource.indexOf("\n## ", opensAt + 1);
+  if (opensAt !== -1) {
+    const buildOrder = templateSource.slice(
+      opensAt,
+      endsAt === -1 ? undefined : endsAt,
+    );
+    const opensBlockAt = [];
+    let cursor = -1;
+    for (const opener of ROADMAP_TEMPLATE_BLOCKS) {
+      const at = buildOrder.indexOf(opener, cursor + 1);
+      if (at === -1) {
+        failures.push(
+          `references/hub-strategy-template.md: the Build Order section is missing the ${JSON.stringify(opener)} block, or it appears out of order. Every planned project carries a roadmap card, and these three are the exemplars for it.`,
+        );
+        break;
+      }
+      opensBlockAt.push(at);
+      cursor = at;
+    }
+    if (opensBlockAt.length === ROADMAP_TEMPLATE_BLOCKS.length) {
+      for (let index = 0; index < opensBlockAt.length; index += 1) {
+        const block = buildOrder.slice(
+          opensBlockAt[index],
+          opensBlockAt[index + 1] ?? undefined,
+        );
+        const opener = ROADMAP_TEMPLATE_BLOCKS[index];
+        // Matched on lines that begin with a label, so that the note's quoted forms of the
+        // no-task lines cannot satisfy a label deleted from a block above it.
+        const lines = block.split("\n").map((line) => line.trim());
+        const written = lines
+          .map((line) =>
+            ROADMAP_TEMPLATE_LABELS.find((roadmapLabel) =>
+              line.startsWith(roadmapLabel),
+            ),
+          )
+          .filter((roadmapLabel) => roadmapLabel !== undefined);
+        // Step 1 has a second legal shape: a named unblocking action, which is not a project
+        // and carries no roadmap card, with the project it unlocks in the block immediately
+        // after it. So an empty Step 1 passes only when the next block carries all five. A
+        // Step 1 carrying some of them is a card losing lines, and that still fails.
+        const unlocksInNextBlock =
+          index === 0 &&
+          written.length === 0 &&
+          opensBlockAt.length > 1 &&
+          JSON.stringify(
+            buildOrder
+              .slice(opensBlockAt[1], opensBlockAt[2] ?? undefined)
+              .split("\n")
+              .map((line) => line.trim())
+              .map((line) =>
+                ROADMAP_TEMPLATE_LABELS.find((roadmapLabel) =>
+                  line.startsWith(roadmapLabel),
+                ),
+              )
+              .filter((roadmapLabel) => roadmapLabel !== undefined),
+          ) === JSON.stringify(ROADMAP_TEMPLATE_LABELS);
+        if (
+          !unlocksInNextBlock &&
+          JSON.stringify(written) !== JSON.stringify(ROADMAP_TEMPLATE_LABELS)
+        ) {
+          failures.push(
+            `references/hub-strategy-template.md: the ${JSON.stringify(opener)} roadmap card carries ${JSON.stringify(written)}. Every planned project carries all five lines, once each, in this order: ${JSON.stringify(ROADMAP_TEMPLATE_LABELS)}.`,
+          );
+        }
+        const attached = lines.find((candidate) =>
+          candidate.startsWith(ROADMAP_ATTACHED_LABEL_LINE),
+        );
+        if (attached !== undefined && !attached.includes(ROADMAP_LABEL_ATTACHMENT)) {
+          failures.push(
+            `references/hub-strategy-template.md: the ${JSON.stringify(opener)} block's ${JSON.stringify(ROADMAP_ATTACHED_LABEL_LINE)} line carries no ${JSON.stringify(ROADMAP_LABEL_ATTACHMENT)} attachment. It states what a scheduled job does, and an unlabeled capability line reads as verified.`,
+          );
+        }
+        const copied = lines.find((candidate) =>
+          candidate.startsWith(ROADMAP_COPIED_LABEL_LINE),
+        );
+        if (copied !== undefined && copied.includes(ROADMAP_LABEL_ATTACHMENT)) {
+          failures.push(
+            `references/hub-strategy-template.md: the ${JSON.stringify(opener)} block's ${JSON.stringify(ROADMAP_COPIED_LABEL_LINE)} line appends a second ${JSON.stringify(ROADMAP_LABEL_ATTACHMENT)} attachment. This line is copied from the home base section, which already labeled it, and two labels on one claim can disagree.`,
+          );
+        }
+        if (copied !== undefined && !copied.includes(ROADMAP_COPIED_LABEL_WORDING)) {
+          failures.push(
+            `references/hub-strategy-template.md: the ${JSON.stringify(opener)} block's ${JSON.stringify(ROADMAP_COPIED_LABEL_LINE)} line never says ${JSON.stringify(ROADMAP_COPIED_LABEL_WORDING)}. Without it the copy is taken without the label the home base section put on it, and the line lands unlabeled.`,
+          );
+        }
+      }
+    }
+  }
+}
+
+if (pageSource !== null) {
+  const opensAt = pageSource.indexOf(`<!-- slot: ${ROADMAP_PAGE_SLOT} -->`);
+  const endsAt = pageSource.indexOf(`<!-- end: ${ROADMAP_PAGE_SLOT} -->`, opensAt + 1);
+  if (opensAt !== -1 && endsAt !== -1) {
+    const card = pageSource.slice(opensAt, endsAt);
+    if (!card.includes(ROADMAP_PAGE_DRAFT_EXCLUSION)) {
+      failures.push(
+        `${PAGE_TEMPLATE_FILE}: the build-order slot never says ${JSON.stringify(ROADMAP_PAGE_DRAFT_EXCLUSION)}. A draft page's cards are the name, the area, and the route, and roadmap lines on one dress an unfinished proposal as a plan.`,
+      );
+    }
+    let placeholderCursor = -1;
+    for (const placeholder of ROADMAP_PAGE_PLACEHOLDERS) {
+      const at = card.indexOf(placeholder, placeholderCursor + 1);
+      if (at === -1) {
+        failures.push(
+          `${PAGE_TEMPLATE_FILE}: the build-order card is missing the placeholder ${JSON.stringify(placeholder)}, or it appears out of order. The tail of each one says which value to take and that its label is written out in full, and that is the half a trim removes.`,
+        );
+        break;
+      }
+      placeholderCursor = at;
+    }
+    let cursor = card.indexOf(ROADMAP_PAGE_OPENS_AFTER);
+    if (cursor === -1) {
+      failures.push(
+        `${PAGE_TEMPLATE_FILE}: the build-order card is missing ${JSON.stringify(ROADMAP_PAGE_OPENS_AFTER)}, which is what the three roadmap lines sit after.`,
+      );
+    } else {
+      let placed = true;
+      for (const roadmapLine of ROADMAP_PAGE_LINES) {
+        const at = card.indexOf(roadmapLine, cursor + 1);
+        if (at === -1) {
+          failures.push(
+            `${PAGE_TEMPLATE_FILE}: the build-order card is missing the roadmap line ${JSON.stringify(roadmapLine)}, or it appears out of order. All three sit after What it reads, in this order.`,
+          );
+          placed = false;
+          break;
+        }
+        cursor = at;
+      }
+      const closesAt = card.indexOf(ROADMAP_PAGE_CLOSES_BEFORE);
+      if (placed && (closesAt === -1 || closesAt < cursor)) {
+        failures.push(
+          `${PAGE_TEMPLATE_FILE}: the build-order card's ${JSON.stringify(ROADMAP_PAGE_CLOSES_BEFORE)} line does not follow the three roadmap lines. The card reads in the document's own order.`,
+        );
+      }
+    }
+  }
+}
+
+// 6f. A no-task line states no capability, so nothing on its line may label it.
+for (const file of ROADMAP_NO_TASK_FILES) {
+  const source = sourceFor(file);
+  if (source === null) continue;
+  const lines = source.split("\n");
+  for (let index = 0; index < lines.length; index += 1) {
+    for (const sentence of ROADMAP_NO_TASK_SENTENCES) {
+      const at = lines[index].indexOf(sentence);
+      if (at === -1) continue;
+      const after = lines[index].slice(at + sentence.length);
+      for (const canonical of CANONICAL_LABELS) {
+        if (after.includes(canonical)) {
+          failures.push(
+            `${file}:${index + 1}: a no-task roadmap line is followed by ${JSON.stringify(canonical)} on its own line. That line states no capability, so labeling it says something was checked when there was nothing to check.`,
+          );
+        }
+      }
+    }
+  }
+}
+
+if (pageSource !== null) {
+  for (const [name, chrome] of Object.entries(PAGE_MODE_AWARE_CHROME)) {
+    if (!pageSource.includes(chrome)) {
+      failures.push(
+        `${PAGE_TEMPLATE_FILE}: missing the ${name} chrome line ${JSON.stringify(chrome)}. Both variants live in the template, in the exemplar or its comment, because the page cannot pick between them on its own.`,
+      );
+    }
+  }
+}
+
 // 7. The portal lesson's invocation phrase, character for character.
 const codexManifestPath = join(pluginRoot, ".codex-plugin", "plugin.json");
 if (!existsSync(codexManifestPath)) {
@@ -850,5 +1122,5 @@ if (failures.length > 0) {
 }
 
 process.stdout.write(
-  `Validated AI Strategist across ${SKILLS.length} skills: frontmatter, required sections in the two authored skills and the document template, every emitted task-block field, the exactly-pinned model line, the audit rows, the precedence-scoping, structural-narrowing, administrator-policy, browser-ban and authorship invariants, reference links, the portal invocation phrase, the member-facing glance block, the row-expansion line, the mode-aware session-scope sentence, the whole stop-rule paragraph appearing exactly once and identically in the four files that carry it, the page template's exact slot allowlist rendered as paired regions with no missing, duplicate, unknown, nested, or out-of-order marker, and its freedom from script, from links, and from anything that fetches or embeds, the Quick Plan heading with its eight exchanges in order and its no-lookup, routing-order and administrator-label invariants, the template's mode line, the routing reference as a bounded shape (only its header paragraph, intro sentence, table header and separator, and six module rows, each row five cells with a known id, that id's own Project, a well-formed lesson list whose first slug matches, and no capability verdict), the spoken line before the task block, and the absence of retired recipe identifiers, retired bridge vendors, retired bridge machinery, and any second statement of the card count.\n`,
+  `Validated AI Strategist across ${SKILLS.length} skills: frontmatter, required sections in the two authored skills and the document template, every emitted task-block field, the exactly-pinned model line, the audit rows, the precedence-scoping, structural-narrowing, administrator-policy, browser-ban and authorship invariants, reference links, the portal invocation phrase, the member-facing glance block, the row-expansion line, the mode-aware session-scope sentence, the whole stop-rule paragraph appearing exactly once and identically in the four files that carry it, the page template's exact slot allowlist rendered as paired regions with no missing, duplicate, unknown, nested, or out-of-order marker, and its freedom from script, from links, and from anything that fetches or embeds, the Quick Plan heading with its eight exchanges in order and its no-lookup, routing-order and administrator-label invariants, the template's mode line, the roadmap card as an ordered contract in each of the template's three Build Order blocks with a label attached to both of its capability lines, the same three lines placed between What it reads and Done means on the page's build-order card with its three label-copy placeholders pinned whole and its draft carve-out, the one sentence separating a roadmap card from a full plan carried identically by the skill and the template, the two no-task sentences carried by both with no canonical label anywhere on their line, the four mode-aware chrome strings with both draft variants named in the skill, the routing reference as a bounded shape (only its header paragraph, intro sentence, table header and separator, and six module rows, each row five cells with a known id, that id's own Project, a well-formed lesson list whose first slug matches, and no capability verdict), the spoken line before the task block, and the absence of retired recipe identifiers, retired bridge vendors, retired bridge machinery, and any second statement of the full-plan count.\n`,
 );
