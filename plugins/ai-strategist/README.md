@@ -11,7 +11,7 @@ It checks what Claude and Notion can currently do against their own documentatio
 - **Hub Strategy** — the interview and the document. Ask for it by name, or say "design my AI hub strategy".
 - **Notion Hub** — the Notion expert. It designs your workspace during the strategy session, and when you sit down to build, it walks you through creating the pages and databases with you watching every step.
 - **The design engine** — the automation designer that came over from Automation Builder. When your strategy says a project should check something every morning, this is what turns that line into a real scheduled task: its own interview, a check on what your connection can actually read, and a test on your real data before anything goes on a schedule.
-- **Two helpers** — one that reports which connected apps can actually be used, and one that works out what a Composio connection allows and what running a job through it costs, read from Composio's current documentation rather than from memory.
+- **One helper** — the connection check, which reports which connected apps can actually be used and what each one can read, taken from the vendors' current documentation rather than from memory.
 
 ## Install in Claude Cowork
 
@@ -41,7 +41,7 @@ codex plugin marketplace upgrade plugins
 codex plugin add ai-strategist@plugins
 ```
 
-Claude's Auto-update toggle does not update Codex installations. Product names, connector availability, and recurring-task controls differ by product, so AI Strategist uses only the tools visible in the current conversation and says plainly where a product cannot do something rather than quietly doing something weaker. Where a product cannot schedule recurring work, it hands you the finished task to schedule yourself.
+Claude's Auto-update toggle does not update Codex installations. Product names, connector availability, and recurring-task controls differ by product, so AI Strategist uses only the tools visible in the current conversation and says plainly where a product cannot do something rather than quietly doing something weaker. Where a product cannot schedule recurring work, it hands you the finished task to schedule yourself — but only where every source in it is a native connector that product verified and the task's reach can be narrowed to those sources plus the one place its results land. Where it cannot, it says the task is not schedulable there rather than handing you one that looks ready.
 
 ## If you have Automation Builder installed
 
@@ -59,10 +59,10 @@ If you added Automation Architect as an uploaded file rather than through the ma
 
 - Every capability in your document is labeled. `Verified` with a date means it was checked against current documentation in that session. `Unverified` means it could not be checked, and it says so rather than guessing.
 - **Those labels expire.** A verified line is a record of one check on one day. Before you build any project in the document, ask for its capabilities to be re-checked, however recent the date looks.
-- Anything you said should never happen goes into the document in your own words, alongside a floor that applies whatever else changes: nothing sends, publishes, pays, or deletes on its own, no passwords or keys go into a chat, legal and medical judgment stays with your professional, and anything to do with money prefers a statement you exported yourself.
+- Anything you said should never happen goes into the document in your own words, alongside a floor that applies whatever else changes: nothing sends, publishes, pays, or deletes on its own, no passwords or keys go into a chat, legal and medical judgment stays with your professional, and financial records come in one way only, as statements and exports you download yourself, never through a live bank or payment connection and never through a browser.
 - Anything sensitive — legal, medical, your children, your finances — gets its own separate project, and the document says why in your words.
 
-**When you build, one project at a time.** The build order starts with a single project, chosen because it is daily, boring, and low-risk. Sensitive projects are never first. Nine projects half-built is the failure this is designed around.
+**When you build, one project at a time.** The build order starts with a single project, chosen because it is daily, boring, and low-risk. Sensitive projects are recommended later, and if you decide to build one first, every privacy, isolation, test, and permission gate still applies to it exactly as it would have. Nine projects half-built is the failure this is designed around.
 
 **Scheduled tasks keep the limits they always had.** Every task the design engine builds reads bounded information, prepares a private review only you see, and stops. Nothing goes on a schedule until one manual test run comes back clean on your real data.
 

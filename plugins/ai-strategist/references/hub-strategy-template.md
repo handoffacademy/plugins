@@ -8,7 +8,7 @@ Every capability line carries exactly one label. `Verified <date>` when it was c
 
 **A capability checked and found unavailable is neither of those, and it gets no capability line at all.** `Unverified` means nobody looked; a verified negative means somebody looked and the answer was no, and writing one as the other turns a settled fact into an open question that gets re-asked at office hours. What the document records instead is what was chosen in its place — the next rung down, a different source, or the open decision it created — and the sentence that states the ruling-out carries `Verified <date>` like any other checked claim. "Your personal mail is not reachable through the direct connection, checked today — Verified 14 March" is a fact in the plan. There is no line underneath it waiting to be confirmed.
 
-**Some unverified items cannot be settled at office hours, and those carry a resolution note as well as the label.** Whether a work account under somebody else's administration permits a connection is not a documentation question and not an Academy question. On any such line, keep the `Unverified` label and add one line beneath it: `Needs your account administrator — one specific question`, then the exact yes-or-no to put to whoever runs that account, then the fallback version of the project if the answer is no. One question with the fallback already written is the only research this document ever hands back to the member.
+**Some items cannot be settled at office hours, and those carry a third label instead of a capability one.** Whether a work account under somebody else's administration permits a connection is not a documentation question and not an Academy question. **The three labels are mutually exclusive and a line carries exactly one of them.** So a line waiting on an administrator carries `Needs your account administrator — one specific question` **in place of `Verified <date>` or `Unverified — confirm at office hours`, never alongside one and never beneath one**, followed by the exact yes-or-no to put to whoever runs that account, then the fallback version of the project if the answer is no. One question with the fallback already written is the only research this document ever hands back to the member. **That fallback is a source you control, or nothing.** A connection somebody decided to switch off is not a rung waiting to be resolved, so the plan never steps down to a watched routine reading the same thing another way: that is the workaround the decision forbade, and it is out of this plan whichever way it is reached.
 
 **The label is not only for sources and connections.** Skills, plugins, scheduled tasks, writes into your home base, dashboards, and by-hand steps are all capability claims, and each one carries its own label. The test is about meaning, not vocabulary: **any statement about what a product, connector, or tool does, can do, or will do carries a label.** Do not check for a list of verbs — a sentence can make a capability claim without using any particular word, and a claim written in the passive or as a noun phrase ("a daily digest into your hub") is still a claim. Ask of each sentence: is this asserting something about how a product behaves? If yes, it is labeled.
 
@@ -123,19 +123,13 @@ or its manual test because it moved up the list.
 
 **What it reads.**
 - [Source] — [connector name], directly in Claude — Verified [date] / Unverified — confirm at office hours
-- [Source with no direct connection] — through your Composio connection[, once it is set up — keep this clause wherever the connection is not in place yet; drop it where Step 0 found the connection in place, whether or not this particular read has been checked] — Verified [date] / Unverified — confirm at office hours
-- [Source with no connection of either kind] — watched routine, you at the keyboard, reading and summarizing only, never on a schedule — Verified [date] / Unverified — confirm at office hours
+- [Source with no connector] — watched routine, you at the keyboard, reading and summarizing only, never on a schedule — Verified [date] / Unverified — confirm at office hours
 
-**How this route is held.** [Mandatory field, one of two. Where every source is a direct
-connection: "Narrowed to what it reads — the tighter arrangement." Where any source comes
-through your Composio connection: "Approving an app there opens all of it, so what holds
-this to reading and preparing your review is the rules written into the job, not a
-setting. That is structurally weaker than a narrowed direct connection, and it means this
-job stays a read-and-prepare job permanently." **Add ", which is preferred wherever one
-reaches the same source" only where no decline is recorded** — where *Choices Already
-Made* shows they turned the direct route down, that clause is omitted and the rest of the
-sentence stands unchanged.]
-Per app it reads, all three states on one line each: [app] — connection attached: yes/no | authorized on it: yes/no | knowingly approved: [date] / pending.]
+**What each source is read through.** [Mandatory field. Name the connector for every
+source that has one, and say in one line that what this project's scheduled work can
+reach is narrowed to those sources plus the one place its results land. Where a source
+is a watched routine, say so on its own line and say plainly that it never runs on a
+schedule.]
 
 **The Claude Project itself.**
 
@@ -151,12 +145,12 @@ Instructions to paste in when you create it:
 > between a draft you edit and a draft you have to proofread for tone.
 > Then the refusals this space needs, in your own words.]
 
-[**Where this project reads anything through the Composio connection, the block below is
-part of those pasted instructions and is not optional.** Reproduce it as written. On this
-route these written rules are the guardrail rather than a description of one, and the
-project is created long after this conversation ends and loads none of the rules that
-produced it — so a rule that lives only in this document does not reach the run at all.
-That is doubly true of a job that runs on a schedule, where nobody is watching it.]
+[**Where this project reads any source at all, the block below is part of those pasted
+instructions and is not optional.** Reproduce it as written. The project is created long
+after this conversation ends and loads none of the rules that produced it — so a rule
+that lives only in this document does not reach the run at all. That is doubly true of a
+job that runs on a schedule, where nobody is watching it. These written rules are the
+second layer: the first is the narrowing on the connector itself.]
 
 > These are the only things you may read, and the list is complete:
 > 1. [App] — [the read, in plain words: "find and read messages in the last 7 days"]
@@ -164,14 +158,12 @@ That is doubly true of a job that runs on a schedule, where nobody is watching i
 > [One numbered line per approved read, one per source. Write every one of them out.
 > Never write "the read named above" or any other pointing phrase: this block is all
 > the project will have, and a runtime cannot work out which operation you meant.
-> Where a project would need more than one Composio read, either list them all here
-> or split the project.]
+> Where a project needs more than one read, either list them all here or split the
+> project.]
 >
 > Prepare only the private review named in this project, and put it only where this
 > project says it goes. Write nowhere else, in any app, for any reason — that one
 > review in that one place is the whole of your output.
-> Run this only once every app above is recorded as knowingly approved. Where one is
-> still pending, stop and say so rather than running the part that would work.
 >
 > Anything not on that list is not yours to do. Never go looking for other operations,
 > and never send, reply, post, change, move, or delete anything, in any app, for any
@@ -237,14 +229,12 @@ private one.]
 carries no labels of its own. Anything in it that is a new claim gets labeled inline.]
 
 **What runs on a schedule.** [What it should check, how often, and what you want
-back.] [Where any source comes through your Composio connection, this line repeats in one
-clause what holds it — the job's own written rules rather than a setting — and does not go
-in at all while any app it reads is still `approval pending`.] [Runs in the cloud / runs on your computer — it must be on, awake, and
+back.] [Runs in the cloud / runs on your computer — it must be on, awake, and
 logged in at run time, because [the local dependency / this is the only place your
 setup can run a scheduled task] / run location not established this session —
 confirm which locations your surface offers before this task is built.] —
 Verified [date] / Unverified — confirm at office hours
-> The design engine builds this task properly when you get to it. Ask for it by pasting this line and this project's never-list, in full, and it runs its own interview, re-verifies the exact read, where this task will run, and the reach, control, and cost checks that depend on where it runs, then tests on your real data before anything goes on a schedule. It inherits this project's never-list, which is not optional and is not re-decided in that interview.
+> The design engine builds this task properly when you get to it. Ask for it by pasting this line and this project's never-list, in full, and it runs its own interview, re-verifies the exact read, where this task will run, and the reach and control checks that depend on where it runs, then tests on your real data before anything goes on a schedule. It inherits this project's never-list, which is not optional and is not re-decided in that interview.
 
 **Where its results live in your hub home base.** [Notion by default, or the tool you
 chose instead. One of three states, and only one.]
@@ -325,8 +315,6 @@ cost. Then this ordered reading list is the standing arrangement rather than a s
 Each connection appears once here, however many projects use it.
 
 - [ ] [App] — [what it is for, which projects use it] — Verified [date] / Unverified — confirm at office hours
-- [ ] Your Composio connection — added once, the route to [apps with no direct connection, named]. [**Always include this row whenever any child row below it exists**, so a pending app is never an orphan under nothing. Where the connection is already in place, keep the row and mark it done — `Already set up [date]` — rather than dropping it and leaving its children floating. Name the projects waiting on it.] — Verified [date] / Unverified — confirm at office hours
-  - [ ] [App] — approve it on that connection, one link you open yourself. Approving opens all of that app, which is why anything reading through it is held to reading by the job's own written rules rather than by a setting. [**One of these child rows for every app a project above reads through the connection whose approval is still pending — always, and whether or not the connection itself is already set up.** The connection being in place says nothing about this app having been approved knowingly, and an app with no row here is an app that disappears from the plan.] — Verified [date] / Unverified — confirm at office hours
 - [ ] [The hub home base — Notion by default, or the tool they chose instead] — where every digest and record lands. [Include this line whenever the home base is not connected yet, and name which projects start writing to it once it is.] — Verified [date] / Unverified — confirm at office hours
 
 ## What This Hub Will Never Do
@@ -357,7 +345,7 @@ And the floor that applies to every project here, whatever else changes:
   and what stays out is the material itself: the filings, the notes, the correspondence,
   which live in the systems your practice already keeps them in. Your own personal legal
   or medical matter stays walled off exactly as you asked, whatever you are qualified in.
-- Financial records come in as statements and exports you download yourself. Never a live connection to an account, and never a browser tool on a bank, card issuer, payment processor, or brokerage — not even watched. Keep full account numbers out of it; the last four identify an account fine.
+- Financial records come in one way only: statements and exports you download yourself. Never through a live connection to a bank, card, payment, or brokerage account, and never through a browser tool pointed at one — not watched, not read-only, not once. Keep full account numbers out of it; the last four identify an account fine.
 - Your plan describes kinds of things, not their contents. Account numbers, card numbers, passwords and keys, and government identifiers never go in, whatever anyone decides later. Documents and records themselves, and anything identifying your children beyond a first name, go in only if you deliberately choose it — and this document says so where you did.
 - No scheduled task ever changes where it writes on its own. Moving one to your hub means building the new version, testing it once, and retiring the old one.
 
@@ -373,7 +361,7 @@ Everything above that is still yours to decide, collected so you can take the li
 Decisions you have already made, written down so nobody asks you again and so a stranger reading this plan understands why it looks the way it does. Nothing here is a question, and nothing here needs an answer at office hours.
 
 - [The recommended home base you turned down, where you did] — [what was recommended, what you chose instead, and what it costs you, one line each]. Yours to revisit whenever you want to.
-- [A route you declined] — [what it would have carried, in one line][, and where you turned it down on cost rather than on the route itself: the price and the cadence you declined it at, plus the smaller shape that was offered]. Yours to revisit whenever you want to.
+- [A route you declined] — [what it would have carried, in one line, and the condition that would make it worth another look]. Yours to revisit whenever you want to.
 - [Any other refusal you recorded] — [in your words].
 
 ## When Things Change
@@ -402,26 +390,21 @@ Come back through this document once a week while you are building it. Cross off
 ## Rules for filling it in
 
 - **A card is complete when a stranger could build the space from it and the member could use it on the day it exists.** Missing its knowledge reasons, its day-to-day use block, its home-base destination, its sensitivity line, or any label makes it half-designed. **And a card whose only described behavior is the scheduled task is a task with a project wrapped around it, not a space.** A card with no scheduled task at all can be complete; a card that would collapse into nothing without its task is not.
-- **A source reached through the member's Composio connection is its own route and is written as one.** It is not a direct connection and it is not a watched routine: it is the rung between them, and it is the one that can still carry scheduled work. Two states get recorded separately here, and one part of the line carries each. **The clause carries the connection:** Step 0's inventory says whether it is in place, and the route line keeps ", once it is set up" wherever it is not. **The label carries the read:** `Verified` or `Unverified` is the only thing that says whether this particular source has been checked through it. A connection that is in place with a read nobody has checked yet is the short clause plus an unverified label, and that is a normal state rather than a gap. Where any project depends on the connection **and it is not set up yet**, setting it up is its own one-time line on the Connections Checklist, exactly as connecting the home base is — the same condition the checklist entry states. A connection the member already has gets no setup line **of its own — unless an app it carries is still pending approval, in which case the parent row stays (marked `Already set up [date]`) so those child rows are not left hanging under nothing.** The always-parent rule on the Connections Checklist governs that case.
+- **A source with no native connector is never written as a scheduled route.** It is one of two things and the card says which: a watched routine, with the member at the keyboard, read-and-summarize only, and never on a schedule; or honestly out of reach today. There is no route in between, so nothing in this document ever describes a second connection, a written-rules arrangement, or any other stand-in that would let an unreachable source run on a schedule. Where a project depends on a connector the member has not added yet, adding it is its own one-time line on the Connections Checklist, exactly as connecting the home base is.
 
-  **The connection and the apps behind it are two different pieces of setup, and the checklist line says so.** Adding the connection reaches no app on its own; each app is one link the member opens in their own browser and approves, and that approval lasts until they revoke it or it expires. So the checklist line names the apps to authorize alongside the connection itself, and **nothing in this document ever authorizes one or produces the link** — an app the member has not approved stays out of reach, which is a property of the route rather than a gap in the plan.
-
-  **And a bridge route carries one plain line saying what holds it.** Approving an app opens the whole of that app, so this route has none of the first rung's structural narrowing. It can still carry scheduled work, on two conditions the card states rather than assumes: the job's version-one rules are read-only and draft-only in writing, and the member approved that app knowing it opens all of it. Write that line in those terms — **never imply a setting is doing it, and never present it as equal to a native connector's narrowing.** Where a native connector could carry the same source, it is the better route and the card says so. [**Omit the preference clause where *Choices Already Made* records that the direct route was declined** — the structural-weakness statement stays, the comparison to the route they turned down comes out.]
 - **A knowledge item with no reason attached is a guess about what the member has lying around, not a setup instruction.** Every item names what it teaches the project about acting in this space, or it comes out.
 - **Skills and plugins are decisions, and "none, because…" is one of them.** A named skill with no argument for why it is a skill rather than a line in the instructions is boilerplate. So is a plugin line that only lists additions: in any space that drafts or handles sensitive material, what is deliberately not enabled belongs on the card, because the absence is the safety property.
-- **The handoff line to the design engine is fixed, including the never-list clause.** Describe the job the task should do; never write the task text here, or anywhere else in the conversation that produced this document — asking for the prompt "just in the chat" is the same request with the channel changed. The engine runs its own interview, re-verifies the exact read along with the run location and the reach, control, and cost checks that depend on it, and tests on real data. A task specified in this document skips all three — and a refusal that lives only in the project instructions never reaches a scheduled run, which is why the handoff carries the project's never-list forward.
+- **The handoff line to the design engine is fixed, including the never-list clause.** Describe the job the task should do; never write the task text here, or anywhere else in the conversation that produced this document — asking for the prompt "just in the chat" is the same request with the channel changed. The engine runs its own interview, re-verifies the exact read along with the run location and the reach and control checks that depend on it, and tests on real data. A task specified in this document skips all three — and a refusal that lives only in the project instructions never reaches a scheduled run, which is why the handoff carries the project's never-list forward.
 - **Step 1 is one of exactly two shapes, and never a list.** Normally it is one project that can be built this week with what the member has today — sources reachable now, destination available now, nothing in it waiting on an open decision. **Only where no project passes that test** does it become the second shape: one named unblocking action — the single connection, the single question to whoever runs an account — with the first project it unlocks named beside it, so the step still ends in something rather than in waiting. **A member starting from paper gets that shape by a third route: a digitize-first step** — an account to open, a paper calendar to move into it, a folder to scan — which is the unblocking action for that plan and carries the first project it unlocks beside it like any other. Two projects is never Step 1, and neither is an unblocking action with nothing attached to it.
 - **An amended document keeps every step number it already had, because the ordinal and the lifecycle state are two different columns.** Order is assigned once and never changes. State is where `Built — [date]` and `Retired [date] — task stopped` go, and a row in either state keeps its number and stays in the table. A newly named area takes the next unused number. **The next thing to build is named as `Next: Step [N]` in the Build Order section, never renumbered to Step 1** — a plan that renumbers itself stops being recognizable to the person who has been working through it, and a finished project is never moved back into the order to make room. Whatever `Next` points at gets the buildable-this-week test exactly as Step 1 got it the first time. Deferred rows are unaffected by any of this.
-- **A route they declined is a settled choice, not an open decision, and it has its own section.** Where the member turned down a rung of the connector ladder, or the recommended home base, it goes under *Choices Already Made* in their own words, with one line on what that route would have carried and one on what it costs them. **Where the decline was about cost rather than about the route, the price and the cadence it was declined at go in the line**, because those are the conditions that would make them look at it again, and a refusal recorded without them reads as permanent when it was not. **It never goes in Open Decisions**, because that list is what they take to office hours to answer, and a decision they already made is not a question. Frame it as theirs to revisit rather than as a disagreement kept on the record, and let the document be the only place it is raised again.
+- **A route they declined is a settled choice, not an open decision, and it has its own section.** Where the member turned down a rung of the connector ladder, or the recommended home base, it goes under *Choices Already Made* in their own words, with one line on what that route would have carried and one on what it costs them. **Record the condition that would make them look at it again alongside the decline**, because a refusal recorded without it reads as permanent when it was not. **It never goes in Open Decisions**, because that list is what they take to office hours to answer, and a decision they already made is not a question. Frame it as theirs to revisit rather than as a disagreement kept on the record, and let the document be the only place it is raised again.
 - **Open decisions carry real options.** Two or three, each with what it means and what it costs. "It depends on your preference" is not an option, and neither is a recommendation with the alternatives left out.
 - **The never list is quoted, not summarized.** The member has to be able to find their own sentence in it.
 - **The Hub Home Base section gives every scheduled task somewhere to land**, now and once the home base is connected. Check this by walking the project cards and confirming each destination appears in that section. A task with no home is the most common gap in a first draft.
 - **The home base not being connected yet is never a reason to drop it from the plan.** It stays the home base, connecting it goes on the Connections Checklist as its own step, and each task names both destinations in time. What is never done is scheduling a task against a page that does not exist.
-- **Never write that a task will move to the home base by itself.** Every second destination in this document is reached by building a replacement task, verifying it, testing it once, and retiring the old one. A member who reads "it will move over" waits for something that is never going to happen. **This is shorthand for the gate, never a substitute for it:** what actually permits the schedule is the complete block the design engine emits, passing every row of its audit table — numbered read allowlist, full prohibitions, untrusted-result rule, sanitizer — plus a recorded knowing approval for every app it reads.
+- **Never write that a task will move to the home base by itself.** Every second destination in this document is reached by building a replacement task, verifying it, testing it once, and retiring the old one. A member who reads "it will move over" waits for something that is never going to happen.
 
-**Two conditions get their own check before that pass, on every card whose route is the bridge.** The card says in its own words that written rules are what hold it; and every app it reads carries **all three states — connection attached, authorized on it, and knowingly approved [date] or approval pending — recorded separately**, the knowing approval in addition to the technical authorization rather than one standing in for the other. A card failing either is not handed over as scheduled work.
-
-  **The direct-connector preference is checked conditionally, and both directions are a failure.** Where *Choices Already Made* records no decline of the direct route, the card also says a direct connector is preferred wherever one reaches the same source. **Where a decline is recorded, verify that clause is absent** — the structural-weakness statement stays, and restating the preference re-opens a settled decision.
+**One condition gets its own check before that pass, on every card carrying scheduled work.** Every source that work reads is a native connector, named on the card and labeled. A card whose scheduled line rests on a watched routine, or on a source nothing reaches, is not handed over as scheduled work — it goes back as the job the member runs while they are there, or as an area waiting on something that would change it.
 
 **The last pass before you hand it over.** Read the finished document once more, asking one question of every sentence: **is this asserting something about what a product, connector, or tool does, can do, or will do?** If yes, it carries a label. Sources, connections, skills, plugins, scheduled tasks, writes into the home base, dashboards, by-hand steps, all of them. Do not scan for particular words — a claim can be made in the passive, as a noun phrase, or in a table cell, and it is still a claim. An unlabeled one reads as verified to the person building from it, and that is how a guess becomes a build.
 

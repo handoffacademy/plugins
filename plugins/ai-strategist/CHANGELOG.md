@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.2.0
+
+The route your strategy tried when an app had no direct connection is gone, and what replaces it is a straight answer.
+
+- **A source with no direct connection is read while you watch, or it is out of reach on a schedule.** The bridge rung has been taken out of the ladder entirely. What is left is three rungs and no gap between them: a direct connection, checked while you are sitting there for the kind of account you actually have; a routine you run with someone at the keyboard, reading and summarizing only, which never goes on a schedule; and, where neither of those reaches it, the honest answer that nothing does today. Your plan says which one each source landed on and why the ones above it were ruled out.
+- **Only a direct connection can carry work that runs on its own, and that is now the whole rule.** A job goes on a schedule because what it can reach was narrowed to the sources it reads plus the one private place it writes to. Nothing else does that, so nothing else gets scheduled: not a second connection, not a set of rules written into the job, not anything that would look the same from the outside and hold less. Where a source cannot be reached that way, you get the version you run yourself and read at the end, or the version built on something that is reachable.
+- **Mail on a personal account is the case this changes most, and it changes honestly.** Where the direct connection only covers work accounts, that mailbox does not get read every morning by anything. What your plan offers instead is a sitting you do together once a week, or a digest built on another source checked reachable in that session, such as a connected calendar or file store. Nothing is described as automatic that is not.
+- **None of the limits moved, because none of them were resting on that rung.** A first version still reads and reports into one private place. A watched routine is still watched, still never scheduled, and still never pointed at a bank. Where a connection was switched off by whoever administers your account, that is still one question for them rather than something to work around.
+- **Your scheduled tasks are set up to leave the model on Default.** The task text you paste in says so on its own line, so there is nothing for you to pick and nothing to change on the way past.
+- **The cost helper has retired.** It existed to price the route that is gone. The connection check stays and does the same job it always did: what is connected, what it can actually read, and what is missing.
+- **Nothing you already have changes on its own.** A document says what it said the day it was written, and a scheduled task keeps running on the text it was created with. New plans are written on the three rungs from here. When you come back to an older one and its capabilities are re-checked, which is what happens before you build from it, you are told plainly where it was designed differently and you decide whether to leave it as it is or rebuild that part.
+
 ## 1.1.0
 
 When an app has no direct connection, the route your strategy tries next has changed hands.
