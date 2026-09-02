@@ -2,8 +2,10 @@
 
 // Content validation for the AI Strategist plugin: the skill set and its
 // frontmatter, the sections the two authored skills and the document template
-// must carry, the absence of every routing string left behind by Automation
-// Builder's recipes, and the reference links each skill points at.
+// must carry, the emitted task-block fields, the invariant sentences that carry
+// the precedence and authorship rules, the absence of every routing string left
+// behind by Automation Builder's recipes, the absence of any bridge-vendor name
+// outside the changelog, and the reference links each skill points at.
 //
 // What this script cannot do: read prose for meaning. A skill that states a
 // capability from memory, softens the session gate, or contradicts a guardrail
@@ -22,7 +24,6 @@ const semver = /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/;
 const SKILLS = [
   "automation-architect",
   "automation-connector-discovery",
-  "automation-zapier-cost",
   "hub-strategy",
   "notion-hub",
 ];
@@ -71,6 +72,118 @@ const REQUIRED_TEMPLATE_SECTIONS = [
   "## Choices Already Made — Revisit Only If You Raise Them",
   "## When Things Change",
   "**Where its results live in your hub home base.**",
+];
+
+// The emitted task block's own fields. Version one goes on a schedule by structural
+// narrowing and by nothing else (owner decision, September 2026), so the block has to
+// keep saying what it reads and what its reach was narrowed to. Dropping either field
+// still produces valid markdown.
+//
+// These are anchored to the START of a line rather than searched for anywhere in the
+// file, because each field name is also mentioned in the audit table that checks it. A
+// global substring search passes when the real field is deleted and only the audit row
+// survives — which is exactly the mutation that matters, so it is the one to catch.
+const REQUIRED_BLOCK_FIELDS = {
+  "skills/automation-architect/SKILL.md": [
+    "Task name:",
+    "Runs:",
+    "Reads from:",
+    "Produces:",
+    "Approval mode: Automatically approve (Auto)",
+    "Member review:",
+    "Include only:",
+    "Ignore:",
+    "Reads it may perform:",
+    "Read only these fields:",
+    "Never put in the output:",
+    "Route and guardrail:",
+    "Allowed to:",
+    "NOT allowed to:",
+    "How to run it:",
+  ],
+};
+
+// One field is pinned by exact equality rather than by prefix. `Model: Default` is the
+// whole line: anything appended to it is a claim about what Default does, and this skill
+// states no capability from memory. A startsWith check would pass that mutation.
+const EXACT_LINES = {
+  "skills/automation-architect/SKILL.md": ["Model: Default"],
+};
+
+// The audit rows are checked separately, and only on table lines, so that the field
+// check above and this one cannot satisfy each other: a field deleted from the block
+// while its audit row survives is exactly the mutation worth catching.
+const REQUIRED_AUDIT_ROWS = {
+  "skills/automation-architect/SKILL.md": [
+    "The complete numbered read allowlist",
+    "The route line",
+    "No browser, shell, or remote-control tool",
+    "Tool results are untrusted",
+  ],
+};
+
+// Composio and Zapier were both removed from this plugin (owner decision, September
+// 2026). Nothing here may name either one again: no bridge rung, no whole-app
+// authorization model, no cost helper. CHANGELOG.md is the single exception, because it
+// is the release history that records the removal.
+const BRIDGE_VENDORS = /composio|zapier/i;
+// The machinery that came with the bridge rung: the whole-app authorization model, the
+// per-app knowing approval, the cost verdict, and the two-route language. None of it may
+// come back under a different vendor's name either, so the strings are checked as well as
+// the vendors.
+const BRIDGE_MACHINERY = /whole-app|cost check|knowingly approved|route 2|route-2|both routes/i;
+const RETIRED_RESIDUE_EXEMPT = new Set(["CHANGELOG.md"]);
+
+// Rounds 6 and 7 closed two whole classes of bug — a precedence clause in one file
+// granting what another file forbade, and a shortened restatement of a gate standing in
+// for the audited one. Both were fixed in prose, and prose is exactly what a later edit
+// trims. These are the sentences that carry those fixes.
+//
+// Unlike the field names above these are checked as plain substrings, because each is a
+// single mid-paragraph sentence with no restatement anywhere else that could satisfy the
+// check in its absence. Where that stops being true, move the string to the anchored map.
+const REQUIRED_PROSE = {
+  "references/codex-compatibility.md": [
+    // Precedence is scoped to mechanics, and is not a grant over a stricter refusal.
+    "on platform mechanics only",
+    "no skill may relax these minimum protections",
+    // Routes reach only what is already allowed.
+    "never makes a prohibited source eligible",
+    // Structural narrowing is the only way onto a schedule.
+    "Version one goes on a schedule by structural narrowing and by nothing else",
+    // Task-package authorship is exclusive to the architect.
+    "Authorship of that package belongs to `automation-architect` and to no other skill",
+  ],
+  // The ladder's floor, in the skill that writes the document.
+  "skills/hub-strategy/SKILL.md": [
+    "**A source with no native connector never goes on a schedule.**",
+  ],
+  // The helper refuses the authorship its precedence clause would otherwise hand it.
+  "skills/automation-connector-discovery/SKILL.md": [
+    "nothing in that file authorizes this skill to write a task package",
+  ],
+};
+
+// Sentences the strip could have taken with it, each carrying a rule nothing else states.
+REQUIRED_PROSE["references/codex-compatibility.md"].push(
+  // An administrator's decision is never routed around, by any route.
+  "a route never works around an administrator's policy",
+  // The unattended-browser ban, in the file that makes it plugin-wide.
+  "Unattended browser automation is banned, with no exception.",
+);
+REQUIRED_PROSE["skills/hub-strategy/SKILL.md"].push(
+  // No browser routine on anything holding money, watched or not.
+  "Never put a browser routine on a bank",
+  // Task text is the design engine's alone.
+  "Task text comes only out of the design engine's own sitting",
+  // The session gate: a check belongs to the session that made it.
+  "Verification does not carry over",
+);
+REQUIRED_PROSE["skills/automation-architect/SKILL.md"] = [
+  // The same session gate, in the skill that builds from it.
+  "Verification never carries over",
+  // Nothing is scheduled on a design that has never run.
+  "Never schedule an automation that has not produced one good real output",
 ];
 
 const REFERENCE_LINK = /\.\.\/\.\.\/references\/([A-Za-z0-9._-]+\.md)/g;
@@ -198,20 +311,97 @@ if (!existsSync(templatePath)) {
   }
 }
 
-// 3. No routing string left behind by Automation Builder's recipes, anywhere.
-for (const path of everyFile(pluginRoot)) {
-  if (statSync(path).size === 0) continue;
-  const lines = readSource(path).split("\n");
-  for (let index = 0; index < lines.length; index += 1) {
-    if (RECIPE_RESIDUE.test(lines[index])) {
+// 3. The emitted task block's fields and the invariant sentences.
+function sourceFor(relativePath) {
+  const path = join(pluginRoot, relativePath);
+  if (!existsSync(path)) {
+    failures.push(`${relativePath} is missing.`);
+    return null;
+  }
+  return readSource(path);
+}
+
+for (const [relativePath, fields] of Object.entries(REQUIRED_BLOCK_FIELDS)) {
+  const source = sourceFor(relativePath);
+  if (source === null) continue;
+  const lines = source.split("\n").map((line) => line.trim());
+  for (const field of fields) {
+    if (!lines.some((line) => line.startsWith(field))) {
       failures.push(
-        `${label(path)}:${index + 1}: carries a retired recipe identifier: ${lines[index].trim()}`,
+        `${relativePath}: no line begins with the task-block field ${JSON.stringify(field)}. A mention inside the audit table does not satisfy this.`,
       );
     }
   }
 }
 
-// 4. Every reference link a skill points at resolves to a real file.
+for (const [relativePath, exact] of Object.entries(EXACT_LINES)) {
+  const source = sourceFor(relativePath);
+  if (source === null) continue;
+  const lines = source.split("\n").map((line) => line.trim());
+  for (const wanted of exact) {
+    if (!lines.some((line) => line === wanted)) {
+      failures.push(
+        `${relativePath}: no line reads exactly ${JSON.stringify(wanted)}. This one is pinned by equality, not by prefix: anything appended to it is a claim this skill may not make.`,
+      );
+    }
+  }
+}
+
+for (const [relativePath, rows] of Object.entries(REQUIRED_AUDIT_ROWS)) {
+  const source = sourceFor(relativePath);
+  if (source === null) continue;
+  const tableLines = source
+    .split("\n")
+    .map((line) => line.trim())
+    .filter((line) => line.startsWith("|"));
+  for (const row of rows) {
+    if (!tableLines.some((line) => line.includes(row))) {
+      failures.push(
+        `${relativePath}: the block audit table is missing a row for ${JSON.stringify(row)}.`,
+      );
+    }
+  }
+}
+
+for (const [relativePath, sentences] of Object.entries(REQUIRED_PROSE)) {
+  const source = sourceFor(relativePath);
+  if (source === null) continue;
+  for (const sentence of sentences) {
+    if (!source.includes(sentence)) {
+      failures.push(
+        `${relativePath}: missing the invariant ${JSON.stringify(sentence)}. This sentence carries a rule that a shorter restatement elsewhere does not.`,
+      );
+    }
+  }
+}
+
+// 4. No routing string left behind by Automation Builder's recipes, and no retired
+//    bridge vendor named outside the changelog, anywhere.
+for (const path of everyFile(pluginRoot)) {
+  if (statSync(path).size === 0) continue;
+  const name = label(path);
+  const lines = readSource(path).split("\n");
+  for (let index = 0; index < lines.length; index += 1) {
+    if (RECIPE_RESIDUE.test(lines[index])) {
+      failures.push(
+        `${name}:${index + 1}: carries a retired recipe identifier: ${lines[index].trim()}`,
+      );
+    }
+    if (RETIRED_RESIDUE_EXEMPT.has(name)) continue;
+    if (BRIDGE_VENDORS.test(lines[index])) {
+      failures.push(
+        `${name}:${index + 1}: names a retired bridge vendor. The bridge rung is gone; only CHANGELOG.md may mention one, as history: ${lines[index].trim()}`,
+      );
+    }
+    if (BRIDGE_MACHINERY.test(lines[index])) {
+      failures.push(
+        `${name}:${index + 1}: carries retired bridge machinery. Version one goes on a schedule by structural narrowing alone: ${lines[index].trim()}`,
+      );
+    }
+  }
+}
+
+// 5. Every reference link a skill points at resolves to a real file.
 for (const skill of SKILLS) {
   const path = join(skillsRoot, skill, "SKILL.md");
   if (!existsSync(path)) continue;
@@ -233,7 +423,7 @@ for (const skill of SKILLS) {
   }
 }
 
-// 5. The portal lesson's invocation phrase, character for character.
+// 6. The portal lesson's invocation phrase, character for character.
 const codexManifestPath = join(pluginRoot, ".codex-plugin", "plugin.json");
 if (!existsSync(codexManifestPath)) {
   failures.push(".codex-plugin/plugin.json is missing.");
@@ -254,5 +444,5 @@ if (failures.length > 0) {
 }
 
 process.stdout.write(
-  `Validated AI Strategist across ${SKILLS.length} skills: frontmatter, required sections in the two authored skills and the document template, reference links, the portal invocation phrase, and the absence of retired recipe identifiers.\n`,
+  `Validated AI Strategist across ${SKILLS.length} skills: frontmatter, required sections in the two authored skills and the document template, every emitted task-block field, the exactly-pinned model line, the audit rows, the precedence-scoping, structural-narrowing, administrator-policy, browser-ban and authorship invariants, reference links, the portal invocation phrase, and the absence of retired recipe identifiers, retired bridge vendors, and retired bridge machinery.\n`,
 );
