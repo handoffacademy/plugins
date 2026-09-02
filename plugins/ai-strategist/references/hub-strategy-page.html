@@ -103,10 +103,12 @@ An Unverified line is a stop, not permission to proceed. Before giving a setup s
 <!-- slot: build-order-heading -->
 <!-- a strategy reads The build order; a draft reads Proposed structure - not ready to build -->
 <h2>The build order</h2><!-- end: build-order-heading -->
-<p class="note">These cards are a map. The document holds the full plan for each project.</p>
+<!-- slot: build-order-note -->
+<!-- a strategy reads the line below; a draft reads: These cards are a proposal. Nothing here is ready to build, and nothing becomes a plan until the people it is about have answered for themselves. -->
+<p class="note">These cards are a map. The document is what you build from; it says which projects have a full plan, and any other planned or deferred project becomes one when you ask for it by name.</p><!-- end: build-order-note -->
 <ol class="cards">
 <!-- slot: build-order -->
-<!-- One card per planned map row, in the document's own order, filled with the document's exact Order, Academy route, and State values. Drop the Done means line except where the document carries one, which is Step 1 and the unblocking-action form of it; drop the Waiting on line where the document names nothing. Where Step 1 is an unblocking action rather than a project, the card name is that action and the project it unlocks is named in Done means. On a DRAFT page a card carries only the name, the area, and the route: no Done means, no Waiting on, and no step number presented as an order. -->
+<!-- One card per planned map row, in the document's own order, filled with the document's exact Order, Academy route, and State values. The three lines after What it reads are the roadmap, and every planned card carries all three. The card prints each line's name itself, so each one takes the exact value after that label in this project's roadmap card in the document's Build Order section, word for word. A project with no scheduled task shows Runs on its own and then Nothing. This one is a space you open, not a task that runs., and Lands in and then Nothing runs, so nothing lands. You open the space yourself. Built in carries whichever form the route cell gave it in the document: the module title and the lesson it starts at, the custom sentence, or the route cell copied exactly. Drop the Done means line except where the document carries one, which is Step 1 and the unblocking-action form of it; drop the Waiting on line where the document names nothing. Where Step 1 is an unblocking action rather than a project, the card name is that action and the project it unlocks is named in Done means; that card carries no roadmap lines, because an action is not a project, and the project it unlocks is the next card and carries all three. On a DRAFT page a card carries only the name, the area, and the route: no roadmap lines, no Done means, no Waiting on, and no step number presented as an order. -->
   <li class="card">
     <p class="step">[the document's exact Order value, for example Step 1]</p>
     <h3>[project name, exactly as the document names it]</h3>
@@ -117,6 +119,9 @@ An Unverified line is a stop, not permission to proceed. Before giving a setup s
     </p>
     <p><span class="k">What it is for</span>[the map's exact What it is for value]</p>
     <p><span class="k">What it reads</span>[the map's exact What it reads value, its label written out in full]</p>
+    <p><span class="k">Runs on its own</span>[the exact value after "Runs on its own:" in the document, its label written out in full where it carries one]</p>
+    <p><span class="k">Lands in</span>[the exact value after "Lands in:" in the document, its label written out in full where it carries one]</p>
+    <p><span class="k">Built in</span>[the exact value after "Built in:" in the document]</p>
     <p><span class="k">Done means</span>[only where the document carries one]</p>
     <p><span class="k">Waiting on</span>[only where the document names something]</p>
   </li><!-- end: build-order -->
@@ -125,7 +130,7 @@ An Unverified line is a stop, not permission to proceed. Before giving a setup s
 <details>
 <summary>Project plans in the document</summary>
 <!-- slot: project-plans -->
-<!-- one line per project the document worked into a full card: the name and one line on what it is for. Never reproduce a project plan here. Empty between the markers where the document worked none. -->
+<!-- one line per project the document worked into a full plan: the name and one line on what it is for. Never reproduce a project plan here. Empty between the markers where the document worked none. -->
 <ul>
   <li><strong>[project name]</strong> - [what it is for, one line] - see the document</li>
 </ul><!-- end: project-plans -->
@@ -133,7 +138,7 @@ An Unverified line is a stop, not permission to proceed. Before giving a setup s
 <details>
 <summary>Parked for now</summary>
 <!-- slot: parked -->
-<!-- every deferred and pending map row, carrying the document's exact Order, Academy route, and State values -->
+<!-- every deferred and pending map row, carrying the document's exact Order, Academy route, and State values. All six fields below are present on every parked row, the reason it waits included: a row that drops it reads as parked for no reason. -->
 <ul>
   <li><strong>[name]</strong> - [Order] - [route cell] - [State] - [What it is for] - [why it waits]</li>
 </ul><!-- end: parked -->
@@ -141,7 +146,7 @@ An Unverified line is a stop, not permission to proceed. Before giving a setup s
 <details>
 <summary>Already running</summary>
 <!-- slot: already-running -->
-<!-- every map row marked already running, with the route cell and the state exactly as the document writes them -->
+<!-- every map row marked already running, with the route cell and the state exactly as the document writes them. The Order value is copied exactly as the document writes it, including where that value is nothing but a dash, and the area is never put in its place. -->
 <ul>
   <li><strong>[name]</strong> - [Order] - Not applicable — already running - Already running — not redesigned - [What it is for: the existing job or space, one line]</li>
 </ul><!-- end: already-running -->
@@ -202,7 +207,7 @@ An Unverified line is a stop, not permission to proceed. Before giving a setup s
 </details>
 <footer>
 <!-- slot: markdown-filename -->
-<!-- the name of the Markdown file this page was rendered from, filename only -->
+<!-- the name of the Markdown file this page was rendered from, filename only. A strategy reads the line below; a draft reads: [first-name]-hub-strategy.md is the draft. Nothing in it is ready to build; edit it first, and this page is made again from it. -->
 <p>[first-name]-hub-strategy.md is the plan. Build from it; edit it first, and this page is made again from it.</p><!-- end: markdown-filename -->
 </footer>
 
