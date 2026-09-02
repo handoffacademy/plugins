@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.4.0
+
+Your plan now also comes as a page you can read on your phone and save with one click; the document is still there underneath it.
+
+- **A page as well as the document.** When your plan is finished you get two files instead of one. The written document, same as always, and a one page summary of it. In Cowork that page opens in the panel beside you. Your five plain lines sit at the top, the build order follows as cards, and everything else is tucked into sections you open when you want them.
+- **The page is a map, and the document is the plan.** The page shows what you decided and the order to build in. The full write up of each project stays in the document, which is what you build from, and the page says so on it.
+- **Save it with one click.** In Cowork the panel has a Download button, so the page is yours to keep, to print, or to read on your phone on the way somewhere. Everywhere else the page is saved next to the document. Either way the document stays where it was saved, and it is still the copy anything looking for your plan later goes and finds.
+- **The page follows the document, never the other way round.** Anything that changes, changes in the document first, and the page is made again from it.
+- **A plan that is not ready to build says so on the page too.** Where somebody answered on behalf of a person who was not there, what you get is a draft rather than a strategy, and the page carries that in the same words the document does.
+- **Whichever way you ran it, you get one.** The Quick Plan and the full interview each end with the page and the document together.
+- **Nothing you already have changes.** A plan written before today says exactly what it said.
+
 ## 1.3.1
 
 Two things a first timed run of the Quick Plan showed, both small.

@@ -2,7 +2,7 @@
 
 // Content validation for the AI Strategist plugin: the skill set and its
 // frontmatter, the sections the two authored skills and the document template
-// must carry, the emitted task-block fields, the invariant sentences that carry
+// must carry, the slots and self-containment of the member-facing page, the emitted task-block fields, the invariant sentences that carry
 // the precedence and authorship rules, the absence of every routing string left
 // behind by Automation Builder's recipes, the absence of any bridge-vendor name
 // outside the changelog, and the reference links each skill points at.
@@ -208,6 +208,14 @@ REQUIRED_PROSE["references/hub-strategy-template.md"] = [
   "Any planned or deferred row here can be worked into a full plan whenever you want one. Ask for it by name.",
 ];
 REQUIRED_PROSE["skills/hub-strategy/SKILL.md"].push(
+  // The page rule (1.7.0). Two strings, because the rule needs both halves to be executable: the
+  // template it renders from, which nothing else in this file resolves - the reference-link check
+  // matches .md targets only — and the invariant that keeps the page downstream of the document.
+  // A page edited directly is a second source of truth, and the member cannot tell which one it is.
+  "render it as a one-page HTML rendering from `../../references/hub-strategy-page.html`",
+  "**The page is a rendering, never the source:**",
+);
+REQUIRED_PROSE["skills/hub-strategy/SKILL.md"].push(
   // Stated once, on purpose. A second copy of a number is a second number to drift. The
   // sentence is mode-aware from 1.3.0: the full interview and Quick Plan produce different
   // amounts of the same document, and how much is decided here rather than at Q9.
@@ -216,15 +224,19 @@ REQUIRED_PROSE["skills/hub-strategy/SKILL.md"].push(
 
 // The stop rule is the whole of what makes build-time verification safe: Quick Plan writes
 // conditional lines it never checked, so the sentence that turns an unverified line into a
-// stop has to be present, identically, in all three artifacts that carry a plan forward —
-// the skill that writes the document, the skill that builds from it, and the document itself.
-// The whole paragraph is pinned by exact equality, once per file, and the three copies are compared.
+// stop has to be present, identically, in all four artifacts that carry a plan forward - the
+// skill that writes the document, the skill that builds from it, the document itself, and the
+// page the member reads. The page is the newest way for it to go missing: it is rendered from a
+// template rather than written out, so a trimmed template drops the rule from the only artifact
+// most members ever open. The whole paragraph is pinned by exact equality, once per file, and
+// the four copies are compared.
 const STOP_RULE_PARAGRAPH =
   "An Unverified line is a stop, not permission to proceed. Before giving a setup step or creating, connecting, testing, writing, or scheduling anything that depends on it, re-check the exact capability for this account and this source in that build session. If it cannot be confirmed, stop that branch and use only a verified, permitted fallback.";
 const STOP_RULE_FILES = [
   "skills/hub-strategy/SKILL.md",
   "skills/automation-architect/SKILL.md",
   "references/hub-strategy-template.md",
+  "references/hub-strategy-page.html",
 ];
 REQUIRED_PROSE["skills/automation-architect/SKILL.md"].push(
   // Spoken, not pasted: the half that says what the block is.
@@ -308,6 +320,57 @@ const QUICK_PLAN_ADMIN_LABEL =
   "**Where a source sits under somebody else's administration, its line carries `Needs your account administrator — one specific question`**";
 const TEMPLATE_MODE_LINE =
   "[One mode line, here, directly under the title, and never left out:";
+
+// The page the member reads. It is filled mechanically, so the slots are a contract: a renamed or
+// dropped marker leaves a section of the plan silently unfilled and nothing else notices. The list
+// below is an exact allowlist rather than a floor, so an unknown marker fails too: a slot the skill
+// was never told to fill ships its placeholder to the member, which is the same bug from the other
+// end.
+const PAGE_TEMPLATE_FILE = "references/hub-strategy-page.html";
+const PAGE_SLOTS = [
+  "lang",
+  "title-text",
+  "eyebrow",
+  "title",
+  "draft-notice",
+  "subtitle",
+  "glance-lines",
+  "labels-note",
+  "build-order-heading",
+  "build-order",
+  "project-plans",
+  "parked",
+  "already-running",
+  "built-retired",
+  "home-base-name",
+  "home-base",
+  "never-list",
+  "open-decisions",
+  "connections",
+  "choices-made",
+  "markdown-filename",
+];
+const PAGE_SLOT_MARKER = /<!-- (slot|end): ([a-z-]+) -->/g;
+// The page is handed over as a file somebody keeps, prints, opens offline, and reopens months later.
+// So it stays self-contained: nothing that executes, nothing that fetches, and nothing that embeds
+// something fetched. This is a bounded list of patterns rather than an HTML parser. It is
+// deliberately blunt, and a template that needs one of these needs a decision rather than an
+// exemption.
+const PAGE_BANNED = [
+  /<script/i,
+  /<img/i,
+  /<iframe/i,
+  /<link/i,
+  /<form/i,
+  /<object/i,
+  /<embed/i,
+  /<meta\s+http-equiv/i,
+  /https?:\/\//i,
+  /javascript:/i,
+  /url\(/i,
+  /@import/i,
+  /(?:src|href)="\/\//i,
+];
 
 const REFERENCE_LINK = /\.\.\/\.\.\/references\/([A-Za-z0-9._-]+\.md)/g;
 const RECIPE_RESIDUE = /recipe-/;
@@ -637,7 +700,7 @@ if (runModulesSource !== null) {
   }
 }
 
-// 6b. The stop rule: one occurrence per file, the whole paragraph, and the three identical.
+// 6b. The stop rule: one occurrence per file, the whole paragraph, and the four identical.
 const stopRuleLines = new Map();
 for (const file of STOP_RULE_FILES) {
   const source = sourceFor(file);
@@ -663,7 +726,7 @@ if (stopRuleLines.size === STOP_RULE_FILES.length) {
   const [first, ...rest] = [...stopRuleLines.values()];
   if (rest.some((paragraph) => paragraph !== first)) {
     failures.push(
-      "The stop-rule paragraph differs between the files that carry it. It is one fixed paragraph in all three.",
+      "The stop-rule paragraph differs between the files that carry it. It is one fixed paragraph in all four.",
     );
   }
 }
@@ -702,6 +765,68 @@ if (templateSource !== null && !templateSource.includes(TEMPLATE_MODE_LINE)) {
   );
 }
 
+// 6d. The member-facing page: its exact slot set, and its self-containment.
+const pageSource = sourceFor(PAGE_TEMPLATE_FILE);
+if (pageSource !== null) {
+  const markers = [...pageSource.matchAll(PAGE_SLOT_MARKER)].map((match) => ({
+    kind: match[1],
+    name: match[2],
+  }));
+  for (const slot of PAGE_SLOTS) {
+    for (const kind of ["slot", "end"]) {
+      const found = markers.filter(
+        (marker) => marker.name === slot && marker.kind === kind,
+      ).length;
+      if (found !== 1) {
+        failures.push(
+          `${PAGE_TEMPLATE_FILE}: expected exactly one "<!-- ${kind}: ${slot} -->" marker, found ${found}. Each slot is a paired region, and everything between its two markers is replaced.`,
+        );
+      }
+    }
+  }
+  for (const name of new Set(markers.map((marker) => marker.name))) {
+    if (!PAGE_SLOTS.includes(name)) {
+      failures.push(
+        `${PAGE_TEMPLATE_FILE}: carries an unknown slot ${JSON.stringify(name)}. This list is an allowlist: a slot the skill was never told to fill ships its placeholder to the member.`,
+      );
+    }
+  }
+  // Order and nesting. A region that opens inside another one has no single replaceable span, and
+  // an end before its own start silently swallows the region above it.
+  let open = null;
+  for (const marker of markers) {
+    if (marker.kind === "slot") {
+      if (open !== null) {
+        failures.push(
+          `${PAGE_TEMPLATE_FILE}: slot ${JSON.stringify(marker.name)} opens inside ${JSON.stringify(open)}. Slot regions never nest.`,
+        );
+        break;
+      }
+      open = marker.name;
+    } else {
+      if (open !== marker.name) {
+        failures.push(
+          `${PAGE_TEMPLATE_FILE}: "<!-- end: ${marker.name} -->" closes ${open === null ? "nothing" : JSON.stringify(open)}. Every region opens and closes in order.`,
+        );
+        break;
+      }
+      open = null;
+    }
+  }
+  if (open !== null) {
+    failures.push(
+      `${PAGE_TEMPLATE_FILE}: slot ${JSON.stringify(open)} is never closed.`,
+    );
+  }
+  for (const banned of PAGE_BANNED) {
+    if (banned.test(pageSource)) {
+      failures.push(
+        `${PAGE_TEMPLATE_FILE}: matches ${banned}. This page is saved, printed, and opened offline by the member: nothing that executes, nothing that fetches, and no link of any kind.`,
+      );
+    }
+  }
+}
+
 // 7. The portal lesson's invocation phrase, character for character.
 const codexManifestPath = join(pluginRoot, ".codex-plugin", "plugin.json");
 if (!existsSync(codexManifestPath)) {
@@ -725,5 +850,5 @@ if (failures.length > 0) {
 }
 
 process.stdout.write(
-  `Validated AI Strategist across ${SKILLS.length} skills: frontmatter, required sections in the two authored skills and the document template, every emitted task-block field, the exactly-pinned model line, the audit rows, the precedence-scoping, structural-narrowing, administrator-policy, browser-ban and authorship invariants, reference links, the portal invocation phrase, the member-facing glance block, the row-expansion line, the mode-aware session-scope sentence, the whole stop-rule paragraph appearing exactly once and identically in the three files that carry it, the Quick Plan heading with its eight exchanges in order and its no-lookup, routing-order and administrator-label invariants, the template's mode line, the routing reference as a bounded shape (only its header paragraph, intro sentence, table header and separator, and six module rows, each row five cells with a known id, that id's own Project, a well-formed lesson list whose first slug matches, and no capability verdict), the spoken line before the task block, and the absence of retired recipe identifiers, retired bridge vendors, retired bridge machinery, and any second statement of the card count.\n`,
+  `Validated AI Strategist across ${SKILLS.length} skills: frontmatter, required sections in the two authored skills and the document template, every emitted task-block field, the exactly-pinned model line, the audit rows, the precedence-scoping, structural-narrowing, administrator-policy, browser-ban and authorship invariants, reference links, the portal invocation phrase, the member-facing glance block, the row-expansion line, the mode-aware session-scope sentence, the whole stop-rule paragraph appearing exactly once and identically in the four files that carry it, the page template's exact slot allowlist rendered as paired regions with no missing, duplicate, unknown, nested, or out-of-order marker, and its freedom from script, from links, and from anything that fetches or embeds, the Quick Plan heading with its eight exchanges in order and its no-lookup, routing-order and administrator-label invariants, the template's mode line, the routing reference as a bounded shape (only its header paragraph, intro sentence, table header and separator, and six module rows, each row five cells with a known id, that id's own Project, a well-formed lesson list whose first slug matches, and no capability verdict), the spoken line before the task block, and the absence of retired recipe identifiers, retired bridge vendors, retired bridge machinery, and any second statement of the card count.\n`,
 );
