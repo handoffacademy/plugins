@@ -99,8 +99,10 @@ Being a row is a matter of how much of it is written out, never a lifecycle stat
 `later` with `Deferred` belongs only to an area with no project ordered yet. A project that
 has been built keeps its number and changes its state; a project that has been stopped does
 the same; neither row is ever deleted, because a plan with a gap in it reads as an oversight
-and a member who wants that work back needs something to point at. A newly named area takes
-the next unused number after the highest one in this table. Deferred rows and already-running
+and a member who wants that work back needs something to point at. A newly ordered project takes
+the next unused number after the highest one in this table. A newly named area that is
+still deferred stays `later` with `Deferred` until a project is ordered for it, and only
+then takes a number. Deferred rows and already-running
 rows are untouched by all of this and keep the entries shown above.]
 
 ## Build Order
