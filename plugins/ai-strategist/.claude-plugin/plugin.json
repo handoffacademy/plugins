@@ -1,8 +1,8 @@
 {
   "name": "ai-strategist",
   "displayName": "AI Strategist",
-  "version": "1.2.1",
-  "description": "Interviews you about your business and your life, then designs the AI hub that runs them: which Claude Projects to create, what each one reads, and what runs on a schedule.",
+  "version": "1.3.0",
+  "description": "Interviews you about your business and your life, then designs the AI hub that runs them: which Claude Projects to create, what each one reads, and what runs on a schedule. Runs as a Quick Plan or as the full interview, and labels every capability line it could not check.",
   "author": {
     "name": "Mother of AI"
   }

@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.3.0
+
+Your plan now comes two ways, and the quick one is the point of this release.
+
+- **A Quick Plan, in about twenty minutes.** Eight short questions instead of nine longer ones, and you leave with the same document: everything you are running, the Academy route state beside each area, and the order to work through them. A custom area you choose to build first is the one thing written out in full. The full interview keeps its nine-question format and gains the same Academy routes, and it is yours whenever you ask for it. Your plan says at the top which of the two wrote it.
+- **Every planned area gets a module route, custom, or a plain reason it is blocked or not needed.** Your map carries three things side by side now: the area in your own words, the one project that serves it, and the module you build that project with. One project per area, never one shared between two of them, and a module named beside an area is a route through the curriculum rather than a promise about what any app can do.
+- **Anything you asked to keep separate keeps its own project**, even where it is built with the same module as something general. And where a line on your never list clashes with the module a row was routed to, that route comes off the row with the reason written beside it. It comes back only if you change that line yourself, in your own words.
+- **The checking moved to the day you build.** The quick route does not stop to look anything up while you sit there, so its lines come to you marked unconfirmed on purpose, and your plan carries one paragraph saying what that means. An unconfirmed line is a stop rather than a green light: before anything is set up, connected, tested, written, or scheduled on it, that exact thing gets checked again for your account and your source in the session doing the building, and if it cannot be confirmed there, that part stops and only a confirmed route is used. Where a source sits under whoever administers your account, it says so instead, with the one question to put to them.
+- **Nothing you already have changes.** A plan written before today says exactly what it said, and a scheduled task keeps running on the text it was created with.
+
 ## 1.2.1
 
 Same plan, less to wade through. This one is about what you actually read.

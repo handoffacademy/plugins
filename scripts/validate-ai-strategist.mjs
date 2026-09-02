@@ -205,13 +205,106 @@ REQUIRED_PROSE["references/hub-strategy-template.md"] = [
   "Any planned or deferred row here can be worked into a full plan whenever you want one. Ask for it by name.",
 ];
 REQUIRED_PROSE["skills/hub-strategy/SKILL.md"].push(
-  // Stated once, on purpose. A second copy of a number is a second number to drift.
-  "Session scope: a standard session works the first three projects in the build order into full cards; a rushed session works one. Every other project is a row.",
+  // Stated once, on purpose. A second copy of a number is a second number to drift. The
+  // sentence is mode-aware from 1.3.0: the full interview and Quick Plan produce different
+  // amounts of the same document, and how much is decided here rather than at Q9.
+  "Session scope: the full interview works the first three projects in the build order into full cards; Quick Plan writes module rows and at most one custom card, only where the member made that area the first project; every other area is a row.",
 );
+
+// The stop rule is the whole of what makes build-time verification safe: Quick Plan writes
+// conditional lines it never checked, so the sentence that turns an unverified line into a
+// stop has to be present, identically, in all three artifacts that carry a plan forward —
+// the skill that writes the document, the skill that builds from it, and the document itself.
+// The whole paragraph is pinned by exact equality, once per file, and the three copies are compared.
+const STOP_RULE_PARAGRAPH =
+  "An Unverified line is a stop, not permission to proceed. Before giving a setup step or creating, connecting, testing, writing, or scheduling anything that depends on it, re-check the exact capability for this account and this source in that build session. If it cannot be confirmed, stop that branch and use only a verified, permitted fallback.";
+const STOP_RULE_FILES = [
+  "skills/hub-strategy/SKILL.md",
+  "skills/automation-architect/SKILL.md",
+  "references/hub-strategy-template.md",
+];
 REQUIRED_PROSE["skills/automation-architect/SKILL.md"].push(
   // Spoken, not pasted: the half that says what the block is.
   "this block is the task's rulebook, written so the run behaves the same way with nobody watching",
 );
+
+// The Academy routing reference is generated from the portal's own registry, so nothing here
+// checks its prose. What it checks is the three things a hand edit or a drifted generator
+// breaks: the sentence saying it is not evidence of a capability, the exact six module records
+// it is allowed to carry, and the absence of any vendor name — a route is curriculum routing,
+// and a connector or product named in this file reads as a capability claim with no label on it.
+const RUN_MODULES_FILE = "references/moai-run-modules.md";
+const RUN_MODULES_DISCLAIMER =
+  "This is not evidence that any connector or product capability is available for this member.";
+const RUN_MODULES_HEADER =
+  "Curriculum routing metadata synced from the Academy registry at commit <sha>. This is not evidence that any connector or product capability is available for this member. Never emit a Verified label from this file.";
+const RUN_MODULES_INTRO =
+  "Each row is one Academy Run module: the id to write in an Academy route field, the title to show the member, the Project that module builds, and the lessons in the order the member takes them.";
+const RUN_MODULES_TABLE_HEADER =
+  "| Module id | Module title | Project it builds | First lesson slug | All lessons in order |";
+const RUN_MODULES_TABLE_SEPARATOR = "| --- | --- | --- | --- | --- |";
+const RUN_MODULES_LESSONS = /^[a-z0-9-]+: [^;|]+(; [a-z0-9-]+: [^;|]+)*$/;
+const RUN_MODULE_PROJECTS = {
+  "recipe-inbox-autopilot": "Inbox Agent",
+  "recipe-calendar-autopilot": "Calendar Agent",
+  "recipe-file-organizer": "File Organizer",
+  "recipe-meeting-memory": "Meeting Memory",
+  "recipe-sales-autopilot": "Sales Agent",
+  "content-engine": "Content Engine",
+};
+const RUN_MODULE_IDS = [
+  "recipe-inbox-autopilot",
+  "recipe-calendar-autopilot",
+  "recipe-file-organizer",
+  "recipe-meeting-memory",
+  "recipe-sales-autopilot",
+  "content-engine",
+];
+const RUN_MODULES_COLUMNS = [
+  "Module id",
+  "Module title",
+  "Project it builds",
+  "First lesson slug",
+  "All lessons in order",
+];
+// Vendor words are expected in this file: they are inside the Academy's own lesson slugs and
+// lesson titles, which is what a route has to name to be usable. What may never appear in a
+// module row is a capability verdict — a label, an approval state, or the word connector —
+// because this file carries no labels and a verdict read out of it would carry none either.
+// The banned strings are checked on the table rows alone: the header sentences say "connector"
+// and "Verified" on purpose, in the disclaimer that exists to stop exactly that misreading.
+const RUN_MODULES_BANNED_IN_ROWS = [
+  "Verified",
+  "Unverified",
+  "Needs approval",
+  "connector",
+  "Needs your account administrator",
+];
+
+// The Quick Plan mode is a set of promises that only hold together as a set: the section
+// itself, its eight exchanges in order, the sentence saying nothing is looked up, the sentence
+// putting routing after Q6 and Q7, the administrator label in the source-boundary exchange, and
+// the template's mode line. Any one of these can be trimmed without breaking a heading or a
+// table, and each one on its own turns Quick Plan into something it is not.
+const QUICK_PLAN_HEADING =
+  "### The Quick Plan Question Set — Eight Short Exchanges";
+const QUICK_PLAN_EXCHANGES = [
+  "**Q1, open, in their own words, prefilled.**",
+  "**Q2, the heaviest one**",
+  "**Already running, in one compact question. Required, and never a clarifier.**",
+  "**The source boundary, in one compact question. Required, and never a clarifier.**",
+  "**Home base and delivery, combined — Q5 and Q8 in one exchange.**",
+  "**Q6, the walled gardens**",
+  "**Q7, the never list**",
+  "**Q9, short.**",
+];
+const QUICK_PLAN_NO_LOOKUP = "**It does no documentation lookups at all:**";
+const QUICK_PLAN_ROUTE_ORDER =
+  "**Route only after Q6 and Q7 are answered, and after both audits have run**";
+const QUICK_PLAN_ADMIN_LABEL =
+  "**Where a source sits under somebody else's administration, its line carries `Needs your account administrator — one specific question`**";
+const TEMPLATE_MODE_LINE =
+  "[One mode line, here, directly under the title, and never left out:";
 
 const REFERENCE_LINK = /\.\.\/\.\.\/references\/([A-Za-z0-9._-]+\.md)/g;
 const RECIPE_RESIDUE = /recipe-/;
@@ -411,8 +504,13 @@ for (const path of everyFile(pluginRoot)) {
   if (statSync(path).size === 0) continue;
   const name = label(path);
   const lines = readSource(path).split("\n");
+  // The routing reference carries Academy module ids, and four of the six are named
+  // recipe-something in the registry itself. Those are curriculum identifiers rather than
+  // the retired Automation Builder routing strings, and the module-record check below is
+  // what holds them to the exact six.
+  const recipeIdentifiersAllowed = name === RUN_MODULES_FILE;
   for (let index = 0; index < lines.length; index += 1) {
-    if (RECIPE_RESIDUE.test(lines[index])) {
+    if (!recipeIdentifiersAllowed && RECIPE_RESIDUE.test(lines[index])) {
       failures.push(
         `${name}:${index + 1}: carries a retired recipe identifier: ${lines[index].trim()}`,
       );
@@ -458,16 +556,161 @@ for (const skill of SKILLS) {
   }
 }
 
-// 6. The portal lesson's invocation phrase, character for character.
+// 6. The Academy routing reference, bounded. The file is generated, so it is checked as a
+//    whole shape rather than searched: four kinds of line are allowed and nothing else, and
+//    every module row is checked cell by cell against the registry facts this plugin routes on.
+const runModulesSource = sourceFor(RUN_MODULES_FILE);
+if (runModulesSource !== null) {
+  const cellsOf = (line) =>
+    line
+      .replace(/^\|/, "")
+      .replace(/\|$/, "")
+      .split("|")
+      .map((cell) => cell.trim());
+  const lines = runModulesSource.split("\n").map((line) => line.trim());
+  const seenIds = [];
+  let dataRowCount = 0;
+  for (let index = 0; index < lines.length; index += 1) {
+    const line = lines[index];
+    if (line.length === 0) continue;
+    const normalized = line.replace(/commit [0-9a-f]{7,40}/, "commit <sha>");
+    if (normalized === RUN_MODULES_HEADER) continue;
+    if (line === RUN_MODULES_INTRO) continue;
+    if (line === RUN_MODULES_TABLE_HEADER) continue;
+    if (line === RUN_MODULES_TABLE_SEPARATOR) continue;
+    if (!line.startsWith("|")) {
+      failures.push(
+        `${RUN_MODULES_FILE}:${index + 1}: unexpected line. This file may carry only the header paragraph, the intro sentence, the table header and separator, and six module rows: ${line}`,
+      );
+      continue;
+    }
+    dataRowCount += 1;
+    const cells = cellsOf(line);
+    if (cells.length !== RUN_MODULES_COLUMNS.length) {
+      failures.push(
+        `${RUN_MODULES_FILE}:${index + 1}: has ${cells.length} cells, expected ${RUN_MODULES_COLUMNS.length}.`,
+      );
+      continue;
+    }
+    const [id, , project, firstSlug, lessons] = cells;
+    if (!Object.prototype.hasOwnProperty.call(RUN_MODULE_PROJECTS, id)) {
+      failures.push(
+        `${RUN_MODULES_FILE}:${index + 1}: ${JSON.stringify(id)} is not one of the six Academy Run modules.`,
+      );
+      continue;
+    }
+    seenIds.push(id);
+    if (project !== RUN_MODULE_PROJECTS[id]) {
+      failures.push(
+        `${RUN_MODULES_FILE}:${index + 1}: ${id} builds ${JSON.stringify(RUN_MODULE_PROJECTS[id])}; the row says ${JSON.stringify(project)}.`,
+      );
+    }
+    if (!RUN_MODULES_LESSONS.test(lessons)) {
+      failures.push(
+        `${RUN_MODULES_FILE}:${index + 1}: the lesson list must read "slug: title" entries separated by "; ": ${lessons}`,
+      );
+    } else if (firstSlug !== lessons.split(":")[0].trim()) {
+      failures.push(
+        `${RUN_MODULES_FILE}:${index + 1}: first lesson slug ${JSON.stringify(firstSlug)} is not the first slug in the lesson list ${JSON.stringify(lessons.split(":")[0].trim())}.`,
+      );
+    }
+    for (const banned of RUN_MODULES_BANNED_IN_ROWS) {
+      if (line.toLowerCase().includes(banned.toLowerCase())) {
+        failures.push(
+          `${RUN_MODULES_FILE}:${index + 1}: a module row carries ${JSON.stringify(banned)}. This file is curriculum routing metadata and states no capability.`,
+        );
+      }
+    }
+  }
+  if (!runModulesSource.includes(RUN_MODULES_DISCLAIMER)) {
+    failures.push(
+      `${RUN_MODULES_FILE}: missing the header sentence ${JSON.stringify(RUN_MODULES_DISCLAIMER)}. Without it a reader takes a route as evidence that a connector is available.`,
+    );
+  }
+  if (dataRowCount !== RUN_MODULE_IDS.length || new Set(seenIds).size !== RUN_MODULE_IDS.length) {
+    failures.push(
+      `${RUN_MODULES_FILE}: expected exactly ${RUN_MODULE_IDS.length} module rows with unique known ids, found ${dataRowCount} rows and ${new Set(seenIds).size} unique ids.`,
+    );
+  }
+}
+
+// 6b. The stop rule: one occurrence per file, the whole paragraph, and the three identical.
+const stopRuleLines = new Map();
+for (const file of STOP_RULE_FILES) {
+  const source = sourceFor(file);
+  if (source === null) continue;
+  const carrying = source
+    .split("\n")
+    .filter((line) => line.includes("An Unverified line is a stop"));
+  if (carrying.length !== 1) {
+    failures.push(
+      `${file}: expected exactly one line carrying the stop-rule paragraph, found ${carrying.length}.`,
+    );
+    continue;
+  }
+  if (carrying[0].trim() !== STOP_RULE_PARAGRAPH) {
+    failures.push(
+      `${file}: the stop-rule paragraph is not the fixed text. It is reproduced word for word or it is an edit, and the clause it loses is the one doing the work.`,
+    );
+    continue;
+  }
+  stopRuleLines.set(file, carrying[0].trim());
+}
+if (stopRuleLines.size === STOP_RULE_FILES.length) {
+  const [first, ...rest] = [...stopRuleLines.values()];
+  if (rest.some((paragraph) => paragraph !== first)) {
+    failures.push(
+      "The stop-rule paragraph differs between the files that carry it. It is one fixed paragraph in all three.",
+    );
+  }
+}
+
+// 6c. The Quick Plan machinery, in the skill and in the template.
+const quickPlanSource = sourceFor("skills/hub-strategy/SKILL.md");
+if (quickPlanSource !== null) {
+  for (const pinned of [
+    QUICK_PLAN_HEADING,
+    QUICK_PLAN_NO_LOOKUP,
+    QUICK_PLAN_ROUTE_ORDER,
+    QUICK_PLAN_ADMIN_LABEL,
+  ]) {
+    if (!quickPlanSource.includes(pinned)) {
+      failures.push(
+        `skills/hub-strategy/SKILL.md: missing the Quick Plan invariant ${JSON.stringify(pinned)}.`,
+      );
+    }
+  }
+  let cursor = -1;
+  for (const marker of QUICK_PLAN_EXCHANGES) {
+    const at = quickPlanSource.indexOf(marker, cursor + 1);
+    if (at === -1) {
+      failures.push(
+        `skills/hub-strategy/SKILL.md: missing the Quick Plan exchange ${JSON.stringify(marker)}, or it appears out of order.`,
+      );
+      break;
+    }
+    cursor = at;
+  }
+}
+const templateSource = sourceFor("references/hub-strategy-template.md");
+if (templateSource !== null && !templateSource.includes(TEMPLATE_MODE_LINE)) {
+  failures.push(
+    `references/hub-strategy-template.md: missing the mode line under the document title. Which mode wrote a plan is the first thing somebody picking it up needs to know.`,
+  );
+}
+
+// 7. The portal lesson's invocation phrase, character for character.
 const codexManifestPath = join(pluginRoot, ".codex-plugin", "plugin.json");
 if (!existsSync(codexManifestPath)) {
   failures.push(".codex-plugin/plugin.json is missing.");
 } else {
   const prompts =
     JSON.parse(readSource(codexManifestPath)).interface?.defaultPrompt ?? [];
-  if (!prompts.includes(PORTAL_INVOCATION)) {
+  // Pinned by position as well as by text: the lesson tells the member to use the first
+  // prompt, so a reordering breaks the lesson exactly as a rewording would.
+  if (prompts[0] !== PORTAL_INVOCATION) {
     failures.push(
-      `.codex-plugin/plugin.json: interface.defaultPrompt must carry the portal lesson's exact phrase ${JSON.stringify(PORTAL_INVOCATION)}.`,
+      `.codex-plugin/plugin.json: interface.defaultPrompt[0] must equal the portal lesson's exact phrase ${JSON.stringify(PORTAL_INVOCATION)}; it is ${JSON.stringify(prompts[0] ?? null)}.`,
     );
   }
 }
@@ -479,5 +722,5 @@ if (failures.length > 0) {
 }
 
 process.stdout.write(
-  `Validated AI Strategist across ${SKILLS.length} skills: frontmatter, required sections in the two authored skills and the document template, every emitted task-block field, the exactly-pinned model line, the audit rows, the precedence-scoping, structural-narrowing, administrator-policy, browser-ban and authorship invariants, reference links, the portal invocation phrase, the member-facing glance block, the row-expansion line, the session-scope sentence and the spoken line before the task block, and the absence of retired recipe identifiers, retired bridge vendors, retired bridge machinery, and any second statement of the card count.\n`,
+  `Validated AI Strategist across ${SKILLS.length} skills: frontmatter, required sections in the two authored skills and the document template, every emitted task-block field, the exactly-pinned model line, the audit rows, the precedence-scoping, structural-narrowing, administrator-policy, browser-ban and authorship invariants, reference links, the portal invocation phrase, the member-facing glance block, the row-expansion line, the mode-aware session-scope sentence, the whole stop-rule paragraph appearing exactly once and identically in the three files that carry it, the Quick Plan heading with its eight exchanges in order and its no-lookup, routing-order and administrator-label invariants, the template's mode line, the routing reference as a bounded shape (only its header paragraph, intro sentence, table header and separator, and six module rows, each row five cells with a known id, that id's own Project, a well-formed lesson list whose first slug matches, and no capability verdict), the spoken line before the task block, and the absence of retired recipe identifiers, retired bridge vendors, retired bridge machinery, and any second statement of the card count.\n`,
 );

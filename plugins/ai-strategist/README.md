@@ -4,7 +4,9 @@ AI Strategist interviews you about everything you are running — every business
 
 It is a plan, not a build. Nothing gets created, connected, or scheduled during the interview. You leave with a document you understand and an order to work through it in, starting with one project rather than nine.
 
-It checks what Claude and Notion can currently do against their own documentation while you are sitting there, every session, instead of working from memory. Anything it could not check comes to you labeled unverified rather than quietly guessed at.
+**Two ways to run it.** The Quick Plan is the short route: eight short questions, a map naming which Academy module builds each area you named, and a full write-up only for a custom area you choose to build first. The full interview is the long one: nine questions, and the first three projects written out. Your document says at the top which of the two wrote it, and you can ask for the other whenever you want it.
+
+In the full interview it checks what Claude and Notion can currently do against their own documentation while you are sitting there, instead of working from memory. The Quick Plan does not stop to look anything up, so its capability lines come to you labeled unverified on purpose. Either way every line is labeled, and an unverified line is a stop rather than a green light: whoever helps you build re-checks that exact thing on your account before anything is set up on it.
 
 ## What comes with it
 
