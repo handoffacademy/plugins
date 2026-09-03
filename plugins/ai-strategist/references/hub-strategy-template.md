@@ -1,6 +1,6 @@
-# The Hub Strategy document
+# The Hub Strategy: the content contract
 
-This is the shape of the deliverable, and it is the only one. Fill every section, in this order, with the member's own words. Nothing here is optional: **a section with nothing in it reads `None` on its own line rather than being dropped**, because a missing section reads as an oversight and a blank one reads as an answer. That holds in both modes, and it holds for every section in the skeleton below.
+**This file is the contract for what a Hub Strategy holds, and it is never itself an output.** The one file the strategy sitting writes is the Hub Strategy page, rendered from `hub-strategy-page.html`, and every section of the skeleton below is written onto it. This is the shape of the deliverable, and it is the only one. Fill every section, in this order, with the member's own words. Nothing here is optional: **a section with nothing in it reads `None` on its own line rather than being dropped**, because a missing section reads as an oversight and a blank one reads as an answer. That holds in both modes, and it holds for every section in the skeleton below. **One case is carved out of it, and only on a draft.** On a draft, the project-plans and when-things-change page regions are empty; they carry neither None, nor pasteable instructions, nor lifecycle text.
 
 Every capability line carries exactly one label. `Verified <date>` when it was checked against current documentation in the session that wrote the line. `Unverified — confirm at office hours` when it was not. Those two are the only capability states, and there is no unlabeled capability line anywhere in the document.
 
@@ -27,12 +27,13 @@ Every capability line carries exactly one label. `Verified <date>` when it was c
 
 First names are fine. Where the member chose something from the second list, the document says they chose it and what for.
 
-**One variant of this document exists, and it is a draft rather than a strategy.** Where the interview rules produced a draft — somebody answered on behalf of a person who was not there, or the sitting was part interview and part proxy — the deliverable keeps this shape exactly and changes four things. All four are canonical, and a draft missing any of them is indistinguishable from a finished plan:
+**One variant of this plan exists, and it is a draft rather than a strategy.** Where the interview rules produced a draft — somebody answered on behalf of a person who was not there, or the sitting was part interview and part proxy — the deliverable keeps this shape exactly and changes five things. All five are canonical, and a draft missing any of them is indistinguishable from a finished plan:
 
 - **The title is `Draft hub proposal — not ready to build`**, in place of the strategy title in the skeleton below.
 - **A line under the title names who answered, and which intended members of the hub were not present**, by name.
-- **The three sections that make a document somebody's own carry their marker in place of an answer** — everything they carry, the walled gardens, and the never list. `Not established — answered on the member's behalf` where nobody the hub is for was in the room; `Not established — [name] was not present`, written per absent person, where some intended members were present and some were not.
+- **The three sections that make a plan somebody's own carry their marker in place of an answer** — everything they carry, the walled gardens, and the never list. `Not established — answered on the member's behalf` where nobody the hub is for was in the room; `Not established — [name] was not present`, written per absent person, where some intended members were present and some were not.
 - **The closing line says what would make it a strategy:** each absent member's own sitting, where those three questions are asked of them in their own words. Nothing in the draft is built from until that has happened.
+- **Two regions of the page carry nothing at all.** On a draft, the project-plans and when-things-change page regions are empty; they carry neither None, nor pasteable instructions, nor lifecycle text. A draft with pasteable project instructions is a build kit for a plan nobody has answered for, and a lifecycle section is a schedule for re-checking work that was never agreed to.
 
 A draft carrying the strategy title is the failure this variant exists to prevent. Every other page of it looks finished, and the person who builds from it has no way to see which of the answers were nobody's.
 
@@ -46,14 +47,14 @@ A draft carrying the strategy title is the failure this variant exists to preven
 Quick Plan — your areas, the Academy route for each one, a roadmap card for every project you are planning, and a full write-up only for a custom area you chose to build first.
 
 [One mode line, here, directly under the title, and never left out: which mode wrote this
-document is the first thing somebody picking it up needs to know. Where this was the full
+plan is the first thing somebody picking it up needs to know. Where this was the full
 interview, that line reads instead: Full interview — nine questions, capabilities checked
 against current documentation in this session, a roadmap card for every project you are
 planning, and the first three projects written out in full. One of the two lines, never both.]
 
 [Where this came out of a proxy or a mixed sitting, this title is instead
 `Draft hub proposal — not ready to build`, followed by the line naming who answered and
-which intended members were not present. The four canonical changes are above.]
+which intended members were not present. The five canonical changes are above.]
 
 ## Your Hub at a Glance
 
@@ -64,7 +65,7 @@ which intended members were not present. The four canonical changes are above.]
 [The one thing to do this week.]
 
 [Five lines, and only five, one plain sentence each, and this is the first section of the
-document. Write it last and put it here. It restates the decisions the member made, in
+plan. Write it last and put it here. It restates the decisions the member made, in
 their own words: what they are building, what they want running, where they chose to put
 the results, and what they are doing next. Nothing in it is a claim about what a product,
 a connector, or a tool does. Every claim of that kind stays on the card that carries it,
@@ -180,7 +181,7 @@ draft action card carries only the bare step line Unblocking action and the exac
 
 **Step 2: [project].** Start it once step 1 has run on its own for a week and you trust what it gives you.
 [Where step 2 is waiting on something — a connection, an answer from whoever runs an
-account, a decision on this document's own list — name that one thing here and what it
+account, a decision on this plan's own list — name that one thing here and what it
 unblocks, so the wait is visible rather than discovered on the day you sit down to build.]
 What it is for: [from this project's map row]
 What it reads: [from this project's map row, its label written out in full]
@@ -238,13 +239,13 @@ Neither one carries a label, because neither one claims anything about what a pr
 **Built in is written from the route cell, and every route a planned row can carry has its
 own form.** Where the cell is a module id: the module title from the routing reference, then
 `starting at` and its first lesson slug. Where it reads `custom`: `No Academy lesson builds
-this one. If its full plan is not already in this document, ask for the row by name. If it
+this one. If its full plan is not already in this plan, ask for the row by name. If it
 needs a scheduled task, the design engine writes that task in its own sitting.` Where it is
 anything else, which is either of the two `Pending` states or a route the never list took
 off: copy that cell exactly and add nothing to it. A route is curriculum routing rather than
 a capability claim, so this line carries no label whichever form it takes.]
 
-[Where this document is being amended rather than written fresh, **none of these numbers
+[Where this plan is being amended rather than written fresh, **none of these numbers
 move.** A step number is assigned once and kept: a project that has been built keeps its
 number and carries Built with the date in the State column, one that has been stopped keeps
 its number and carries Retired, and a newly ordered project takes the next unused number after
@@ -255,13 +256,13 @@ the highest one here. What moves is a single pointer line, added at the top of t
 That line is the only thing that changes, and it names a step number that already exists.
 **Never renumber the plan so that the next thing becomes Step 1.** Somebody who built Steps
 1 and 2 in March needs to still see them called Steps 1 and 2, or this stops being the
-document they have been working through. Whatever Next points at gets the same
+plan they have been working through. Whatever Next points at gets the same
 buildable-this-week test that Step 1 got the first time.]
 
 Step 1 is deliberately something low-risk, so the early mistakes happen where they cost
 an hour rather than a relationship. That is the recommendation, and you can overrule it:
 if a different project is the one you actually need first, say so and it goes first, and
-this document records that you chose it.
+your plan records that you chose it.
 
 What does not change with the order: every project is built with the same limits and the
 same checks whenever it is built. Nothing skips its privacy gates, its permission limits,
@@ -300,7 +301,7 @@ Instructions to paste in when you create it:
 [**Where this project reads any source at all, the block below is part of those pasted
 instructions and is not optional.** Reproduce it as written. The project is created long
 after this conversation ends and loads none of the rules that produced it — so a rule
-that lives only in this document does not reach the run at all. That is doubly true of a
+that lives only in this plan does not reach the run at all. That is doubly true of a
 job that runs on a schedule, where nobody is watching it. These written rules are the
 second layer: the first is the narrowing on the connector itself.]
 
@@ -498,7 +499,7 @@ And the floor that applies to every project here, whatever else changes:
   which live in the systems your practice already keeps them in. Your own personal legal
   or medical matter stays walled off exactly as you asked, whatever you are qualified in.
 - Financial records come in one way only: statements and exports you download yourself. Never through a live connection to a bank, card, payment, or brokerage account, and never through a browser tool pointed at one — not watched, not read-only, not once. Keep full account numbers out of it; the last four identify an account fine.
-- Your plan describes kinds of things, not their contents. Account numbers, card numbers, passwords and keys, and government identifiers never go in, whatever anyone decides later. Documents and records themselves, and anything identifying your children beyond a first name, go in only if you deliberately choose it — and this document says so where you did.
+- Your plan describes kinds of things, not their contents. Account numbers, card numbers, passwords and keys, and government identifiers never go in, whatever anyone decides later. Documents and records themselves, and anything identifying your children beyond a first name, go in only if you deliberately choose it — and your plan says so where you did.
 - No scheduled task ever changes where it writes on its own. Moving one to your hub means building the new version, testing it once, and retiring the old one.
 
 ## Open Decisions — All in One Place
@@ -522,7 +523,7 @@ This plan has two halves and they age differently.
 
 **What you decided does not expire — except where you named an ending.** Your projects, your build order, your never list, and your home-base layout are yours, and they keep until you change them. Where an area of yours has a date on it — a sale, a wind-down, a lease or a role ending — its row says when, because that date was part of the decision rather than a note sitting beside it.
 
-**Every capability in this document expires the moment its session ends.** Claude changes constantly. A `Verified` label is a record of one check inside one conversation, not a standing fact, and it does not carry into the next conversation even if that one starts an hour later. **Before you build any project in this document, re-verify every capability that project depends on. Full stop, however recent the date on it looks.** Ask for the check by name at the start of the session: what the connector reads today, what a project holds today, what a scheduled task can reach today. That takes a minute and it is the difference between building on a fact and building on a memory.
+**Every capability in your plan expires the moment its session ends.** Claude changes constantly. A `Verified` label is a record of one check inside one conversation, not a standing fact, and it does not carry into the next conversation even if that one starts an hour later. **Before you build any project in your plan, re-verify every capability that project depends on. Full stop, however recent the date on it looks.** Ask for the check by name at the start of the session: what the connector reads today, what a project holds today, what a scheduled task can reach today. That takes a minute and it is the difference between building on a fact and building on a memory.
 
 Ask for the same re-check whenever any of these happens, because each one can move what is true underneath you:
 
@@ -534,7 +535,7 @@ Ask for the same re-check whenever any of these happens, because each one can mo
 
 And every time something is about to be written into a page in your hub, its privacy gets checked again first. Sharing can change between one write and the next.
 
-Come back through this document once a week while you are building it. Cross off what is done, move anything that turned out to be in the wrong order, and bring what did not work to office hours.
+Come back through your plan once a week while you are building it. Cross off what is done, move anything that turned out to be in the wrong order, and bring what did not work to office hours.
 ```
 
 ---
