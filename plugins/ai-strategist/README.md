@@ -1,18 +1,18 @@
 # AI Strategist
 
-AI Strategist interviews you about everything you are running — every business, every role, and the parts of your life that take real work — and writes you one Hub Strategy document: which Claude Projects to create, what each one reads, the skills and plugins each one needs, what runs on a schedule, and where the results land in your Notion hub.
+AI Strategist interviews you about everything you are running — every business, every role, and the parts of your life that take real work — and writes you one Hub Strategy page: which Claude Projects to create, what each one reads, the skills and plugins each one needs, what runs on a schedule, and where the results land in your Notion hub.
 
-It is a plan, not a build. The strategy sitting writes exactly two local files, your document and the page that renders it, and creates nothing in your workspace, your hub home base, your projects, your connections, or your schedules. You leave with a document you understand and an order to work through it in, starting with one project rather than nine.
+It is a plan, not a build. The strategy sitting writes exactly one local file, the Hub Strategy page, and creates nothing in the member's workspace, hub home base, projects, connections, or schedules. You leave with a plan you understand and an order to work through it in, starting with one project rather than nine.
 
-Every project on the build order comes with a roadmap card: what it is for, what it reads, what runs on its own and how often, where the results land, and which Academy lesson builds it. You get it twice over: the written document, and a one page summary of it. In Cowork that page opens in the panel beside you, with a Download button if you want to keep it on your phone; everywhere else it is saved next to the document. The page is a map of the plan, and the document is what you build from.
+Every project on the build order comes with a roadmap card: what it is for, what it reads, what runs on its own and how often, where the results land, and which Academy lesson builds it. You get one file, and it is the page. In Cowork it opens in the panel beside you, with a Download button if you want to keep it on your phone; on anything without a panel it is saved for you and printed in full in the reply as well. Your five plain lines sit at the top, the build order follows as cards, and everything else is in sections you open: the full write up for every project the sitting worked all the way through, your hub home base, and what to re-check when things change.
 
-**Two ways to run it.** The Quick Plan is the short route: eight short questions, a map naming which Academy module builds each area you named, a roadmap card on the build order for every project you are planning, and a full write-up only for a custom area you choose to build first. The full interview is the long one: nine questions, the same roadmap card on every planned project, and the first three projects written out. Your document says at the top which of the two wrote it, and you can ask for the other whenever you want it.
+**Two ways to run it.** The Quick Plan is the short route: eight short questions, a map naming which Academy module builds each area you named, a roadmap card on the build order for every project you are planning, and a full write-up only for a custom area you choose to build first. The full interview is the long one: nine questions, the same roadmap card on every planned project, and the first three projects written out. Your plan says at the top which of the two wrote it, and you can ask for the other whenever you want it.
 
 In the full interview it checks what Claude and Notion can currently do against their own documentation while you are sitting there, instead of working from memory. The Quick Plan does not stop to look anything up, so its capability lines come to you labeled unverified on purpose. Either way every line is labeled, and an unverified line is a stop rather than a green light: whoever helps you build re-checks that exact thing on your account before anything is set up on it.
 
 ## What comes with it
 
-- **Hub Strategy** — the interview and the document. Ask for it by name, or say "design my AI hub strategy".
+- **Hub Strategy** — the interview and the page. Ask for it by name, or say "design my AI hub strategy".
 - **Notion Hub** — the Notion expert. It designs your workspace during the strategy session, and when you sit down to build, it walks you through creating the pages and databases with you watching every step.
 - **The design engine** — the automation designer that came over from Automation Builder. When your strategy says a project should check something every morning, this is what turns that line into a real scheduled task: its own interview, a check on what your connection can actually read, and a test on your real data before anything goes on a schedule.
 - **One helper** — the connection check, which reports which connected apps can actually be used and what each one can read, taken from the vendors' current documentation rather than from memory.
@@ -59,12 +59,12 @@ If you added Automation Architect as an uploaded file rather than through the ma
 
 ## The safety model
 
-**The strategy session writes two files, your document and the page that renders it. That is all it does.** No project is created, no connector is turned on, no task is scheduled, and nothing is created in your workspace or your Notion hub while you are being interviewed.
+**The strategy sitting writes exactly one local file, the Hub Strategy page, and creates nothing in the member's workspace, hub home base, projects, connections, or schedules. That is all it does.** No project is created, no connector is turned on, no task is scheduled, and nothing is created in your workspace or your Notion hub while you are being interviewed.
 
-- Every capability in your document is labeled. `Verified` with a date means it was checked against current documentation in that session. `Unverified` means it could not be checked, and it says so rather than guessing.
-- **Those labels expire.** A verified line is a record of one check on one day. Before you build any project in the document, ask for its capabilities to be re-checked, however recent the date looks.
-- Anything you said should never happen goes into the document in your own words, alongside a floor that applies whatever else changes: nothing sends, publishes, pays, or deletes on its own, no passwords or keys go into a chat, legal and medical judgment stays with your professional, and financial records come in one way only, as statements and exports you download yourself, never through a live bank or payment connection and never through a browser.
-- Anything sensitive — legal, medical, your children, your finances — gets its own separate project, and the document says why in your words.
+- Every capability in your plan is labeled. `Verified` with a date means it was checked against current documentation in that session. `Unverified` means it could not be checked, and it says so rather than guessing.
+- **Those labels expire.** A verified line is a record of one check on one day. Before you build any project in your plan, ask for its capabilities to be re-checked, however recent the date looks.
+- Anything you said should never happen goes into your plan in your own words, alongside a floor that applies whatever else changes: nothing sends, publishes, pays, or deletes on its own, no passwords or keys go into a chat, legal and medical judgment stays with your professional, and financial records come in one way only, as statements and exports you download yourself, never through a live bank or payment connection and never through a browser.
+- Anything sensitive — legal, medical, your children, your finances — gets its own separate project, and your plan says why in your words.
 
 **When you build, one project at a time.** The build order starts with a single project, chosen because it is daily, boring, and low-risk. Sensitive projects are recommended later, and if you decide to build one first, every privacy, isolation, test, and permission gate still applies to it exactly as it would have. Nine projects half-built is the failure this is designed around.
 

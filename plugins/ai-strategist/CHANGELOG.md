@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.6.0
+
+Your Hub Strategy is now one file, and that file is the page you read.
+
+- **One file instead of two.** The strategy sitting used to write a document and a summary page beside it. Now it writes one thing, your Hub Strategy page, and there is no Markdown file any more.
+- **The page is the whole plan.** Everything that used to sit in the document is on it, in sections you open: the full write up for every project the sitting worked all the way through, all of your hub home base, and the section on what to re-check when things change. Nothing sends you somewhere else for the rest of it.
+- **Download keeps it.** In Cowork the page opens in the panel beside you with a Download button. On anything without a panel, your plan is printed in full in the reply as well, so you can read it and copy it wherever you are.
+- **The design engine can read it in your Project.** When you sit down to turn one line of your plan into a scheduled task, you can name your Hub Strategy page and it gets read for you, instead of you finding and copying two blocks of it. Pasting still works if the page is somewhere it cannot reach.
+- **Nothing to keep in step.** There is no second copy to edit and nothing to keep matching. To change your plan, ask in the same Project and it is written again.
+- **Nothing you already have changes.** A plan written before today says exactly what it said, and the files you already have keep working.
+
 ## 1.5.1
 
 Your plan now says out loud what each thing on it is, and it names your projects the way you would say them out loud.
