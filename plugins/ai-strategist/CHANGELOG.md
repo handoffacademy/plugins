@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.7.1
+
+- ChatGPT skill: the permission line no longer calls Always ask the default; it is the setting to keep (the product default is Allow low-risk actions).
+
+## 1.7.0
+
+AI Strategist now comes in a version you can save inside ChatGPT.
+
+- **A ChatGPT-sized version.** A short version of the strategy interview lives at `chatgpt/SKILL.md`. Paste it into a Work chat and ChatGPT saves it as a skill named AI Strategist, so you can ask for your Hub Strategy there the same way you ask for it here.
+- **Same interview, same rules.** It asks the same nine questions one at a time, keeps the same safety rules, and writes the same plan in the same section order. It builds nothing while it interviews you.
+- **Written in ChatGPT's own words.** It names ChatGPT Projects, Plugins, Skills, the Scheduled page, and the permission setting to keep on each one, and your results still land in your Notion Command Center.
+- **Nothing here changes.** The plugin works exactly as it did, and the ChatGPT version is an extra file rather than a replacement for any of it.
+
 ## 1.6.0
 
 Your Hub Strategy is now one file, and that file is the page you read.
