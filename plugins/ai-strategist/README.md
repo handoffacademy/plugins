@@ -47,6 +47,10 @@ codex plugin add ai-strategist@plugins
 
 Claude's Auto-update toggle does not update Codex installations. Product names, connector availability, and recurring-task controls differ by product, so AI Strategist uses only the tools visible in the current conversation and says plainly where a product cannot do something rather than quietly doing something weaker. Where a product cannot schedule recurring work, it hands you the finished task to schedule yourself — but only where every source in it is a native connector that product verified and the task's reach can be narrowed to those sources plus the one place its results land. Where it cannot, it says the task is not schedulable there rather than handing you one that looks ready.
 
+## Save it as a skill in ChatGPT
+
+A ChatGPT-sized version lives at [`chatgpt/SKILL.md`](chatgpt/SKILL.md). Open a Work chat, paste the sentence "Save the following as a skill named AI Strategist, so I can reuse it in later chats:" and then the whole file underneath it. It takes about two minutes. ChatGPT finishes with "Saved and installed AI Strategist", and it is listed from then on at chatgpt.com/skills.
+
 ## If you have Automation Builder installed
 
 **Remove Automation Builder before you install AI Strategist.** The automation designer inside AI Strategist is the same skill Automation Builder carried, so running both leaves two copies of it active at once. Claude can load either one, and only one of them receives updates.
