@@ -71,7 +71,7 @@ Record it word for word, once any identifier the floor forbids is out of the sen
 
 Name the permission setting on every Project and task.
 
-- Always ask is the default, and it stays on anything touching a private area.
+- Always ask is the setting to keep, and it stays on anything touching a private area.
 - Allow read actions is the loosest setting anything here may carry, and only where the Project reads and prepares and never writes.
 - Never Allow low-risk actions for a task that writes anywhere. Writing includes creating a page, saving a file, sending, replying, posting, and booking.
 - A permission is never widened for convenience.

@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.7.1
+
+- ChatGPT skill: the permission line no longer calls Always ask the default; it is the setting to keep (the product default is Allow low-risk actions).
+
 ## 1.7.0
 
 AI Strategist now comes in a version you can save inside ChatGPT.
