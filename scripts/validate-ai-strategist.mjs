@@ -63,6 +63,8 @@ const REQUIRED_SECTIONS = {
 // checked as strings rather than as markdown headings.
 const REQUIRED_TEMPLATE_SECTIONS = [
   "## Your Hub at a Glance",
+  "## Start here",
+  "### Set up this project — repeat inside every planned card",
   "## Build Order",
   "## Project Plans",
   "## Your Hub Home Base",
@@ -224,7 +226,7 @@ const CANONICAL_LABELS = [
 // them on its own and the skill is what does the choosing.
 const PAGE_MODE_AWARE_CHROME = {
   "build-order note, strategy":
-    "These cards are a map: each one is a planned Claude Project, named as written, except a card whose step line says Unblocking action. The full plans sit under Project plans below, and any other planned or deferred project becomes one when you ask for it by name.",
+    "Each project card includes Set up this project: your setup steps, Project instructions, and First prompt. Start with the next project only. An Unblocking action must be completed before the project it names. Deeper write-ups sit under Project plans below.",
   "build-order note, draft":
     "These cards are a proposal. Nothing here is ready to build, and nothing becomes a plan until the people it is about have answered for themselves.",
   "footer, strategy":
@@ -379,7 +381,7 @@ REQUIRED_PROSE["skills/hub-strategy/SKILL.md"].push(
   // amounts of the same document, and how much is decided here rather than at Q9. From 1.5.0
   // it opens with what both modes always produce, so a roadmap card cannot be read as the
   // thing a short sitting drops.
-  "Session scope: every planned project carries a roadmap card in the build order, in both modes; the full interview also works the first three projects in the build order into full plans; Quick Plan writes at most one full plan, only where the member made a custom area the first project; every other area is a row.",
+  "Session scope: every planned project carries a roadmap card and starter kit in the build order, in both modes; the full interview also works the first three projects in the build order into full plans; Quick Plan writes at most one full plan, only where the member made a custom area the first project; every other area keeps its row and, if planned, its starter kit.",
 );
 
 // The naming rules (1.5.1). Three of them, in precedence order, and the precedence is the
@@ -506,21 +508,19 @@ const RUN_MODULES_BANNED_IN_ROWS = [
 ];
 
 // The Quick Plan mode is a set of promises that only hold together as a set: the section
-// itself, its eight exchanges in order, the sentence saying nothing is looked up, the sentence
+// itself, its adaptive topic coverage in order, the sentence saying nothing is looked up, the sentence
 // putting routing after Q6 and Q7, the administrator label in the source-boundary exchange, and
 // the template's mode line. Any one of these can be trimmed without breaking a heading or a
 // table, and each one on its own turns Quick Plan into something it is not.
 const QUICK_PLAN_HEADING =
-  "### The Quick Plan Question Set — Eight Short Exchanges";
+  "### The Adaptive Interview — Shared Topic Coverage";
 const QUICK_PLAN_EXCHANGES = [
-  "**Q1, open, in their own words, prefilled.**",
-  "**Q2, the heaviest one**",
-  "**Already running, in one compact question. Required, and never a clarifier.**",
-  "**The source boundary, in one compact question. Required, and never a clarifier.**",
-  "**Home base and delivery, combined — Q5 and Q8 in one exchange.**",
-  "**Q6, the walled gardens**",
-  "**Q7, the never list**",
-  "**Q9, short.**",
+  "**Target app and privacy.**",
+  "**Areas and priority.**",
+  "**Sources and existing work.**",
+  "**Separation and shared sources.**",
+  "**Never list.**",
+  "**Review and destination.**",
 ];
 const QUICK_PLAN_NO_LOOKUP = "**It does no documentation lookups at all:**";
 const QUICK_PLAN_ROUTE_ORDER =
@@ -545,6 +545,7 @@ const PAGE_SLOTS = [
   "draft-notice",
   "subtitle",
   "glance-lines",
+  "next-steps",
   "labels-note",
   "map",
   "build-order-heading",
@@ -706,6 +707,8 @@ const ACTION_CARD_FORBIDDEN = [
   "Lands in",
   "Built in",
   "chips",
+  'class="starter"',
+  "Set up this project",
 ];
 
 // The full plan on the page (1.6.0). The page is the Hub Strategy, so each plan is written onto it
@@ -868,7 +871,7 @@ const FIXED_BLOCKS = {
       "references/hub-strategy-page.html",
       "skills/hub-strategy/SKILL.md",
     ],
-    text: "Quick Plan \u2014 your areas, the Academy route for each one, a roadmap card for every project you are planning, and a full write-up only for a custom area you chose to build first.",
+    text: "Quick Plan \u2014 an adaptive conversation, your areas and Academy routes, a roadmap and starter kit for every planned project, and a deeper write-up only for a custom area you chose to build first.",
   },
   "the full-interview mode line": {
     slot: "mode-line",
@@ -877,7 +880,7 @@ const FIXED_BLOCKS = {
       "references/hub-strategy-page.html",
       "skills/hub-strategy/SKILL.md",
     ],
-    text: "Full interview \u2014 nine questions, capabilities checked against current documentation in this session, a roadmap card for every project you are planning, and the first three projects written out in full.",
+    text: "Full interview \u2014 deeper exploration and current capability checks, a roadmap and starter kit for every planned project, and the first three projects written out in full.",
   },
 };
 
@@ -1254,9 +1257,10 @@ if (quickPlanSource !== null) {
       );
     }
   }
+  const flow = quickPlanSource.split(QUICK_PLAN_HEADING)[1]?.split("### When a Judgment Call Comes Up")[0] ?? "";
   let cursor = -1;
   for (const marker of QUICK_PLAN_EXCHANGES) {
-    const at = quickPlanSource.indexOf(marker, cursor + 1);
+    const at = flow.indexOf(marker, cursor + 1);
     if (at === -1) {
       failures.push(
         `skills/hub-strategy/SKILL.md: missing the Quick Plan exchange ${JSON.stringify(marker)}, or it appears out of order.`,
@@ -1812,6 +1816,90 @@ for (const file of DRAFT_CHANGE_COUNT_RESIDUE_FILES) {
   }
 }
 
+// 6m. Adaptive intake and per-project handoff are contracts on both entry points.
+const adaptiveRequired = {
+  "skills/hub-strategy/SKILL.md": [
+    "**Quick Plan is the default.**",
+    "Track answered topics from the member's own words. One answer may cover several topics; skip every topic already answered.",
+    "Explicit privacy choices and refusals already supplied by this member satisfy those topics.",
+    "Ask a follow-up only if it changes project selection, privacy, feasibility, or the first step.",
+    "A starter kit is required for every planned project, regardless of interview depth.",
+    "Assemble one complete instructions value per project and reuse it unchanged wherever that project has a full plan.",
+    "Drafts, unblocking actions, deferred rows, already-running rows, and built or retired rows get no starter kit.",
+    "If the project instructions are not available in the new conversation, its first action is to ask the member to paste this project's Project instructions block and wait before any setup or source access.",
+    "On a draft, Start here names whose missing answers are needed and gives no build steps or copyable blocks.",
+  ],
+  "chatgpt/SKILL.md": [
+    "**Quick Plan is the default.**",
+    "Track answered topics from the member's own words. One answer may cover several topics; skip every topic already answered.",
+    "Ask a follow-up only if it changes project selection, privacy, feasibility, or the first step.",
+    "**Every planned Project gets one starter kit, even without a deeper plan.**",
+    "Drafts, unblocking actions, deferred rows, already-running rows, and built or retired rows get no starter kit.",
+    "If its Project instructions are absent, first ask the member to paste this Project's instructions and wait before setup or access.",
+    "Assemble once and reproduce unchanged wherever the deeper plan repeats it.",
+    "On a draft, name whose answers are missing and give no build steps.",
+    "Quick Plan does no documentation lookups",
+    "Never author or schedule a recurring-task prompt.",
+  ],
+};
+for (const [file, required] of Object.entries(adaptiveRequired)) {
+  const source = sourceFor(file);
+  if (source === null) continue;
+  for (const text of required) {
+    if (!source.includes(text)) failures.push(`${file}: missing adaptive handoff invariant ${JSON.stringify(text)}.`);
+  }
+  const obsolete = /eight short (?:questions|exchanges)|nine (?:core )?questions|never batch questions|question cap|clarifier cap|twenty minutes|30 to 60/i;
+  if (obsolete.test(source)) failures.push(`${file}: obsolete fixed interview requirement remains.`);
+}
+const chatgptSource = sourceFor("chatgpt/SKILL.md");
+if (chatgptSource !== null) {
+  const flow = chatgptSource.split("## The adaptive interview")[1]?.split("## Permissions")[0] ?? "";
+  let cursor = -1;
+  for (const marker of QUICK_PLAN_EXCHANGES) {
+    const at = flow.indexOf(marker, cursor + 1);
+    if (at === -1) failures.push(`chatgpt/SKILL.md: missing adaptive topic ${JSON.stringify(marker)} or out of order.`);
+    else cursor = at;
+  }
+}
+const starterLabels = ["Project name", "Setup steps", "Project instructions", "First prompt", "What you should get"];
+const starterRegion = pageSource?.match(/<!-- starter-kit: start -->([\s\S]*?)<!-- starter-kit: end -->/g) ?? [];
+if (starterRegion.length !== 1) failures.push(`${PAGE_TEMPLATE_FILE}: expected exactly one starter-kit exemplar.`);
+for (const block of starterRegion) {
+  const actual = [...block.matchAll(/<p class="k">([^<]+)<\/p>/g)].map((match) => match[1]);
+  if (JSON.stringify(actual) !== JSON.stringify(starterLabels)) failures.push(`${PAGE_TEMPLATE_FILE}: starter-kit fields must occur once each in their defined order.`);
+  const pasteBlocks = [...block.matchAll(/<pre class="paste" tabindex="0">([\s\S]*?)<\/pre>/g)];
+  if (pasteBlocks.length !== 2 || pasteBlocks.some((match) => !match[1].trim())) failures.push(`${PAGE_TEMPLATE_FILE}: starter kit needs exactly two focusable, nonempty paste blocks.`);
+  for (const phrase of [
+    'class="starter" open',
+    "Omit the entire kit on drafts, unblocking actions, deferred, already-running, and built or retired rows.",
+    "remove open from every other kit and from all kits when an unblocking action comes first",
+    "fixed read-allowlist block and canonical never-list floor in full",
+    "ask for this project's instructions and wait if absent",
+    "check capabilities before setup",
+    "never author or schedule task text",
+  ]) {
+    if (!block.includes(phrase)) failures.push(`${PAGE_TEMPLATE_FILE}: starter-kit exemplar missing ${JSON.stringify(phrase)}.`);
+  }
+  const roadmap = pageRegionOf("build-order") ?? "";
+  const projectExemplar = roadmap.split(ACTION_CARD_MARKER)[0];
+  if (!projectExemplar.includes(block)) failures.push(`${PAGE_TEMPLATE_FILE}: starter kit must be inside the planned project card, before the action exemplar.`);
+  // The kit must precede the card's own close, not merely appear somewhere in build-order.
+  if (projectExemplar.indexOf("</li>") < projectExemplar.indexOf("<!-- starter-kit: start -->")) failures.push(`${PAGE_TEMPLATE_FILE}: starter kit lies outside its project card.`);
+}
+const nextSteps = pageRegionOf("next-steps");
+for (const phrase of ['<h2 id="start-here">Start here</h2>', 'aria-labelledby="start-here"', 'Draft: name whose missing answers are needed, with no setup steps or copyable blocks.']) {
+  if (!nextSteps?.includes(phrase)) failures.push(`${PAGE_TEMPLATE_FILE}: next-steps missing ${JSON.stringify(phrase)}.`);
+}
+if (templateSource !== null) {
+  const kit = templateSource.split("### Set up this project — repeat inside every planned card")[1]?.split("## Project Plans")[0] ?? "";
+  let cursor = -1;
+  for (const label of starterLabels) {
+    const at = kit.indexOf(`**${label}.**`, cursor + 1);
+    if (at === -1) failures.push(`references/hub-strategy-template.md: missing starter field ${label} or out of order.`);
+    else cursor = at;
+  }
+}
+
 // 7. The portal lesson's invocation phrase, character for character.
 const codexManifestPath = join(pluginRoot, ".codex-plugin", "plugin.json");
 if (!existsSync(codexManifestPath)) {
@@ -1835,5 +1923,5 @@ if (failures.length > 0) {
 }
 
 process.stdout.write(
-  `Validated AI Strategist across ${SKILLS.length} skills: frontmatter, required sections in the two authored skills and the document template, every emitted task-block field, the exactly-pinned model line, the audit rows, the precedence-scoping, structural-narrowing, administrator-policy, browser-ban and authorship invariants, reference links, the portal invocation phrase, the member-facing glance block, the row-expansion line, the mode-aware session-scope sentence, the one-file boundary sentence, the twelve blocks of every plan and every home-base subsection on the page, the slot regions opening in the order the member reads them, the Map on the page with its eight-column header row and its eight field placeholders in order, the six-step task move placed in the plan region that carries it, the read-allowlist header as a whole line, and the four fixed blocks the plan carries verbatim (the pasted read allowlist, the design-engine handoff, the never-list floor and When Things Change) and the two mode lines, each compared whole and normalized across every artifact that carries it and required exactly once inside the page region that carries it, the whole stop-rule paragraph appearing exactly once and identically in the four files that carry it, the page template's exact slot allowlist rendered as paired regions with no missing, duplicate, unknown, nested, or out-of-order marker, and its freedom from script, from links, and from anything that fetches or embeds, the Quick Plan heading with its eight exchanges in order and its no-lookup, routing-order and administrator-label invariants, the template's mode line, the roadmap card as an ordered contract in each of the template's three Build Order blocks with a label attached to both of its capability lines, the same three lines placed between What it reads and Done means on the page's build-order card with its three label-copy placeholders pinned whole and its draft carve-out, the two fixed step-line suffixes on the page pinned in the exemplar, the slot comment and the skill, with the name-copy rule and the draft step line beside them, the three naming rules in precedence order carried identically by the skill and the template's map note with the map's own Project-column placeholders pinned to them, the alternate unblocking-action card shape carrying its bare suffix, its name and its two lines and none of the four project lines, the chips or What it is for, the Build Order line saying which steps are planned Claude Projects and which one is not, the one sentence separating a roadmap card from a full plan carried identically by the skill and the template, the two no-task sentences carried by both with no canonical label anywhere on their line, the four mode-aware chrome strings with both draft variants named in the skill, the rule scoping what a slot replaces so a fixed block inside one is copied rather than rewritten, restated in every slot comment that carries one and with the whole-region phrasing kept out, the architect taking a refusal only from the never-list section of a Hub Strategy page and holding a line of uncertain provenance until the member confirms it, the routing reference as a bounded shape (only its header paragraph, intro sentence, table header and separator, and six module rows, each row five cells with a known id, that id's own Project, a well-formed lesson list whose first slug matches, and no capability verdict), the spoken line before the task block, and the absence of retired recipe identifiers, retired bridge vendors, retired bridge machinery, every name for the retired second deliverable, and any second statement of the full-plan count.\n`,
+  `Validated AI Strategist across ${SKILLS.length} skills, adaptive interviews and project starter kits: frontmatter, required sections in the two authored skills and the document template, every emitted task-block field, the exactly-pinned model line, the audit rows, the precedence-scoping, structural-narrowing, administrator-policy, browser-ban and authorship invariants, reference links, the portal invocation phrase, the member-facing glance block, the row-expansion line, the mode-aware session-scope sentence, the one-file boundary sentence, the twelve blocks of every plan and every home-base subsection on the page, the slot regions opening in the order the member reads them, the Map on the page with its eight-column header row and its eight field placeholders in order, the six-step task move placed in the plan region that carries it, the read-allowlist header as a whole line, and the four fixed blocks the plan carries verbatim (the pasted read allowlist, the design-engine handoff, the never-list floor and When Things Change) and the two mode lines, each compared whole and normalized across every artifact that carries it and required exactly once inside the page region that carries it, the whole stop-rule paragraph appearing exactly once and identically in the four files that carry it, the page template's exact slot allowlist rendered as paired regions with no missing, duplicate, unknown, nested, or out-of-order marker, and its freedom from script, from links, and from anything that fetches or embeds, the Quick Plan heading with its adaptive topic coverage in order and its no-lookup, routing-order and administrator-label invariants, the template's mode line, the roadmap card as an ordered contract in each of the template's three Build Order blocks with a label attached to both of its capability lines, the same three lines placed between What it reads and Done means on the page's build-order card with its three label-copy placeholders pinned whole and its draft carve-out, the two fixed step-line suffixes on the page pinned in the exemplar, the slot comment and the skill, with the name-copy rule and the draft step line beside them, the three naming rules in precedence order carried identically by the skill and the template's map note with the map's own Project-column placeholders pinned to them, the alternate unblocking-action card shape carrying its bare suffix, its name and its two lines and none of the four project lines, the chips or What it is for, the Build Order line saying which steps are planned Claude Projects and which one is not, the one sentence separating a roadmap card from a full plan carried identically by the skill and the template, the two no-task sentences carried by both with no canonical label anywhere on their line, the four mode-aware chrome strings with both draft variants named in the skill, the rule scoping what a slot replaces so a fixed block inside one is copied rather than rewritten, restated in every slot comment that carries one and with the whole-region phrasing kept out, the architect taking a refusal only from the never-list section of a Hub Strategy page and holding a line of uncertain provenance until the member confirms it, the routing reference as a bounded shape (only its header paragraph, intro sentence, table header and separator, and six module rows, each row five cells with a known id, that id's own Project, a well-formed lesson list whose first slug matches, and no capability verdict), the spoken line before the task block, and the absence of retired recipe identifiers, retired bridge vendors, retired bridge machinery, every name for the retired second deliverable, and any second statement of the full-plan count.\n`,
 );
