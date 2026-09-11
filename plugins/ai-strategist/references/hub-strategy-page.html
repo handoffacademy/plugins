@@ -12,8 +12,8 @@
 <style>
 :root { color-scheme: light dark; }
 * { box-sizing: border-box; }
-body { margin: 0 auto; padding: 28px 20px 56px; max-width: 44rem; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; font-size: 17px; line-height: 1.55; color: #1d1c19; background: #fbfaf7; -webkit-text-size-adjust: 100%; }
-.eyebrow, .step, .k, dl.glance dt, h2 { font-size: .68rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #6b675e; }
+body { margin: 0 auto; padding: 28px 20px 56px; max-width: 44rem; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; font-size: 17px; line-height: 1.55; color: #1d1c19; background: #fbfaf7; -webkit-text-size-adjust: 100%; overflow-wrap: anywhere; }
+.eyebrow, .step, .k, dl.glance dt, h2 { font-size: .75rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #6b675e; }
 .eyebrow { margin: 0 0 .4rem; }
 h2 { margin: 2rem 0 .3rem; font-size: .78rem; }
 .k { display: block; }
@@ -33,17 +33,26 @@ li.card p { margin: 0 0 .5rem; }
 li.card h3 { margin: .1rem 0 .5rem; font-size: 1.08rem; }
 .chips { line-height: 2; }
 .chip { display: inline-block; margin: 0 .3rem .2rem 0; padding: .1rem .55rem; border: 1px solid #ded8c9; border-radius: 999px; background: #f1eee5; font-size: .78rem; }
-.slug { color: #6b675e; font-size: .68rem; }
+.slug { color: #6b675e; font-size: .75rem; }
 details { border-top: 1px solid #e4dfd4; padding: .7rem 0; }
 details.plan p { margin: 0 0 .6rem; }
 details.plan p.k { margin: 1rem 0 .3rem; }
 .wide { overflow-x: auto; }
 table.map { width: 100%; border-collapse: collapse; font-size: .8rem; }
 table.map th, table.map td { padding: .35rem .5rem; border-bottom: 1px solid #e4dfd4; text-align: left; vertical-align: top; }
-table.map th { font-size: .68rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #6b675e; white-space: nowrap; }
+table.map th { font-size: .75rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #6b675e; white-space: nowrap; }
 .paste { margin: 0 0 .6rem; padding: .7rem .8rem; border: 1px solid #e4dfd4; border-radius: 8px; background: #f6f4ee; font-family: inherit; font-size: .92rem; white-space: pre-wrap; overflow-wrap: anywhere; }
 details > *:not(summary) { margin-top: .7rem; }
 summary { cursor: pointer; font-weight: 600; }
+summary:focus-visible, .paste:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
+::selection { color: #1d1c19; background: #eadba7; }
+.starter { margin-top: 1rem; }
+.starter .k { margin-top: 1rem; }
+.starter ol { padding-left: 1.3rem; }
+.starter ol li { margin-bottom: .4rem; }
+.next-steps { margin-top: 1.5rem; }
+.next-steps h2 { margin-top: 0; }
+.next-steps p { margin: .4rem 0; }
 ul { margin: 0; padding-left: 1.15rem; }
 ul li { margin: 0 0 .35rem; }
 footer { margin-top: 2.4rem; padding-top: .9rem; border-top: 1px solid #e4dfd4; font-size: .85rem; color: #6b675e; }
@@ -61,6 +70,8 @@ footer { margin-top: 2.4rem; padding-top: .9rem; border-top: 1px solid #e4dfd4; 
   body { max-width: none; padding: 0; font-size: 11pt; color: #000000; background: #ffffff; }
   li.card, .callout, .draft, .paste { border-color: #999999; background: transparent; }
   table.map th, table.map td { border-color: #999999; }
+  .eyebrow, h2, dl.glance dt, .k, .slug, .step, footer, table.map th, .subtitle, .note, .chip { color: #222222; }
+  .chip { border-color: #999999; background: transparent; }
   details > *:not(summary) { display: block; }
   details::details-content { content-visibility: visible; block-size: auto; }
   summary { list-style: none; }
@@ -78,7 +89,7 @@ footer { margin-top: 2.4rem; padding-top: .9rem; border-top: 1px solid #e4dfd4; 
 <h1>[the plan's title]</h1><!-- end: title -->
 
 <!-- slot: mode-line -->
-<!-- The skeleton's own mode sentence, whole, and one of exactly two. A Quick Plan reads: Quick Plan — your areas, the Academy route for each one, a roadmap card for every project you are planning, and a full write-up only for a custom area you chose to build first. The full interview reads: Full interview — nine questions, capabilities checked against current documentation in this session, a roadmap card for every project you are planning, and the first three projects written out in full. One of the two, never both, each a fixed block copied exactly as this comment carries it. On a draft this slot carries instead the line naming who answered and which intended members were not present, and the draft notice below it does not repeat that line. -->
+<!-- The skeleton's own mode sentence, whole, and one of exactly two. A Quick Plan reads: Quick Plan — an adaptive conversation, your areas and Academy routes, a roadmap and starter kit for every planned project, and a deeper write-up only for a custom area you chose to build first. The full interview reads: Full interview — deeper exploration and current capability checks, a roadmap and starter kit for every planned project, and the first three projects written out in full. One of the two, never both, each a fixed block copied exactly as this comment carries it. On a draft this slot carries instead the line naming who answered and which intended members were not present, and the draft notice below it does not repeat that line. -->
 <p class="note">[the mode sentence, whole, one of the two]</p><!-- end: mode-line -->
 
 <!-- slot: draft-notice -->
@@ -102,6 +113,14 @@ footer { margin-top: 2.4rem; padding-top: .9rem; border-top: 1px solid #e4dfd4; 
   <div><dt>Where results land</dt><dd>[glance line 4]</dd></div>
   <div><dt>This week</dt><dd>[glance line 5]</dd></div><!-- end: glance-lines -->
 </dl>
+
+<!-- slot: next-steps -->
+<!-- Strategy: name the next planned project and its Set up this project section, or the unblocking action and the project it unlocks. Respect the existing Next pointer. No planned project means the next actual decision. Draft: name whose missing answers are needed, with no setup steps or copyable blocks. -->
+<section class="next-steps" aria-labelledby="start-here">
+  <h2 id="start-here">Start here</h2>
+  <p>[the exact next project or unblocking action name]</p>
+  <p>[one immediate next action and what completing it produces; on a draft, missing answers only]</p>
+</section><!-- end: next-steps -->
 
 <aside class="callout">
 <p>
@@ -142,10 +161,10 @@ An Unverified line is a stop, not permission to proceed. Before giving a setup s
 <h2>The build order</h2><!-- end: build-order-heading -->
 <!-- slot: build-order-note -->
 <!-- a strategy reads the line below; a draft reads: These cards are a proposal. Nothing here is ready to build, and nothing becomes a plan until the people it is about have answered for themselves. -->
-<p class="note">These cards are a map: each one is a planned Claude Project, named as written, except a card whose step line says Unblocking action. The full plans sit under Project plans below, and any other planned or deferred project becomes one when you ask for it by name.</p><!-- end: build-order-note -->
+<p class="note">Each project card includes Set up this project: your setup steps, Project instructions, and First prompt. Start with the next project only. An Unblocking action must be completed before the project it names. Deeper write-ups sit under Project plans below.</p><!-- end: build-order-note -->
 <ol class="cards">
 <!-- slot: build-order -->
-<!-- One card per planned map row, in the plan's own order, filled with the plan's exact Order, Academy route, and State values. The step line is the plan's exact Order value followed by a fixed suffix saying what the card is: the fixed suffix · Claude Project on a card that is a project, and the fixed suffix · Unblocking action on the Step 1 card that is a named unblocking action rather than a project. Every card carries one of the two, and an unblocking action is not a Project. The name on a card is the plan's own: the page copies the plan's name exactly, whether the plan kept a name the member already had, put an area in front of an Academy module's own Project name, or proposed one of its own. The three lines after What it reads are the roadmap, and every planned card carries all three. The card prints each line's name itself, so each one takes the exact value after that label in this project's roadmap card in the plan's Build Order section, word for word. A project with no scheduled task shows Runs on its own: Nothing. This one is a space you open, not a task that runs. and then Lands in: Nothing runs, so nothing lands. You open the space yourself. Built in carries whichever form the route cell gave it in the plan: the module title and the lesson it starts at, the custom sentence, or the route cell copied exactly. Drop the Done means line except where the plan carries one, which is Step 1 and the unblocking-action form of it; drop the Waiting on line where the plan names nothing. Where Step 1 is an unblocking action rather than a project, that card has a shape of its own, and the second exemplar below is it. A strategy action card carries only the step line Step 1 · Unblocking action, the plan's exact action name as its heading, Why this one first, and Done means naming the project it unlocks: no chips, no What it is for, no What it reads, no roadmap lines, and no Waiting on. A draft action card carries only the bare step line Unblocking action and the exact action name. The project it unlocks is the next card and carries all three roadmap lines like any other. On a DRAFT page a project card carries only the name, the area, and the route, and the draft action card is the one exception, carrying the bare words and the action name only: no roadmap lines, no Done means, no Waiting on, and no step number presented as an order, and its step line reads Claude Project on its own, or reads Unblocking action on its own where that card is the action. -->
+<!-- One card per planned map row, in the plan's own order, filled with the plan's exact Order, Academy route, and State values. The step line is the plan's exact Order value followed by a fixed suffix saying what the card is: the fixed suffix · Claude Project on a card that is a project, and the fixed suffix · Unblocking action on the Step 1 card that is a named unblocking action rather than a project. Every card carries one of the two, and an unblocking action is not a Project. The name on a card is the plan's own: the page copies the plan's name exactly, whether the plan kept a name the member already had, put an area in front of an Academy module's own Project name, or proposed one of its own. The three lines after What it reads are the roadmap, and every planned card carries all three. The card prints each line's name itself, so each one takes the exact value after that label in this project's roadmap card in the plan's Build Order section, word for word. A project with no scheduled task shows Runs on its own: Nothing. This one is a space you open, not a task that runs. and then Lands in: Nothing runs, so nothing lands. You open the space yourself. Built in carries whichever form the route cell gave it in the plan: the module title and the lesson it starts at, the custom sentence, or the route cell copied exactly. Drop the Done means line except where the plan carries one, which is Step 1 and the unblocking-action form of it; drop the Waiting on line where the plan names nothing. Where Step 1 is an unblocking action rather than a project, that card has a shape of its own, and the second exemplar below is it. A strategy action card carries only the step line Step 1 · Unblocking action, the plan's exact action name as its heading, Why this one first, and Done means naming the project it unlocks: no chips, no What it is for, no What it reads, no roadmap lines, and no Waiting on. A draft action card carries only the bare step line Unblocking action and the exact action name. Draft cards and action cards never carry a starter kit. The project it unlocks is the next card and carries all three roadmap lines like any other. On a DRAFT page a project card carries only the name, the area, and the route, and the draft action card is the one exception, carrying the bare words and the action name only: no roadmap lines, no Done means, no Waiting on, and no step number presented as an order, and its step line reads Claude Project on its own, or reads Unblocking action on its own where that card is the action. -->
   <li class="card">
     <p class="step">[the plan's exact Order value, for example Step 1] · Claude Project</p>
     <h3>[project name, exactly as the plan names it]</h3>
@@ -161,6 +180,25 @@ An Unverified line is a stop, not permission to proceed. Before giving a setup s
     <p><span class="k">Built in</span>[the exact value after "Built in:" in the plan]</p>
     <p><span class="k">Done means</span>[only where the plan carries one]</p>
     <p><span class="k">Waiting on</span>[only where the plan names something]</p>
+    <!-- starter-kit: start -->
+    <!-- One kit inside each planned project card, even without a full plan. Omit the entire kit on drafts, unblocking actions, deferred, already-running, and built or retired rows. Keep a blocked planned project's dependencies inactive and name what resolves them. Only the next planned project's kit has open; remove open from every other kit and from all kits when an unblocking action comes first. -->
+    <details class="starter" open>
+      <summary>Set up this project</summary>
+      <p class="k">Project name</p>
+      <p>[the exact project name]</p>
+      <p class="k">Setup steps</p>
+      <ol>
+        <li>[where to create the project and paste instructions, only after its setting is verified; otherwise begin in a build conversation with the instructions as context]</li>
+        <li>[where to paste First prompt; copy only this project's blocks, not the whole strategy]</li>
+      </ol>
+      <p class="k">Project instructions</p>
+      <pre class="paste" tabindex="0">[one complete instructions value including the fixed read-allowlist block and canonical never-list floor in full, applicable member refusals, all stricter restrictions, and unresolved dependencies kept inactive; identical to this project's full-plan instructions]</pre>
+      <p class="k">First prompt</p>
+      <pre class="paste" tabindex="0">[the personalized guided first prompt, with known facts and the first result; ask for this project's instructions and wait if absent, check capabilities before setup, ask only missing details, stop blocked work, and never author or schedule task text]</pre>
+      <p class="k">What you should get</p>
+      <p>[the concrete first result, with the prerequisite named if blocked]</p>
+    </details>
+    <!-- starter-kit: end -->
   </li>
   <!-- the alternate card shape, and the only card that ever takes it: a Step 1 that is a named unblocking action rather than a project. It is not a Claude Project, so it carries neither the project suffix nor any of the lines a project card carries. -->
   <li class="card">
@@ -187,7 +225,7 @@ An Unverified line is a stop, not permission to proceed. Before giving a setup s
   <p>[the connector named for every source that has one, what this project's scheduled work is narrowed to, and any watched routine said plainly to run on no schedule]</p>
   <p class="k">The Claude Project itself</p>
   <p>Instructions to paste in when you create it:</p>
-  <pre class="paste">[the instructions in full, word for word, ready to paste rather than a sketch to improve later]</pre>
+  <pre class="paste">[the same complete instructions as this project’s starter kit, including its canonical never-list floor and member refusals; this region and the fixed read-allowlist region below are consecutive parts of that one value, not a second version]</pre>
   <pre class="paste">
 These are the only things you may read, and the list is complete:
 1. [App] — [the read, in plain words: "find and read messages in the last 7 days"]
