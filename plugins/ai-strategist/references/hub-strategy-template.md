@@ -33,7 +33,7 @@ First names are fine. Where the member chose something from the second list, the
 - **A line under the title names who answered, and which intended members of the hub were not present**, by name.
 - **The three sections that make a plan somebody's own carry their marker in place of an answer** — everything they carry, the walled gardens, and the never list. `Not established — answered on the member's behalf` where nobody the hub is for was in the room; `Not established — [name] was not present`, written per absent person, where some intended members were present and some were not.
 - **The closing line says what would make it a strategy:** each absent member's own sitting, where those three questions are asked of them in their own words. Nothing in the draft is built from until that has happened.
-- **Two regions of the page carry nothing at all.** On a draft, the project-plans and when-things-change page regions are empty; they carry neither None, nor pasteable instructions, nor lifecycle text. A draft with pasteable project instructions is a build kit for a plan nobody has answered for, and a lifecycle section is a schedule for re-checking work that was never agreed to.
+- **Buildable content stays out.** Draft build-order cards have no starter kits. Start here names missing answers rather than setup actions. **Two regions of the page carry nothing at all.** On a draft, the project-plans and when-things-change page regions are empty; they carry neither None, nor pasteable instructions, nor lifecycle text. A draft with pasteable project instructions is a build kit for a plan nobody has answered for, and a lifecycle section is a schedule for re-checking work that was never agreed to.
 
 A draft carrying the strategy title is the failure this variant exists to prevent. Every other page of it looks finished, and the person who builds from it has no way to see which of the answers were nobody's.
 
@@ -44,13 +44,11 @@ A draft carrying the strategy title is the failure this variant exists to preven
 ```text
 # [Member's name]'s AI Hub Strategy
 
-Quick Plan — your areas, the Academy route for each one, a roadmap card for every project you are planning, and a full write-up only for a custom area you chose to build first.
+Quick Plan — an adaptive conversation, your areas and Academy routes, a roadmap and starter kit for every planned project, and a deeper write-up only for a custom area you chose to build first.
 
 [One mode line, here, directly under the title, and never left out: which mode wrote this
 plan is the first thing somebody picking it up needs to know. Where this was the full
-interview, that line reads instead: Full interview — nine questions, capabilities checked
-against current documentation in this session, a roadmap card for every project you are
-planning, and the first three projects written out in full. One of the two lines, never both.]
+interview, that line reads instead: Full interview — deeper exploration and current capability checks, a roadmap and starter kit for every planned project, and the first three projects written out in full. One of the two lines, never both.]
 
 [Where this came out of a proxy or a mixed sitting, this title is instead
 `Draft hub proposal — not ready to build`, followed by the line naming who answered and
@@ -74,6 +72,13 @@ with its label.]
 Written [date].
 
 An Unverified line is a stop, not permission to proceed. Before giving a setup step or creating, connecting, testing, writing, or scheduling anything that depends on it, re-check the exact capability for this account and this source in that build session. If it cannot be confirmed, stop that branch and use only a verified, permitted fallback.
+
+## Start here
+
+[Name the next planned project and direct the member to Set up this project on its card.
+Say the one useful result to expect. Where an unblocking action comes first, name that
+action and the project it unlocks instead. On a draft, name the missing personal answers;
+give no project setup steps or copyable blocks. If no project is planned, name the next decision.]
 
 ## The Map
 
@@ -204,7 +209,7 @@ one, in both modes.** They restate what the map row and *Your Hub Home Base* alr
 for that project, gathered in one place so the member reads a project's whole shape without
 holding three sections in their head at once.
 **A roadmap card is never a full plan and never stands in for one.** A full plan is a
-*Project Plans* card, with the instructions, the knowledge, the skills, and the plugins, and
+*Project Plans* card, which repeats the starter instructions and adds knowledge, skills, plugins, and day-to-day detail, and
 how many get written is the session scope rule in the strategy skill. Any planned or deferred
 row becomes one whenever the member asks for it by name, which the line under the map already
 says.
@@ -268,6 +273,49 @@ What does not change with the order: every project is built with the same limits
 same checks whenever it is built. Nothing skips its privacy gates, its permission limits,
 or its manual test because it moved up the list.
 
+### Set up this project — repeat inside every planned card
+
+[This is an authoring contract, not a separate output section. Render these fields inside
+each planned project's build-order card, after its roadmap and any Done means / Waiting on.
+In both modes, every planned project gets a kit even without a deeper write-up.
+Drafts, unblocking actions, deferred, already-running, and built or retired rows get no kit.
+For a blocked planned project, name the exact condition and keep dependent work inactive.]
+
+**Project name.** [The exact project name, never an abbreviation.]
+
+**Setup steps.** [Use the current target app's verified project instructions setting, if
+available. Create the named project, paste Project instructions in that setting, then paste
+First prompt into its first conversation. Never invent a click path. If project setup is
+unavailable or unverified, use a build conversation: paste the instructions as context for
+the proposed project, then the first prompt. Verify project support before dependent setup.
+Explain that the instructions persist only if saved in a supported project setting.
+Copy only this project's blocks, not the full page of private areas.]
+
+**Project instructions.**
+
+> [One complete copyable value: exact name, purpose, scope, response style, bounded sources,
+> output and private destination, known facts, unresolved dependencies kept inactive,
+> member refusals verbatim, the canonical never-list floor in full, and stricter applicable
+> restrictions. Copy the fixed read-allowlist block from The Claude Project itself below,
+> including its full prose, changing only source placeholders. No approved sources means
+> the list is None — no source access is enabled for this project. All listed member-data reads remain
+> inactive until this account and session re-verify them. Where setup needs public vendor documentation, explicitly list that bounded verification read separately from member-data sources; it is available only in the later build conversation and enables no member-data access. Without it, use visible tool inventory only and stop where a required capability cannot be established. Never depend on another section
+> or the original interview. Assemble once per project; reuse unchanged in its full plan.]
+
+**First prompt.**
+
+> [Personalized opening for this named project: its purpose, known non-sensitive facts,
+> missing decisions and checks, and the one first result. If this conversation cannot see
+> the project instructions, first ask for this project's Project instructions block and
+> wait before setup or source access. Never ask for the full Hub Strategy. With instructions
+> present, re-check required capabilities for this account, explain missing setup for the
+> member to complete personally, and ask only unanswered questions. Keep source and privacy
+> gates closed until resolved. Produce one permitted private result when ready, or state
+> the specific blocker and next action. Never author or schedule a recurring-task prompt.]
+
+**What you should get.** [The concrete first result in the user's words. On a blocked
+project, state which resolution is needed first; do not promise its output before then.]
+
 ## Project Plans
 
 ### [Project name]
@@ -286,9 +334,9 @@ schedule.]
 
 **The Claude Project itself.**
 
-Instructions to paste in when you create it:
+Instructions to paste in when you create it (the same complete value as this project’s starter kit):
 
-> [Written out in full, ready to paste — not a sketch to improve later.
+> [The starter kit’s complete instructions, reproduced unchanged. The instructions and read-allowlist regions here are consecutive parts of that one value; do not add a second allowlist. Include the canonical never-list floor and applicable member refusals here too. Written out in full, ready to paste — not a sketch to improve later.
 > Role, scope, and what this project never does.
 > Then how it should answer YOU: the shape of a reply, the length, what it leads with.
 > Then, WHERE THIS PROJECT DRAFTS ANYTHING IN YOUR NAME, how it should sound when it
@@ -421,7 +469,7 @@ recognizable as their own sentence.]
 
 ## Your Hub Home Base
 
-[Notion unless the member chose otherwise at Q5 — record the choice here in one line, in
+[The home base the member accepted at the closing review. If still undecided, say so and keep its setup and writes conditional; record the open destination decision. Record an accepted choice here in one line, in
 their words. Where it is another tool, keep this section's shape and use that tool's
 nearest equivalent for each block below: its own way of holding records, and its own way
 of showing several projects at once. Where it genuinely has no equivalent, say so in one

@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.8.0
+
+- Quick Plan is now the default adaptive interview: related topics are grouped, answers carry forward, and only missing information that matters is asked. Deeper exploration remains available on request.
+- Every planned project now includes setup steps, complete project instructions, a guided first prompt, and the first result to expect, even without a deeper write-up.
+- Start here names the next project or unblocking action. Starter kits carry existing source, privacy, and capability gates into the build conversation; drafts and non-planned rows receive no build kit.
+- The standalone ChatGPT skill uses the same shorter interview and project handoff.
+
 ## 1.7.1
 
 - ChatGPT skill: the permission line no longer calls Always ask the default; it is the setting to keep (the product default is Allow low-risk actions).
