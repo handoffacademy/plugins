@@ -141,8 +141,11 @@ export function relativeTo(root: string, path: string): string | null {
 const WORKING_DIRS = ['business/', 'how we work/', 'decisions/', 'projects/', 'team/tasks/', 'team/chat/', 'team/memory/']
 // Files an AI tool loads as instructions when it works in their folder
 // (Claude Code loads a subfolder's CLAUDE.md on its own). An employee who
-// wrote one would be giving orders to every later session there.
-const INSTRUCTION_FILES = new Set(['claude.md', 'claude.local.md', 'agents.md', 'agents.override.md', 'gemini.md'])
+// wrote one would be giving orders to every later session there. Names are
+// compared after folding look-alike letters to plain ones: a Mac folder
+// opens "AGENTſ.md" (long s) when a tool asks for AGENTS.md.
+const INSTRUCTION_FILE = /^(claude|agents?|gemini)(\..*)?\.md$/
+const isInstructionFile = (name: string) => INSTRUCTION_FILE.test(name.normalize('NFKC').toLowerCase())
 
 export function isWorkingNote(root: string, path: unknown): boolean {
   if (typeof path !== 'string' || path.length === 0) return false
@@ -150,7 +153,7 @@ export function isWorkingNote(root: string, path: unknown): boolean {
   if (!rel) return false
   const lower = rel.toLowerCase()
   if (!lower.endsWith('.md')) return false
-  if (rel.split('/').some(seg => seg.startsWith('.') || /[\u0000-\u001f]/.test(seg) || INSTRUCTION_FILES.has(seg.toLowerCase()))) return false
+  if (rel.split('/').some(seg => seg.startsWith('.') || /[\u0000-\u001f]/.test(seg) || isInstructionFile(seg))) return false
   return WORKING_DIRS.some(dir => lower.startsWith(dir) && lower.length > dir.length)
 }
 
@@ -285,10 +288,13 @@ export type CardView = {
   problems: string[]
 }
 
-// Characters that change how the rest of the text looks: controls, line and
-// paragraph separators, direction overrides and zero-width marks. With any of
-// them a card could show something other than what would go out.
-const HIDDEN = /[\u0000-\u001f\u007f-\u009f\u061c\u200b-\u200f\u2028-\u202e\u2060-\u2069\ufeff]/
+// Characters a person cannot see or that change how the rest of the text
+// looks: controls, format marks (direction overrides, zero-width marks, soft
+// hyphens, the invisible tag letters), line and paragraph separators,
+// private and unassigned code points, variation selectors (which can carry
+// hidden bytes) and the letters that draw as blank space. With any of them a
+// card could show something other than what would go out.
+const HIDDEN = /[\p{Cc}\p{Cf}\p{Co}\p{Cn}\p{Zl}\p{Zp}\p{Variation_Selector}\u{34f}\u{115f}\u{1160}\u{2800}\u{3164}\u{ffa0}]/u
 const isText = (v: unknown): v is string => typeof v === 'string' && !HIDDEN.test(v)
 // A message body may break lines and indent; nothing else hidden.
 const isBody = (v: unknown): v is string => typeof v === 'string' && !HIDDEN.test(v.replace(/[\n\t]/g, ''))
