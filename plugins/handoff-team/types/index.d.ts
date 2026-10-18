@@ -91,6 +91,7 @@ declare module 'claude-code' {
       backupFlow: BackupFlow
       opened: string
       appsCheck: number
+      update: string[]
     }
   }
 }

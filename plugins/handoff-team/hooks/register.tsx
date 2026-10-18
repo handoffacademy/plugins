@@ -22,7 +22,7 @@ import {
   unplainSettings,
 } from './gate'
 import type { Adapter, McpTarget } from './gate'
-import { CONNECTORS_URL, GH_DOWNLOAD_URL, IGNORABLE, NEW_BRAIN_NOTE, SCHEDULED_URL, SHIFT_PROMPT, filled, onlyMcpChoices, repoName, signInCode } from './setup'
+import { CONNECTORS_URL, GH_DOWNLOAD_URL, IGNORABLE, NEW_BRAIN_NOTE, SCHEDULED_URL, SHIFT_PROMPT, filled, isSystemFile, onlyMcpChoices, repoName, signInCode } from './setup'
 import { BASE, PRACTICE } from './template'
 import { CAPS, STRINGS, activityFor, activityLine, capWords } from './words'
 
@@ -49,6 +49,7 @@ const backupFlowA = atom({ plugin: 'handoff-team', key: 'backupFlow' } as const,
 const openedA = atom({ plugin: 'handoff-team', key: 'opened' } as const, '')
 // Bumped by Check, so the pane looks again for the owner's connected apps.
 const appsCheckA = atom({ plugin: 'handoff-team', key: 'appsCheck' } as const, 0)
+const updateA = atom({ plugin: 'handoff-team', key: 'update' } as const, [] as string[])
 
 const STATUS_COLOR: Record<MemberStatus, string> = {
   working: 'claude',
@@ -532,6 +533,7 @@ const startOffice = async ($: EngineInterface, at: string) => {
     )
   }
   await refreshFiles($).catch(() => undefined)
+  await refreshUpdate($).catch(() => undefined)
   void refreshEnergy($)
   void runBackup($).catch(() => undefined)
 }
@@ -655,6 +657,35 @@ const makeCopy = async ($: EngineInterface) => {
   await runBackup($)
   const saved = (await read($, backupA)).state === 'saved'
   await update($, backupFlowA, (): BackupFlow => ({ stage: saved ? 'done' : 'failed', code: '' }))
+}
+
+// A brain keeps the files it was made with. When the add-on carries newer
+// safety rules or trainings, Team View offers them; nothing changes until the
+// owner taps Update.
+const outdatedFiles = async ($: EngineInterface, at: string): Promise<string[]> => {
+  const out: string[] = []
+  for (const [rel, text] of Object.entries(BASE)) {
+    if (!isSystemFile(rel)) continue
+    const have = await $.fs.read(join(at, rel)).catch(() => null)
+    if (have !== text) out.push(rel)
+  }
+  return out
+}
+
+const refreshUpdate = async ($: EngineInterface) => {
+  if (!root || brain?.unhealthy) return
+  const files = await outdatedFiles($, root)
+  await update($, updateA, () => files)
+}
+
+const applyUpdate = async ($: EngineInterface) => {
+  if (!root) return
+  for (const rel of await outdatedFiles($, root)) {
+    const text = BASE[rel]
+    if (text !== undefined) await $.fs.write(join(root, rel), text)
+  }
+  await refreshUpdate($)
+  await runBackup($)
 }
 
 // The shift runs in Anthropic's cloud on the cloud copy. Its steps go on the
@@ -1026,6 +1057,7 @@ export const register: Register = on => {
     const found = detectServices(toolNames)
     const doubled = doubledServices(toolNames)
     const roster = showAll ? info.employees : info.employees.slice(0, 4)
+    const pending = await read($, updateA)
 
     const setupScreen = !info.setupDone && STRINGS.setup[step]
     if (setupScreen) {
@@ -1270,6 +1302,14 @@ export const register: Register = on => {
         </Box>
 
         {info.unhealthy && <Text color="warning">{STRINGS.line.unhealthy}</Text>}
+
+        {pending.length > 0 && (
+          <Box key="update" flexDirection="column" borderStyle="round" borderColor="claude" paddingX={1}>
+            <Text bold>{STRINGS.update.title}</Text>
+            <Text>{STRINGS.update.body}</Text>
+            <Button key="update-brain" label={STRINGS.update.button} variant="primary" onPress={() => applyUpdate($)} />
+          </Box>
+        )}
 
         {!info.unhealthy && Object.keys(info.connections).length === 0 && (
           <Box key="apps" flexDirection="column" borderStyle="round" borderColor="warning" paddingX={1}>

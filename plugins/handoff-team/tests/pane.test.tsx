@@ -304,6 +304,22 @@ describe('Team View draws on the desktop and the terminal', () => {
     await ui.unmount()
   })
 
+  test('a safety update rewrites only the files the add-on owns', async ($, on) => {
+    const files = brainFiles(true)
+    files[`${ROOT}/.handoff/guard.py`] = '# an older guard\n'
+    files[`${ROOT}/Team/Chief.md`] = '# Chief\n\nMy own words.\n'
+    fakeWorld(on, files)
+    await $.session.start({ cwd: ROOT, surface: 'desktop', isInteractive: true })
+    const ui = await mountPane($)
+    expect(await ui.find({ type: 'Text', text: 'Safety update' })).toBeDefined()
+    await ui.press({ key: 'update-brain' })
+    expect(files[`${ROOT}/.handoff/guard.py`]?.includes('def decide')).toBe(true)
+    expect(files[`${ROOT}/.claude/skills/morning-shift/SKILL.md`]?.includes('push.followTags')).toBe(true)
+    expect(files[`${ROOT}/Team/Chief.md`]).toBe('# Chief\n\nMy own words.\n')
+    expect(await ui.find({ type: 'Text', text: 'Safety update' })).toBeUndefined()
+    await ui.unmount()
+  })
+
   test('setup picks up where the owner left off in the next session', async ($, on) => {
     const store: Record<string, unknown> = {}
     fakeWorld(on, brainFiles(false, true, {}), store)

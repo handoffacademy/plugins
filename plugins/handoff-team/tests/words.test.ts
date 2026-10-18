@@ -12,7 +12,7 @@ function everyString(): Capped[] {
   for (const text of Object.values(STRINGS.toast)) out.push({ text, cap: 'toast' })
   for (const text of Object.values(STRINGS.line)) out.push({ text, cap: 'chat' })
   for (const text of Object.values(STRINGS.ask)) out.push({ text, cap: 'chat' })
-  const screens = [...STRINGS.setup, ...Object.values(STRINGS.after), ...Object.values(STRINGS.backup)]
+  const screens = [...STRINGS.setup, ...Object.values(STRINGS.after), ...Object.values(STRINGS.backup), STRINGS.update]
   for (const screen of screens) {
     out.push({ text: screen.title, cap: 'cardTitle' })
     out.push({ text: screen.body, cap: 'setup' })

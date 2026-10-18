@@ -17,6 +17,13 @@ export const NEW_BRAIN_NOTE =
   'Before anything else, read CLAUDE.md in this folder and follow it. Trainings are in ' +
   '.claude/skills/<name>/SKILL.md: when one is not in your skill list, read that file and follow it.'
 
+// Files the add-on owns in every brain: the guard, the brain's settings and
+// rules, the job cards and the built-in trainings. A safety update rewrites
+// these; job pages, notes and anything the owner made stay as they are.
+const SYSTEM_FILE =
+  /^(\.handoff\/guard\.py|\.claude\/settings\.json|\.gitignore|CLAUDE\.md|AGENTS\.md|\.claude\/agents\/[^/]+\.md|\.claude\/skills\/[^/]+\/SKILL\.md|Trainings\/[^/]+\/SKILL\.md)$/
+export const isSystemFile = (rel: string): boolean => SYSTEM_FILE.test(rel)
+
 // What a new folder may hold and still count as empty.
 export const IGNORABLE = new Set(['.DS_Store', '.localized'])
 

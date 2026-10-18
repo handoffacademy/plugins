@@ -180,6 +180,8 @@ export const STRINGS = {
     appsReady: { title: 'Email and calendar', body: 'Your team can read them and write drafts. You send everything yourself.', button: 'Next' },
     shift: { title: 'Paste the steps', body: 'Make a new task on the page that opened, paste the steps, and pick your cloud copy.', button: 'Done' },
   },
+  // Newer safety rules and trainings than the brain has.
+  update: { title: 'Safety update', body: 'Newer rules and trainings for your team. Your notes and job pages stay as they are.', button: 'Update' },
   // An empty folder: the first screen a new member sees.
   start: {
     title: 'Make your brain',
