@@ -20,6 +20,24 @@ export const NEW_BRAIN_NOTE =
 // What a new folder may hold and still count as empty.
 export const IGNORABLE = new Set(['.DS_Store', '.localized'])
 
+// Claude writes .claude/settings.local.json when the owner answers a new
+// folder's question about MCP servers. A file holding only those answers still
+// counts as "nothing here yet"; any other setting does not.
+export function onlyMcpChoices(text: string): boolean {
+  try {
+    const value = JSON.parse(text) as unknown
+    if (!value || typeof value !== 'object' || Array.isArray(value)) return false
+    return Object.entries(value).every(
+      ([key, list]) =>
+        (key === 'disabledMcpjsonServers' || key === 'enabledMcpjsonServers') &&
+        Array.isArray(list) &&
+        list.every(item => typeof item === 'string'),
+    )
+  } catch {
+    return false
+  }
+}
+
 // The cloud copy's name: the folder's name in plain lowercase words.
 export function repoName(folder: string): string {
   const base = folder.split('/').filter(Boolean).pop() ?? ''

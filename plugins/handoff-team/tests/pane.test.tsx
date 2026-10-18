@@ -230,6 +230,14 @@ describe('Team View draws on the desktop and the terminal', () => {
     await ui.unmount()
   })
 
+  test('local settings beyond the MCP answers mean the folder is not new', async ($, on) => {
+    fakeWorld(on, { '/new/.claude/settings.local.json': '{"permissions":{"allow":["Bash"]}}' }, {}, '/new')
+    await $.session.start({ cwd: '/new', surface: 'desktop', isInteractive: true })
+    const ui = await mountPane($)
+    expect(await ui.find({ key: 'make-brain' })).toBeUndefined()
+    await ui.unmount()
+  })
+
   test('a folder with project settings of its own is not offered a brain', async ($, on) => {
     fakeWorld(on, { '/code/.claude/settings.json': '{}' }, {}, '/code')
     await $.session.start({ cwd: '/code', surface: 'desktop', isInteractive: true })

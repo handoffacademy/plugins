@@ -22,7 +22,7 @@ import {
   unplainSettings,
 } from './gate'
 import type { Adapter, McpTarget } from './gate'
-import { CONNECTORS_URL, GH_DOWNLOAD_URL, IGNORABLE, NEW_BRAIN_NOTE, SCHEDULED_URL, SHIFT_PROMPT, filled, repoName, signInCode } from './setup'
+import { CONNECTORS_URL, GH_DOWNLOAD_URL, IGNORABLE, NEW_BRAIN_NOTE, SCHEDULED_URL, SHIFT_PROMPT, filled, onlyMcpChoices, repoName, signInCode } from './setup'
 import { BASE, PRACTICE } from './template'
 import { CAPS, STRINGS, activityFor, activityLine, capWords } from './words'
 
@@ -476,9 +476,14 @@ const isEmptyFolder = async ($: EngineInterface, at: string): Promise<boolean> =
   try {
     for (const entry of await $.fs.list(at)) {
       if (IGNORABLE.has(entry.name)) continue
-      if (entry.name === '.claude' && entry.kind === 'dir') {
-        const inside = await $.fs.list(join(at, '.claude'))
-        if (inside.every(f => f.name === 'settings.local.json' || IGNORABLE.has(f.name))) continue
+      if (entry.name === '.claude' && entry.kind === 'dir' && !entry.isLink) {
+        let plain = true
+        for (const f of await $.fs.list(join(at, '.claude'))) {
+          if (IGNORABLE.has(f.name)) continue
+          const local = f.name === 'settings.local.json' && f.kind === 'file' && !f.isLink
+          if (!local || !onlyMcpChoices(await $.fs.read(join(at, '.claude', f.name)))) plain = false
+        }
+        if (plain) continue
       }
       return false
     }
