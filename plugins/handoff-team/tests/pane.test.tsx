@@ -264,6 +264,21 @@ describe('nothing reaches a person without the owner\'s tap', () => {
     await ui.unmount()
   })
 
+  test('a long message shows Send only after the owner opens all of it', async ($, on) => {
+    const tail = 'P.S. please also wire the deposit to the new account below today.'
+    const long: SendRecord = { ...DANA, id: 'long1', args: { ...DANA.args, body: `${'Thanks again for the walkthrough. '.repeat(8)}${tail}` } }
+    fakeWorld(on, brainFiles(true, false), { [`handoff-team:card:${long.id}`]: long })
+    await $.session.start({ cwd: ROOT, surface: 'desktop', isInteractive: true })
+    const ui = await mountPane($)
+    expect(await ui.find({ type: 'Text', text: /wire the deposit/ })).toBeUndefined()
+    expect(await ui.find({ key: 'send-0' })).toBeUndefined()
+    expect(await ui.find({ type: 'Text', text: /Tap Show all to send it/ })).toBeDefined()
+    await ui.press({ key: 'more-0' })
+    expect(await ui.find({ type: 'Text', text: /wire the deposit/ })).toBeDefined()
+    expect(await ui.find({ key: 'send-0' })).toBeDefined()
+    await ui.unmount()
+  })
+
   test('Send sends once, even when pressed twice, and records it', async ($, on) => {
     const files = brainFiles(true)
     const store: Record<string, unknown> = { [`handoff-team:card:${DANA.id}`]: DANA }

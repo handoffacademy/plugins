@@ -139,6 +139,10 @@ export function relativeTo(root: string, path: string): string | null {
 // Working notes: Markdown files inside these folders, matched without regard
 // to letter case (a Mac folder answers to any case), with no hidden folder.
 const WORKING_DIRS = ['business/', 'how we work/', 'decisions/', 'projects/', 'team/tasks/', 'team/chat/', 'team/memory/']
+// Files an AI tool loads as instructions when it works in their folder
+// (Claude Code loads a subfolder's CLAUDE.md on its own). An employee who
+// wrote one would be giving orders to every later session there.
+const INSTRUCTION_FILES = new Set(['claude.md', 'claude.local.md', 'agents.md', 'agents.override.md', 'gemini.md'])
 
 export function isWorkingNote(root: string, path: unknown): boolean {
   if (typeof path !== 'string' || path.length === 0) return false
@@ -146,7 +150,7 @@ export function isWorkingNote(root: string, path: unknown): boolean {
   if (!rel) return false
   const lower = rel.toLowerCase()
   if (!lower.endsWith('.md')) return false
-  if (rel.split('/').some(seg => seg.startsWith('.') || /[\u0000-\u001f]/.test(seg))) return false
+  if (rel.split('/').some(seg => seg.startsWith('.') || /[\u0000-\u001f]/.test(seg) || INSTRUCTION_FILES.has(seg.toLowerCase()))) return false
   return WORKING_DIRS.some(dir => lower.startsWith(dir) && lower.length > dir.length)
 }
 
@@ -281,7 +285,13 @@ export type CardView = {
   problems: string[]
 }
 
-const isText = (v: unknown): v is string => typeof v === 'string' && !/[\r\n\u0000]/.test(v)
+// Characters that change how the rest of the text looks: controls, line and
+// paragraph separators, direction overrides and zero-width marks. With any of
+// them a card could show something other than what would go out.
+const HIDDEN = /[\u0000-\u001f\u007f-\u009f\u061c\u200b-\u200f\u2028-\u202e\u2060-\u2069\ufeff]/
+const isText = (v: unknown): v is string => typeof v === 'string' && !HIDDEN.test(v)
+// A message body may break lines and indent; nothing else hidden.
+const isBody = (v: unknown): v is string => typeof v === 'string' && !HIDDEN.test(v.replace(/[\n\t]/g, ''))
 const isTextList = (v: unknown): v is string[] => Array.isArray(v) && v.every(isText)
 
 function emailView(args: Record<string, unknown>): CardView {
@@ -296,7 +306,7 @@ function emailView(args: Record<string, unknown>): CardView {
     else if ((args[k] as string[]).length > 0) recipients.push({ label: k, value: (args[k] as string[]).join(', ') })
   }
   if (args.subject !== undefined && !isText(args.subject)) problems.push('subject')
-  if (args.body !== undefined && typeof args.body !== 'string') problems.push('body')
+  if (args.body !== undefined && !isBody(args.body)) problems.push('body')
   const details: CardLine[] = []
   if (args.includeSignature !== undefined) {
     if (typeof args.includeSignature !== 'boolean') problems.push('includeSignature')
@@ -345,7 +355,7 @@ function eventView(args: Record<string, unknown>): CardView {
   for (const k of ['summary', 'startTime', 'endTime'] as const) if (!isText(args[k])) problems.push(k)
   // Single-line fields shown on one line; a line break would hide the rest.
   for (const k of ['location', 'timeZone', 'calendarId'] as const) if (args[k] !== undefined && !isText(args[k])) problems.push(k)
-  if (args.description !== undefined && typeof args.description !== 'string') problems.push('description')
+  if (args.description !== undefined && !isBody(args.description)) problems.push('description')
   for (const k of ['allDay', 'addGoogleMeetUrl'] as const)
     if (args[k] !== undefined && typeof args[k] !== 'boolean') problems.push(k)
   const details: CardLine[] = [{ label: 'Starts', value: isText(args.startTime) ? args.startTime : '' }, { label: 'Ends', value: isText(args.endTime) ? args.endTime : '' }]

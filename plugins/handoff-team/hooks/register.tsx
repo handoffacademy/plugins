@@ -863,6 +863,8 @@ export const register: Register = on => {
       if (!view) return null
       const isOpen = expanded === card.id
       const short = capWords(view.body, CAPS.cardBody)
+      // Send appears only once the owner can see every word that would go out.
+      const allShown = isOpen || view.body === short
       return (
         <Box key={`card-${i}`} flexDirection="column" borderStyle="round" borderColor="warning" paddingX={1}>
           <Text bold>{cardTitle(card)}</Text>
@@ -889,6 +891,7 @@ export const register: Register = on => {
           )}
           <Text dimColor>Goes to: {view.goesTo}</Text>
           {!view.canSend && <Text color="warning">{STRINGS.line.cantShow}</Text>}
+          {view.canSend && card.status === 'waiting' && !allShown && <Text dimColor>{STRINGS.line.readAll}</Text>}
           {card.status === 'unknown' && <Text color="inactive">{STRINGS.toast.unsure}</Text>}
           <Box gap={1}>
             {card.status === 'unknown' ? (
@@ -898,7 +901,8 @@ export const register: Register = on => {
               </>
             ) : (
               view.canSend &&
-              card.status === 'waiting' && (
+              card.status === 'waiting' &&
+              allShown && (
                 <Button
                   key={`send-${i}`}
                   label={sending === card.id ? STRINGS.button.sending : STRINGS.button.send}

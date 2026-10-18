@@ -147,6 +147,7 @@ export const STRINGS = {
     heldOther: 'Held. Ask your Chief to make a card.',
     heldNoCard: 'Held. Team View could not save the card.',
     cantShow: 'Team View cannot show all of this. Send it yourself.',
+    readAll: 'Tap Show all to send it.',
     nameTaken: 'That name is already on the team.',
     appsFound: 'Your team can use these connected apps:',
     noApps: 'No connected apps found yet. Connect Gmail or Calendar in Claude first.',

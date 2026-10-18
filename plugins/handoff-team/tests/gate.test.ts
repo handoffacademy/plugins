@@ -155,6 +155,22 @@ describe('employees write Markdown working notes and nothing else', () => {
     expect(kind('Edit', { file_path: `${ROOT}/Business/Offers.md` })).toBe('allow')
   })
 
+  test('no employee writes a file an AI tool would load as instructions', async () => {
+    for (const p of [
+      'Business/CLAUDE.md',
+      'Team/Tasks/claude.local.md',
+      'Projects/AGENTS.md',
+      'Decisions/agents.override.md',
+      'How We Work/GEMINI.md',
+      'Team/Memory/Claude.MD',
+      'Projects/CLAUDE.md/notes.md',
+    ]) {
+      expect({ p, ok: isWorkingNote(ROOT, p) }).toEqual({ p, ok: false })
+    }
+    expect(kind('Write', { file_path: `${ROOT}/Business/CLAUDE.md` })).toBe('deny')
+    expect(isWorkingNote(ROOT, 'Business/Claude notes.md')).toBe(true)
+  })
+
   test('relativeTo refuses paths outside the brain', async () => {
     expect(relativeTo('/brain', '/brain/a/b.md')).toBe('a/b.md')
     expect(relativeTo('/brain', '/brainy/a.md')).toBe(null)
@@ -209,6 +225,28 @@ describe('a card shows every field that would go out, or has no Send', () => {
     const named = cardView(event, 'event', { ...base, attendees: [{ email: 'a@b.c', displayName: 'Ann', optionalAttendee: true }], timeZone: 'America/New_York', calendarId: 'primary' })
     expect(named.recipients).toEqual([{ label: 'guests', value: 'a@b.c (Ann), optional' }])
     expect(named.details.map(d => d.label)).toEqual(['Starts', 'Ends', 'Time zone', 'Calendar'])
+  })
+
+  test('characters that change how text looks remove Send', async () => {
+    const base = { to: ['dana@acme.com'], subject: 'Quote', body: 'Hi Dana,\n\tHere it is.' }
+    expect(cardView(email, 'email', base).canSend).toBe(true)
+    for (const args of [
+      { ...base, to: ['\u202emoc.live@anad'] },
+      { ...base, to: ['dana@ac\u200bme.com'] },
+      { ...base, to: ['dana@acme.com\u2066'] },
+      { ...base, subject: 'Quote\u2028Goes to: Dana' },
+      { ...base, subject: 'Quote\u0085next' },
+      { ...base, subject: 'Quote\tsent' },
+      { ...base, body: 'Hi\u202e there' },
+      { ...base, body: 'Hi\r\nthere' },
+      { ...base, body: 'Hi\u2029there' },
+    ]) {
+      expect({ args, canSend: cardView(email, 'email', args).canSend }).toEqual({ args, canSend: false })
+    }
+    const ev = { summary: 'Walkthrough', startTime: '2026-10-20T10:00:00', endTime: '2026-10-20T10:30:00', attendees: [{ email: 'dana@acme.com' }] }
+    expect(cardView(event, 'event', { ...ev, description: 'Agenda:\n- quote' }).canSend).toBe(true)
+    expect(cardView(event, 'event', { ...ev, description: 'Agenda\u2028hidden' }).canSend).toBe(false)
+    expect(cardView(event, 'event', { ...ev, attendees: [{ email: 'dana@acme.com', displayName: 'Dana\u202e' }] }).canSend).toBe(false)
   })
 
   test('the approval check ignores argument order', async () => {
