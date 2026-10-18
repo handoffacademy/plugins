@@ -1,0 +1,4 @@
+interface:
+  display_name: "Handoff AI Team"
+  short_description: "Set up your AI team and its second brain"
+  default_prompt: "Use $handoff-team to set up my AI team."
