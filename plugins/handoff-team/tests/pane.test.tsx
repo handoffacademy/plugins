@@ -320,6 +320,21 @@ describe('Team View draws on the desktop and the terminal', () => {
     await ui.unmount()
   })
 
+  test('a safety update never writes through a link', async ($, on) => {
+    const files = brainFiles(true)
+    files['/outside/profile.md'] = 'mine'
+    const links = { [`${ROOT}/Trainings/catch-me-up/SKILL.md`]: '/outside/profile.md', [`${ROOT}/.claude/agents`]: '/outside' }
+    fakeWorld(on, files, {}, ROOT, links)
+    await $.session.start({ cwd: ROOT, surface: 'desktop', isInteractive: true })
+    const ui = await mountPane($)
+    await ui.press({ key: 'update-brain' })
+    expect(files['/outside/profile.md']).toBe('mine')
+    expect(files[`${ROOT}/Trainings/catch-me-up/SKILL.md`]).toBeUndefined()
+    expect(files[`${ROOT}/.claude/agents/follow-up.md`]).toBeUndefined()
+    expect(files[`${ROOT}/.handoff/guard.py`]?.includes('def decide')).toBe(true)
+    await ui.unmount()
+  })
+
   test('setup picks up where the owner left off in the next session', async ($, on) => {
     const store: Record<string, unknown> = {}
     fakeWorld(on, brainFiles(false, true, {}), store)

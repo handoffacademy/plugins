@@ -678,11 +678,26 @@ const refreshUpdate = async ($: EngineInterface) => {
   await update($, updateA, () => files)
 }
 
+// Where an update may write: the path itself inside the brain's real folder,
+// with no link anywhere on the way (the nearest part that exists resolves to
+// exactly where it sits).
+const plainInsideBrain = async ($: EngineInterface, realRoot: string, rel: string): Promise<boolean> => {
+  const parts = rel.split('/')
+  for (let i = parts.length; i >= 1; i--) {
+    const sub = parts.slice(0, i).join('/')
+    const found = await $.fs.stat(join(root, sub), { resolve: true }).catch(() => undefined)
+    if (found) return !found.isLink && found.realPath === join(realRoot, sub)
+  }
+  return true
+}
+
 const applyUpdate = async ($: EngineInterface) => {
-  if (!root) return
+  if (!root || brain?.unhealthy) return
+  const realRoot = (await $.fs.stat(root, { resolve: true }).catch(() => undefined))?.realPath
+  if (!realRoot) return
   for (const rel of await outdatedFiles($, root)) {
     const text = BASE[rel]
-    if (text !== undefined) await $.fs.write(join(root, rel), text)
+    if (text !== undefined && (await plainInsideBrain($, realRoot, rel))) await $.fs.write(join(root, rel), text)
   }
   await refreshUpdate($)
   await runBackup($)
