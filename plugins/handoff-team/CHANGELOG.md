@@ -9,6 +9,8 @@ Ready for new members from an empty folder (not yet released):
 - **Safety update**: newer guard, rules, job cards and built-in trainings for existing brains, on the owner's tap, never through a link.
 - Template fixes: drafts state only facts written in the brain, no made-up clock times, the brief is updated at the end, a practice brain never opens the real inbox, plain cloud save commands, and backup keeps only the brain's own `.claude` files.
 - Gate: instruction files (CLAUDE.md, AGENTS.md, GEMINI.md and variants, look-alike letters folded), invisible characters in note names and on cards, and plain reasons for apps not yet OKed.
+- While Team View offers to make a brain, only reading goes on in that folder until the owner taps (Codex round 11).
+- Drafts only is read fresh from the brain when a message is held and right before a send; with it off, earlier Send cards show no Send (Codex round 11).
 
 ## 1.0.0
 

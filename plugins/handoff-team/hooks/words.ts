@@ -149,6 +149,8 @@ export const STRINGS = {
     heldNoCard: 'Held. Team View could not save the card.',
     heldDraft: 'Held. Save it as a draft; the owner sends it.',
     heldApp: 'Held. The owner OKs this app in Team View first.',
+    heldSetup: 'Held. The owner makes the brain in Team View first.',
+    sendOff: 'Sending from Team View is off. Send it from Gmail.',
     cantShow: 'Team View cannot show all of this. Send it yourself.',
     readAll: 'Tap Show all to send it.',
     nameTaken: 'That name is already on the team.',

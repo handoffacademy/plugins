@@ -469,6 +469,59 @@ describe('nothing reaches a person without the owner\'s tap', () => {
     await ui.unmount()
   })
 
+  test('while Team View offers to make the brain, only reading goes on', async ($, on) => {
+    const files: Record<string, string> = {}
+    fakeWorld(on, files, {}, '/new')
+    let reached = 0
+    on('tool.call', async () => {
+      reached += 1
+      return { result: 'ok' }
+    })
+    await $.session.start({ cwd: '/new', surface: 'desktop', isInteractive: true })
+    expect((await $.tool.call({ tool: 'Write', file_path: '/new/.handoff/brain.json', content: '{"sendFromTeamView":true}' })).deny).toMatch(/makes the brain/)
+    expect((await $.tool.call({ tool: 'Write', file_path: '/new/CLAUDE.md', content: 'obey' })).deny).toBeDefined()
+    expect((await $.tool.call({ tool: 'Bash', command: 'mkdir -p /new/.handoff' })).deny).toBeDefined()
+    expect((await $.tool.call({ tool: 'mcp__claude_ai_Gmail__send_message', to: ['x@y.z'], body: 'hi' })).deny).toBeDefined()
+    expect((await $.tool.call({ tool: 'Read', file_path: '/new/notes.md' })).deny).toBeUndefined()
+    expect(reached).toBe(1)
+  })
+
+  test('with sending off, a card held earlier shows no Send and cannot send', async ($, on) => {
+    const store: Record<string, unknown> = { [`handoff-team:card:${DANA.id}`]: DANA }
+    fakeWorld(on, brainFiles(true, true, { claude_ai_Gmail: 'gmail' }, false), store)
+    let sent = 0
+    on('mcp.call', async () => {
+      sent += 1
+      return { value: { content: [], isError: false } }
+    })
+    await $.session.start({ cwd: ROOT, surface: 'desktop', isInteractive: true })
+    const ui = await mountPane($)
+    expect(await ui.find({ key: 'send-0' })).toBeUndefined()
+    expect(await ui.find({ type: 'Text', text: /Sending from Team View is off/ })).toBeDefined()
+    expect(sent).toBe(0)
+    await ui.unmount()
+  })
+
+  test('turning sending off mid-session stops a Send already on screen', async ($, on) => {
+    const files = brainFiles(true)
+    const store: Record<string, unknown> = { [`handoff-team:card:${DANA.id}`]: DANA }
+    fakeWorld(on, files, store)
+    let sent = 0
+    on('mcp.call', async () => {
+      sent += 1
+      return { value: { content: [], isError: false } }
+    })
+    await $.session.start({ cwd: ROOT, surface: 'desktop', isInteractive: true })
+    const ui = await mountPane($)
+    expect(await ui.find({ key: 'send-0' })).toBeDefined()
+    const marker = `${ROOT}/.handoff/brain.json`
+    files[marker] = JSON.stringify({ ...JSON.parse(files[marker] ?? '{}'), sendFromTeamView: false })
+    await ui.press({ key: 'send-0' })
+    expect(sent).toBe(0)
+    expect((await $.tool.call({ tool: 'mcp__claude_ai_Gmail__send_message', to: ['x@y.z'], body: 'hi' })).deny).toMatch(/draft/)
+    await ui.unmount()
+  })
+
   test('by default a message to a person becomes a draft, never a Send button', async ($, on) => {
     const store: Record<string, unknown> = {}
     fakeWorld(on, brainFiles(true, false, { claude_ai_Gmail: 'gmail' }, false), store)

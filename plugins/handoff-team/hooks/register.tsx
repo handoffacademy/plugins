@@ -174,6 +174,9 @@ const READ_ONLY = ['Read', 'Glob', 'Grep', 'LS', 'NotebookRead', 'TodoWrite']
 // Set when this session turned an empty folder into a brain: the brain's own
 // instructions were not loaded at the start, so the Chief is told to read them.
 let madeHere = false
+// The empty folder Team View is offering to make a brain in. Until the owner
+// taps, only reading goes on there, so nothing can make the brain for them.
+let offeredFolder = ''
 let making = false
 let timersOn = false
 let commandReady = false
@@ -374,6 +377,11 @@ const addFeed = async ($: EngineInterface, text: string) => {
 
 const refreshFiles = async ($: EngineInterface) => {
   if (!root) return
+  const fresh = await readBrain($, root)
+  if (fresh && brain && !brain.unhealthy) {
+    brain = { ...fresh, setupDone: fresh.setupDone || brain.setupDone }
+    await update($, brainA, () => brain)
+  }
   const nowMs = await $.clock.now()
   const sends: Card[] = []
   for (const r of await readSendRecords($)) {
@@ -468,6 +476,10 @@ const takeLock = async ($: EngineInterface, name: string): Promise<boolean> => {
 const approvedNow = async ($: EngineInterface): Promise<Record<string, Service>> =>
   (await readBrain($, root))?.connections ?? {}
 
+// Whether the owner has turned on sending from Team View, as the brain says
+// now; unreadable settings mean off.
+const sendingOn = async ($: EngineInterface): Promise<boolean> => (await readBrain($, root))?.sendFromTeamView === true
+
 // Starting from scratch. A new member opens their office in an empty folder;
 // Team View offers to make the brain there from the template it carries.
 
@@ -506,6 +518,7 @@ const openPane = async ($: EngineInterface) => {
 // Everything Team View does once it knows where the brain is.
 const startOffice = async ($: EngineInterface, at: string) => {
   root = at
+  offeredFolder = ''
   brain = (await readBrain($, root)) ?? UNHEALTHY
   await update($, brainA, () => brain)
   await update($, rootA, () => root)
@@ -730,6 +743,8 @@ const approveSend = async ($: EngineInterface, card: Card) => {
     if (!connectionStillApproved(record, await approvedNow($))) return
     const view = cardView({ server: record.server, tool: record.tool }, record.adapter, record.args)
     if (!view.canSend) return
+    // Sending must still be on when the owner taps, as the brain says now.
+    if (!(await sendingOn($))) return
     if (!(await takeLock($, lockName(record.id, record.attempt)))) return
     await $.store.set(key, { ...record, status: 'sending', claimedAt: await $.clock.now() })
     const stamp = new Date(await $.clock.now()).toISOString()
@@ -878,6 +893,7 @@ export const register: Register = on => {
     }
     // An empty folder is where a new member starts: offer to make the brain.
     if (await isEmptyFolder($, cwd)) {
+      offeredFolder = cwd
       await update($, newFolderA, () => cwd)
       await openPane($)
     }
@@ -902,7 +918,10 @@ export const register: Register = on => {
   // brain folder an employee may read, write working notes, write drafts and
   // hand work on. A known message to a person becomes a card; all else is held.
   on('tool.call', async ($, e, next) => {
-    if (!root) return initFailed && !READ_ONLY.includes(e.tool) ? { deny: STRINGS.line.heldNoCard } : next(e)
+    if (!root) {
+      if (offeredFolder) return READ_ONLY.includes(e.tool) ? next(e) : { deny: STRINGS.line.heldSetup }
+      return initFailed && !READ_ONLY.includes(e.tool) ? { deny: STRINGS.line.heldNoCard } : next(e)
+    }
     const who = e.agentId ? (agentToName.get(e.agentId) ?? 'A helper') : chiefName()
     if (e.tool_use_id) toolToName.set(e.tool_use_id, who)
     if (!e.agentId) teamWorked = true
@@ -913,7 +932,7 @@ export const register: Register = on => {
     if (verdict.kind === 'deny') return { deny: DENY_TEXT[verdict.reason] }
     // Unless the owner turned on sending from Team View, a message to a person
     // is never held for a Send button: it becomes a draft the owner sends.
-    if (verdict.kind === 'card' && !brain?.sendFromTeamView) return { deny: STRINGS.line.heldDraft }
+    if (verdict.kind === 'card' && !(await sendingOn($))) return { deny: STRINGS.line.heldDraft }
     if (verdict.kind === 'allow') {
       const path = input.file_path ?? input.notebook_path
       if (isWriteTool(e.tool) && typeof path === 'string') {
@@ -1242,7 +1261,8 @@ export const register: Register = on => {
           )}
           <Text dimColor>Goes to: {view.goesTo}</Text>
           {!view.canSend && <Text color="warning">{STRINGS.line.cantShow}</Text>}
-          {view.canSend && card.status === 'waiting' && !allShown && <Text dimColor>{STRINGS.line.readAll}</Text>}
+          {view.canSend && info.sendFromTeamView === true && card.status === 'waiting' && !allShown && <Text dimColor>{STRINGS.line.readAll}</Text>}
+          {info.sendFromTeamView !== true && card.status === 'waiting' && <Text dimColor>{STRINGS.line.sendOff}</Text>}
           {card.status === 'unknown' && <Text color="inactive">{STRINGS.toast.unsure}</Text>}
           <Box gap={1}>
             {card.status === 'unknown' ? (
@@ -1252,6 +1272,7 @@ export const register: Register = on => {
               </>
             ) : (
               view.canSend &&
+              info.sendFromTeamView === true &&
               card.status === 'waiting' &&
               allShown && (
                 <Button
