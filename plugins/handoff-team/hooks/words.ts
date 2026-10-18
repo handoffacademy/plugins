@@ -148,6 +148,7 @@ export const STRINGS = {
     heldOther: 'Held. Ask your Chief to make a card.',
     heldNoCard: 'Held. Team View could not save the card.',
     heldDraft: 'Held. Save it as a draft; the owner sends it.',
+    heldApp: 'Held. The owner OKs this app in Team View first.',
     cantShow: 'Team View cannot show all of this. Send it yourself.',
     readAll: 'Tap Show all to send it.',
     nameTaken: 'That name is already on the team.',
@@ -174,7 +175,9 @@ export const STRINGS = {
   ],
   // What a step shows once its button has done its part.
   after: {
-    apps: { title: 'Connect email and calendar', body: 'Connected both? Your team asks before using them. Come back here when you are done.', button: 'Done' },
+    apps: { title: 'Connect email and calendar', body: 'Connected them on the page that opened? Press Check to see them here.', button: 'Check' },
+    appsFound: { title: 'Your connected apps', body: 'Your team may read these and write drafts. Nothing goes out without you.', button: 'Use these' },
+    appsReady: { title: 'Email and calendar', body: 'Your team can read them and write drafts. You send everything yourself.', button: 'Next' },
     shift: { title: 'Paste the steps', body: 'Make a new task on the page that opened, paste the steps, and pick your cloud copy.', button: 'Done' },
   },
   // An empty folder: the first screen a new member sees.

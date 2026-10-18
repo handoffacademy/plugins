@@ -90,6 +90,7 @@ declare module 'claude-code' {
       newFolder: string
       backupFlow: BackupFlow
       opened: string
+      appsCheck: number
     }
   }
 }

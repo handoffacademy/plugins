@@ -47,6 +47,8 @@ const expandedA = atom({ plugin: 'handoff-team', key: 'expanded' } as const, '')
 const newFolderA = atom({ plugin: 'handoff-team', key: 'newFolder' } as const, '')
 const backupFlowA = atom({ plugin: 'handoff-team', key: 'backupFlow' } as const, { stage: 'checking', code: '' } as BackupFlow)
 const openedA = atom({ plugin: 'handoff-team', key: 'opened' } as const, '')
+// Bumped by Check, so the pane looks again for the owner's connected apps.
+const appsCheckA = atom({ plugin: 'handoff-team', key: 'appsCheck' } as const, 0)
 
 const STATUS_COLOR: Record<MemberStatus, string> = {
   working: 'claude',
@@ -63,6 +65,7 @@ const DENY_TEXT = {
   shell: STRINGS.line.heldShell,
   web: STRINGS.line.heldWeb,
   held: STRINGS.line.heldOther,
+  unapproved: STRINGS.line.heldApp,
 } as const
 
 function clockTime(ms: number): string {
@@ -467,10 +470,19 @@ const approvedNow = async ($: EngineInterface): Promise<Record<string, Service>>
 // Starting from scratch. A new member opens their office in an empty folder;
 // Team View offers to make the brain there from the template it carries.
 
-// A folder with nothing in it but the Mac's own bookkeeping files.
+// A folder with nothing in it but the Mac's own bookkeeping files, and the
+// local settings Claude writes when a new folder is first opened.
 const isEmptyFolder = async ($: EngineInterface, at: string): Promise<boolean> => {
   try {
-    return (await $.fs.list(at)).every(entry => IGNORABLE.has(entry.name))
+    for (const entry of await $.fs.list(at)) {
+      if (IGNORABLE.has(entry.name)) continue
+      if (entry.name === '.claude' && entry.kind === 'dir') {
+        const inside = await $.fs.list(join(at, '.claude'))
+        if (inside.every(f => f.name === 'settings.local.json' || IGNORABLE.has(f.name))) continue
+      }
+      return false
+    }
+    return true
   } catch {
     return false
   }
@@ -493,6 +505,8 @@ const startOffice = async ($: EngineInterface, at: string) => {
   await update($, rootA, () => root)
   const stored = await $.store.get('handoff-team:chimes')
   await update($, chimesA, () => stored === true)
+  const savedStep = await $.store.get(`handoff-team:setup:${root}`)
+  await update($, setupA, () => (typeof savedStep === 'number' && savedStep >= 0 ? savedStep : 0))
   const members: Record<string, MemberState> = {}
   for (const employee of brain.employees) members[employee.name] = { status: 'resting', line: '', at: 0 }
   await update($, membersA, () => members)
@@ -539,7 +553,8 @@ const makeBrain = async ($: EngineInterface, at: string, practice: boolean) => {
   making = true
   try {
     const files = filled({ ...BASE, ...(practice ? PRACTICE : {}) }, today(await $.clock.now()))
-    for (const [rel, text] of Object.entries(files)) await $.fs.write(join(at, rel), text)
+    // Never overwrite a file that is already there.
+    for (const [rel, text] of Object.entries(files)) if (!(await $.fs.exists(join(at, rel)))) await $.fs.write(join(at, rel), text)
     madeHere = true
     await update($, newFolderA, () => '')
     await startOffice($, at)
@@ -600,22 +615,32 @@ const makeCopy = async ($: EngineInterface) => {
   const gh = await ghPath($)
   if (!gh || !root) return checkBackup($)
   await update($, backupFlowA, (): BackupFlow => ({ stage: 'making', code: '' }))
+  const failed = () => update($, backupFlowA, (): BackupFlow => ({ stage: 'failed', code: '' }))
   await gitStart($, root)
-  // git signs in to GitHub through the helper from now on.
-  await $.process.run([gh, 'auth', 'setup-git', '--hostname', 'github.com'], { timeoutMs: 20_000 }).catch(() => undefined)
+  // The same check as every save: only a brain with plain git settings.
+  if (!(await settingsAreSafe($, root))) return failed()
   const origin = async () => {
     const out = await git($, root, ['remote', 'get-url', 'origin'])
     return out.exitCode === 0 ? out.stdout.trim() : ''
   }
+  // A cloud copy someone set up before is never adopted here.
+  if (await origin()) return failed()
+  // git signs in to GitHub through the helper from now on.
+  await $.process.run([gh, 'auth', 'setup-git', '--hostname', 'github.com'], { timeoutMs: 20_000 }).catch(() => undefined)
   const base = repoName(root)
+  let created = ''
   for (const name of [base, `${base}-2`, `${base}-3`]) {
-    if (await origin()) break
     await $.process
       .run([gh, 'repo', 'create', name, '--private', '--source', root, '--remote', 'origin', '--push'], { cwd: root, timeoutMs: 120_000 })
       .catch(() => undefined)
+    if (await origin()) {
+      created = name
+      break
+    }
   }
   const url = await origin()
-  if (!url) return update($, backupFlowA, (): BackupFlow => ({ stage: 'failed', code: '' }))
+  // Only the copy just made, on GitHub, is pinned.
+  if (!created || !new RegExp(`^https://github\\.com/[A-Za-z0-9-]+/${created}(\\.git)?$`).test(url)) return failed()
   // The cloud copy is pinned: backup goes there and nowhere else.
   const path = join(root, MARKER)
   const raw = JSON.parse(await $.fs.read(path)) as Record<string, unknown>
@@ -1000,7 +1025,11 @@ export const register: Register = on => {
     const setupScreen = !info.setupDone && STRINGS.setup[step]
     if (setupScreen) {
       const dots = STRINGS.setup.map((_, i) => (i <= step ? '●' : '○')).join(' ')
-      const nextStep = () => update($, setupA, (n: number) => n + 1)
+      // Setup picks up where the owner left off, in this brain, next time too.
+      const nextStep = async () => {
+        await update($, setupA, (n: number) => n + 1)
+        await $.store.set(`handoff-team:setup:${root}`, step + 1)
+      }
       const opened = await read($, openedA)
       const flow = await read($, backupFlowA)
       // What this step shows now, what its main button does, and whether it
@@ -1008,6 +1037,8 @@ export const register: Register = on => {
       let shown: { title: string; body: string; button: string } = setupScreen
       let go: () => Promise<unknown> = nextStep
       let canWait = false
+      let listed: Record<string, Service> = {}
+      await read($, appsCheckA)
       if (setupScreen.id === 'welcome') {
         go = async () => {
           await nextStep()
@@ -1031,8 +1062,22 @@ export const register: Register = on => {
         else if (flow.stage === 'makeCopy') go = async () => void makeCopy($).catch(() => undefined)
         else go = () => checkBackup($)
       } else if (setupScreen.id === 'apps') {
-        if (opened === 'apps') shown = STRINGS.after.apps
-        else
+        // Approved already: move on. Found: the owner OKs exactly what is
+        // listed. Otherwise open claude.ai's connections page, then check.
+        if (Object.keys(info.connections).length > 0) shown = STRINGS.after.appsReady
+        else if (Object.keys(found).length > 0) {
+          shown = STRINGS.after.appsFound
+          listed = found
+          canWait = true
+          go = async () => {
+            await approveConnections($, found)
+            await nextStep()
+          }
+        } else if (opened === 'apps') {
+          shown = STRINGS.after.apps
+          canWait = true
+          go = () => update($, appsCheckA, (n: number) => n + 1)
+        } else
           go = async () => {
             await openPage($, CONNECTORS_URL)
             await update($, openedA, () => 'apps')
@@ -1071,6 +1116,17 @@ export const register: Register = on => {
           <Text dimColor>{dots}</Text>
           <Text bold>{shown.title}</Text>
           <Text>{shown.body}</Text>
+          {Object.entries(listed).map(([server, service]) => (
+            <Text key={`listed-${server}`}>
+              {SERVICE_NAME[service]} <Text dimColor>({server.slice(0, 12)})</Text>
+            </Text>
+          ))}
+          {setupScreen.id === 'apps' &&
+            doubled.map(svc => (
+              <Text key={`twice-setup-${svc}`} color="warning">
+                {SERVICE_NAME[svc]} {STRINGS.line.doubled}
+              </Text>
+            ))}
           {setupScreen.id === 'backup' && flow.stage === 'code' && flow.code && (
             <Text bold color="claude">
               {flow.code}

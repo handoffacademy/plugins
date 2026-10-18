@@ -2,7 +2,7 @@
 // the parsing that needs no engine.
 
 export const CONNECTORS_URL = 'https://claude.ai/customize/connectors'
-export const SCHEDULED_URL = 'https://claude.ai/code/scheduled'
+export const SCHEDULED_URL = 'https://claude.ai/code/routines'
 export const GH_DOWNLOAD_URL = 'https://cli.github.com/'
 
 // What the owner pastes into a new scheduled task on claude.ai.

@@ -107,11 +107,16 @@ function fakeWorld(
     }
   })
   on('tool.list', async () => ({ value: tools.map(name => ({ name, description: '', mcp: name.startsWith('mcp__') })) }))
-  on('fs.list', async (_$, e) => ({
-    value: Object.keys(files)
-      .filter(p => p.startsWith(`${e.path}/`) && !p.slice(e.path.length + 1).includes('/'))
-      .map(p => ({ name: p.slice(e.path.length + 1), kind: 'file' as const, size: files[p]?.length ?? 0, mtimeMs: 0, isLink: false })),
-  }))
+  on('fs.list', async (_$, e) => {
+    const under = Object.keys(files).filter(p => p.startsWith(`${e.path}/`))
+    const own = under
+      .filter(p => !p.slice(e.path.length + 1).includes('/'))
+      .map(p => ({ name: p.slice(e.path.length + 1), kind: 'file' as const, size: files[p]?.length ?? 0, mtimeMs: 0, isLink: false }))
+    const folders = [...new Set(under.map(p => p.slice(e.path.length + 1)).filter(r => r.includes('/')).map(r => r.split('/')[0] ?? ''))]
+      .filter(Boolean)
+      .map(name => ({ name, kind: 'dir' as const, size: 0, mtimeMs: 0, isLink: false }))
+    return { value: [...own, ...folders] }
+  })
   // mkdir behaves like the real one (the send lock); git and the rest fail.
   const made = new Set<string>()
   on('process.run', async (_$, e) => {
@@ -168,7 +173,7 @@ describe('Team View draws on the desktop and the terminal', () => {
   })
 
   test('a new member sees one setup step at a time', async ($, on) => {
-    fakeWorld(on, brainFiles(false))
+    fakeWorld(on, brainFiles(false, true, {}))
     await $.session.start({ cwd: ROOT, surface: 'desktop', isInteractive: true })
     const ui = await mountPane($)
     expect(await ui.find({ type: 'Text', text: 'Meet your team' })).toBeDefined()
@@ -208,6 +213,26 @@ describe('Team View draws on the desktop and the terminal', () => {
     const files: Record<string, string> = { '/project/README.md': '# My code' }
     fakeWorld(on, files, {}, '/project')
     await $.session.start({ cwd: '/project', surface: 'desktop', isInteractive: true })
+    const ui = await mountPane($)
+    expect(await ui.find({ key: 'make-brain' })).toBeUndefined()
+    await ui.unmount()
+  })
+
+  test('a folder whose only file is Claude\'s own local settings still counts as new', async ($, on) => {
+    const files: Record<string, string> = { '/new/.claude/settings.local.json': '{"disabledMcpjsonServers":["x"]}' }
+    fakeWorld(on, files, {}, '/new')
+    await $.session.start({ cwd: '/new', surface: 'desktop', isInteractive: true })
+    const ui = await mountPane($)
+    expect(await ui.find({ key: 'make-brain' })).toBeDefined()
+    await ui.press({ key: 'make-brain' })
+    expect(files['/new/.claude/settings.local.json']).toBe('{"disabledMcpjsonServers":["x"]}')
+    expect(files['/new/.claude/settings.json']).toBeDefined()
+    await ui.unmount()
+  })
+
+  test('a folder with project settings of its own is not offered a brain', async ($, on) => {
+    fakeWorld(on, { '/code/.claude/settings.json': '{}' }, {}, '/code')
+    await $.session.start({ cwd: '/code', surface: 'desktop', isInteractive: true })
     const ui = await mountPane($)
     expect(await ui.find({ key: 'make-brain' })).toBeUndefined()
     await ui.unmount()
@@ -271,9 +296,67 @@ describe('Team View draws on the desktop and the terminal', () => {
     await ui.unmount()
   })
 
+  test('setup picks up where the owner left off in the next session', async ($, on) => {
+    const store: Record<string, unknown> = {}
+    fakeWorld(on, brainFiles(false, true, {}), store)
+    await $.session.start({ cwd: ROOT, surface: 'desktop', isInteractive: true })
+    const a = await mountPane($)
+    await a.press({ key: 'setup-go' }) // welcome
+    await a.press({ key: 'setup-later' }) // backup
+    await a.unmount()
+    expect(store[`handoff-team:setup:${ROOT}`]).toBe(2)
+    await $.session.start({ cwd: ROOT, surface: 'desktop', isInteractive: true })
+    const b = await mountPane($)
+    expect(await b.find({ type: 'Text', text: 'Connect email and calendar' })).toBeDefined()
+    await b.unmount()
+  })
+
+  test('setup lists the connected apps and Use these lets the team read them', async ($, on) => {
+    const files = brainFiles(false, false, {})
+    const tools = ['search_threads', 'send_message', 'create_draft'].map(t => `mcp__a1b2c3__${t}`)
+    fakeWorld(on, files, {}, ROOT, {}, tools)
+    await $.session.start({ cwd: ROOT, surface: 'desktop', isInteractive: true })
+    expect((await $.tool.call({ tool: 'mcp__a1b2c3__search_threads', query: 'x' })).deny).toMatch(/Team View/)
+    const ui = await mountPane($)
+    await ui.press({ key: 'setup-go' }) // welcome
+    await ui.press({ key: 'setup-later' }) // backup
+    expect(await ui.find({ type: 'Text', text: 'Your connected apps' })).toBeDefined()
+    expect(await ui.find({ type: 'Text', text: /^Gmail/ })).toBeDefined()
+    await ui.press({ key: 'setup-go' })
+    expect((files[`${ROOT}/.handoff/brain.json`] ?? '').includes('"a1b2c3": "gmail"')).toBe(true)
+    expect(await ui.find({ type: 'Text', text: 'Tell us about your business' })).toBeDefined()
+    await ui.unmount()
+  })
+
+  test('backup never adopts a cloud copy it did not make', async ($, on) => {
+    const files = brainFiles(false)
+    files['/opt/homebrew/bin/gh'] = ''
+    files[`${ROOT}/.git/HEAD`] = 'ref: refs/heads/main'
+    const ran: string[] = []
+    fakeWorld(on, files, {}, ROOT, {}, [], argv => {
+      const cmd = argv.join(' ')
+      ran.push(cmd)
+      if (cmd === '/usr/bin/xcode-select -p' || cmd.endsWith('auth status --hostname github.com')) return { exitCode: 0 }
+      if (cmd.includes('remote get-url')) return { exitCode: 0, stdout: 'https://github.com/someone-else/brain.git\n' }
+      if (cmd.includes('config --local')) return { exitCode: 0, stdout: 'core.bare\nfalse\0' }
+      if (cmd.includes('config --list --show-origin')) return { exitCode: 0, stdout: '' }
+      if (cmd === '/usr/bin/env -0') return { exitCode: 0, stdout: 'HOME=/Users/maria\0PATH=/usr/bin:/bin\0' }
+      return argv[0] === 'git' ? { exitCode: 0 } : undefined
+    })
+    await $.session.start({ cwd: ROOT, surface: 'desktop', isInteractive: true })
+    const ui = await mountPane($)
+    await ui.press({ key: 'setup-go' })
+    expect(await ui.find({ type: 'Text', text: 'Make your cloud copy' })).toBeDefined()
+    await ui.press({ key: 'setup-go' })
+    expect(await ui.find({ type: 'Text', text: 'Backup did not finish' })).toBeDefined()
+    expect(ran.some(c => c.includes(' repo create '))).toBe(false)
+    expect(JSON.parse(files[`${ROOT}/.handoff/brain.json`] ?? '{}').backupRemote).toBeUndefined()
+    await ui.unmount()
+  })
+
   test('putting the Chief on shift copies the steps and opens the page', async ($, on) => {
     const ran: { argv: string; stdin?: string }[] = []
-    fakeWorld(on, brainFiles(false), {}, ROOT, {}, [], (argv, stdin) => {
+    fakeWorld(on, brainFiles(false, true, {}), {}, ROOT, {}, [], (argv, stdin) => {
       ran.push({ argv: argv.join(' '), stdin })
       return { exitCode: 1 }
     })
@@ -284,14 +367,15 @@ describe('Team View draws on the desktop and the terminal', () => {
     await ui.press({ key: 'setup-later' }) // backup
     await ui.press({ key: 'setup-go' }) // open the connections page
     expect(ran.some(r => r.argv === '/usr/bin/open https://claude.ai/customize/connectors')).toBe(true)
-    await ui.press({ key: 'setup-go' }) // done
+    expect(await ui.find({ type: 'Text', text: /Press Check/ })).toBeDefined()
+    await ui.press({ key: 'setup-later' }) // nothing connected yet
     await ui.press({ key: 'setup-go' }) // interview
     await ui.press({ key: 'setup-go' }) // chief
     await ui.press({ key: 'setup-go' }) // brief
     expect(await ui.find({ type: 'Text', text: 'Put your Chief on shift' })).toBeDefined()
     await ui.press({ key: 'setup-go' })
     expect(ran.find(r => r.argv === '/usr/bin/pbcopy')?.stdin).toMatch(/morning-shift/)
-    expect(ran.some(r => r.argv === '/usr/bin/open https://claude.ai/code/scheduled')).toBe(true)
+    expect(ran.some(r => r.argv === '/usr/bin/open https://claude.ai/code/routines')).toBe(true)
     expect(await ui.find({ type: 'Text', text: 'Paste the steps' })).toBeDefined()
     await ui.unmount()
   })

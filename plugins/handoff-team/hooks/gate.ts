@@ -103,14 +103,14 @@ export const isListing = (command: unknown): boolean => typeof command === 'stri
 export type Verdict =
   | { kind: 'allow' }
   | { kind: 'card'; target: McpTarget; adapter: Adapter }
-  | { kind: 'deny'; reason: 'protected' | 'shell' | 'web' | 'held' }
+  | { kind: 'deny'; reason: 'protected' | 'shell' | 'web' | 'held' | 'unapproved' }
 
 export function classifyMcp(tool: string, connections: Record<string, Service>): Verdict {
   const target = mcpTarget(tool)
   if (!target) return { kind: 'deny', reason: 'held' }
   // Only connections the owner approved count, and only their reviewed tools.
   const service = Object.prototype.hasOwnProperty.call(connections, target.server) ? connections[target.server] : undefined
-  if (!service) return { kind: 'deny', reason: 'held' }
+  if (!service) return { kind: 'deny', reason: 'unapproved' }
   const spec = SERVICES[service]
   if (spec.reads.includes(target.tool) || spec.drafts.includes(target.tool)) return { kind: 'allow' }
   const adapter = spec.cards[target.tool]
