@@ -4,7 +4,7 @@
 import { atom, read, update } from 'claude-code'
 import type { EngineInterface, Register } from 'claude-code'
 
-import type { Backup, BrainInfo, Card, ChatLine, Energy, MemberState, MemberStatus, SendRecord, Service } from '../types'
+import type { Backup, BackupFlow, BrainInfo, Card, ChatLine, Energy, MemberState, MemberStatus, SendRecord, Service } from '../types'
 
 import { MARKER, chatEntry, join, mirrorNote, parseBrain, parseBrief, parseCard, parseChat, setFrontmatter, splitFrontmatter, today } from './brain'
 import {
@@ -22,6 +22,8 @@ import {
   unplainSettings,
 } from './gate'
 import type { Adapter, McpTarget } from './gate'
+import { CONNECTORS_URL, GH_DOWNLOAD_URL, IGNORABLE, NEW_BRAIN_NOTE, SCHEDULED_URL, SHIFT_PROMPT, filled, repoName, signInCode } from './setup'
+import { BASE, PRACTICE } from './template'
 import { CAPS, STRINGS, activityFor, activityLine, capWords } from './words'
 
 const PANE = 'team'
@@ -42,6 +44,9 @@ const showAllA = atom({ plugin: 'handoff-team', key: 'showAll' } as const, false
 const chimesA = atom({ plugin: 'handoff-team', key: 'chimes' } as const, false)
 const sendingA = atom({ plugin: 'handoff-team', key: 'sending' } as const, '')
 const expandedA = atom({ plugin: 'handoff-team', key: 'expanded' } as const, '')
+const newFolderA = atom({ plugin: 'handoff-team', key: 'newFolder' } as const, '')
+const backupFlowA = atom({ plugin: 'handoff-team', key: 'backupFlow' } as const, { stage: 'checking', code: '' } as BackupFlow)
+const openedA = atom({ plugin: 'handoff-team', key: 'opened' } as const, '')
 
 const STATUS_COLOR: Record<MemberStatus, string> = {
   working: 'claude',
@@ -162,6 +167,12 @@ const inFlight = new Set<string>()
 // plain reading goes on, as when the gate itself fails.
 let initFailed = false
 const READ_ONLY = ['Read', 'Glob', 'Grep', 'LS', 'NotebookRead', 'TodoWrite']
+// Set when this session turned an empty folder into a brain: the brain's own
+// instructions were not loaded at the start, so the Chief is told to read them.
+let madeHere = false
+let making = false
+let timersOn = false
+let commandReady = false
 
 const chiefName = () => brain?.employees[0]?.name ?? 'Your Chief'
 
@@ -453,6 +464,177 @@ const takeLock = async ($: EngineInterface, name: string): Promise<boolean> => {
 const approvedNow = async ($: EngineInterface): Promise<Record<string, Service>> =>
   (await readBrain($, root))?.connections ?? {}
 
+// Starting from scratch. A new member opens their office in an empty folder;
+// Team View offers to make the brain there from the template it carries.
+
+// A folder with nothing in it but the Mac's own bookkeeping files.
+const isEmptyFolder = async ($: EngineInterface, at: string): Promise<boolean> => {
+  try {
+    return (await $.fs.list(at)).every(entry => IGNORABLE.has(entry.name))
+  } catch {
+    return false
+  }
+}
+
+const openPane = async ($: EngineInterface) => {
+  if (!commandReady) {
+    commandReady = true
+    await $.command.register({ name: 'team', description: 'Open Team View' })
+  }
+  const opened = await $.ui.open({ id: PANE, title: STRINGS.heading.team })
+  await update($, placedA, () => opened.isPlaced)
+}
+
+// Everything Team View does once it knows where the brain is.
+const startOffice = async ($: EngineInterface, at: string) => {
+  root = at
+  brain = (await readBrain($, root)) ?? UNHEALTHY
+  await update($, brainA, () => brain)
+  await update($, rootA, () => root)
+  const stored = await $.store.get('handoff-team:chimes')
+  await update($, chimesA, () => stored === true)
+  const members: Record<string, MemberState> = {}
+  for (const employee of brain.employees) members[employee.name] = { status: 'resting', line: '', at: 0 }
+  await update($, membersA, () => members)
+  await openPane($)
+
+  // The timers start once per load, however many times the office opens.
+  if (!timersOn) {
+    timersOn = true
+    $.clock.every(2000, () => void refreshAgents($).catch(() => undefined))
+    $.clock.every(20_000, () => void refreshFiles($).catch(() => undefined))
+    $.clock.every(60_000, () => void refreshEnergy($))
+    $.clock.every(60_000, () => void runBackup($).catch(() => undefined))
+    $.clock.every(5000, () =>
+      void $.ui
+        .panes()
+        .then(panes => update($, placedA, () => panes.some(p => p.id === PANE && p.isPlaced)))
+        .catch(() => undefined),
+    )
+  }
+  await refreshFiles($).catch(() => undefined)
+  void refreshEnergy($)
+  void runBackup($).catch(() => undefined)
+}
+
+// Apple's git is a stand-in until Apple's free developer tools are installed,
+// and asking it anything opens the installer, so ask xcode-select first.
+const hasGit = async ($: EngineInterface): Promise<boolean> => {
+  const mac = await $.process.run(['/usr/bin/xcode-select', '-p'], { timeoutMs: 10_000 }).catch(() => undefined)
+  if (mac) return mac.exitCode === 0
+  const any = await $.process.run(['git', '--version'], { timeoutMs: 10_000 }).catch(() => undefined)
+  return any?.exitCode === 0
+}
+
+// A new brain starts its own history at once, so backup has something to save.
+const gitStart = async ($: EngineInterface, at: string) => {
+  if ((await $.fs.exists(join(at, '.git'))) || !(await hasGit($))) return
+  await $.process.run(['git', 'init', '--quiet', '-b', 'main', at], { timeoutMs: 30_000 })
+  await git($, at, ['add', '-A'])
+  await git($, at, ['commit', '--quiet', '-m', 'Brain created'])
+}
+
+const makeBrain = async ($: EngineInterface, at: string, practice: boolean) => {
+  if (making || root || !(await isEmptyFolder($, at))) return
+  making = true
+  try {
+    const files = filled({ ...BASE, ...(practice ? PRACTICE : {}) }, today(await $.clock.now()))
+    for (const [rel, text] of Object.entries(files)) await $.fs.write(join(at, rel), text)
+    madeHere = true
+    await update($, newFolderA, () => '')
+    await startOffice($, at)
+    await gitStart($, at).catch(() => undefined)
+  } finally {
+    making = false
+  }
+}
+
+const openPage = async ($: EngineInterface, url: string) => {
+  await $.process.run(['/usr/bin/open', url], { timeoutMs: 10_000 }).catch(() => undefined)
+}
+
+// GitHub's free helper signs the owner in and makes the private cloud copy.
+const GH_PLACES = ['/opt/homebrew/bin/gh', '/usr/local/bin/gh']
+const ghPath = async ($: EngineInterface): Promise<string> => {
+  for (const place of GH_PLACES) if (await $.fs.exists(place)) return place
+  const found = await $.process.run(['gh', '--version'], { timeoutMs: 10_000 }).catch(() => undefined)
+  return found?.exitCode === 0 ? 'gh' : ''
+}
+
+const backupStage = async ($: EngineInterface): Promise<BackupFlow> => {
+  if (brain?.backupRemote && (await remoteIsPinned($, root).catch(() => false))) return { stage: 'done', code: '' }
+  if (!(await hasGit($))) return { stage: 'needGit', code: '' }
+  const gh = await ghPath($)
+  if (!gh) return { stage: 'needGh', code: '' }
+  const status = await $.process.run([gh, 'auth', 'status', '--hostname', 'github.com'], { timeoutMs: 20_000 }).catch(() => undefined)
+  return { stage: status?.exitCode === 0 ? 'makeCopy' : 'signIn', code: '' }
+}
+
+const checkBackup = async ($: EngineInterface) => {
+  await update($, backupFlowA, (): BackupFlow => ({ stage: 'checking', code: '' }))
+  const flow = await backupStage($)
+  await update($, backupFlowA, () => flow)
+}
+
+// The helper prints a one-time code and opens GitHub's sign-in page; the
+// owner pastes the code there. The code shows in Team View as it arrives.
+const signIn = async ($: EngineInterface) => {
+  const gh = await ghPath($)
+  if (!gh) return checkBackup($)
+  await update($, backupFlowA, (): BackupFlow => ({ stage: 'code', code: '' }))
+  const login = $.process.spawn({ argv: [gh, 'auth', 'login', '--hostname', 'github.com', '--git-protocol', 'https', '--web'], input: '\n' })
+  let seen = ''
+  try {
+    for await (const { text } of login) {
+      seen += text
+      const code = signInCode(seen)
+      if (code) await update($, backupFlowA, (f: BackupFlow): BackupFlow => (f.code ? f : { stage: 'code', code }))
+    }
+  } catch {
+    // A sign-in that ends early is checked again below.
+  }
+  await checkBackup($)
+}
+
+const makeCopy = async ($: EngineInterface) => {
+  const gh = await ghPath($)
+  if (!gh || !root) return checkBackup($)
+  await update($, backupFlowA, (): BackupFlow => ({ stage: 'making', code: '' }))
+  await gitStart($, root)
+  // git signs in to GitHub through the helper from now on.
+  await $.process.run([gh, 'auth', 'setup-git', '--hostname', 'github.com'], { timeoutMs: 20_000 }).catch(() => undefined)
+  const origin = async () => {
+    const out = await git($, root, ['remote', 'get-url', 'origin'])
+    return out.exitCode === 0 ? out.stdout.trim() : ''
+  }
+  const base = repoName(root)
+  for (const name of [base, `${base}-2`, `${base}-3`]) {
+    if (await origin()) break
+    await $.process
+      .run([gh, 'repo', 'create', name, '--private', '--source', root, '--remote', 'origin', '--push'], { cwd: root, timeoutMs: 120_000 })
+      .catch(() => undefined)
+  }
+  const url = await origin()
+  if (!url) return update($, backupFlowA, (): BackupFlow => ({ stage: 'failed', code: '' }))
+  // The cloud copy is pinned: backup goes there and nowhere else.
+  const path = join(root, MARKER)
+  const raw = JSON.parse(await $.fs.read(path)) as Record<string, unknown>
+  await $.fs.write(path, `${JSON.stringify({ ...raw, backupRemote: url }, null, 2)}\n`)
+  brain = (await readBrain($, root)) ?? brain
+  await update($, brainA, () => brain)
+  await runBackup($)
+  const saved = (await read($, backupA)).state === 'saved'
+  await update($, backupFlowA, (): BackupFlow => ({ stage: saved ? 'done' : 'failed', code: '' }))
+}
+
+// The shift runs in Anthropic's cloud on the cloud copy. Its steps go on the
+// clipboard and the page for scheduled tasks opens.
+const copyShift = async ($: EngineInterface) => {
+  await $.process.run(['/usr/bin/pbcopy'], { stdin: SHIFT_PROMPT, timeoutMs: 10_000 }).catch(() => undefined)
+  await openPage($, SCHEDULED_URL)
+  await update($, openedA, () => 'shift')
+}
+
 // A send may go only through the connection the owner approved for its service.
 const connectionStillApproved = (r: SendRecord, connections: Record<string, Service>) => {
   const service = connections[r.server]
@@ -604,42 +786,34 @@ const approveHire = async ($: EngineInterface, card: Card) => {
 
 export const register: Register = on => {
   on('session.start', async ($, e, next) => {
+    let cwd = ''
+    let found = ''
     try {
-      root = await findBrainRoot($, await $.session.cwd())
+      cwd = await $.session.cwd()
+      found = await findBrainRoot($, cwd)
       initFailed = false
     } catch {
       initFailed = true
       return next(e)
     }
-    if (!root) return next(e)
-    brain = (await readBrain($, root)) ?? UNHEALTHY
-
-    await update($, brainA, () => brain)
-    await update($, rootA, () => root)
-    const stored = await $.store.get('handoff-team:chimes')
-    await update($, chimesA, () => stored === true)
-    const members: Record<string, MemberState> = {}
-    for (const employee of brain.employees) members[employee.name] = { status: 'resting', line: '', at: 0 }
-    await update($, membersA, () => members)
-
-    await $.command.register({ name: 'team', description: 'Open Team View' })
-    const opened = await $.ui.open({ id: PANE, title: STRINGS.heading.team })
-    await update($, placedA, () => opened.isPlaced)
-
-    $.clock.every(2000, () => void refreshAgents($).catch(() => undefined))
-    $.clock.every(20_000, () => void refreshFiles($).catch(() => undefined))
-    $.clock.every(60_000, () => void refreshEnergy($))
-    $.clock.every(60_000, () => void runBackup($).catch(() => undefined))
-    $.clock.every(5000, () =>
-      void $.ui
-        .panes()
-        .then(panes => update($, placedA, () => panes.some(p => p.id === PANE && p.isPlaced)))
-        .catch(() => undefined),
-    )
-    await refreshFiles($).catch(() => undefined)
-    void refreshEnergy($)
-    void runBackup($).catch(() => undefined)
+    if (found) {
+      await startOffice($, found)
+      return next(e)
+    }
+    // An empty folder is where a new member starts: offer to make the brain.
+    if (await isEmptyFolder($, cwd)) {
+      await update($, newFolderA, () => cwd)
+      await openPane($)
+    }
     return next(e)
+  })
+
+  // A brain made during this session: its instructions were not loaded at the
+  // start, so the Chief is told to read them first.
+  on('prompt.compose', async ($, e, next) => {
+    const result = await next(e)
+    if (!root || !madeHere) return result
+    return { sections: [...result.sections, { id: 'handoff-team:new-brain', text: NEW_BRAIN_NOTE, scope: 'session' as const }] }
   })
 
   on('command.run', { command: 'team' }, async $ => {
@@ -661,6 +835,9 @@ export const register: Register = on => {
     const input = argsOf(e as unknown as Record<string, unknown>)
     const verdict = classify(e.tool, input, root, e.tool.startsWith('mcp__') ? await approvedNow($) : {})
     if (verdict.kind === 'deny') return { deny: DENY_TEXT[verdict.reason] }
+    // Unless the owner turned on sending from Team View, a message to a person
+    // is never held for a Send button: it becomes a draft the owner sends.
+    if (verdict.kind === 'card' && !brain?.sendFromTeamView) return { deny: STRINGS.line.heldDraft }
     if (verdict.kind === 'allow') {
       const path = input.file_path ?? input.notebook_path
       if (isWriteTool(e.tool) && typeof path === 'string') {
@@ -787,7 +964,20 @@ export const register: Register = on => {
   on('ui.render', { component: 'Pane', requestId: PANE }, async ($, e) => {
     const { Box, Text, Button } = $.ui.resolve(e)
     const info = await read($, brainA)
-    if (!info) return <Text dimColor>{STRINGS.line.resting}</Text>
+    if (!info) {
+      const fresh = await read($, newFolderA)
+      if (!fresh) return <Text dimColor>{STRINGS.line.resting}</Text>
+      return (
+        <Box flexDirection="column" gap={1} paddingX={1}>
+          <Text bold>{STRINGS.start.title}</Text>
+          <Text>{STRINGS.start.body}</Text>
+          <Box gap={1}>
+            <Button key="make-brain" label={STRINGS.start.make} variant="primary" onPress={() => makeBrain($, fresh, false)} />
+            <Button key="practice-brain" label={STRINGS.start.practice} onPress={() => makeBrain($, fresh, true)} />
+          </Box>
+        </Box>
+      )
+    }
     const members = await read($, membersA)
     const cards = await read($, cardsA)
     const chat = [...(await read($, chatA)), ...(await read($, feedA))]
@@ -810,33 +1000,86 @@ export const register: Register = on => {
     const setupScreen = !info.setupDone && STRINGS.setup[step]
     if (setupScreen) {
       const dots = STRINGS.setup.map((_, i) => (i <= step ? '●' : '○')).join(' ')
-      const advance = async () => {
-        if (step === 2) await $.prompt.submit({ text: STRINGS.ask.interview, asUser: true })
-        if (step === 4) await $.prompt.submit({ text: STRINGS.ask.brief, asUser: true })
-        if (step === 5) {
+      const nextStep = () => update($, setupA, (n: number) => n + 1)
+      const opened = await read($, openedA)
+      const flow = await read($, backupFlowA)
+      // What this step shows now, what its main button does, and whether it
+      // can wait for later.
+      let shown: { title: string; body: string; button: string } = setupScreen
+      let go: () => Promise<unknown> = nextStep
+      let canWait = false
+      if (setupScreen.id === 'welcome') {
+        go = async () => {
+          await nextStep()
+          void checkBackup($).catch(() => undefined)
+        }
+      } else if (setupScreen.id === 'backup') {
+        shown = STRINGS.backup[flow.stage]
+        canWait = flow.stage !== 'done'
+        if (flow.stage === 'done') go = nextStep
+        else if (flow.stage === 'needGit')
+          go = async () => {
+            await $.process.run(['/usr/bin/xcode-select', '--install'], { timeoutMs: 10_000 }).catch(() => undefined)
+            await update($, backupFlowA, (): BackupFlow => ({ stage: 'checking', code: '' }))
+          }
+        else if (flow.stage === 'needGh')
+          go = async () => {
+            await openPage($, GH_DOWNLOAD_URL)
+            await update($, backupFlowA, (): BackupFlow => ({ stage: 'checking', code: '' }))
+          }
+        else if (flow.stage === 'signIn') go = async () => void signIn($).catch(() => undefined)
+        else if (flow.stage === 'makeCopy') go = async () => void makeCopy($).catch(() => undefined)
+        else go = () => checkBackup($)
+      } else if (setupScreen.id === 'apps') {
+        if (opened === 'apps') shown = STRINGS.after.apps
+        else
+          go = async () => {
+            await openPage($, CONNECTORS_URL)
+            await update($, openedA, () => 'apps')
+          }
+      } else if (setupScreen.id === 'interview') {
+        go = async () => {
+          await $.prompt.submit({ text: STRINGS.ask.interview, asUser: true })
+          await nextStep()
+        }
+      } else if (setupScreen.id === 'brief') {
+        go = async () => {
+          await $.prompt.submit({ text: STRINGS.ask.brief, asUser: true })
+          await nextStep()
+        }
+      } else if (setupScreen.id === 'shift') {
+        canWait = opened !== 'shift'
+        if (opened === 'shift') shown = STRINGS.after.shift
+        else go = () => copyShift($)
+      } else if (setupScreen.id === 'chimes') {
+        go = async () => {
           await $.store.set('handoff-team:chimes', true)
           await update($, chimesA, () => true)
+          await nextStep()
         }
-        if (step >= STRINGS.setup.length - 1) {
+      } else if (setupScreen.id === 'done') {
+        go = async () => {
           const path = join(root, MARKER)
           const raw = JSON.parse(await $.fs.read(path)) as Record<string, unknown>
           await $.fs.write(path, `${JSON.stringify({ ...raw, setupDone: true }, null, 2)}\n`)
           brain = { ...info, setupDone: true }
           await update($, brainA, () => brain)
-          return
         }
-        await update($, setupA, (n: number) => n + 1)
       }
       return (
         <Box flexDirection="column" gap={1} paddingX={1}>
           <Text dimColor>{dots}</Text>
-          <Text bold>{setupScreen.title}</Text>
-          <Text>{setupScreen.body}</Text>
+          <Text bold>{shown.title}</Text>
+          <Text>{shown.body}</Text>
+          {setupScreen.id === 'backup' && flow.stage === 'code' && flow.code && (
+            <Text bold color="claude">
+              {flow.code}
+            </Text>
+          )}
           <Box gap={1}>
-            <Button key="setup-go" label={setupScreen.button} variant="primary" onPress={advance} />
-            {step === 5 && (
-              <Button key="setup-no" label={STRINGS.button.no} onPress={() => update($, setupA, (n: number) => n + 1)} />
-            )}
+            <Button key="setup-go" label={shown.button} variant="primary" onPress={go} />
+            {setupScreen.id === 'chimes' && <Button key="setup-no" label={STRINGS.button.no} onPress={nextStep} />}
+            {canWait && <Button key="setup-later" label={STRINGS.button.later} onPress={nextStep} />}
           </Box>
         </Box>
       )

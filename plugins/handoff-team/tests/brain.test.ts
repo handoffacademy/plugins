@@ -12,6 +12,7 @@ describe('reading the brain', () => {
       setupDone: false,
       backupRemote: undefined,
       connections: {},
+      sendFromTeamView: false,
     })
   })
 

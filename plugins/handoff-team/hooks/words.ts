@@ -115,6 +115,7 @@ export const STRINGS = {
     didntSend: "It didn't send",
     looksGoodHire: 'Hire them',
     useThese: 'Use these',
+    later: 'Later',
   },
   toast: {
     sent: 'Sent. Logged in chat.',
@@ -146,6 +147,7 @@ export const STRINGS = {
     heldProtected: 'Held. Only you change this part.',
     heldOther: 'Held. Ask your Chief to make a card.',
     heldNoCard: 'Held. Team View could not save the card.',
+    heldDraft: 'Held. Save it as a draft; the owner sends it.',
     cantShow: 'Team View cannot show all of this. Send it yourself.',
     readAll: 'Tap Show all to send it.',
     nameTaken: 'That name is already on the team.',
@@ -160,14 +162,39 @@ export const STRINGS = {
     youApproved: 'You approved:',
   },
   setup: [
-    { title: 'Meet your team', body: 'Your Chief and helpers work from your brain. Let us get them ready.', button: 'Start' },
-    { title: 'Connect email and calendar', body: 'Open Settings, then Connections. Turn on Gmail and Google Calendar. Come back here.', button: 'Done' },
-    { title: 'Tell us about your business', body: 'Your Chief asks 8 quick questions, one at a time.', button: 'Start' },
-    { title: 'Meet your Chief', body: 'Read your Chief\'s job page in your brain. Change anything you like.', button: 'Looks good' },
-    { title: 'Your first brief', body: 'Ask your Chief for today\'s brief and watch it work.', button: 'Get my brief' },
-    { title: 'Chimes?', body: 'Play a soft chime when something needs you or the team is done?', button: 'Yes' },
-    { title: 'Your Chief is on duty', body: 'Open your office any time. Your team is ready.', button: 'Done' },
+    { id: 'welcome', title: 'Meet your team', body: 'Your Chief and helpers work from your brain. Let us get them ready.', button: 'Start' },
+    { id: 'backup', title: 'Back up your brain', body: 'A private cloud copy keeps your brain safe and lets your Chief work while you are away.', button: 'Set it up' },
+    { id: 'apps', title: 'Connect email and calendar', body: 'Connect Gmail and Google Calendar on the page that opens. Then come back here.', button: 'Open it' },
+    { id: 'interview', title: 'Tell us about your business', body: 'Your Chief asks 8 quick questions, one at a time.', button: 'Start' },
+    { id: 'chief', title: 'Meet your Chief', body: 'Read your Chief\'s job page in your brain. Change anything you like.', button: 'Looks good' },
+    { id: 'brief', title: 'Your first brief', body: 'Ask your Chief for today\'s brief and watch it work.', button: 'Get my brief' },
+    { id: 'shift', title: 'Put your Chief on shift', body: 'Your Chief can work each weekday morning, even with your computer off. We copy the steps for you.', button: 'Copy and open' },
+    { id: 'chimes', title: 'Chimes?', body: 'Play a soft chime when something needs you or the team is done?', button: 'Yes' },
+    { id: 'done', title: 'Your Chief is on duty', body: 'Open your office any time. Your team is ready.', button: 'Done' },
   ],
+  // What a step shows once its button has done its part.
+  after: {
+    apps: { title: 'Connect email and calendar', body: 'Connected both? Your team asks before using them. Come back here when you are done.', button: 'Done' },
+    shift: { title: 'Paste the steps', body: 'Make a new task on the page that opened, paste the steps, and pick your cloud copy.', button: 'Done' },
+  },
+  // An empty folder: the first screen a new member sees.
+  start: {
+    title: 'Make your brain',
+    body: 'Your brain is a folder of notes your team works from. Start fresh, or practice with a sample business.',
+    make: 'Make my brain',
+    practice: 'Practice brain',
+  },
+  backup: {
+    checking: { title: 'Checking your Mac', body: 'One moment while we look for what backup needs.', button: 'Check again' },
+    needGit: { title: 'One free Apple tool', body: 'Backup needs a free tool from Apple. Click Install when your Mac asks, then come back.', button: 'Install it' },
+    needGh: { title: 'One free GitHub helper', body: 'Download and install the free GitHub helper from the page that opens. Then come back here.', button: 'Get it' },
+    signIn: { title: 'Sign in to GitHub', body: 'Sign in, or make a free account. We give you a code to paste there.', button: 'Sign in' },
+    code: { title: 'Paste this code', body: 'Paste the code on the GitHub page that opened, then click Authorize.', button: 'Check again' },
+    makeCopy: { title: 'Make your cloud copy', body: 'We make a private copy of your brain on GitHub. Only you can see it.', button: 'Make it' },
+    making: { title: 'Making your copy', body: 'Saving your brain to its private cloud copy.', button: 'Check again' },
+    done: { title: 'Backed up', body: 'Your brain has a private cloud copy. Changes save on their own.', button: 'Next' },
+    failed: { title: 'Backup did not finish', body: 'Try again, or bring this screen to the Setup Clinic.', button: 'Try again' },
+  },
 } as const
 
 // The six verbs Team View uses for work in progress.

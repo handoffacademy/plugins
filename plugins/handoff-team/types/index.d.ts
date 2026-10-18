@@ -11,6 +11,9 @@ export type BrainInfo = {
   connections: Record<string, Service>
   // A brain folder whose settings could not be read: the gate stays on.
   unhealthy?: boolean
+  // Off unless the owner turns it on: employees write drafts and the owner
+  // sends from Gmail. On, a held message gets a Send button in Team View.
+  sendFromTeamView?: boolean
 }
 
 export type MemberStatus = 'working' | 'waiting' | 'done' | 'resting' | 'snag'
@@ -62,6 +65,10 @@ export type Energy = { level: 'plenty' | 'low' | 'out'; resetsAt?: string }
 
 export type Backup = { state: 'idle' | 'saving' | 'saved' | 'conflict' | 'off'; files: string[] }
 
+// Turning on backup during setup, one screen per stage.
+export type BackupStage = 'checking' | 'needGit' | 'needGh' | 'signIn' | 'code' | 'makeCopy' | 'making' | 'done' | 'failed'
+export type BackupFlow = { stage: BackupStage; code: string }
+
 declare module 'claude-code' {
   interface PluginState {
     'handoff-team': {
@@ -80,6 +87,9 @@ declare module 'claude-code' {
       chimes: boolean
       sending: string
       expanded: string
+      newFolder: string
+      backupFlow: BackupFlow
+      opened: string
     }
   }
 }

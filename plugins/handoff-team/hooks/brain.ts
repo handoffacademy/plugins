@@ -38,6 +38,7 @@ export function parseBrain(text: string): BrainInfo | null {
       setupDone: raw.setupDone === true,
       backupRemote: typeof raw.backupRemote === 'string' ? raw.backupRemote : undefined,
       connections,
+      sendFromTeamView: raw.sendFromTeamView === true,
     }
   } catch {
     return null

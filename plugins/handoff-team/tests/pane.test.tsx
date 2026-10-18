@@ -28,12 +28,18 @@ const DANA: SendRecord = {
   attempt: 1,
 }
 
-function brainFiles(setupDone: boolean, withMirror = true, connections: Record<string, string> = { claude_ai_Gmail: 'gmail' }): Record<string, string> {
+function brainFiles(
+  setupDone: boolean,
+  withMirror = true,
+  connections: Record<string, string> = { claude_ai_Gmail: 'gmail' },
+  sendFromTeamView = true,
+): Record<string, string> {
   const files: Record<string, string> = {
     [`${ROOT}/.handoff/brain.json`]: JSON.stringify({
       name: 'Sunny Days Cleaning',
       setupDone,
       connections,
+      sendFromTeamView,
       employees: [
         { id: 'chief', name: 'Chief', role: 'Chief of Staff' },
         { id: 'follow-up', name: 'Follow-up', role: 'Follow-up' },
@@ -57,6 +63,7 @@ function fakeWorld(
   cwd = ROOT,
   links: Record<string, string> = {},
   tools: string[] = [],
+  run?: (argv: readonly string[], stdin?: string) => { exitCode: number; stdout?: string } | undefined,
 ): { made: Set<string> } {
   mock.clock(on, { now: NOW })
   on('store.get', async (_$, e) => ({ value: store[e.key] }))
@@ -108,6 +115,8 @@ function fakeWorld(
   // mkdir behaves like the real one (the send lock); git and the rest fail.
   const made = new Set<string>()
   on('process.run', async (_$, e) => {
+    const own = run?.(e.argv, e.init?.stdin)
+    if (own) return { value: { exitCode: own.exitCode, stdout: own.stdout ?? '', stderr: '', isStdoutTruncated: false, isStderrTruncated: false } }
     const [cmd, ...rest] = e.argv
     let exitCode = 1
     if (cmd === 'mkdir' && rest[0] === '-p') exitCode = 0
@@ -167,7 +176,123 @@ describe('Team View draws on the desktop and the terminal', () => {
     const body = await ui.find({ type: 'Text', text: /Chief and helpers/ })
     expect(wordCount(body?.text ?? '') <= CAPS.setup).toBe(true)
     await ui.press({ key: 'setup-go' })
+    // Backup comes next; this Mac (the fake one) lacks Apple's free tools.
+    expect(await ui.find({ type: 'Text', text: 'One free Apple tool' })).toBeDefined()
+    await ui.press({ key: 'setup-later' })
     expect(await ui.find({ type: 'Text', text: 'Connect email and calendar' })).toBeDefined()
+    await ui.unmount()
+  })
+
+  test('an empty folder offers a brain; the practice brain is the sample business', async ($, on) => {
+    const files: Record<string, string> = {}
+    fakeWorld(on, files, {}, '/new')
+    on('prompt.compose', async () => ({ sections: [] }))
+    await $.session.start({ cwd: '/new', surface: 'desktop', isInteractive: true })
+    const ui = await mountPane($)
+    expect(await ui.find({ type: 'Text', text: 'Make your brain' })).toBeDefined()
+    await ui.press({ key: 'practice-brain' })
+    expect(JSON.parse(files['/new/.handoff/brain.json'] ?? '{}').name).toBe('Sunny Days Cleaning (practice)')
+    expect(files['/new/Drop Zone/Inbox (practice).md']).toBeDefined()
+    expect(files['/new/.claude/skills/about-my-business/SKILL.md']).toBeDefined()
+    expect(files['/new/.handoff/guard.py']).toBeDefined()
+    expect(Object.values(files).some(text => text.includes('{{TODAY}}'))).toBe(false)
+    // The office is open, setup starts, and the brain's rules are on at once.
+    expect(await ui.find({ type: 'Text', text: 'Meet your team' })).toBeDefined()
+    expect((await $.tool.call({ tool: 'Write', file_path: '/new/Team/Chief.md', content: 'x' })).deny).toBeDefined()
+    const prompt = await $.prompt.compose({ model: 'm', promptModel: 'm', surfaces: [], tools: [], outputStyle: null, traits: [] })
+    expect(prompt.sections.some(s => s.id === 'handoff-team:new-brain')).toBe(true)
+    await ui.unmount()
+  })
+
+  test('a blank brain has no sample business, and a folder with files is left alone', async ($, on) => {
+    const files: Record<string, string> = { '/project/README.md': '# My code' }
+    fakeWorld(on, files, {}, '/project')
+    await $.session.start({ cwd: '/project', surface: 'desktop', isInteractive: true })
+    const ui = await mountPane($)
+    expect(await ui.find({ key: 'make-brain' })).toBeUndefined()
+    await ui.unmount()
+  })
+
+  test('make my brain writes the blank brain', async ($, on) => {
+    const files: Record<string, string> = { '/new/.DS_Store': '' }
+    fakeWorld(on, files, {}, '/new')
+    await $.session.start({ cwd: '/new', surface: 'desktop', isInteractive: true })
+    const ui = await mountPane($)
+    await ui.press({ key: 'make-brain' })
+    expect(JSON.parse(files['/new/.handoff/brain.json'] ?? '{}').name).toBe('My business')
+    expect(files['/new/Drop Zone/Inbox (practice).md']).toBeUndefined()
+    expect(files['/new/Business/Offers.md']?.includes('$140')).toBe(false)
+    await ui.unmount()
+  })
+
+  test('backup: sign in, then a private cloud copy is made and pinned', async ($, on) => {
+    const files = brainFiles(false)
+    files['/opt/homebrew/bin/gh'] = ''
+    const URL = 'https://github.com/maria/brain.git'
+    let signedIn = false
+    let origin = ''
+    const ran: string[] = []
+    const ok = (stdout = '') => ({ exitCode: 0, stdout })
+    const no = () => ({ exitCode: 1 })
+    fakeWorld(on, files, {}, ROOT, {}, [], argv => {
+      const cmd = argv.join(' ')
+      ran.push(cmd)
+      if (cmd === '/usr/bin/xcode-select -p') return ok('/Library/Developer/CommandLineTools')
+      if (cmd.endsWith('auth status --hostname github.com')) return signedIn ? ok() : no()
+      if (cmd.includes(' repo create ')) {
+        origin = URL
+        files[`${ROOT}/.git/HEAD`] = 'ref: refs/heads/main'
+        return ok()
+      }
+      if (cmd.includes('remote get-url')) return origin ? ok(`${origin}\n`) : no()
+      if (cmd.includes('config --local')) return ok(`core.bare\nfalse\0remote.origin.url\n${URL}\0`)
+      if (cmd.includes('config --list --show-origin')) return ok('')
+      if (cmd === '/usr/bin/env -0') return ok('HOME=/Users/maria\0PATH=/usr/bin:/bin\0')
+      if (argv[0] === 'git' || cmd.includes('auth setup-git')) return ok()
+      return undefined
+    })
+    on('process.spawn', async function* (_$, e) {
+      ran.push(e.argv.join(' '))
+      yield { stream: 'stderr' as const, text: '! First copy your one-time code: ABCD-1234\n' }
+      signedIn = true
+      return { value: { code: 0, signal: null } }
+    })
+    await $.session.start({ cwd: ROOT, surface: 'desktop', isInteractive: true })
+    const ui = await mountPane($)
+    await ui.press({ key: 'setup-go' })
+    expect(await ui.find({ type: 'Text', text: 'Sign in to GitHub' })).toBeDefined()
+    await ui.press({ key: 'setup-go' })
+    expect(ran.some(c => c.includes('auth login --hostname github.com --git-protocol https --web'))).toBe(true)
+    expect(await ui.find({ type: 'Text', text: 'Make your cloud copy' })).toBeDefined()
+    await ui.press({ key: 'setup-go' })
+    expect(ran.some(c => c.includes('repo create brain --private --source /brain --remote origin --push'))).toBe(true)
+    expect(JSON.parse(files[`${ROOT}/.handoff/brain.json`] ?? '{}').backupRemote).toBe(URL)
+    expect(await ui.find({ type: 'Text', text: 'Backed up' })).toBeDefined()
+    await ui.unmount()
+  })
+
+  test('putting the Chief on shift copies the steps and opens the page', async ($, on) => {
+    const ran: { argv: string; stdin?: string }[] = []
+    fakeWorld(on, brainFiles(false), {}, ROOT, {}, [], (argv, stdin) => {
+      ran.push({ argv: argv.join(' '), stdin })
+      return { exitCode: 1 }
+    })
+    on('prompt.submit', async (_$, e) => ({ text: e.text }))
+    await $.session.start({ cwd: ROOT, surface: 'desktop', isInteractive: true })
+    const ui = await mountPane($)
+    await ui.press({ key: 'setup-go' }) // welcome
+    await ui.press({ key: 'setup-later' }) // backup
+    await ui.press({ key: 'setup-go' }) // open the connections page
+    expect(ran.some(r => r.argv === '/usr/bin/open https://claude.ai/customize/connectors')).toBe(true)
+    await ui.press({ key: 'setup-go' }) // done
+    await ui.press({ key: 'setup-go' }) // interview
+    await ui.press({ key: 'setup-go' }) // chief
+    await ui.press({ key: 'setup-go' }) // brief
+    expect(await ui.find({ type: 'Text', text: 'Put your Chief on shift' })).toBeDefined()
+    await ui.press({ key: 'setup-go' })
+    expect(ran.find(r => r.argv === '/usr/bin/pbcopy')?.stdin).toMatch(/morning-shift/)
+    expect(ran.some(r => r.argv === '/usr/bin/open https://claude.ai/code/scheduled')).toBe(true)
+    expect(await ui.find({ type: 'Text', text: 'Paste the steps' })).toBeDefined()
     await ui.unmount()
   })
 
@@ -219,6 +344,22 @@ describe('nothing reaches a person without the owner\'s tap', () => {
     const ui = await mountPane($)
     expect(await ui.find({ key: 'send-0' })).toBeDefined()
     await ui.unmount()
+  })
+
+  test('by default a message to a person becomes a draft, never a Send button', async ($, on) => {
+    const store: Record<string, unknown> = {}
+    fakeWorld(on, brainFiles(true, false, { claude_ai_Gmail: 'gmail' }, false), store)
+    let reached = 0
+    on('tool.call', async () => {
+      reached += 1
+      return { result: 'ok' }
+    })
+    await $.session.start({ cwd: ROOT, surface: 'desktop', isInteractive: true })
+    const held = await $.tool.call({ tool: 'mcp__claude_ai_Gmail__send_message', to: ['sam@bigco.com'], body: 'Hi Sam' })
+    expect(held.deny).toMatch(/draft/)
+    expect(Object.keys(store).some(k => k.startsWith('handoff-team:card:'))).toBe(false)
+    expect((await $.tool.call({ tool: 'mcp__claude_ai_Gmail__create_draft', to: ['sam@bigco.com'], body: 'Hi Sam' })).deny).toBeUndefined()
+    expect(reached).toBe(1)
   })
 
   test('reads pass; programs, the web and the rules are held', async ($, on) => {

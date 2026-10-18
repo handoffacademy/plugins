@@ -146,6 +146,9 @@ const WORKING_DIRS = ['business/', 'how we work/', 'decisions/', 'projects/', 't
 // opens "AGENTſ.md" (long s) when a tool asks for AGENTS.md.
 const INSTRUCTION_FILE = /^(claude|agents?|gemini)(\..*)?\.md$/
 const isInstructionFile = (name: string) => INSTRUCTION_FILE.test(name.normalize('NFKC').toLowerCase())
+// A note name never needs a character nobody can see; some disks ignore them
+// when matching names.
+const INVISIBLE = /[\p{Cc}\p{Cf}\p{Co}\p{Cn}\p{Zl}\p{Zp}\p{Default_Ignorable_Code_Point}]/u
 
 export function isWorkingNote(root: string, path: unknown): boolean {
   if (typeof path !== 'string' || path.length === 0) return false
@@ -153,7 +156,7 @@ export function isWorkingNote(root: string, path: unknown): boolean {
   if (!rel) return false
   const lower = rel.toLowerCase()
   if (!lower.endsWith('.md')) return false
-  if (rel.split('/').some(seg => seg.startsWith('.') || /[\u0000-\u001f]/.test(seg) || isInstructionFile(seg))) return false
+  if (rel.split('/').some(seg => seg.startsWith('.') || INVISIBLE.test(seg) || isInstructionFile(seg))) return false
   return WORKING_DIRS.some(dir => lower.startsWith(dir) && lower.length > dir.length)
 }
 

@@ -180,6 +180,9 @@ describe('employees write Markdown working notes and nothing else', () => {
       'Projects/AGENT.md',
       'Business/claude.notes.md',
       'Decisions/Gemini.local.md',
+      `Business/CLAUDE${cp(0x200b)}.md`,
+      `Business/CLA${cp(0xad)}UDE.md`,
+      `Projects/notes${cp(0xfe0f)}.md`,
     ]) {
       expect({ p, ok: isWorkingNote(ROOT, p) }).toEqual({ p, ok: false })
     }
