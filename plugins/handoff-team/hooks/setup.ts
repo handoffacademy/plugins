@@ -52,6 +52,12 @@ export function repoName(folder: string): string {
   return slug || 'my-brain'
 }
 
+// owner/repo for a plain GitHub https address; '' for anything else.
+export function githubRepo(url: string): string {
+  const m = /^https:\/\/github\.com\/([A-Za-z0-9-]+)\/([A-Za-z0-9._-]+?)(\.git)?\/?$/.exec(url.trim())
+  return m ? `${m[1]}/${m[2]}` : ''
+}
+
 // The one-time code GitHub's helper prints while signing in.
 export function signInCode(text: string): string {
   return /\b([A-Z0-9]{4}-[A-Z0-9]{4})\b/.exec(text)?.[1] ?? ''

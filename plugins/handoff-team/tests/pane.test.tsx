@@ -431,17 +431,18 @@ describe('Team View draws on the desktop and the terminal', () => {
     await ui.unmount()
   })
 
-  test('backup never adopts a cloud copy it did not make', async ($, on) => {
+  test('a cloud copy the brain already has is used only when the owner says so', async ($, on) => {
     const files = brainFiles(false)
     files['/opt/homebrew/bin/gh'] = ''
     files[`${ROOT}/.git/HEAD`] = 'ref: refs/heads/main'
+    const URL = 'https://github.com/maria/my-brain.git'
     const ran: string[] = []
     fakeWorld(on, files, {}, ROOT, {}, [], argv => {
       const cmd = argv.join(' ')
       ran.push(cmd)
       if (cmd === '/usr/bin/xcode-select -p' || cmd.endsWith('auth status --hostname github.com')) return { exitCode: 0 }
-      if (cmd.includes('remote get-url')) return { exitCode: 0, stdout: 'https://github.com/someone-else/brain.git\n' }
-      if (cmd.includes('config --local')) return { exitCode: 0, stdout: 'core.bare\nfalse\0' }
+      if (cmd.includes('remote get-url')) return { exitCode: 0, stdout: `${URL}\n` }
+      if (cmd.includes('config --local')) return { exitCode: 0, stdout: `core.bare\nfalse\0remote.origin.url\n${URL}\0` }
       if (cmd.includes('config --list --show-origin')) return { exitCode: 0, stdout: '' }
       if (cmd === '/usr/bin/env -0') return { exitCode: 0, stdout: 'HOME=/Users/maria\0PATH=/usr/bin:/bin\0' }
       return argv[0] === 'git' ? { exitCode: 0 } : undefined
@@ -449,11 +450,13 @@ describe('Team View draws on the desktop and the terminal', () => {
     await $.session.start({ cwd: ROOT, surface: 'desktop', isInteractive: true })
     const ui = await mountPane($)
     await ui.press({ key: 'setup-go' })
-    expect(await ui.find({ type: 'Text', text: 'Make your cloud copy' })).toBeDefined()
-    await ui.press({ key: 'setup-go' })
-    expect(await ui.find({ type: 'Text', text: 'Backup did not finish' })).toBeDefined()
-    expect(ran.some(c => c.includes(' repo create '))).toBe(false)
+    expect(await ui.find({ type: 'Text', text: 'Use your cloud copy' })).toBeDefined()
+    expect(await ui.find({ type: 'Text', text: 'maria/my-brain' })).toBeDefined()
     expect(JSON.parse(files[`${ROOT}/.handoff/brain.json`] ?? '{}').backupRemote).toBeUndefined()
+    await ui.press({ key: 'setup-go' })
+    expect(JSON.parse(files[`${ROOT}/.handoff/brain.json`] ?? '{}').backupRemote).toBe(URL)
+    expect(ran.some(c => c.includes(' repo create '))).toBe(false)
+    expect(await ui.find({ type: 'Text', text: 'Backed up' })).toBeDefined()
     await ui.unmount()
   })
 

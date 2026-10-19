@@ -204,6 +204,7 @@ export const STRINGS = {
     code: { title: 'Paste this code', body: 'Paste the code on the GitHub page that opened, then click Authorize.', button: 'Check again' },
     makeCopy: { title: 'Make your cloud copy', body: 'We make a private copy of your brain on GitHub. Only you can see it.', button: 'Make it' },
     making: { title: 'Making your copy', body: 'Saving your brain to its private cloud copy.', button: 'Check again' },
+    adopt: { title: 'Use your cloud copy', body: 'This brain already has a copy on GitHub. Back up there from now on?', button: 'Use it' },
     done: { title: 'Backed up', body: 'Your brain has a private cloud copy. Changes save on their own.', button: 'Next' },
     failed: { title: 'Backup did not finish', body: 'Try again, or bring this screen to the Setup Clinic.', button: 'Try again' },
   },

@@ -23,7 +23,7 @@ import {
   unplainSettings,
 } from './gate'
 import type { Adapter, McpTarget } from './gate'
-import { CONNECTORS_URL, GH_DOWNLOAD_URL, IGNORABLE, NEW_BRAIN_NOTE, SCHEDULED_URL, SHIFT_PROMPT, filled, isSystemFile, onlyMcpChoices, repoName, signInCode } from './setup'
+import { CONNECTORS_URL, GH_DOWNLOAD_URL, IGNORABLE, NEW_BRAIN_NOTE, SCHEDULED_URL, SHIFT_PROMPT, filled, githubRepo, isSystemFile, onlyMcpChoices, repoName, signInCode } from './setup'
 import { BASE, PRACTICE } from './template'
 import { CAPS, STRINGS, activityFor, activityLine, capWords } from './words'
 
@@ -597,8 +597,26 @@ const ghPath = async ($: EngineInterface): Promise<string> => {
   return found?.exitCode === 0 ? 'gh' : ''
 }
 
+// The brain's own GitHub copy, when it already has one (a brain copied from
+// the template on github.com): every fetch and push address the same plain
+// GitHub https address. '' otherwise.
+const existingCopy = async ($: EngineInterface): Promise<string> => {
+  const all = async (args: string[]) => {
+    const out = await git($, root, args)
+    return out.exitCode === 0 ? out.stdout.split('\n').map(u => u.trim()).filter(Boolean) : []
+  }
+  const fetch = await all(['remote', 'get-url', '--all', 'origin'])
+  const push = await all(['remote', 'get-url', '--push', '--all', 'origin'])
+  const urls = [...new Set([...fetch, ...push])]
+  return fetch.length > 0 && push.length > 0 && urls.length === 1 && githubRepo(urls[0] ?? '') ? (urls[0] ?? '') : ''
+}
+
 const backupStage = async ($: EngineInterface): Promise<BackupFlow> => {
   if (brain?.backupRemote && (await remoteIsPinned($, root).catch(() => false))) return { stage: 'done', code: '' }
+  if (!brain?.backupRemote && (await $.fs.exists(join(root, '.git'))) && (await hasGit($))) {
+    const url = await existingCopy($).catch(() => '')
+    if (url) return { stage: 'adopt', code: githubRepo(url) }
+  }
   if (!(await hasGit($))) return { stage: 'needGit', code: '' }
   const gh = await ghPath($)
   if (!gh) return { stage: 'needGh', code: '' }
@@ -723,6 +741,26 @@ const applyUpdate = async ($: EngineInterface) => {
   madeHere = true
   await refreshUpdate($)
   await runBackup($)
+}
+
+// The owner said yes to the copy the brain already has: pin it, after the same
+// checks as every save.
+const adoptCopy = async ($: EngineInterface, shown: string) => {
+  if (!root || brain?.backupRemote) return checkBackup($)
+  await update($, backupFlowA, (): BackupFlow => ({ stage: 'making', code: '' }))
+  const failed = () => update($, backupFlowA, (): BackupFlow => ({ stage: 'failed', code: '' }))
+  if (!(await settingsAreSafe($, root))) return failed()
+  const url = await existingCopy($)
+  // Only the copy the owner was shown.
+  if (!url || githubRepo(url) !== shown) return failed()
+  const path = join(root, MARKER)
+  const raw = JSON.parse(await $.fs.read(path)) as Record<string, unknown>
+  await $.fs.write(path, `${JSON.stringify({ ...raw, backupRemote: url }, null, 2)}\n`)
+  brain = (await readBrain($, root)) ?? brain
+  await update($, brainA, () => brain)
+  await runBackup($)
+  const saved = (await read($, backupA)).state === 'saved'
+  await update($, backupFlowA, (): BackupFlow => ({ stage: saved ? 'done' : 'failed', code: '' }))
 }
 
 // The shift runs in Anthropic's cloud on the cloud copy. Its steps go on the
@@ -1165,6 +1203,7 @@ export const register: Register = on => {
           }
         else if (flow.stage === 'signIn') go = async () => void signIn($).catch(() => undefined)
         else if (flow.stage === 'makeCopy') go = async () => void makeCopy($).catch(() => undefined)
+        else if (flow.stage === 'adopt') go = async () => void adoptCopy($, flow.code).catch(() => undefined)
         else go = () => checkBackup($)
       } else if (setupScreen.id === 'apps') {
         // Approved already: move on. Found: the owner OKs exactly what is
@@ -1232,6 +1271,7 @@ export const register: Register = on => {
                 {SERVICE_NAME[svc]} {STRINGS.line.doubled}
               </Text>
             ))}
+          {setupScreen.id === 'backup' && flow.stage === 'adopt' && flow.code && <Text bold>{flow.code}</Text>}
           {setupScreen.id === 'backup' && flow.stage === 'code' && flow.code && (
             <Text bold color="claude">
               {flow.code}
