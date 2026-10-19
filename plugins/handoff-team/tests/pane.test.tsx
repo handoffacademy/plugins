@@ -436,12 +436,15 @@ describe('Team View draws on the desktop and the terminal', () => {
     files['/opt/homebrew/bin/gh'] = ''
     files[`${ROOT}/.git/HEAD`] = 'ref: refs/heads/main'
     const URL = 'https://github.com/maria/my-brain.git'
+    let visible = 'PUBLIC'
+    const visibility = () => visible
     const ran: string[] = []
     fakeWorld(on, files, {}, ROOT, {}, [], argv => {
       const cmd = argv.join(' ')
       ran.push(cmd)
       if (cmd === '/usr/bin/xcode-select -p' || cmd.endsWith('auth status --hostname github.com')) return { exitCode: 0 }
       if (cmd.includes('remote get-url')) return { exitCode: 0, stdout: `${URL}\n` }
+      if (cmd.includes(' repo view maria/my-brain ')) return { exitCode: 0, stdout: JSON.stringify({ visibility: visibility(), viewerPermission: 'ADMIN' }) }
       if (cmd.includes('config --local')) return { exitCode: 0, stdout: `core.bare\nfalse\0remote.origin.url\n${URL}\0` }
       if (cmd.includes('config --list --show-origin')) return { exitCode: 0, stdout: '' }
       if (cmd === '/usr/bin/env -0') return { exitCode: 0, stdout: 'HOME=/Users/maria\0PATH=/usr/bin:/bin\0' }
@@ -449,6 +452,11 @@ describe('Team View draws on the desktop and the terminal', () => {
     })
     await $.session.start({ cwd: ROOT, surface: 'desktop', isInteractive: true })
     const ui = await mountPane($)
+    await ui.press({ key: 'setup-go' })
+    // Public on GitHub: never offered, never pinned.
+    expect(await ui.find({ type: 'Text', text: 'Your cloud copy is public' })).toBeDefined()
+    expect(JSON.parse(files[`${ROOT}/.handoff/brain.json`] ?? '{}').backupRemote).toBeUndefined()
+    visible = 'PRIVATE'
     await ui.press({ key: 'setup-go' })
     expect(await ui.find({ type: 'Text', text: 'Use your cloud copy' })).toBeDefined()
     expect(await ui.find({ type: 'Text', text: 'maria/my-brain' })).toBeDefined()

@@ -66,7 +66,7 @@ export type Energy = { level: 'plenty' | 'low' | 'out'; resetsAt?: string }
 export type Backup = { state: 'idle' | 'saving' | 'saved' | 'conflict' | 'off'; files: string[] }
 
 // Turning on backup during setup, one screen per stage.
-export type BackupStage = 'checking' | 'needGit' | 'needGh' | 'signIn' | 'code' | 'makeCopy' | 'making' | 'adopt' | 'done' | 'failed'
+export type BackupStage = 'checking' | 'needGit' | 'needGh' | 'signIn' | 'code' | 'makeCopy' | 'making' | 'adopt' | 'public' | 'done' | 'failed'
 export type BackupFlow = { stage: BackupStage; code: string }
 
 declare module 'claude-code' {

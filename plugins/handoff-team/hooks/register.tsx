@@ -613,15 +613,37 @@ const existingCopy = async ($: EngineInterface): Promise<string> => {
 
 const backupStage = async ($: EngineInterface): Promise<BackupFlow> => {
   if (brain?.backupRemote && (await remoteIsPinned($, root).catch(() => false))) return { stage: 'done', code: '' }
-  if (!brain?.backupRemote && (await $.fs.exists(join(root, '.git'))) && (await hasGit($))) {
-    const url = await existingCopy($).catch(() => '')
-    if (url) return { stage: 'adopt', code: githubRepo(url) }
-  }
   if (!(await hasGit($))) return { stage: 'needGit', code: '' }
   const gh = await ghPath($)
   if (!gh) return { stage: 'needGh', code: '' }
   const status = await $.process.run([gh, 'auth', 'status', '--hostname', 'github.com'], { timeoutMs: 20_000 }).catch(() => undefined)
-  return { stage: status?.exitCode === 0 ? 'makeCopy' : 'signIn', code: '' }
+  if (status?.exitCode !== 0) return { stage: 'signIn', code: '' }
+  // A brain copied from the template already has its own GitHub copy: offer it
+  // only when GitHub says it is private and the signed-in owner runs it.
+  if (!brain?.backupRemote && (await $.fs.exists(join(root, '.git')))) {
+    const url = await existingCopy($).catch(() => '')
+    if (url) {
+      const repo = githubRepo(url)
+      const kind = await copyKind($, gh, repo)
+      return { stage: kind === 'private' ? 'adopt' : kind === 'public' ? 'public' : 'failed', code: repo }
+    }
+  }
+  return { stage: 'makeCopy', code: '' }
+}
+
+// What GitHub says about the brain's existing copy, for the signed-in owner.
+const copyKind = async ($: EngineInterface, gh: string, repo: string): Promise<'private' | 'public' | 'other'> => {
+  const out = await $.process
+    .run([gh, 'repo', 'view', repo, '--json', 'visibility,viewerPermission'], { timeoutMs: 20_000 })
+    .catch(() => undefined)
+  if (out?.exitCode !== 0) return 'other'
+  try {
+    const info = JSON.parse(out.stdout) as { visibility?: string; viewerPermission?: string }
+    if (info.viewerPermission !== 'ADMIN') return 'other'
+    return info.visibility === 'PRIVATE' ? 'private' : 'public'
+  } catch {
+    return 'other'
+  }
 }
 
 const checkBackup = async ($: EngineInterface) => {
@@ -751,8 +773,9 @@ const adoptCopy = async ($: EngineInterface, shown: string) => {
   const failed = () => update($, backupFlowA, (): BackupFlow => ({ stage: 'failed', code: '' }))
   if (!(await settingsAreSafe($, root))) return failed()
   const url = await existingCopy($)
-  // Only the copy the owner was shown.
-  if (!url || githubRepo(url) !== shown) return failed()
+  // Only the copy the owner was shown, and only while it is still private.
+  const gh = await ghPath($)
+  if (!url || githubRepo(url) !== shown || !gh || (await copyKind($, gh, shown)) !== 'private') return failed()
   const path = join(root, MARKER)
   const raw = JSON.parse(await $.fs.read(path)) as Record<string, unknown>
   await $.fs.write(path, `${JSON.stringify({ ...raw, backupRemote: url }, null, 2)}\n`)
@@ -1271,7 +1294,7 @@ export const register: Register = on => {
                 {SERVICE_NAME[svc]} {STRINGS.line.doubled}
               </Text>
             ))}
-          {setupScreen.id === 'backup' && flow.stage === 'adopt' && flow.code && <Text bold>{flow.code}</Text>}
+          {setupScreen.id === 'backup' && (flow.stage === 'adopt' || flow.stage === 'public') && flow.code && <Text bold>{flow.code}</Text>}
           {setupScreen.id === 'backup' && flow.stage === 'code' && flow.code && (
             <Text bold color="claude">
               {flow.code}
