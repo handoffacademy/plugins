@@ -301,6 +301,9 @@ const HIDDEN = /[\p{Cc}\p{Cf}\p{Co}\p{Cn}\p{Zl}\p{Zp}\p{Variation_Selector}\u{34
 const isText = (v: unknown): v is string => typeof v === 'string' && !HIDDEN.test(v)
 // A message body may break lines and indent; nothing else hidden.
 const isBody = (v: unknown): v is string => typeof v === 'string' && !HIDDEN.test(v.replace(/[\n\t]/g, ''))
+// Text the owner approves as instructions (a training, a job page): any
+// character nobody can see means the card cannot show what would be kept.
+export const hasHiddenText = (v: string): boolean => !isBody(v)
 const isTextList = (v: unknown): v is string[] => Array.isArray(v) && v.every(isText)
 
 function emailView(args: Record<string, unknown>): CardView {

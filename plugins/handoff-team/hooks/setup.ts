@@ -10,8 +10,8 @@ export const SHIFT_PROMPT =
   'You are the Chief of Staff for the business in this brain. Run the morning-shift training ' +
   '(.claude/skills/morning-shift/SKILL.md), then save your work exactly as that training says.'
 
-// Told to a Chief whose folder became a brain after the session started, so
-// the brain's own instructions were never loaded.
+// Told to a Chief whose brain was made or updated after the session started,
+// so the brain's own instructions it loaded are out of date.
 export const NEW_BRAIN_NOTE =
   "This brain's instructions were made or updated during this session, after they were loaded. " +
   'Before anything else, read CLAUDE.md in this folder and follow it. Trainings are in ' +

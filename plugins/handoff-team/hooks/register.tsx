@@ -10,6 +10,7 @@ import { MARKER, chatEntry, join, mirrorNote, parseBrain, parseBrief, parseCard,
 import {
   cardView,
   classify,
+  hasHiddenText,
   detectServices,
   doubledServices,
   isWorkingNote,
@@ -840,6 +841,9 @@ const approveConnections = async ($: EngineInterface, shown: Record<string, Serv
 const approveTraining = async ($: EngineInterface, card: Card) => {
   const name = card.name ?? ''
   if (!root || !/^[a-z0-9][a-z0-9-]{1,40}$/.test(name) || BUILT_IN_TRAININGS.has(name)) return
+  if (hasHiddenText(card.title) || hasHiddenText(card.summary)) return
+  // A name already in use is taken: a training is never replaced here.
+  if ((await $.fs.exists(join(root, `.claude/skills/${name}`))) || (await $.fs.exists(join(root, `Trainings/${name}`)))) return
   const current = parseCard(card.path, await $.fs.read(card.path))
   if (!current || current.kind !== 'training' || current.name !== name || current.summary !== card.summary || current.title !== card.title) return
   const realRoot = (await $.fs.stat(root, { resolve: true }).catch(() => undefined))?.realPath
@@ -861,7 +865,7 @@ const nameTaken = (name: string) =>
 const approveHire = async ($: EngineInterface, card: Card) => {
   if (!card.name || !brain) return
   const name = hireName(card)
-  if (!name || nameTaken(name)) return
+  if (!name || nameTaken(name) || hasHiddenText(card.title) || hasHiddenText(card.summary)) return
   // The proposal must be unchanged since the owner read it: name, role and page.
   const current = parseCard(card.path, await $.fs.read(card.path))
   if (!current || current.kind !== 'hire' || current.name !== card.name || current.summary !== card.summary || current.title !== card.title) return
@@ -1119,6 +1123,9 @@ export const register: Register = on => {
     const doubled = doubledServices(toolNames)
     const roster = showAll ? info.employees : info.employees.slice(0, 4)
     const pending = await read($, updateA)
+    const trainingNames = new Set<string>()
+    for (const dir of ['.claude/skills', 'Trainings'])
+      for (const entry of await $.fs.list(join(root, dir)).catch(() => [])) trainingNames.add(entry.name)
 
     const setupScreen = !info.setupDone && STRINGS.setup[step]
     if (setupScreen) {
@@ -1321,15 +1328,19 @@ export const register: Register = on => {
       const isHire = card.kind === 'hire'
       const isTraining = card.kind === 'training'
       const name = isHire ? hireName(card) : isTraining ? (card.name ?? '') : ''
-      const taken = (isHire && nameTaken(name)) || (isTraining && BUILT_IN_TRAININGS.has(name))
-      // A training is added only once the owner can see every step.
-      const seenAll = expanded === card.id || card.summary === capWords(card.summary, CAPS.cardBody)
+      const taken = (isHire && nameTaken(name)) || (isTraining && (BUILT_IN_TRAININGS.has(name) || trainingNames.has(name)))
+      // A hire or a training is kept only once the owner can see every word
+      // that will be kept, title included, and none of it is hidden.
+      const isOpen = expanded === card.id
+      const titleShort = capWords(card.title, CAPS.chat)
+      const seenAll = isOpen || (card.summary === capWords(card.summary, CAPS.cardBody) && card.title === titleShort)
+      const hidden = (isHire || isTraining) && (hasHiddenText(card.title) || hasHiddenText(card.summary))
       return (
         <Box key={`card-${i}`} flexDirection="column" borderStyle="round" borderColor="warning" paddingX={1}>
           <Text bold>
             {isHire ? capWords(`Hire ${name}?`, CAPS.cardTitle) : isTraining ? capWords(`Add training ${name}?`, CAPS.cardTitle) : capWords(card.title, CAPS.cardTitle)}
           </Text>
-          {(isHire || isTraining) && <Text dimColor>{capWords(card.title, CAPS.chat)}</Text>}
+          {(isHire || isTraining) && <Text dimColor>{isOpen ? card.title : titleShort}</Text>}
           {isTraining && <Text>{STRINGS.line.trainingAdds}</Text>}
           {isHire && (
             <Text>
@@ -1337,7 +1348,7 @@ export const register: Register = on => {
             </Text>
           )}
           <Text>{expanded === card.id ? card.summary : capWords(card.summary, CAPS.cardBody)}</Text>
-          {card.summary !== capWords(card.summary, CAPS.cardBody) && (
+          {(card.summary !== capWords(card.summary, CAPS.cardBody) || ((isHire || isTraining) && card.title !== titleShort)) && (
             <Button
               key={`more-${i}`}
               plain
@@ -1347,9 +1358,10 @@ export const register: Register = on => {
           )}
           {card.why && <Text dimColor>Why: {capWords(card.why, CAPS.chat)}</Text>}
           {taken && <Text color="warning">{isTraining ? STRINGS.line.builtInName : STRINGS.line.nameTaken}</Text>}
-          {isTraining && !taken && !seenAll && <Text dimColor>{STRINGS.line.readAllAdd}</Text>}
+          {hidden && <Text color="warning">{STRINGS.line.cantShowCard}</Text>}
+          {(isHire || isTraining) && !taken && !hidden && !seenAll && <Text dimColor>{STRINGS.line.readAllAdd}</Text>}
           <Box gap={1}>
-            {!taken && (!isTraining || seenAll) && (
+            {!taken && !hidden && (!(isHire || isTraining) || seenAll) && (
               <Button
                 key={`ok-${i}`}
                 label={isHire ? STRINGS.button.looksGoodHire : isTraining ? STRINGS.button.addTraining : STRINGS.button.looksGood}

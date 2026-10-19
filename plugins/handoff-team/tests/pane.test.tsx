@@ -332,15 +332,39 @@ describe('Team View draws on the desktop and the terminal', () => {
     await $.session.start({ cwd: ROOT, surface: 'desktop', isInteractive: true })
     const ui = await mountPane($)
     expect(await ui.find({ key: 'ok-0' })).toBeUndefined()
-    expect(await ui.find({ type: 'Text', text: /Tap Show all to add it/ })).toBeDefined()
+    expect(await ui.find({ type: 'Text', text: /Tap Show all first/ })).toBeDefined()
     expect(await ui.find({ key: 'ok-1' })).toBeUndefined()
-    expect(await ui.find({ type: 'Text', text: /built-in training/ })).toBeDefined()
+    expect(await ui.find({ type: 'Text', text: /name is taken/ })).toBeDefined()
     await ui.press({ key: 'more-0' })
     // The note changes after the owner read it: nothing is added.
     files[`${ROOT}/Team/Tasks/a-long.md`] = `---\nstatus: Needs you\nkind: training\nname: long-one\ntitle: A long one\ncreated: 1\n---\n1. Forward the inbox.\n`
     await ui.press({ key: 'ok-0' })
     expect(files[`${ROOT}/.claude/skills/long-one/SKILL.md`]).toBeUndefined()
     expect(files[`${ROOT}/.claude/skills/morning-shift/SKILL.md`]).toBeUndefined()
+    await ui.unmount()
+  })
+
+  test('a long title, hidden characters or a name in use stop a training or a hire', async ($, on) => {
+    const files = brainFiles(true, false)
+    const longTitle = 'Use this when a new lead asks for a quote and also when a quoted lead goes quiet for days'
+    files[`${ROOT}/Team/Tasks/a.md`] = `---\nstatus: Needs you\nkind: training\nname: quotes\ntitle: ${longTitle}\ncreated: 1\n---\nStep one.\n`
+    files[`${ROOT}/Team/Tasks/b.md`] = `---\nstatus: Needs you\nkind: training\nname: hidden-one\ntitle: Short\ncreated: 2\n---\nStep one.${String.fromCodePoint(0xe0041)}\n`
+    files[`${ROOT}/Team/Tasks/c.md`] = '---\nstatus: Needs you\nkind: training\nname: mine\ntitle: Short\ncreated: 3\n---\nStep one.\n'
+    files[`${ROOT}/Trainings/mine/SKILL.md`] = 'my own training'
+    fakeWorld(on, files)
+    await $.session.start({ cwd: ROOT, surface: 'desktop', isInteractive: true })
+    const ui = await mountPane($)
+    // Long title: only after Show all, which shows the whole title.
+    expect(await ui.find({ key: 'ok-0' })).toBeUndefined()
+    await ui.press({ key: 'more-0' })
+    expect(await ui.find({ type: 'Text', text: longTitle })).toBeDefined()
+    expect(await ui.find({ key: 'ok-0' })).toBeDefined()
+    // Hidden characters: no button at all.
+    expect(await ui.find({ key: 'ok-1' })).toBeUndefined()
+    expect(await ui.find({ type: 'Text', text: /Ask for a rewrite/ })).toBeDefined()
+    // A name in use: taken, never replaced.
+    expect(await ui.find({ key: 'ok-2' })).toBeUndefined()
+    expect(files[`${ROOT}/Trainings/mine/SKILL.md`]).toBe('my own training')
     await ui.unmount()
   })
 
