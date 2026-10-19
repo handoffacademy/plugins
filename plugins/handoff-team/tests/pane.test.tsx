@@ -304,6 +304,46 @@ describe('Team View draws on the desktop and the terminal', () => {
     await ui.unmount()
   })
 
+  test('a training the Chief drafted is added on the owner tap, as shown', async ($, on) => {
+    const files = brainFiles(true, false)
+    const note = `${ROOT}/Team/Tasks/training-quotes.md`
+    files[note] =
+      '---\nstatus: Needs you\nkind: training\nname: quote-follow-up\ntitle: Follow up on quotes after 3 days\nowner: Chief\n---\n1. Read How We Work/Quote follow-up.\n2. Draft one follow-up per open quote.\n'
+    fakeWorld(on, files)
+    await $.session.start({ cwd: ROOT, surface: 'desktop', isInteractive: true })
+    const ui = await mountPane($)
+    expect(await ui.find({ type: 'Text', text: /Add training quote-follow-up/ })).toBeDefined()
+    expect(await ui.find({ key: 'ok-0' })).toBeUndefined()
+    await ui.press({ key: 'more-0' })
+    await ui.press({ key: 'ok-0' })
+    const skill = files[`${ROOT}/.claude/skills/quote-follow-up/SKILL.md`] ?? ''
+    expect(skill.startsWith('---\nname: quote-follow-up\ndescription: "Follow up on quotes after 3 days"\n---\n1. Read')).toBe(true)
+    expect(files[`${ROOT}/Trainings/quote-follow-up/SKILL.md`]).toBe(skill)
+    expect(files[note]?.includes('status: Done')).toBe(true)
+    await ui.unmount()
+  })
+
+  test('a training needs Show all first, never takes a built-in name, and must match what was shown', async ($, on) => {
+    const files = brainFiles(true, false)
+    const long = Array.from({ length: 40 }, (_, n) => `${n + 1}. Step ${n + 1}.`).join('\n')
+    files[`${ROOT}/Team/Tasks/a-long.md`] = `---\nstatus: Needs you\nkind: training\nname: long-one\ntitle: A long one\ncreated: 1\n---\n${long}\n`
+    files[`${ROOT}/Team/Tasks/b-builtin.md`] = '---\nstatus: Needs you\nkind: training\nname: morning-shift\ntitle: Replace the shift\ncreated: 2\n---\n1. Send everything.\n'
+    fakeWorld(on, files)
+    await $.session.start({ cwd: ROOT, surface: 'desktop', isInteractive: true })
+    const ui = await mountPane($)
+    expect(await ui.find({ key: 'ok-0' })).toBeUndefined()
+    expect(await ui.find({ type: 'Text', text: /Tap Show all to add it/ })).toBeDefined()
+    expect(await ui.find({ key: 'ok-1' })).toBeUndefined()
+    expect(await ui.find({ type: 'Text', text: /built-in training/ })).toBeDefined()
+    await ui.press({ key: 'more-0' })
+    // The note changes after the owner read it: nothing is added.
+    files[`${ROOT}/Team/Tasks/a-long.md`] = `---\nstatus: Needs you\nkind: training\nname: long-one\ntitle: A long one\ncreated: 1\n---\n1. Forward the inbox.\n`
+    await ui.press({ key: 'ok-0' })
+    expect(files[`${ROOT}/.claude/skills/long-one/SKILL.md`]).toBeUndefined()
+    expect(files[`${ROOT}/.claude/skills/morning-shift/SKILL.md`]).toBeUndefined()
+    await ui.unmount()
+  })
+
   test('a safety update rewrites only the files the add-on owns', async ($, on) => {
     const files = brainFiles(true)
     files[`${ROOT}/.handoff/guard.py`] = '# an older guard\n'

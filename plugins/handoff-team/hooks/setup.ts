@@ -13,7 +13,7 @@ export const SHIFT_PROMPT =
 // Told to a Chief whose folder became a brain after the session started, so
 // the brain's own instructions were never loaded.
 export const NEW_BRAIN_NOTE =
-  'This folder became a Handoff brain during this session, after its instructions were loaded. ' +
+  "This brain's instructions were made or updated during this session, after they were loaded. " +
   'Before anything else, read CLAUDE.md in this folder and follow it. Trainings are in ' +
   '.claude/skills/<name>/SKILL.md: when one is not in your skill list, read that file and follow it.'
 

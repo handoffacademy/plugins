@@ -171,8 +171,8 @@ const inFlight = new Set<string>()
 // plain reading goes on, as when the gate itself fails.
 let initFailed = false
 const READ_ONLY = ['Read', 'Glob', 'Grep', 'LS', 'NotebookRead', 'TodoWrite']
-// Set when this session turned an empty folder into a brain: the brain's own
-// instructions were not loaded at the start, so the Chief is told to read them.
+// Set when this session made the brain or updated its rules: what was loaded
+// at the start is out of date, so the Chief is told to read them again.
 let madeHere = false
 // The empty folder Team View is offering to make a brain in. Until the owner
 // taps, only reading goes on there, so nothing can make the brain for them.
@@ -672,6 +672,13 @@ const makeCopy = async ($: EngineInterface) => {
   await update($, backupFlowA, (): BackupFlow => ({ stage: saved ? 'done' : 'failed', code: '' }))
 }
 
+// Trainings the add-on ships; their files belong to Safety update.
+const BUILT_IN_TRAININGS = new Set(
+  Object.keys(BASE)
+    .map(rel => /^\.claude\/skills\/([^/]+)\/SKILL\.md$/.exec(rel)?.[1])
+    .filter((name): name is string => Boolean(name)),
+)
+
 // A brain keeps the files it was made with. When the add-on carries newer
 // safety rules or trainings, Team View offers them; nothing changes until the
 // owner taps Update.
@@ -712,6 +719,7 @@ const applyUpdate = async ($: EngineInterface) => {
     const text = BASE[rel]
     if (text !== undefined && (await plainInsideBrain($, realRoot, rel))) await $.fs.write(join(root, rel), text)
   }
+  madeHere = true
   await refreshUpdate($)
   await runBackup($)
 }
@@ -825,6 +833,25 @@ const approveConnections = async ($: EngineInterface, shown: Record<string, Serv
   await $.fs.write(path, `${JSON.stringify({ ...raw, connections: found }, null, 2)}\n`)
   brain = (await readBrain($, root)) ?? brain
   await update($, brainA, () => brain)
+}
+
+// A training the Chief drafted, added on the owner's tap: the steps exactly as
+// the card showed them, under a name that is not a built-in training.
+const approveTraining = async ($: EngineInterface, card: Card) => {
+  const name = card.name ?? ''
+  if (!root || !/^[a-z0-9][a-z0-9-]{1,40}$/.test(name) || BUILT_IN_TRAININGS.has(name)) return
+  const current = parseCard(card.path, await $.fs.read(card.path))
+  if (!current || current.kind !== 'training' || current.name !== name || current.summary !== card.summary || current.title !== card.title) return
+  const realRoot = (await $.fs.stat(root, { resolve: true }).catch(() => undefined))?.realPath
+  if (!realRoot) return
+  const description = card.title.replace(/[\r\n]+/g, ' ').trim() || name
+  const text = `---\nname: ${name}\ndescription: ${JSON.stringify(description)}\n---\n${card.summary.trim()}\n`
+  for (const rel of [`.claude/skills/${name}/SKILL.md`, `Trainings/${name}/SKILL.md`]) {
+    if (!(await plainInsideBrain($, realRoot, rel))) return
+  }
+  for (const rel of [`.claude/skills/${name}/SKILL.md`, `Trainings/${name}/SKILL.md`]) await $.fs.write(join(root, rel), text)
+  await setNoteStatus($, card.path, 'Done')
+  await refreshFiles($)
 }
 
 const hireName = (card: Card) => (card.name ?? '').replace(/[^A-Za-z0-9 -]/g, '').trim()
@@ -1292,12 +1319,18 @@ export const register: Register = on => {
 
     const noteCard = (card: Card, i: number) => {
       const isHire = card.kind === 'hire'
-      const name = isHire ? hireName(card) : ''
-      const taken = isHire && nameTaken(name)
+      const isTraining = card.kind === 'training'
+      const name = isHire ? hireName(card) : isTraining ? (card.name ?? '') : ''
+      const taken = (isHire && nameTaken(name)) || (isTraining && BUILT_IN_TRAININGS.has(name))
+      // A training is added only once the owner can see every step.
+      const seenAll = expanded === card.id || card.summary === capWords(card.summary, CAPS.cardBody)
       return (
         <Box key={`card-${i}`} flexDirection="column" borderStyle="round" borderColor="warning" paddingX={1}>
-          <Text bold>{isHire ? capWords(`Hire ${name}?`, CAPS.cardTitle) : capWords(card.title, CAPS.cardTitle)}</Text>
-          {isHire && <Text dimColor>{capWords(card.title, CAPS.chat)}</Text>}
+          <Text bold>
+            {isHire ? capWords(`Hire ${name}?`, CAPS.cardTitle) : isTraining ? capWords(`Add training ${name}?`, CAPS.cardTitle) : capWords(card.title, CAPS.cardTitle)}
+          </Text>
+          {(isHire || isTraining) && <Text dimColor>{capWords(card.title, CAPS.chat)}</Text>}
+          {isTraining && <Text>{STRINGS.line.trainingAdds}</Text>}
           {isHire && (
             <Text>
               {STRINGS.line.hireAdds} {name}.
@@ -1313,14 +1346,15 @@ export const register: Register = on => {
             />
           )}
           {card.why && <Text dimColor>Why: {capWords(card.why, CAPS.chat)}</Text>}
-          {taken && <Text color="warning">{STRINGS.line.nameTaken}</Text>}
+          {taken && <Text color="warning">{isTraining ? STRINGS.line.builtInName : STRINGS.line.nameTaken}</Text>}
+          {isTraining && !taken && !seenAll && <Text dimColor>{STRINGS.line.readAllAdd}</Text>}
           <Box gap={1}>
-            {!taken && (
+            {!taken && (!isTraining || seenAll) && (
               <Button
                 key={`ok-${i}`}
-                label={isHire ? STRINGS.button.looksGoodHire : STRINGS.button.looksGood}
+                label={isHire ? STRINGS.button.looksGoodHire : isTraining ? STRINGS.button.addTraining : STRINGS.button.looksGood}
                 variant="primary"
-                onPress={() => (isHire ? approveHire($, card) : settleNote(card, 'Done'))}
+                onPress={() => (isHire ? approveHire($, card) : isTraining ? approveTraining($, card) : settleNote(card, 'Done'))}
               />
             )}
             <Button key={`edit-${i}`} label={STRINGS.button.edit} onPress={() => edit(card)} />

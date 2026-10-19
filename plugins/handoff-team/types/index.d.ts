@@ -28,7 +28,7 @@ export type Card = {
   id: string
   source: 'store' | 'note'
   path: string
-  kind: 'send' | 'review' | 'hire'
+  kind: 'send' | 'review' | 'hire' | 'training'
   status: CardStatus
   owner: string
   title: string

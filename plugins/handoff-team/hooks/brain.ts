@@ -73,17 +73,19 @@ export function parseCard(path: string, text: string): Card | null {
   if (data.status !== 'Needs you') return null
   if (data.card_id) return null // a mirror of a held send; the store holds the real card
   const isHire = data.kind === 'hire' && Boolean(data.name)
+  // A training's name is its folder: lowercase words joined by dashes.
+  const isTraining = data.kind === 'training' && /^[a-z0-9][a-z0-9-]{1,40}$/.test(data.name ?? '')
   return {
     id: path,
     source: 'note',
     path,
-    kind: isHire ? 'hire' : 'review',
+    kind: isHire ? 'hire' : isTraining ? 'training' : 'review',
     status: 'waiting',
     owner: data.owner || 'Your Chief',
     title: data.title || (isHire ? `Hire ${data.name}` : 'Something to check'),
     why: data.why || '',
     summary: body.trim(),
-    name: isHire ? data.name : undefined,
+    name: isHire || isTraining ? data.name : undefined,
     created: data.created || '',
   }
 }
