@@ -15,6 +15,14 @@
       "description": "Interviews you about your business and your life, then designs the AI hub that runs them: which Claude Projects to create, what each one reads, and what runs on a schedule. Runs as a Quick Plan or as the full interview, and labels every capability line it could not check.",
       "category": "productivity",
       "tags": ["ai-strategy", "claude-projects", "notion", "connectors", "scheduled-tasks", "small-business"]
+    },
+    {
+      "name": "handoff-team",
+      "displayName": "Handoff AI Team",
+      "source": "./plugins/handoff-team",
+      "description": "Your AI team's office: a Chief of Staff and helpers that work from your second brain of plain notes, shown in a friendly Team View. Starts from an empty folder, backs up to a private GitHub copy, runs a morning shift in the cloud, and only ever writes drafts.",
+      "category": "productivity",
+      "tags": ["ai-team", "team-view", "second-brain", "scheduled-tasks", "small-business"]
     }
   ]
 }
