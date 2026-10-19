@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'claude-code/testing'
 
-import { cardView, classify, classifyMcp, detectServices, doubledServices, isListing, isWorkingNote, mcpTarget, parseEnv, parseSettings, relativeTo, settingsReachingBrain, stableJson, unplainSettings } from '../hooks/gate'
+import { cardView, classify, classifyMcp, detectServices, doubledServices, isInstructionFile, isListing, isWorkingNote, mcpTarget, parseEnv, parseSettings, relativeTo, settingsReachingBrain, stableJson, unplainSettings } from '../hooks/gate'
 
 const ROOT = '/brain'
 // Connections the owner approved. In the desktop app a connection's name is an opaque id.
@@ -189,6 +189,11 @@ describe('employees write Markdown working notes and nothing else', () => {
     for (const p of ['Business/Agenda.md', `Business/Caf${cp(0xe9)} menu.md`, 'Projects/Claude notes.md']) {
       expect({ p, ok: isWorkingNote(ROOT, p) }).toEqual({ p, ok: true })
     }
+  })
+
+  test('hire names that would make an instruction file are caught', async () => {
+    for (const name of ['Claude', 'agents', 'GEMINI', 'Agent']) expect({ name, hit: isInstructionFile(`${name}.md`) }).toEqual({ name, hit: true })
+    for (const name of ['Claude Helper', 'Agenda', 'Follow-up']) expect({ name, hit: isInstructionFile(`${name}.md`) }).toEqual({ name, hit: false })
   })
 
   test('relativeTo refuses paths outside the brain', async () => {

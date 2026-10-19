@@ -13,6 +13,7 @@ import {
   hasHiddenText,
   detectServices,
   doubledServices,
+  isInstructionFile,
   isWorkingNote,
   isWriteTool,
   parseEnv,
@@ -922,11 +923,14 @@ const approveTraining = async ($: EngineInterface, card: Card) => {
 const hireName = (card: Card) => (card.name ?? '').replace(/[^A-Za-z0-9 -]/g, '').trim()
 const nameTaken = (name: string) =>
   Boolean(brain?.employees.some(e => e.name.toLowerCase() === name.toLowerCase() || e.id === name.toLowerCase().replace(/\s+/g, '-')))
+// A job page named Claude, Agents or Gemini would be Team/CLAUDE.md and the
+// like, which AI tools load as orders for every session working in Team/.
+const nameReserved = (name: string) => isInstructionFile(`${name}.md`)
 
 const approveHire = async ($: EngineInterface, card: Card) => {
   if (!card.name || !brain) return
   const name = hireName(card)
-  if (!name || nameTaken(name) || hasHiddenText(card.title) || hasHiddenText(card.summary)) return
+  if (!name || nameTaken(name) || nameReserved(name) || hasHiddenText(card.title) || hasHiddenText(card.summary)) return
   // The proposal must be unchanged since the owner read it: name, role and page.
   const current = parseCard(card.path, await $.fs.read(card.path))
   if (!current || current.kind !== 'hire' || current.name !== card.name || current.summary !== card.summary || current.title !== card.title) return
@@ -1391,7 +1395,8 @@ export const register: Register = on => {
       const isHire = card.kind === 'hire'
       const isTraining = card.kind === 'training'
       const name = isHire ? hireName(card) : isTraining ? (card.name ?? '') : ''
-      const taken = (isHire && nameTaken(name)) || (isTraining && (BUILT_IN_TRAININGS.has(name) || trainingNames.has(name)))
+      const reserved = isHire && nameReserved(name)
+      const taken = (isHire && (nameTaken(name) || reserved)) || (isTraining && (BUILT_IN_TRAININGS.has(name) || trainingNames.has(name)))
       // A hire or a training is kept only once the owner can see every word
       // that will be kept, title included, and none of it is hidden.
       const isOpen = expanded === card.id
@@ -1420,7 +1425,7 @@ export const register: Register = on => {
             />
           )}
           {card.why && <Text dimColor>Why: {capWords(card.why, CAPS.chat)}</Text>}
-          {taken && <Text color="warning">{isTraining ? STRINGS.line.builtInName : STRINGS.line.nameTaken}</Text>}
+          {taken && <Text color="warning">{isTraining || reserved ? STRINGS.line.builtInName : STRINGS.line.nameTaken}</Text>}
           {hidden && <Text color="warning">{STRINGS.line.cantShowCard}</Text>}
           {(isHire || isTraining) && !taken && !hidden && !seenAll && <Text dimColor>{STRINGS.line.readAllAdd}</Text>}
           <Box gap={1}>

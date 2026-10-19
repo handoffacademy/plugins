@@ -867,6 +867,18 @@ describe('nothing reaches a person without the owner\'s tap', () => {
     await ui.unmount()
   })
 
+  test('a hire named like an instruction file is refused', async ($, on) => {
+    const files = brainFiles(true, false)
+    files[`${ROOT}/Team/Tasks/hire.md`] = '---\nstatus: Needs you\nkind: hire\nname: Claude\ntitle: Helper\n---\nShort job.\n'
+    fakeWorld(on, files)
+    await $.session.start({ cwd: ROOT, surface: 'desktop', isInteractive: true })
+    const ui = await mountPane($)
+    expect(await ui.find({ type: 'Text', text: /name is taken/ })).toBeDefined()
+    expect(await ui.find({ key: 'ok-0' })).toBeUndefined()
+    expect(Object.keys(files).some(p => p.toLowerCase() === `${ROOT}/team/claude.md`.toLowerCase())).toBe(false)
+    await ui.unmount()
+  })
+
   test('a session opened in a subfolder of the brain is still guarded', async ($, on) => {
     fakeWorld(on, brainFiles(true), {}, `${ROOT}/Projects`)
     let reached = 0

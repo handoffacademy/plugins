@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.1
+
+- **Hires can't be named Claude, Agents or Gemini.** Those names would make a job page such as `Team/CLAUDE.md`, which AI tools read as orders for every session in `Team/`. The card says the name is taken and shows no Hire button; the tool gate already refused these file names.
+
 ## 1.0.0
 
 First release. The member's AI team office: a Chief of Staff and helpers that work from a second brain of plain notes, shown in a friendly Team View.
