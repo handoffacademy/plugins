@@ -17,11 +17,20 @@ Your AI team's office: a Chief of Staff and helpers that work from your second b
 2. Paste this into the prompt box and press Enter:
 
    ```
-   /plugin install handoff-team --marketplace handoffacademy/plugins
+   Install the Handoff AI Team add-on by running exactly this command: "${CLAUDE_CODE_EXECPATH:-claude}" plugin install handoff-team --marketplace handoffacademy/plugins
    ```
 
-3. In Finder, make an empty folder named `My Brain` in your home folder.
-4. Start a new Code tab session in that folder. Team View opens and offers **Make my brain**.
+3. When Claude asks first, choose **Allow**. Claude says the add-on is installed.
+4. In Finder, make an empty folder named `My Brain` in your home folder.
+5. Start a new Code tab session in that folder. Team View opens and offers **Make my brain**.
+
+The Code tab answers `/plugin` with "isn't available in this environment", so the step above asks Claude to run Claude Code's own install command instead.
+
+## Install in the Claude Code terminal
+
+```
+/plugin install handoff-team --marketplace handoffacademy/plugins
+```
 
 Team View draws only in the Claude Code desktop app, terminal and VS Code. In Cowork, ChatGPT or Codex the same rules apply and the setup guide gives a written team report instead.
 

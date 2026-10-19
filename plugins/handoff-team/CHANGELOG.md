@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.2
+
+- **Install steps that work in the Code tab.** The Code tab answers `/plugin` with "isn't available in this environment", so the README now has the member paste one request: Claude runs Claude Code's own install command (`claude plugin install handoff-team --marketplace handoffacademy/plugins`) with the Code tab's bundled copy of Claude Code, and the member chooses Allow. The `/plugin install` line stays for the terminal.
+
 ## 1.0.1
 
 - **Hires can't be named Claude, Agents or Gemini.** Those names would make a job page such as `Team/CLAUDE.md`, which AI tools read as orders for every session in `Team/`. The card says the name is taken and shows no Hire button; the tool gate already refused these file names.
