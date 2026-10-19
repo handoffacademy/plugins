@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.2.0
+
+Weeks 4-8 and a Chrome-only start (not yet released):
+- **Training cards** (Week 4): the Chief drafts a training as a Needs-you note; Team View adds it, both copies, only after the owner opens every step and title, never with hidden characters, never under a built-in or taken name. Template: CLAUDE.md rule 11 and the make-a-training training. Hire cards follow the same rules.
+- **Phone summary**: a cloud shift may send its end-of-shift summary to the owner's phone (PushNotification).
+- **Brains copied from the GitHub template**: in Anthropic's cloud an unpinned brain saves to the repository it was cloned from, only after GitHub confirms the copy is private; on a Mac, Team View offers Use your cloud copy only for a private copy the signed-in owner runs, and Your cloud copy is public otherwise.
+- After a Safety update the Chief is told to re-read CLAUDE.md.
+
 ## 1.1.0
 
 Ready for new members from an empty folder (not yet released):
