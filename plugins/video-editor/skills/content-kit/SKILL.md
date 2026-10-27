@@ -53,7 +53,7 @@ Format them to read off a phone: one short sentence per line, a blank line betwe
 
 ### Shot list for filming day
 - **Where:** a quiet room, light in front of them (a window facing them), a simple background with some depth.
-- **Phone:** upright (vertical), back camera at eye level on a stand, 1080p at 30 fps (Settings → Camera → Record Video), lens wiped, about an arm and a half away so head and shoulders fill the frame.
+- **Phone:** upright (vertical), back camera at eye level on a stand, 1080p at 30 fps with HDR Video off (iPhone: Settings → Camera → Record Video), lens wiped, about an arm and a half away so head and shoulders fill the frame.
 - **Sound:** close the windows, turn off fans; a clip-on mic if they have one.
 - **Each take:** look at the lens, wait two seconds, then speak. If they stumble, pause, say "let me start over", and go again from the start of the sentence: the editor cuts all of that.
 - **Order:** film every script twice, hook lines three times with different energy.

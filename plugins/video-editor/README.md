@@ -1,33 +1,31 @@
 # Video Editor
 
-Turns a raw talking-head video into a finished vertical short: cuts the stumbles and long pauses, opens on a hook, adds word-by-word captions, zooms and sound, and checks the finished file before you post. Runs in Claude Cowork with nothing to install on your computer.
+A viral short-form video editor on your own Mac or Windows computer, built on [HyperFrames](https://github.com/heygen-com/hyperframes) (Apache 2.0). Send it a raw talking-head take and get back a 1080×1920 video in your brand: the stumbles, fillers and long pauses cut on word boundaries, a scroll-stopping hook on the first frame, word-by-word captions in your style, a zoom on every cut, an accent transition at the big moments, sound effects on emphasis, an optional logo end card and studio-level loudness. It checks the finished file before you post.
 
 ## What it includes
 
-- **Video Editor** (`video-editor` skill): send a raw take and get back a 1080×1920 video with the fillers, false starts and long pauses cut on word boundaries, a text hook on frame 0, word-by-word captions with highlighted key words, a zoom on every cut, light sound effects and sound mastered to -14 LUFS. It checks the finished file (spec, loudness, black or frozen frames, dead air, every kept word heard) and reads stills at every cut before handing it over.
-- **Content Kit** (`content-kit` skill): a hook bank for your niche, five scripts you can read off your phone, your caption style and a shot list for filming day, from a research summary you paste or five quick questions.
-- **Brand Setup** (`brand-setup` skill): set your caption font and colours once in a `brand.json` file.
-- **Video Help** (`video-help` skill): plain-words troubleshooting when an edit stalls.
+- **Studio Setup** (`studio-setup`): sets up the computer once, step by step, and ends with a finished practice video.
+- **Video Editor** (`video-editor`): the edit, with three caption styles, three transition styles, sound from HyperFrames' library and a QA check on the rendered file.
+- **Brand Setup** (`brand-setup`): your colours, font, logo, caption and transition style and end card, saved once and used on every video.
+- **Content Kit** (`content-kit`): a hook bank for your niche, five scripts to read off your phone, your caption style and a shot list.
+- **Video Help** (`video-help`): plain-words troubleshooting.
 
-The editing runs on Claude's own cloud computer with [HyperFrames](https://github.com/heygen-com/hyperframes) (Apache 2.0) and FFmpeg. The sound effects are made for this plugin; the caption font is Montserrat (SIL Open Font License, `skills/video-editor/assets/fonts/OFL.txt`).
+Setup installs HyperFrames (pinned to 0.8.209) from npm, with the animation library, skills and sound effects it ships, and adds HyperFrames' core skills (`hyperframes`, `hyperframes-cli`, `media-use`) to your videos folder, so Claude can also make extras like title cards there. If you use HyperFrames' own Claude plugin (`hyperframes@hyperframes`), the editor uses that instead. The editor's scripts run on Node.js only, so they behave the same on Mac and Windows.
 
 ## What you need
 
-- A paid Claude plan (Pro or higher).
-- Claude's internet access for code: **Settings** → **Capabilities** → **Code execution and file creation** → **Allow network egress** on, with **Domain allowlist** set to **All domains**. The editor downloads its tools from npm, GitHub, Hugging Face (the transcription model) and Google's Chrome downloads; "package managers only" blocks the last two.
-- A video with sound, filmed upright. 1080p at 30 fps keeps uploads small.
+- The Claude desktop app (Mac or Windows) with a paid plan (Pro or higher), for the **Code** tab, signed in with your Claude account.
+- Node.js 22 or newer (the LTS installer from nodejs.org).
+- About 1.5 GB of free space for the tools (HyperFrames, FFmpeg, HyperFrames' renderer and a 640 MB speech-to-text model), installed once into `~/.video-editor` and HyperFrames' cache. No admin password is needed beyond the Node.js installer, and no git.
 
-The first edit in each new conversation spends about 3 minutes setting up transcription. Finishing a video takes about 9 seconds per second of video, so a 45-second video takes about 7 minutes.
+## Install in the Claude desktop app (Code tab)
 
-## Install in Claude Cowork
-
-1. In Claude, open **Customize**, then **Plugins**.
+1. In Claude (the desktop app or claude.ai), open **Customize**, then **Plugins**.
 2. Select **Add**, then **Add marketplace**, then **Add from a repository**, and enter `handoffacademy/plugins`.
-3. Open **Handoff Academy Plugins** and turn on its **Auto-update** toggle. Claude leaves automatic updates off by default for third-party marketplaces, so this is a one-time setting.
-4. Install **Video Editor**, then start a new conversation so it loads.
-5. Attach a video and type: `Edit this video into a vertical short.`
-
-Plugins you add in Claude are saved to your account, so the same install works in Claude Code.
+3. Turn on **Sync automatically** (Claude leaves automatic updates off by default for third-party marketplaces, so this is a one-time setting).
+4. Open **Video Editor** and click **Add**.
+5. Quit and reopen the Claude app. Plugins on your Claude account sync to the **Code** tab each time the app starts.
+6. Make a folder called **Handoff Videos** in Documents. In the app, click **Code**, choose that folder, and say: `Set up my video studio.`
 
 ## Install in the Claude Code terminal
 
@@ -35,7 +33,11 @@ Plugins you add in Claude are saved to your account, so the same install works i
 /plugin install video-editor --marketplace handoffacademy/plugins
 ```
 
-On your own computer the scripts need FFmpeg, Python 3 and Node.js 22 or newer; HyperFrames and its Chrome install themselves through `npx`.
+Then, in your videos folder: `Set up my video studio.` HyperFrames' own plugin is optional: `/plugin install hyperframes --marketplace heygen-com/hyperframes` (both terminal routes need git).
+
+## Install in Claude Cowork
+
+Follow steps 1 to 4 above, then start a new conversation. Cowork runs on a cloud computer that resets between sessions, so it downloads the editing tools again in every new conversation (a few extra minutes) and needs **Settings → Capabilities → Domain allowlist: All domains**. The desktop Code tab installs them once and is the recommended way.
 
 ## Updates
 
@@ -59,4 +61,8 @@ codex plugin add video-editor@plugins
 
 Claude's Auto-update toggle does not update Codex installations.
 
-Platform differences: the skills and scripts are the same everywhere. Codex runs them on your own computer, so it needs FFmpeg, Python 3 and Node.js 22 or newer installed there; `scripts/setup.sh` reports anything missing and stops rather than editing without it. The Content Kit skill needs nothing installed.
+Platform differences: the skills and scripts are the same everywhere. Codex runs them on your own computer with Node.js 22+; `scripts/setup.mjs` installs the rest (HyperFrames' sound library included) and stops with a plain message when something is missing.
+
+## Credits
+
+Caption font Montserrat (SIL Open Font License, `skills/video-editor/assets/fonts/OFL.txt`). The editor's own pop, whoosh and chime were made for this plugin. HyperFrames (Apache 2.0) is installed from npm on your computer; its sound effects are used from that install under the Pixabay Content License and aren't redistributed here. FFmpeg comes from the npm packages `ffmpeg-static` (GPL-3.0) and `@ffprobe-installer/ffprobe` (LGPL-2.1).

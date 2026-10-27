@@ -1,13 +1,11 @@
 {
   "name": "Default",
-  "font_file": "Montserrat-Variable.ttf",
-  "font_family": "Montserrat",
-  "caption": { "weight": 800, "size": 78, "color": "#FFFFFF", "case": "as-spoken" },
+  "colors": { "accent": "#FFE14D", "accent_text": "#111111", "bar": "#FFFFFF", "bar_text": "#111111", "caption": "#FFFFFF" },
+  "font": { "family": "Montserrat", "file": "fonts/Montserrat-Variable.ttf" },
+  "captions": { "style": "bold-chip", "case": "as-spoken" },
   "hook": { "weight": 900, "setup_size": 56, "punch_size": 96 },
-  "colors": {
-    "accent": "#FFE14D",
-    "accent_text": "#111111",
-    "bar": "#FFFFFF",
-    "bar_text": "#111111"
-  }
+  "transition": "punch",
+  "sound": { "pack": "auto", "volume": 0.2 },
+  "logo": null,
+  "end_card": { "enabled": false, "line": "" }
 }
