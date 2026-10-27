@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.0.1
+
+- The editor runs each step as a plain command with the full path, so choosing to always allow its steps stops the repeat permission prompts.
+- The reviewer check on the finished video is a set step, not an optional one.
+
 ## 2.0.0
 
 Runs on your own Mac or Windows computer in the Claude desktop app's Code tab, the way HyperFrames recommends, instead of Cowork's cloud computer: tools install once, edits start straight away and render about three times faster.

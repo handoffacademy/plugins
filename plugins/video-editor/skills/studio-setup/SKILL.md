@@ -9,7 +9,7 @@ Get this computer ready to edit, in one sitting, and end with a finished practic
 
 **Done means:** `setup.mjs` prints "All set.", the studio has `brand/`, `inbox/`, `projects/` and `finished/`, the person chose their look (or the default), and the practice clip is edited into `finished/practice.mp4`.
 
-The **studio** is the folder this session is open in (the kit names it "Handoff Videos"). `SKILL` is the video-editor skill's folder: `../video-editor` from this file.
+The **studio** is the folder this session is open in (the kit names it "Handoff Videos"). Run scripts as plain `node "<full path>"` commands, as the video-editor skill says. `SKILL` is the video-editor skill's folder: `../video-editor` from this file.
 
 ## Talk like this
 

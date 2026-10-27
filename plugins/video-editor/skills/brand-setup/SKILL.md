@@ -9,7 +9,7 @@ Make the person's brand kit, once: `brand/brand.json` plus their logo and font f
 
 **Done means:** `brand/brand.json` exists and follows the schema below, every text colour passes 4.5:1 contrast on its background, the person saw their look on a real frame (the practice clip or their last video) and said yes.
 
-`SKILL` is the video-editor skill's folder (`../video-editor` from this file); `references/styles.md` there explains every choice.
+Run scripts as plain `node "<full path>"` commands, as the video-editor skill says. `SKILL` is the video-editor skill's folder (`../video-editor` from this file); `references/styles.md` there explains every choice.
 
 ## 1. Gather (one message, then follow up only on gaps)
 
