@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.0.2
+
+- The editor no longer promises how long anything takes: no times for installing Node.js, downloading the tools, setting the brand or finishing a video, and the cut step no longer prints a finishing estimate. It tells people to leave it open and that it will say when it's done.
+- The Node.js step points to the installer button under "Or get a prebuilt Node.js" on nodejs.org's download page.
+
 ## 2.0.1
 
 - The editor runs each step as a plain command with the full path, so choosing to always allow its steps stops the repeat permission prompts.
