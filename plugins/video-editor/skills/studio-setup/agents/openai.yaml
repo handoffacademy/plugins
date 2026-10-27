@@ -1,0 +1,4 @@
+interface:
+  display_name: "Studio Setup"
+  short_description: "Set up the video studio on this computer, once"
+  default_prompt: "Use $studio-setup to set up my video studio."
