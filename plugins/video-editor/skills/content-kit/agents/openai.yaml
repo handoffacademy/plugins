@@ -1,0 +1,4 @@
+interface:
+  display_name: "Content Kit"
+  short_description: "Hooks, scripts, caption style and a shot list for your videos"
+  default_prompt: "Use $content-kit to build my short-form video content kit."

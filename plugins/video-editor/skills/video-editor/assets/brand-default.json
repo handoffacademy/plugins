@@ -1,0 +1,13 @@
+{
+  "name": "Default",
+  "font_file": "Montserrat-Variable.ttf",
+  "font_family": "Montserrat",
+  "caption": { "weight": 800, "size": 78, "color": "#FFFFFF", "case": "as-spoken" },
+  "hook": { "weight": 900, "setup_size": 56, "punch_size": 96 },
+  "colors": {
+    "accent": "#FFE14D",
+    "accent_text": "#111111",
+    "bar": "#FFFFFF",
+    "bar_text": "#111111"
+  }
+}
