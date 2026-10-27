@@ -30,7 +30,7 @@ From the studio folder: `node "SKILL/scripts/setup.mjs"` (safe to run again) and
 | HyperFrames' skills aren't there | Setup hasn't added them yet | Run `setup.mjs` again, then start a new session in this folder. The editor works without them. |
 | Claude keeps asking before every step | That's normal | "Choose **Allow**. To be asked less, pick 'always allow' for the editor's steps when Claude offers it." |
 | "this file has no sound in it" | A screen recording or an export without sound | "Send the original file from your phone's camera." |
-| It's been working a long time | Finishing takes about 3 to 10 seconds per second of video, depending on the computer; the first edit also downloads tools | "Still working. A 45-second video takes a few minutes; you can leave this open." |
+| It's been working a long time | Longer videos and slower computers take longer to finish, and the first edit also downloads the tools | "Still working. You can leave this open; I'll tell you when it's done." |
 | The computer gets slow or hot | Rendering is heavy | "Close other big apps (browsers with many tabs, video calls) while it finishes." |
 | The colours look grey or washed out | Filmed in HDR and this FFmpeg couldn't convert it fully | Run setup again (it installs the editor's own FFmpeg), then re-edit. Next time: "Film with HDR off: on iPhone, **Settings**, **Camera**, **Record Video**, then turn off **HDR Video**." |
 | Captions show a wrong word | Speech-to-text misheard a name | Fix the word in `edit/words.json` and `edit/words_source.json`, then rebuild from the video-editor's step 9. Ask them for the right spelling. |

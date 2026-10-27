@@ -37,7 +37,7 @@ Then, in your videos folder: `Set up my video studio.` HyperFrames' own plugin i
 
 ## Install in Claude Cowork
 
-Follow steps 1 to 4 above, then start a new conversation. Cowork runs on a cloud computer that resets between sessions, so it downloads the editing tools again in every new conversation (a few extra minutes) and needs **Settings → Capabilities → Domain allowlist: All domains**. The desktop Code tab installs them once and is the recommended way.
+Follow steps 1 to 4 above, then start a new conversation. Cowork runs on a cloud computer that resets between sessions, so it downloads the editing tools again in every new conversation and needs **Settings → Capabilities → Domain allowlist: All domains**. The desktop Code tab installs them once and is the recommended way.
 
 ## Updates
 

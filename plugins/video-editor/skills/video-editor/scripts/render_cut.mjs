@@ -58,6 +58,4 @@ writeJSON(join(edit, "words.json"), { duration: Math.round(offset * 10000) / 100
 
 const starts = cutInfo.map(s => `${s.codec_type} ${Number(s.start_time || 0).toFixed(3)}`);
 console.log(`cut: ${ranges.length} pieces, ${offset.toFixed(2)} s, ${out.length} words; stream starts ${starts.join(", ")}${hold > 0 ? `; held the last frame ${hold.toFixed(2)} s` : ""}`);
-const [lo, hi] = [Math.max(1, Math.round(offset * 3 / 60)), Math.max(2, Math.round(offset * 10 / 60))];
-console.log(`finishing will take about ${lo} to ${hi} minutes, depending on the computer (3 to 10 seconds per second of video)`);
 ranges.forEach((_, i) => console.log(`  ${i}: ${out.filter(w => w.range === i).map(w => w.text).join(" ")}`));
