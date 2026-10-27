@@ -4,6 +4,8 @@
 
 - The editor runs each step as a plain command with the full path, so choosing to always allow its steps stops the repeat permission prompts.
 - The reviewer check on the finished video is a set step, not an optional one.
+- Clean and Punchy captions stay readable with a dark brand colour: the key word gets a chip in that colour instead of dark text on dark video.
+- Clean captions show the whole line on the plate and light each word as it's said, so the plate no longer shows empty space.
 
 ## 2.0.0
 

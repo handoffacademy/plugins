@@ -49,6 +49,10 @@ for (const [fg, bg] of [["accent_text", "accent"], ["bar_text", "bar"]]) {
   if (r < 4.5) console.log(`warning: ${fg} on ${bg} is ${r.toFixed(1)}:1, under 4.5:1; pick a darker or lighter text colour`);
 }
 
+// Clean and Punchy colour the key word with the accent over dark; a dark accent (under 3:1 there) gets a chip instead.
+const keyChip = contrast(col.accent, "#1b1d19") < 3;
+if (keyChip && capStyle !== "bold-chip") console.log(`note: the accent is dark on video, so key words get a chip in it instead of coloured text`);
+
 const esc = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 const shown = t => { t = t.replace(/'/g, "’"); return capCase === "lower" ? t.toLowerCase() : capCase === "upper" ? t.toUpperCase() : t; };
 const t3 = x => x.toFixed(3);
@@ -231,9 +235,9 @@ const captionCss = {
       .cap b.key { padding: 2px 16px 10px; background: var(--accent); color: var(--accent-text); text-shadow: none; border-radius: 10px; box-shadow: 0 0 0 5px #fff, 0 12px 26px rgba(0,0,0,.3); }`,
   "clean-plate": `.cap { padding: 14px 26px 18px; border-radius: 18px; background: rgba(16,18,14,.72); left: auto; right: auto; inset-inline: 0; margin-inline: auto; width: fit-content; max-width: 880px; }
       .cap b { color: var(--caption); font-weight: 700; }
-      .cap b.key { color: var(--accent); }`,
+      .cap b.key { ${keyChip ? "padding: 0 12px 6px; border-radius: 10px; background: var(--accent); color: var(--accent-text);" : "color: var(--accent);"} }`,
   punchy: `.cap b { color: var(--caption); font-weight: 900; text-transform: uppercase; letter-spacing: -0.01em; -webkit-text-stroke: 3px rgba(0,0,0,.85); paint-order: stroke fill; text-shadow: 0 6px 18px rgba(0,0,0,.55); }
-      .cap b.key { color: var(--accent); }`,
+      .cap b.key { ${keyChip ? "padding: 0 14px 8px; border-radius: 12px; background: var(--accent); color: var(--accent-text); -webkit-text-stroke: 0;" : "color: var(--accent);"} }`,
 }[capStyle] || "";
 
 const page = `<!doctype html>
@@ -287,6 +291,7 @@ const page = `<!doctype html>
       for (const [id, starts, end] of chunks) {
         const els = gsap.utils.toArray(\`\${id} b\`);
         tl.to(id, { opacity: 1, duration: 0.08, ease: "none" }, starts[0]);
+        ${capStyle === "clean-plate" ? 'tl.to(els, { opacity: 0.45, duration: 0.08, ease: "none" }, starts[0]);' : ""}
         els.forEach((el, i) => { tl.to(el, { opacity: 1, duration: 0.08, ease: "none" }, starts[i]); ${pop} });
         if (end !== null) tl.to(id, { opacity: 0, duration: 0.01, ease: "none" }, end);
       }
