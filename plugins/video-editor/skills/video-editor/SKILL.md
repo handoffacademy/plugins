@@ -20,8 +20,8 @@ They are a business owner, not an editor or a programmer.
 
 ## Before the first edit
 
-1. **Setup (once per computer).** If `~/.video-editor/tools/node_modules/hyperframes` doesn't exist, or anything fails, run `node "SKILL/scripts/setup.mjs"` from the studio. It installs HyperFrames (with its animation library and sound effects), FFmpeg, HyperFrames' renderer and the speech-to-text model (about 640 MB, 2 to 5 minutes the first time), and adds HyperFrames' skills to the studio folder. Say so before you start. If it reports Node.js missing or too old, stop and tell them: "Install Node.js first: go to nodejs.org, download the LTS version, open it and click through the installer. Then start a new chat here."
-2. **Brand (once).** If `brand/brand.json` doesn't exist, ask: "Want your colours and logo in your videos? It takes about 3 minutes, once." Yes → run the brand-setup skill, then come back. No → use the default look and say they can do it any time.
+1. **Setup (once per computer).** If `~/.video-editor/tools/node_modules/hyperframes` doesn't exist, or anything fails, run `node "SKILL/scripts/setup.mjs"` from the studio. It installs HyperFrames (with its animation library and sound effects), FFmpeg, HyperFrames' renderer and the speech-to-text model (about 640 MB, once), and adds HyperFrames' skills to the studio folder. Say so before you start. If it reports Node.js missing or too old, stop and tell them: "Install Node.js first: go to nodejs.org, download the LTS version, open it and click through the installer. Then start a new chat here."
+2. **Brand (once).** If `brand/brand.json` doesn't exist, ask: "Want your colours and logo in your videos? You only do this once." Yes → run the brand-setup skill, then come back. No → use the default look and say they can do it any time.
 
 ## The edit, step by step
 
@@ -30,7 +30,7 @@ They are a business owner, not an editor or a programmer.
 3. **Transcribe:** `node "SKILL/scripts/transcribe.mjs" P` (add `--language es` and so on for other languages). Read the words.
 4. **Suggest the cut:** `node "SKILL/scripts/suggest_cut.mjs" P`. Then **read the transcript yourself** and fix `P/edit/edl.json` where their intent is clearer than the rule: a better second take of a line, an aside that wanders, a sentence that stops halfway. Keep their words and their order; never write new words for them.
 5. **Plan the opener** with `references/craft.md` (the Hook Stack): three text-hook options, each 7 words or fewer, naming the viewer's problem or the outcome they want, never a copy of the first spoken line. Pick two to five key words to highlight (a number, the problem, the fix).
-6. **One check-in, then finish.** In one message: what you're cutting, the three hooks with your pick, the key words, and how long finishing takes (step 7 prints it). Ask "Shall I finish it like this?" Skip the question if they already said to go ahead.
+6. **One check-in, then finish.** In one message: what you're cutting, the three hooks with your pick, the key words. Ask "Shall I finish it like this?" Skip the question if they already said to go ahead.
 7. **Cut it:** `node "SKILL/scripts/render_cut.mjs" P`. Every kept line should read as a complete thought. If it held the last frame, tip them: hold still for two seconds after the last line.
 8. **Write `P/reel/plan.json`:**
    ```json
