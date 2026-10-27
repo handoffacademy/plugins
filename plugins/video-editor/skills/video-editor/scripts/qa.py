@@ -106,7 +106,7 @@ norm = lambda s: re.sub(r"[^a-z0-9']", "", s.lower().replace("’", "'"))
 times = [0.0, 2.8] + [t for b in cut["boundaries"][1:-1] for t in (b - 0.1, b + 0.1)]
 times += [w["start"] + 0.15 for w in cut["words"] if norm(w["text"]) in keys]
 times += [t * 2.0 for t in range(1, int(dur // 2) + 1)]
-times += [max(0.0, dur - 0.8), max(0.0, dur - 1 / 30)]
+times += [max(0.0, dur - 0.8), max(0.0, dur - 2 / 30)]
 times = sorted({round(t, 2) for t in times if 0 <= t < dur})
 while len(times) > 24:  # keep the sheet readable on long videos: drop the evenly spaced fillers first
     fillers = [t for t in times if abs(t / 2 - round(t / 2)) < 1e-6 and t not in (0.0,)]
@@ -116,15 +116,16 @@ while len(times) > 24:  # keep the sheet readable on long videos: drop the evenl
 for k, t in enumerate(times):
     subprocess.run(["ffmpeg", "-hide_banner", "-v", "error", "-y", "-ss", f"{t:.3f}", "-i", str(final), "-frames:v", "1",
                     "-vf", "scale=360:640", str(qa / "stills" / f"{k:02d}_{t:06.2f}s.jpg")], check=True)
-cols = min(len(times), 6)
+shot = sorted((qa / "stills").glob("*.jpg"))
+cols = min(len(shot), 6)
 subprocess.run(["ffmpeg", "-hide_banner", "-v", "error", "-y", "-pattern_type", "glob", "-i", str(qa / "stills" / "*.jpg"),
-                "-vf", f"tile={cols}x{-(-len(times) // cols)}:padding=6:color=white", "-frames:v", "1", str(qa / "sheet.jpg")], check=True)
+                "-vf", f"tile={cols}x{-(-len(shot) // cols)}:padding=6:color=white", "-frames:v", "1", str(qa / "sheet.jpg")], check=True)
 
 fails = [r for r in rows if r[1] == "FAIL"]
 checks = [r for r in rows if r[1] == "CHECK"]
 lines = ["# QA for " + final.name, "", "| Check | Result | Measured |", "|---|---|---|"]
 lines += [f"| {n} | {res} | {m} |" for n, res, m in rows]
-lines += ["", f"Stills: {len(times)} in stills/ and on sheet.jpg (frame 0, the hook, either side of each cut, each highlighted word, every 2 s, the end).",
+lines += ["", f"Stills: {len(shot)} in stills/ and on sheet.jpg (frame 0, the hook, either side of each cut, each highlighted word, every 2 s, the end).",
           "Read them for: captions on the right words, nothing cut off at the edges, eyes open on frame 0 and the last frame, "
           "the hook readable on frame 0."]
 (qa / "QA.md").write_text("\n".join(lines) + "\n")

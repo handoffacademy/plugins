@@ -77,5 +77,7 @@ starts = subprocess.run(
     capture_output=True, text=True, check=True).stdout.split()
 print(f"cut: {len(ranges)} pieces, {offset:.2f} s, {len(out)} words; stream starts {starts}"
       + (f"; held the last frame {hold:.2f} s" if hold > 0 else ""))
+minutes = max(1, round(offset * 10 / 60))
+print(f"finishing will take about {minutes} minute{'s' if minutes > 1 else ''} (about 10 seconds per second of video)")
 for i in range(len(ranges)):
     print(f"  {i}: " + " ".join(w["text"] for w in out if w["range"] == i))

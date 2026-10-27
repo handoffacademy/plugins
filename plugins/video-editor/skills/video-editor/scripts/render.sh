@@ -2,8 +2,9 @@
 # render.sh: build the composition, check it, render it with HyperFrames and master the sound.
 #
 # Usage: render.sh <project dir> <name> [--draft]
-# Writes <project>/final/<name>.mp4 (1080x1920, 30 fps, -14 LUFS, true peak -1.5 dBTP).
-# --draft renders faster at lower quality, for a first look. Rendering takes about 9 seconds per second
+# Writes <project>/final/<name>.mp4 (1080x1920, 30 fps, -14 LUFS, true peak -1.5 dBTP, which leaves headroom under
+# the -1 dBTP delivery limit).
+# --draft renders faster at lower quality, for a first look. Rendering takes about 10 seconds per second
 # of video on a 2-CPU cloud computer, so a 45-second video takes about 7 minutes.
 set -euo pipefail
 here="$(cd "$(dirname "$0")" && pwd)"

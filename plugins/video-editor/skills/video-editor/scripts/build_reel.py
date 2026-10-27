@@ -215,8 +215,8 @@ page = f"""<!doctype html>
       #root {{ position: relative; width: 1080px; height: 1920px; overflow: hidden; }}
       #frame {{ position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; transform-origin: {fx}% {fy}%; }}
       #frame video {{ position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; object-fit: cover; }}
-      #hook {{ position: absolute; left: 0; top: 230px; width: 1080px; display: grid; justify-items: center; gap: 10px; }}
-      #hook span {{ display: block; max-width: 940px; text-align: center; font-weight: {hk.get("weight", 900)}; line-height: 1.02; letter-spacing: -0.02em; box-shadow: 0 16px 36px rgba(0, 0, 0, 0.32); }}
+      #hook {{ position: absolute; left: 60px; right: 140px; top: 230px; display: grid; justify-items: center; gap: 10px; }}
+      #hook span {{ display: block; max-width: 100%; text-align: center; font-weight: {hk.get("weight", 900)}; line-height: 1.02; letter-spacing: -0.02em; box-shadow: 0 16px 36px rgba(0, 0, 0, 0.32); }}
       #hook .setup {{ padding: 8px 22px 12px; background: var(--bar); color: var(--bar-text); font-size: {hk.get("setup_size", 56)}px; }}
       #hook .punch {{ padding: 10px 28px 18px; background: var(--accent); color: var(--accent-text); font-size: {hk.get("punch_size", 96)}px; }}
       .cap {{ position: absolute; left: 60px; right: 140px; top: {cap_y}px; display: flex; flex-wrap: nowrap; justify-content: center; align-items: center; gap: 0 20px; opacity: 0; }}

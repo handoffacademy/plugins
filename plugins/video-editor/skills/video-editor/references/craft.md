@@ -37,7 +37,7 @@ Stack these in the opening, in this order:
 
 - Sound effects mark a visual change only: a pop on the hook, a whoosh on a zoom, a soft chime into the end. About one every 3-4 seconds at most. If it sounds like a meme edit, it's too much.
 - The voice is the star: effects sit well under it.
-- Master to -14 LUFS with the true peak at or under -1 dBTP, the level Instagram, TikTok and YouTube Shorts play at.
+- Master to -14 LUFS with the true peak at or under -1 dBTP, the level Instagram, TikTok and YouTube Shorts play at. The editor masters to -1.5 dBTP to leave headroom.
 
 ## Restraint
 
