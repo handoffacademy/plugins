@@ -1,0 +1,9 @@
+{
+  "name": "video-editor",
+  "displayName": "Video Editor",
+  "version": "1.0.1",
+  "description": "Turns a raw talking-head video into a finished vertical short: cuts the stumbles and long pauses, opens on a hook, adds word-by-word captions, zooms and sound, and checks the finished file before you post. Runs in Claude Cowork with nothing to install on your computer.",
+  "author": {
+    "name": "Mother of AI"
+  }
+}

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Brand Setup"
+  short_description: "Set your video fonts and colours once"
+  default_prompt: "Use $brand-setup to set my brand look for edited videos."
