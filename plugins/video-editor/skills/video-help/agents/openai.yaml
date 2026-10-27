@@ -1,0 +1,4 @@
+interface:
+  display_name: "Video Help"
+  short_description: "Fix a stuck video edit in plain words"
+  default_prompt: "Use $video-help: my video edit is stuck."

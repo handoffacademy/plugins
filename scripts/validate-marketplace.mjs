@@ -48,10 +48,13 @@ function readBaseManifest(base, slug) {
   }
 }
 
+// Compares the two trees, not HEAD with the merge base: main takes squash
+// merges, so its merge base with preview is old and would count a plugin main
+// already carries, file for file, as changed.
 function pluginChanged(base, slug) {
   try {
     return (
-      git(["diff", "--name-only", `${base}...HEAD`, "--", `plugins/${slug}`])
+      git(["diff", "--name-only", base, "HEAD", "--", `plugins/${slug}`])
         .length > 0
     );
   } catch {
@@ -274,9 +277,15 @@ if (base) {
     );
     const previous = readBaseManifest(base, entry.name);
     if (!previous) {
-      if (manifest.version !== "1.0.0") {
+      // A new plugin starts at 1.0.0. One that shipped fixes on preview before
+      // its first main release arrives later, so its changelog must start there.
+      const changelog = readFileSync(
+        join(repoRoot, entry.source, "CHANGELOG.md"),
+        "utf8",
+      );
+      if (manifest.version !== "1.0.0" && !/^## 1\.0\.0$/m.test(changelog)) {
         fail(
-          `New plugin "${entry.name}" must start at 1.0.0, found ${manifest.version}.`,
+          `New plugin "${entry.name}" must start at 1.0.0, found ${manifest.version} and no "## 1.0.0" changelog entry.`,
         );
       }
       continue;
