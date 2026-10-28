@@ -5,11 +5,13 @@
 // Installs into ~/.video-editor/tools with npm (no admin password, no git): HyperFrames (pinned) with the GSAP and
 // sound library it ships, and FFmpeg and ffprobe, so every computer edits with the same build (it can convert iPhone
 // HDR). Then HyperFrames' headless Chrome and the Parakeet speech-to-text model (about 640 MB, once). Copies
-// HyperFrames' core skills into the studio's .claude/skills (unless HyperFrames' plugin is installed) and makes the
-// studio's folders. Prints a plain checklist; exits 1 if something is missing. It changes no Claude settings.
-import { cpSync, existsSync, mkdirSync } from "node:fs";
+// HyperFrames' core skills into the studio's .claude/skills, plus its registry skill (ready-made captions, titles and
+// transitions) from the same release on GitHub, unless HyperFrames' plugin is installed, and makes the studio's
+// folders. Prints a plain checklist; exits 1 if something is missing. It changes no Claude settings.
+import { createHash } from "node:crypto";
+import { cpSync, existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { homedir } from "node:os";
-import { join, resolve } from "node:path";
+import { dirname, join, resolve } from "node:path";
 import { HF_PKG, HF_VERSION, IS_WINDOWS, TOOLS_DIR, gsapFile, hf, readJSON, run, tool, writeJSON } from "./lib.mjs";
 
 const studio = resolve(process.argv[2] || ".");
@@ -17,6 +19,28 @@ let ok = true;
 const line = (what, status) => console.log(`${what.padEnd(30)} ${status}`);
 const npm = IS_WINDOWS ? "npm.cmd" : "npm";
 const npmInstall = pkgs => run(npm, ["i", "--silent", "--no-audit", "--no-fund", "--prefix", TOOLS_DIR, ...pkgs], { allowFail: true });
+// HyperFrames' registry skill isn't in its npm package, so it comes from GitHub as released in 0.8.209: pinned to that
+// release's commit and its skill tree (a tag can move; these hashes can't). Update both when HF_VERSION changes.
+const REGISTRY = { version: "0.8.209", commit: "53c975966611e7012b09b6d46707c26511ea077d", tree: "ca95458584add658afa2a9eaa986795949970103" };
+// Each file must match its git hash in the pinned tree. Downloads every file before writing any, so a dropped
+// connection or a changed file leaves the last good copy; a failure only skips the skill.
+async function fetchSkill(name, { commit, tree: treeSha }) {
+  const repo = "heygen-com/hyperframes";
+  try {
+    const tree = await (await fetch(`https://api.github.com/repos/${repo}/git/trees/${treeSha}?recursive=1`)).json();
+    const files = [];
+    for (const f of tree.tree.filter(f => f.type === "blob")) {
+      const res = await fetch(`https://raw.githubusercontent.com/${repo}/${commit}/skills/${name}/${f.path}`);
+      const buf = res.ok ? Buffer.from(await res.arrayBuffer()) : null;
+      if (!buf || createHash("sha1").update(`blob ${buf.length}\0`).update(buf).digest("hex") !== f.sha) return;
+      files.push([join(studio, ".claude", "skills", name, f.path), buf]);
+    }
+    for (const [dest, buf] of files) {
+      mkdirSync(dirname(dest), { recursive: true });
+      writeFileSync(dest, buf);
+    }
+  } catch {}
+}
 mkdirSync(TOOLS_DIR, { recursive: true });
 if (!existsSync(join(TOOLS_DIR, "package.json"))) writeJSON(join(TOOLS_DIR, "package.json"), { name: "video-editor-tools", private: true });
 
@@ -52,9 +76,12 @@ if (hfOk && !plugin) {
     const from = join(HF_PKG, "dist", "skills", name);
     if (existsSync(from)) cpSync(from, join(studio, ".claude", "skills", name), { recursive: true, force: true });
   }
+  if (HF_VERSION === REGISTRY.version) await fetchSkill("hyperframes-registry", REGISTRY);
 }
 const skillsOk = plugin || existsSync(join(studio, ".claude", "skills", "hyperframes", "SKILL.md"));
 line("HyperFrames skills", skillsOk ? (plugin ? "ready (HyperFrames plugin)" : "ready (in this folder)") : "not added: the editor still works");
+const registryOk = plugin || existsSync(join(studio, ".claude", "skills", "hyperframes-registry", "SKILL.md"));
+line("Ready-made effects skill", registryOk ? (plugin ? "ready (HyperFrames plugin)" : "ready (in this folder)") : "not added: the editor still works");
 
 for (const sub of ["brand", "inbox", "projects", "finished"]) mkdirSync(join(studio, sub), { recursive: true });
 line("Your studio folder", `ready (${studio})`);

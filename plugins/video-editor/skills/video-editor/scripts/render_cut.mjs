@@ -4,9 +4,10 @@
 //
 // Every range is snapped to the 30 fps frame grid and trimmed from edit/source.mp4 in a single filter graph, so
 // picture and voice stay in sync across every cut. Each audio piece gets a 12 ms fade at both ends so no cut clicks.
-// When the take stops less than 0.9 s after the last word, the last frame is held (with silence) so the video never
-// ends on a syllable. Writes edit/cut.mp4 and edit/words.json ({"duration", "boundaries", "words": [{text, start, end,
-// range}]}).
+// When the take stops less than 0.9 s after the last word (1.8 s when an end card shows, so it can be read), the last
+// frame is held (with silence) so the video never ends on a syllable. Writes edit/cut.mp4 and edit/words.json
+// ({"duration", "boundaries", "words": [{text, start, end, range}]}).
+import { existsSync } from "node:fs";
 import { join } from "node:path";
 import { args, fail, ffmpeg, probe, readJSON, snap, writeJSON } from "./lib.mjs";
 
@@ -22,7 +23,10 @@ if (!ranges.length) fail("edl.json has no ranges long enough to keep");
 const mid = w => (w.start + w.end) / 2;
 const [lastS, lastE] = ranges[ranges.length - 1];
 const keptLast = Math.max(...words.filter(w => lastS <= mid(w) && mid(w) <= lastE).map(w => w.end), lastS);
-const hold = snap(Math.max(0, 0.9 - (lastE - keptLast)));
+// The end card shows over the hold: plan.json's choice, else the brand's, found where build_reel.mjs finds them.
+const brand = readJSON([join(project, "brand.json"), join(project, "..", "..", "brand", "brand.json")].find(p => existsSync(p)), {});
+const endCard = readJSON(join(project, "reel", "plan.json"), {}).end_card ?? brand.end_card?.enabled ?? false;
+const hold = snap(Math.max(0, (endCard ? 1.8 : 0.9) - (lastE - keptLast)));
 
 const parts = [];
 const labels = ranges.map(([s, e], i) => {

@@ -14,7 +14,7 @@ Also: `captions.case` (`as-spoken`, `lower`, `upper`) and `captions.size` (px, d
 
 ## Transitions (`transition`)
 
-Every cut gets a zoom (a "punch-in"), which hides the jump. On top of that, one accent transition marks the story's turns: the cut out of the opener and the cut into the payoff, at most twice per video. Two transition types per video is the ceiling; more reads as "try hard".
+Every cut gets a zoom (a "punch-in"), which hides the jump. On top of that, one accent transition marks the story's turns: the cut out of the opener and the cut into the payoff, at most twice per video and never while the hook is on screen. A take kept in one piece has no cut, so its accent covers the first zoom after the hook. Two transition types per video is the ceiling; more reads as "try hard".
 
 | Say | Value | What happens |
 |---|---|---|
