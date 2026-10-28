@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.1
+
+- Setup takes HyperFrames' registry skill from the exact 0.8.209 release commit and checks every file against that release before saving it. If a file doesn't match, setup skips the skill and the editor still works.
+
 ## 2.1.0
 
 - Setup adds HyperFrames' registry skill to your videos folder, from the same HyperFrames release the editor uses: ready-made transitions, titles, overlays and caption blocks Claude can start from when you ask for an extra. HyperFrames' own plugin already includes it.
