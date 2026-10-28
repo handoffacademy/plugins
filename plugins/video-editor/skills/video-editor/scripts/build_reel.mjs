@@ -122,11 +122,13 @@ if (hook.length) {
 }
 
 // The accent transition (wipe or flash) covers at most two cuts: the turn out of the opener and the turn into the
-// payoff. Every other cut gets only its zoom (Thomas's rule: at most two transition types per video).
+// payoff. Every other cut gets only its zoom (Thomas's rule: at most two transition types per video). Never while the
+// hook is on screen; with no cut after the hook (a take kept in one piece), it covers the first zoom after it instead.
 const inner = bounds.slice(1, -1);
 let turnCuts = (plan.transition_at || []).map(n => inner[n - 1]).filter(t => t !== undefined);
-if (!plan.transition_at && transition !== "punch" && inner.length) {
-  turnCuts = [inner.find(t => t >= 1.5), inner.length > 1 ? inner[inner.length - 1] : undefined].filter((t, i, a) => t !== undefined && a.indexOf(t) === i);
+if (!plan.transition_at && transition !== "punch") {
+  const cuts = inner.filter(t => t >= hookOut);
+  turnCuts = cuts.length ? [...new Set([cuts[0], cuts[cuts.length - 1]])] : events.filter(t => t >= hookOut).slice(0, 1);
   if (turnCuts.length === 2 && turnCuts[1] - turnCuts[0] < 3) turnCuts = [turnCuts[0]];
 }
 const fxHtml = [];

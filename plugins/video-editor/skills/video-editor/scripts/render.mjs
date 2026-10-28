@@ -3,7 +3,8 @@
 // Usage: node render.mjs <project folder> <name> [--draft] [--brand brand.json]
 //
 // Writes <project>/final/<name>.mp4 (1080x1920, 30 fps, -14 LUFS) and copies it to the studio's finished/ folder
-// when the project sits in <studio>/projects/. --draft renders faster at lower quality for a first look.
+// when the project sits in <studio>/projects/. --draft renders faster at lower quality for a first look, and stays
+// in <project>/final/: finished/ holds only videos ready to post.
 import { copyFileSync, cpSync, existsSync, mkdirSync, rmSync } from "node:fs";
 import { basename, dirname, join, resolve } from "node:path";
 import { SKILL_DIR, args, fail, hf, run } from "./lib.mjs";
@@ -32,7 +33,7 @@ const out = join(project, "final", `${name}.mp4`);
 node("master.mjs", [join(project, "edit", "render.mp4"), out]);
 
 const studio = dirname(dirname(project));
-if (basename(dirname(project)) === "projects" && existsSync(join(studio, "finished"))) {
+if (!opts.draft && basename(dirname(project)) === "projects" && existsSync(join(studio, "finished"))) {
   cpSync(out, join(studio, "finished", `${name}.mp4`));
   console.log(`finished: ${join(studio, "finished", `${name}.mp4`)}`);
 } else console.log(`finished: ${out}`);

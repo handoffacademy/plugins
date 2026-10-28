@@ -10,7 +10,7 @@ A viral short-form video editor on your own Mac or Windows computer, built on [H
 - **Content Kit** (`content-kit`): a hook bank for your niche, five scripts to read off your phone, your caption style and a shot list.
 - **Video Help** (`video-help`): plain-words troubleshooting.
 
-Setup installs HyperFrames (pinned to 0.8.209) from npm, with the animation library, skills and sound effects it ships, and adds HyperFrames' core skills (`hyperframes`, `hyperframes-cli`, `media-use`) to your videos folder, so Claude can also make extras like title cards there. If you use HyperFrames' own Claude plugin (`hyperframes@hyperframes`), the editor uses that instead. The editor's scripts run on Node.js only, so they behave the same on Mac and Windows.
+Setup installs HyperFrames (pinned to 0.8.209) from npm, with the animation library, skills and sound effects it ships, and adds HyperFrames' core skills (`hyperframes`, `hyperframes-cli`, `media-use`) to your videos folder, plus `hyperframes-registry` (its catalog of ready-made transitions, titles and caption blocks, downloaded from the same HyperFrames release on GitHub), so Claude can also make extras like title cards there. If you use HyperFrames' own Claude plugin (`hyperframes@hyperframes`), the editor uses that instead. The editor's scripts run on Node.js only, so they behave the same on Mac and Windows.
 
 ## What you need
 
