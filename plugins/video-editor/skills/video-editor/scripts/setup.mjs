@@ -5,11 +5,12 @@
 // Installs into ~/.video-editor/tools with npm (no admin password, no git): HyperFrames (pinned) with the GSAP and
 // sound library it ships, and FFmpeg and ffprobe, so every computer edits with the same build (it can convert iPhone
 // HDR). Then HyperFrames' headless Chrome and the Parakeet speech-to-text model (about 640 MB, once). Copies
-// HyperFrames' core skills into the studio's .claude/skills (unless HyperFrames' plugin is installed) and makes the
-// studio's folders. Prints a plain checklist; exits 1 if something is missing. It changes no Claude settings.
-import { cpSync, existsSync, mkdirSync } from "node:fs";
+// HyperFrames' core skills into the studio's .claude/skills, plus its registry skill (ready-made captions, titles and
+// transitions) from the same release on GitHub, unless HyperFrames' plugin is installed, and makes the studio's
+// folders. Prints a plain checklist; exits 1 if something is missing. It changes no Claude settings.
+import { cpSync, existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { homedir } from "node:os";
-import { join, resolve } from "node:path";
+import { dirname, join, resolve } from "node:path";
 import { HF_PKG, HF_VERSION, IS_WINDOWS, TOOLS_DIR, gsapFile, hf, readJSON, run, tool, writeJSON } from "./lib.mjs";
 
 const studio = resolve(process.argv[2] || ".");
@@ -17,6 +18,26 @@ let ok = true;
 const line = (what, status) => console.log(`${what.padEnd(30)} ${status}`);
 const npm = IS_WINDOWS ? "npm.cmd" : "npm";
 const npmInstall = pkgs => run(npm, ["i", "--silent", "--no-audit", "--no-fund", "--prefix", TOOLS_DIR, ...pkgs], { allowFail: true });
+// A skill HyperFrames publishes on GitHub but not in its npm package, at the pinned release. Downloads every file
+// before writing any, so a dropped connection leaves the last good copy; a failure only skips it.
+async function fetchSkill(name) {
+  const repo = "heygen-com/hyperframes", ref = `v${HF_VERSION}`;
+  try {
+    const listing = await (await fetch(`https://api.github.com/repos/${repo}/contents/skills?ref=${ref}`)).json();
+    const sha = listing.find(d => d.name === name && d.type === "dir")?.sha;
+    const tree = await (await fetch(`https://api.github.com/repos/${repo}/git/trees/${sha}?recursive=1`)).json();
+    const files = [];
+    for (const f of tree.tree.filter(f => f.type === "blob")) {
+      const res = await fetch(`https://raw.githubusercontent.com/${repo}/${ref}/skills/${name}/${f.path}`);
+      if (!res.ok) return;
+      files.push([join(studio, ".claude", "skills", name, f.path), Buffer.from(await res.arrayBuffer())]);
+    }
+    for (const [dest, buf] of files) {
+      mkdirSync(dirname(dest), { recursive: true });
+      writeFileSync(dest, buf);
+    }
+  } catch {}
+}
 mkdirSync(TOOLS_DIR, { recursive: true });
 if (!existsSync(join(TOOLS_DIR, "package.json"))) writeJSON(join(TOOLS_DIR, "package.json"), { name: "video-editor-tools", private: true });
 
@@ -52,9 +73,12 @@ if (hfOk && !plugin) {
     const from = join(HF_PKG, "dist", "skills", name);
     if (existsSync(from)) cpSync(from, join(studio, ".claude", "skills", name), { recursive: true, force: true });
   }
+  await fetchSkill("hyperframes-registry");
 }
 const skillsOk = plugin || existsSync(join(studio, ".claude", "skills", "hyperframes", "SKILL.md"));
 line("HyperFrames skills", skillsOk ? (plugin ? "ready (HyperFrames plugin)" : "ready (in this folder)") : "not added: the editor still works");
+const registryOk = plugin || existsSync(join(studio, ".claude", "skills", "hyperframes-registry", "SKILL.md"));
+line("Ready-made effects skill", registryOk ? (plugin ? "ready (HyperFrames plugin)" : "ready (in this folder)") : "not added: the editor still works");
 
 for (const sub of ["brand", "inbox", "projects", "finished"]) mkdirSync(join(studio, sub), { recursive: true });
 line("Your studio folder", `ready (${studio})`);

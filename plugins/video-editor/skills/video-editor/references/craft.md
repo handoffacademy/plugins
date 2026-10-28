@@ -25,7 +25,7 @@ Stack these in the opening, in this order:
 
 ## Pace
 
-- Cut every pause longer than about 0.35 s inside a line; leave about 0.4 s after the strongest line and a settled hold of about a second after the last word. Never end on the last syllable.
+- Cut every pause longer than about 0.35 s inside a line; leave about 0.4 s after the strongest line and a settled hold of about a second after the last word (1.8 s when the end card shows, so it can be read). Never end on the last syllable.
 - Something changes every 1.5-3 s in the first ten seconds: a cut, a zoom or a caption beat.
 - A zoom on every cut hides the jump (alternate about 1.04 and 1.12, never past 1.15), with a slow push between cuts.
 - Keep the person's spoken order. A strong later line can open the video only when they agree.
@@ -48,7 +48,7 @@ Stack these in the opening, in this order:
 ## Graphics and transitions
 
 - Illustrate the idea, not every sentence: 4 to 8 visual beats in a 30-60 s video, each explaining a concept or highlighting the key phrase. If the only reason for a graphic is a noun the person said (a place, an object), cut it.
-- At most two transition types per video: the zoom on every cut, plus one accent (wipe or flash) at the story's turns. Jump cuts get zooms, not blur whips.
+- At most two transition types per video: the zoom on every cut, plus one accent (wipe or flash) at the story's turns, never while the hook is on screen. Jump cuts get zooms, not blur whips.
 - Every graphic carries its own contrast: words on chips or plates, key-word chips with a white outline. Nothing stays on screen under 0.6 s.
 
 ## Restraint

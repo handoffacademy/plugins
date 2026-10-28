@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.1.0
+
+- Setup adds HyperFrames' registry skill to your videos folder, from the same HyperFrames release the editor uses: ready-made transitions, titles, overlays and caption blocks Claude can start from when you ask for an extra. HyperFrames' own plugin already includes it.
+- Swipe and Flash now show on a take kept in one piece, like the practice clip: the accent lands on the first zoom after the hook. No accent lands while the hook is still on screen.
+- The end card stays up long enough to read: with it on, the video holds 1.8 s after the last word instead of 0.9 s.
+- A quick draft, such as the brand preview, stays in its project folder, so finished only holds videos ready to post.
+
 ## 2.0.2
 
 - The editor no longer promises how long anything takes: no times for installing Node.js, downloading the tools, setting the brand or finishing a video, and the cut step no longer prints a finishing estimate. It tells people to leave it open and that it will say when it's done.
